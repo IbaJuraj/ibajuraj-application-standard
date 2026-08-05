@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.schema.json",
+  "title": "IbaJuraj Application Standard metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "version",
+    "status",
+    "releasedAt",
+    "minimumSupportedVersion",
+    "breakingChange",
+    "source"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "const": "IbaJuraj Application Standard"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "active",
+        "deprecated"
+      ]
+    },
+    "releasedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "minimumSupportedVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "breakingChange": {
+      "type": "boolean"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "latestMetadata",
+        "tag",
+        "document"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "format": "uri"
+        },
+        "latestMetadata": {
+          "type": "string",
+          "format": "uri"
+        },
+        "tag": {
+          "type": "string",
+          "pattern": "^standard-v\\d+\\.\\d+\\.\\d+$"
+        },
+        "document": {
+          "const": "IBAJURAJ_APPLICATION_STANDARD.md"
+        }
+      }
+    }
+  }
+}
