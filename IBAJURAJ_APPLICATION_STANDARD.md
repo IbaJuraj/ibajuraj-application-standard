@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.0.0  
+**Verzia:** 1.1.0  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 31. júla 2026  
+**Platnosť od:** 7. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -65,6 +65,30 @@ Aplikácie môžu mať rozdielny počet tabov, navigáciu, dashboard a doménov�
 - SHOULD používať systémové komponenty Apple, ak produktová potreba nevyžaduje vlastné riešenie.
 - SHOULD obmedziť veľké monolitické view súbory a deliť ich podľa zodpovedností.
 
+
+### 6.3 Spoločné systémové nastavenia
+
+Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUSIA používať rovnaký význam a predvolené pomenovanie naprieč rodinou aplikácií. Produkt môže sekcie vynechať, ak danú funkciu nemá; štandard neurčuje rovnaký počet položiek ani rovnaké poradie pre všetky produkty.
+
+Spoločné názvy a princípy:
+
+- **Vzhľad** – iba ak aplikácia ponúka voľbu Automaticky / Svetlý / Tmavý; jednoduchá voľba MÁ BYŤ dostupná bez zbytočnej medziobrazovky.
+- **Zabezpečenie** – biometria, PIN aplikácie a automatické uzamknutie, ak ich produkt podporuje.
+- **Synchronizácia cez iCloud** – stav a ovládanie osobnej synchronizácie, ak ju produkt podporuje.
+- **Ľudia a zdieľanie** – iba ak produkt podporuje zdieľanie alebo členstvo.
+- **Kontakt** – priamy vstup do kontaktnej obrazovky; nemá byť skrytý za zbytočnou medziobrazovkou.
+- **O aplikácii** – verzia, súkromie, štandard a právne/informačné údaje relevantné pre produkt.
+
+Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktívna**, **Povolené** alebo **Iba ja**, MUSÍ zostať čitateľná pri podporovaných veľkostiach textu a NESMIE sa lámať po jednotlivých písmenách.
+
+### 6.4 Navigácia: push, modal a návrat
+
+- Bežná vnorená obrazovka v hierarchii MUSÍ používať návrat späť, nie tlačidlo `Hotovo`.
+- Na iOS MUSÍ bežná push navigácia zachovať systémové gesto potiahnutia z ľavého okraja späť, ak neexistuje zdokumentovaný technický alebo produktový dôvod.
+- `Zrušiť`, `Uložiť`, `Vytvoriť`, `Prijať` alebo obdobné akcie patria formulárom a skutočným modálnym workflow.
+- `Hotovo` sa NESMIE používať ako náhrada navigácie späť.
+- Aplikácia MÁ minimalizovať navigačnú hĺbku a nevytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
+
 ## 7. Obsah a texty
 
 - MUST používať zrozumiteľný jazyk a vysvetliť odborné pojmy.
@@ -97,6 +121,10 @@ Prázdna obrazovka bez vysvetlenia nie je platný stav.
 - MUST po uložení jednoznačne potvrdiť výsledok.
 - SHOULD meniť polia podľa typu objektu namiesto jedného univerzálneho formulára s nerelevantnými položkami.
 
+- MUST umožniť pohodlné skrytie klávesnice bez nutnosti opustiť obrazovku.
+- IbaJuraj aplikácie SHOULD používať spoločný plávajúci ovládací prvok s ikonou klávesnice a šípkou nadol, ak je potrebné explicitné zatvorenie klávesnice; vlastné textové tlačidlo `Hotovo` nad klávesnicou sa nemá zavádzať bez produktového dôvodu.
+- Scrollovateľný obsah SHOULD podporovať prirodzené interaktívne schovanie klávesnice a ukončenie fokusu tam, kde je to bezpečné pre rozpracované údaje.
+
 ## 10. Dáta, migrácie a kompatibilita
 
 - MUST mať verziu dátovej schémy.
@@ -128,6 +156,11 @@ Používateľ má dostať zrozumiteľný stav, napríklad počet čakajúcich zm
 - MUST validovať a podľa potreby kryptograficky overovať vzdialené balíky.
 - MUST zobrazovať používateľovi diagnostické údaje pred ich odoslaním.
 - MUST zakázať zdieľanie citlivých údajov cez verejnú Telegram skupinu.
+
+- Ak aplikácia ponúka lokálny zámok, biometria, voliteľný PIN aplikácie a automatické uzamknutie SHOULD tvoriť jeden konzistentný bezpečnostný model.
+- Bezpečnostné nastavenia lokálneho zámku SHOULD zostať lokálne v zariadení a nemajú sa synchronizovať ani exportovať spolu s bežnými používateľskými dátami, ak na to nie je výslovný bezpečný návrh.
+- Interná navigácia, prepnutie tabu, otvorenie/zatvorenie interného sheetu ani návrat z vnoreného detailu NESMÚ samy osebe spustiť nové biometrické overenie.
+- Čas automatického uzamknutia sa má vyhodnocovať podľa skutočného životného cyklu aplikácie a odchodu do neaktívneho/background stavu, nie podľa opakovaného `onAppear` jednotlivých obrazoviek.
 
 ## 13. Prístupnosť
 
@@ -192,6 +225,11 @@ Pred vydaním musí byť overené:
 - šifrovanie a exportné nastavenia,
 - odstránenie `.DS_Store`, `__MACOSX`, tajomstiev a nepotrebných archívov z distribučného ZIP-u.
 
+- pri aplikáciách s vlastnou navigáciou kontrola šípky späť aj systémového swipe-back,
+- pri textových vstupoch kontrola schovania klávesnice vrátane podporovaných klávesníc tretích strán,
+- pri lokálnom zámku kontrola, že bežná interná navigácia nespúšťa opakovanú biometriu,
+- kontrola, že pravé stavové hodnoty v Nastaveniach nie sú orezané ani nevhodne zalomené.
+
 ## 18. Živý štandard a návrhy zmien
 
 Štandard sa môže priebežne rozširovať, ale nie nekontrolovane.
@@ -220,5 +258,7 @@ Výnimka sa eviduje v produktovom súbore `APP_STANDARD_ADOPTION.md` alebo ADR.
 
 - **Strážca Termínov:** Administrative Detail Framework, Agenda ako autoritatívny systém, Progressive Completion, Action over Information, No Dead Ends.
 - **Lex Drive:** Trust before Intelligence, Situation before Law, Answer before Citation, overiteľnosť právneho zdroja, účinnosť právneho stavu a auditovateľnosť.
+- **Kalkulačka 2v1:** kalkulačné workflow, hlasový vstup a doménové formátovanie výsledkov zostávajú produktovo špecifické.
+- **Peňaženka Kariet:** rýchly prístup ku kartám, prezentácia čiarových/2D kódov a zdieľané peňaženky zostávajú produktovo špecifické.
 
-Tieto doplnky zostávajú produktovo špecifické a nesmú byť mechanicky prenášané medzi aplikáciami.
+Tieto doplnky zostávajú produktovo špecifické a nesmú byť mechanicky prenášané medzi aplikáciami. Spoločné systémové vzory sa do tohto štandardu zaraďujú až po overení rovnakej potreby vo viacerých produktoch.

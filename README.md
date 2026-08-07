@@ -2,14 +2,14 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.0.0**  
+Aktuálna verzia: **1.1.0**  
 Stav: **active**
 
 ## Účel repozitára
 
 Tento repozitár je jediným zdrojom pravdy pre spoločné pravidlá kvality, UX, architektúry, lokalizácie, prístupnosti, dát, bezpečnosti, testovania a vydávania aplikácií IbaJuraj.
 
-Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Lex Drive, Strážca Termínov a ďalšie aplikácie si uchovávajú lokálnu kópiu konkrétnej prijatej verzie a záznam `APP_STANDARD_ADOPTION.md`.
+Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Aplikácie si uchovávajú lokálnu kópiu konkrétnej prijatej verzie a záznam `APP_STANDARD_ADOPTION.md`.
 
 ## Hlavné súbory
 
@@ -18,6 +18,7 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Lex
 - `standard.json` – metadata pre automatické kontroly,
 - `GOVERNANCE.md` – verzionovanie a proces zmien,
 - `CHANGELOG.md` – história vydaných verzií,
+- `MIGRATION.md` – migračné pokyny medzi zdrojmi/verziami,
 - `SUPPORT_AND_LINKS.md` – autoritatívny register verejných odkazov,
 - `Proposals/` – návrhy zmien štandardu,
 - `Templates/` – šablóny adopcie a výnimiek,
@@ -26,7 +27,7 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Lex
 ## Ako aplikácia prijme štandard
 
 1. Skontroluje najnovšiu verziu v `standard.json`.
-2. Prečíta `CHANGELOG.md` a posúdi dopad.
+2. Prečíta `CHANGELOG.md` a `MIGRATION.md` a posúdi dopad.
 3. Upraví kód, testy a dokumentáciu.
 4. Skopíruje dokumenty z konkrétneho tagu, nie z pohyblivého `main`.
 5. Aktualizuje svoj `APP_STANDARD_ADOPTION.md`.
@@ -45,17 +46,10 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.0.0
+standard-v1.1.0
 ```
 
-## Prvé publikovanie tohto repozitára
-
-1. Vytvorte verejný repozitár `IbaJuraj/ibajuraj-application-standard`.
-2. Nahrajte celý obsah tohto balíka do koreňa repozitára.
-3. Spustite GitHub Action **Validate standard**.
-4. Vytvorte tag `standard-v1.0.0`.
-5. Vytvorte GitHub Release **IbaJuraj Application Standard 1.0.0**.
-6. Až potom zmeňte odkazy v aplikáciách a na webe IbaJuraj Apps.
+Aktuálny release: **IbaJuraj Application Standard 1.1.0**.
 
 ## Návrhy zmien
 

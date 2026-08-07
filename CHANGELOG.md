@@ -1,5 +1,19 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.1.0 – 2026-08-07
+
+- zavedená spoločná architektúra a pomenovanie systémových Nastavení,
+- doplnené pravidlo minimálnej navigačnej hĺbky,
+- doplnené pravidlá pre push vs. modal a systémový swipe-back na iOS,
+- zjednotený spôsob explicitného schovania klávesnice v rodine IbaJuraj aplikácií,
+- doplnené pravidlá pre krátke stavové hodnoty v Nastaveniach,
+- doplnený priamy model Kontakt bez zbytočného medzikroku,
+- doplnený spoločný model biometrie, voliteľného PIN-u a automatického uzamknutia,
+- doplnené lifecycle pravidlo, aby interná navigácia nespúšťala opakované biometrické overenie,
+- doplnené release kontroly navigácie, klávesnice a lokálneho zámku,
+- rozšírený zoznam produktových doplnkov o Kalkulačku 2v1 a Peňaženku Kariet,
+- verzia 1.1.0 je spätne kompatibilná s 1.0.0 a sama osebe nevyžaduje dátovú migráciu.
+
 ## 1.0.0 – 2026-07-31
 
 - vytvorený prvý spoločný autoritatívny štandard,
