@@ -1,5 +1,21 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.2.0 – 2026-08-09
+
+- zavedený spoločný vstup do Nastavení cez `gearshape.fill` vpravo hore a pravidlo, že spodná navigácia obsahuje iba hlavné pracovné časti,
+- zjednotený grouped-card vizuál Nastavení vrátane ikonových dlaždíc, typografie, section headers, chevronov, stavových hodnôt a priameho segmented prepínača Vzhľadu,
+- doplnené pravidlá adaptívneho rozloženia podľa dostupného priestoru namiesto konkrétneho modelu zariadenia,
+- zavedené spoločné sémantické varianty dlaždíc, kariet a riadkov bez vynútenia identického produktového vzhľadu,
+- doplnené pravidlá minimálnych rozmerov, obsahovej výšky, Dynamic Type a adaptívneho počtu stĺpcov,
+- zavedená spoločná hierarchia informácií v kartách a pravidlá pre produktový variant vernostnej karty,
+- rozšírené pravidlá dizajnových tokenov, spätnej väzby, chýb, obnovy a zachovania rozpracovanej práce,
+- doplnené pravidlá dátového životného cyklu, dátumu a času, upozornení, systémových oprávnení, výkonu a stability,
+- zavedené úrovne adopcie a spoločná testovacia matica zariadení, orientácie, lokalizácie, prístupnosti a sieťových stavov,
+- opravený neúplný obsah repozitára a doplnené chýbajúce GitHub workflow a šablóny,
+- opravený register SHA-256 kontrolných súčtov a rozšírená automatická validácia release,
+- zjednotený normatívny jazyk MUST / MUST NOT / SHOULD / SHOULD NOT / MAY a používateľské pomenovanie položky Kontakt,
+- verzia 1.2.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
+
 ## 1.1.0 – 2026-08-07
 
 - zavedená spoločná architektúra a pomenovanie systémových Nastavení,

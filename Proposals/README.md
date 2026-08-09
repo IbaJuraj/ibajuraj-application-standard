@@ -24,6 +24,6 @@ IJAS-0001-strucny-nazov.md
 
 1. Skopírujte `TEMPLATE.md`.
 2. Popíšte opakovaný problém a dotknuté aplikácie.
-3. Navrhnite MUST, SHOULD alebo MAY.
+3. Navrhnite MUST, MUST NOT, SHOULD, SHOULD NOT alebo MAY.
 4. Uveďte migráciu, riziká a možnosti automatickej kontroly.
 5. Po schválení aktualizujte štandard a changelog.

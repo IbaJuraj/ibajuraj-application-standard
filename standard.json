@@ -1,15 +1,15 @@
 {
   "$schema": "./standard.schema.json",
   "name": "IbaJuraj Application Standard",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "active",
-  "releasedAt": "2026-08-07",
+  "releasedAt": "2026-08-09",
   "minimumSupportedVersion": "1.0.0",
   "breakingChange": false,
   "source": {
     "repository": "https://github.com/IbaJuraj/ibajuraj-application-standard",
     "latestMetadata": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.json",
-    "tag": "standard-v1.1.0",
+    "tag": "standard-v1.2.0",
     "document": "IBAJURAJ_APPLICATION_STANDARD.md"
   }
 }

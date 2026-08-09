@@ -2,7 +2,7 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.1.0**  
+Aktuálna verzia: **1.2.0**  
 Stav: **active**
 
 ## Účel repozitára
@@ -14,6 +14,7 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Apl
 ## Hlavné súbory
 
 - `IBAJURAJ_APPLICATION_STANDARD.md` – záväzné spoločné pravidlá,
+- `DESIGN_TOKENS.md` – spoločné rozmery, rozostupy a komponentové varianty,
 - `STANDARD_VERSION` – jednoduchá strojovo čitateľná verzia,
 - `standard.json` – metadata pre automatické kontroly,
 - `GOVERNANCE.md` – verzionovanie a proces zmien,
@@ -31,7 +32,8 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Apl
 3. Upraví kód, testy a dokumentáciu.
 4. Skopíruje dokumenty z konkrétneho tagu, nie z pohyblivého `main`.
 5. Aktualizuje svoj `APP_STANDARD_ADOPTION.md`.
-6. Vykoná automatický a manuálny release audit.
+6. Určí pravdivú úroveň adopcie Level 0 až Level 4.
+7. Vykoná automatický a manuálny release audit.
 
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
@@ -46,10 +48,10 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.1.0
+standard-v1.2.0
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.1.0**.
+Aktuálny release: **IbaJuraj Application Standard 1.2.0**.
 
 ## Návrhy zmien
 

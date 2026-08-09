@@ -1,5 +1,35 @@
 # Migrácia IbaJuraj Application Standard
 
+## 1.1.0 → 1.2.0
+
+Verzia 1.2.0 je spätne kompatibilná minor aktualizácia. Nevyžaduje migráciu používateľských dát ani zmenu produktových doménových modelov. Aplikácia však môže odstrániť tab Nastavení a nahradiť ho spoločným vstupom vpravo hore; hlavné pracovné taby zostávajú produktové.
+
+Aplikácia pri adopcii 1.2.0 vykoná audit:
+
+1. vstupu do Nastavení cez `gearshape.fill` vpravo hore a odstránenia Nastavení zo spodnej navigácie,
+2. samostatnej push obrazovky Nastavení so šípkou späť a swipe-back,
+3. grouped-card vizuálu, spoločných ikonových dlaždíc, section headers, chevronov, status hodnôt a priameho segmented prepínača Vzhľadu,
+4. adaptívneho rozloženia na kompaktnom, štandardnom a veľkom iPhone,
+5. dlaždíc, kariet a zoznamových riadkov podľa ich sémantickej roly,
+6. obsahu pri Dynamic Type, dlhších lokalizáciách a orientácii na šírku,
+7. stavov načítavania, chyby, obnovy a spätnej väzby po akcii,
+8. zachovania rozpracovaných formulárov a platného navigačného stavu,
+9. životného cyklu údajov, zálohy, exportu a synchronizácie, ak ich aplikácia používa,
+10. dátumov, časových pásiem a upozornení, ak ich aplikácia používa,
+11. systémových oprávnení, výkonu a release testovacej matice,
+12. lokálneho `APP_STANDARD_ADOPTION.md`, úrovne adopcie a aktívnych výnimiek.
+
+Produktové migračné body:
+
+- **Kalkulačka 2v1:** presunúť ikonu Nastavení vpravo hore, nahradiť modal plnohodnotnou push obrazovkou a použiť spoločný grouped-card systém.
+- **Lex Drive:** oddeliť systémové Nastavenia od obrazovky Moje; História, Obľúbené a právny kontext MAY zostať v Moje.
+- **Strážca Termínov:** odstrániť Nastavenia zo spodného tab baru a pridať spoločný vstup vpravo hore.
+- **Peňaženka Kariet:** odstrániť Nastavenia zo spodnej navigácie a pridať spoločný vstup vpravo hore.
+
+Nové obrazovky prijaté po vydaní 1.2.0 používajú nové spoločné pravidlá okamžite. Existujúce obrazovky sa auditujú v najbližšom plánovanom builde; dočasná odchýlka musí byť evidovaná ako výnimka.
+
+---
+
 ## 1.0.0 → 1.1.0
 
 Verzia 1.1.0 je spätne kompatibilná minor aktualizácia. Samotné prijatie štandardu nevyžaduje migráciu používateľských dát.

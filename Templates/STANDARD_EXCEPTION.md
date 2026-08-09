@@ -2,7 +2,7 @@
 
 **Aplikácia:**  
 **Pravidlo:**  
-**Záväznosť pravidla:** MUST / SHOULD  
+**Záväznosť pravidla:** MUST / MUST NOT / SHOULD / SHOULD NOT  
 **Stav:** active  
 **Schválil:**  
 **Dátum schválenia:** YYYY-MM-DD  

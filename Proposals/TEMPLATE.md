@@ -18,7 +18,7 @@ V ktorých aplikáciách alebo buildoch sa problém prejavil?
 
 Presné znenie pravidla.
 
-**Záväznosť:** MUST / SHOULD / MAY
+**Záväznosť:** MUST / MUST NOT / SHOULD / SHOULD NOT / MAY
 
 ## Rozsah
 

@@ -16,7 +16,7 @@ Používa sa sémantické verzionovanie:
 
 1. návrh,
 2. posúdenie dopadu na všetky aplikácie,
-3. rozhodnutie MUST / SHOULD / MAY,
+3. rozhodnutie MUST / MUST NOT / SHOULD / SHOULD NOT / MAY,
 4. schválenie,
 5. aktualizácia štandardu a changelogu,
 6. audit a postupná adopcia aplikáciami.

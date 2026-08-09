@@ -1,7 +1,7 @@
 # IbaJuraj – podpora a verejné odkazy
 
 **Stav:** autoritatívny register  
-**Verzia:** 1.1.0
+**Verzia:** 1.2.0
 
 ## Verejné adresy
 
@@ -14,10 +14,10 @@
 
 ## Pravidlá použitia
 
-- Aplikácia MUST ponúknuť **Kontaktovať podporu**, ktoré otvorí kontaktný formulár.
+- Aplikácia MUST ponúknuť položku **Kontakt**, ktorá otvorí kontaktnú obrazovku s formulárom.
 - Aplikácia SHOULD ponúknuť samostatné tlačidlo **Telegram komunita**.
-- Telegram nie je jediný kanál podpory a nesmie sa používať na osobné, zdravotné, právne, identifikačné alebo iné citlivé údaje.
-- Bežný používateľ sa nemá posielať priamo do GitHub Issues.
+- Telegram MUST NOT byť jediným kanálom podpory a MUST NOT sa používať na osobné, zdravotné, právne, identifikačné alebo iné citlivé údaje.
+- Bežný používateľ SHOULD NOT byť posielaný priamo do GitHub Issues.
 - GitHub môže byť technickým základom webu a internou evidenciou potvrdených chýb.
-- Technické údaje pridané ku kontaktnej správe musia byť používateľovi zobrazené pred odoslaním.
-- Odkazy sa nemajú duplikovať v jednotlivých obrazovkách; cieľom je spoločný `IJSupportLinks` alebo ekvivalentný jeden zdroj pravdy.
+- Technické údaje pridané ku kontaktnej správe MUST byť používateľovi zobrazené pred odoslaním.
+- Odkazy SHOULD NOT byť duplikované v jednotlivých obrazovkách; cieľom je spoločný `IJSupportLinks` alebo ekvivalentný jeden zdroj pravdy.

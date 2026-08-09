@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.1.0  
+**Verzia:** 1.2.0  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 7. augusta 2026  
+**Platnosť od:** 9. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -14,20 +14,24 @@ Tento štandard určuje spoločné produktové, UX, technické, obsahové, bezpe
 1. **IbaJuraj Application Standard** – spoločné pravidlá pre všetky aplikácie.
 2. **Product Standard** – pravidlá konkrétnej aplikácie alebo domény.
 3. **Architecture Decision Record (ADR)** – zdôvodnená technická výnimka alebo rozhodnutie.
-4. **Build Scope** – konkrétny rozsah jedného buildu; nesmie meniť vyššie pravidlá bez schváleného návrhu.
+4. **Build Scope** – konkrétny rozsah jedného buildu; MUST rešpektovať vyššie pravidlá, ak ich nemení schválený návrh.
 
 Pri konflikte platí vyššia úroveň. Produktový štandard môže spoločné pravidlo rozšíriť, nie potichu obísť.
 
 ## 3. Záväznosť
 
 - **MUST** – povinné; porušenie blokuje release alebo vyžaduje schválenú výnimku.
+- **MUST NOT** – zakázané; porušenie blokuje release alebo vyžaduje schválenú výnimku.
 - **SHOULD** – odporúčané; odchýlka musí mať uvedený dôvod.
+- **SHOULD NOT** – neodporúčané; použitie musí mať uvedený dôvod.
 - **MAY** – voliteľné.
+
+Záväznosť pravidla určuje iba jedno z týchto veľkými písmenami zapísaných kľúčových slov. Slovenské modálne slovesá vo vysvetľujúcom texte nevytvárajú samostatnú úroveň záväznosti.
 
 ## 4. Spoločná identita
 
 - MUST používať značku **IbaJuraj** ako spoločnú autorskú a produktovú identitu.
-- MUST načítavať marketingovú verziu a build z autoritatívnych build nastavení alebo `Bundle`; nesmú byť ručne duplikované v používateľskom kóde.
+- MUST načítavať marketingovú verziu a build z autoritatívnych build nastavení alebo `Bundle`; hodnoty MUST NOT byť ručne duplikované v používateľskom kóde.
 - MUST používať jednotné verejné odkazy definované v `SUPPORT_AND_LINKS.md`.
 - SHOULD zobrazovať názov aplikácie, verziu, build, web, ochranu súkromia a podporu v časti O aplikácii.
 
@@ -68,26 +72,93 @@ Aplikácie môžu mať rozdielny počet tabov, navigáciu, dashboard a doménov�
 
 ### 6.3 Spoločné systémové nastavenia
 
-Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUSIA používať rovnaký význam a predvolené pomenovanie naprieč rodinou aplikácií. Produkt môže sekcie vynechať, ak danú funkciu nemá; štandard neurčuje rovnaký počet položiek ani rovnaké poradie pre všetky produkty.
+Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používať rovnaký význam a predvolené pomenovanie naprieč rodinou aplikácií. Produkt môže sekcie vynechať, ak danú funkciu nemá; štandard neurčuje rovnaký počet položiek ani rovnaké poradie pre všetky produkty.
+
+#### 6.3.1 Spoločný vstup do Nastavení
+
+- Nastavenia MUST byť dostupné cez tlačidlo so symbolom `gearshape.fill` vpravo hore na hlavnej obrazovke aplikácie.
+- Spodná navigácia MUST obsahovať iba hlavné pracovné časti produktu a MUST NOT obsahovať samostatný tab systémových Nastavení.
+- Produktová obrazovka typu **Moje** MAY zostať pre históriu, obľúbené položky, profil alebo doménový kontext, ale MUST NOT byť jediným kontajnerom systémových Nastavení.
+- Tlačidlo Nastavení MUST používať spoločný priemer, kruhový vizuálny kontajner, odsadenie od safe area, pressed state a accessibility label podľa `DESIGN_TOKENS.md`.
+- Nastavenia MUST byť samostatnou plnohodnotnou obrazovkou otvorenou bežnou push navigáciou. MUST používať šípku späť a systémový swipe-back; MUST NOT byť bežným modálom s tlačidlom **Zavrieť** alebo **Hotovo**.
+
+#### 6.3.2 Spoločný vizuálny systém Nastavení
+
+- Nastavenia MUST používať grouped-card rozloženie so spoločnými rozmermi, zaoblením, ikonovými dlaždicami, typografiou, section headers, chevronmi, stavovými hodnotami a hustotou podľa `DESIGN_TOKENS.md`.
+- Riadok s vnorenou obrazovkou MUST používať spoločný trailing chevron.
+- Krátka aktuálna hodnota SHOULD byť zobrazená vpravo, ak používateľovi pomáha pochopiť stav bez otvorenia detailu.
+- Jednoduchá voľba MUST NOT vytvárať zbytočnú medziobrazovku. Ak aplikácia ponúka vzhľad **Automaticky / Svetlý / Tmavý**, výber MUST byť priamo na hlavnej obrazovke Nastavení ako segmented control.
+- Zjednotenie vizuálu MUST NOT meniť produktový obsah Nastavení; aplikácia zobrazuje iba relevantné položky a sekcie.
+
+Odporúčané spoločné sekcie sú:
+
+- **Aplikácia** – vzhľad a produktovo špecifické správanie,
+- **Zdieľanie** – ľudia, roly, členstvo a pozvánky,
+- **Údaje a zabezpečenie** – zámok, synchronizácia, záloha, export a ochrana údajov,
+- **Pomoc a informácie** – kontakt, návod, súkromie a informácie o aplikácii.
 
 Spoločné názvy a princípy:
 
-- **Vzhľad** – iba ak aplikácia ponúka voľbu Automaticky / Svetlý / Tmavý; jednoduchá voľba MÁ BYŤ dostupná bez zbytočnej medziobrazovky.
+- **Vzhľad** – iba ak aplikácia ponúka voľbu Automaticky / Svetlý / Tmavý; výber MUST byť dostupný priamo ako segmented control bez medziobrazovky.
+- **Upozornenia** – stav a cesta k systémovým alebo produktovým nastaveniam upozornení.
 - **Zabezpečenie** – biometria, PIN aplikácie a automatické uzamknutie, ak ich produkt podporuje.
 - **Synchronizácia cez iCloud** – stav a ovládanie osobnej synchronizácie, ak ju produkt podporuje.
 - **Ľudia a zdieľanie** – iba ak produkt podporuje zdieľanie alebo členstvo.
-- **Kontakt** – priamy vstup do kontaktnej obrazovky; nemá byť skrytý za zbytočnou medziobrazovkou.
+- **Zálohy** – vytvorenie, obnova a vysvetlenie rozsahu zálohy.
+- **Export údajov** – vytvorenie používateľskej prenosnej kópie, ak ju produkt podporuje.
+- **Ochrana súkromia** – priamy vstup do aktuálnych informácií o spracovaní údajov.
+- **Kontakt** – SHOULD viesť priamo do kontaktnej obrazovky a SHOULD NOT byť skrytý za zbytočnou medziobrazovkou.
 - **O aplikácii** – verzia, súkromie, štandard a právne/informačné údaje relevantné pre produkt.
 
-Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktívna**, **Povolené** alebo **Iba ja**, MUSÍ zostať čitateľná pri podporovaných veľkostiach textu a NESMIE sa lámať po jednotlivých písmenách.
+Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktívna**, **Povolené** alebo **Iba ja**, MUST zostať čitateľná pri podporovaných veľkostiach textu a MUST NOT sa lámať po jednotlivých písmenách.
 
 ### 6.4 Navigácia: push, modal a návrat
 
-- Bežná vnorená obrazovka v hierarchii MUSÍ používať návrat späť, nie tlačidlo `Hotovo`.
-- Na iOS MUSÍ bežná push navigácia zachovať systémové gesto potiahnutia z ľavého okraja späť, ak neexistuje zdokumentovaný technický alebo produktový dôvod.
+- Bežná vnorená obrazovka v hierarchii MUST používať návrat späť, nie tlačidlo `Hotovo`.
+- Na iOS MUST bežná push navigácia zachovať systémové gesto potiahnutia z ľavého okraja späť, ak neexistuje zdokumentovaný technický alebo produktový dôvod.
 - `Zrušiť`, `Uložiť`, `Vytvoriť`, `Prijať` alebo obdobné akcie patria formulárom a skutočným modálnym workflow.
-- `Hotovo` sa NESMIE používať ako náhrada navigácie späť.
-- Aplikácia MÁ minimalizovať navigačnú hĺbku a nevytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
+- `Hotovo` MUST NOT byť použité ako náhrada navigácie späť.
+- Aplikácia SHOULD minimalizovať navigačnú hĺbku a SHOULD NOT vytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
+
+### 6.5 Adaptívne rozloženie
+
+- Rozloženie MUST reagovať na reálne dostupný priestor, safe area, orientáciu, veľkosť textu a lokalizovaný obsah; MUST NOT sa rozhodovať podľa názvu konkrétneho modelu zariadenia.
+- Spoločné komponenty MUST používať minimálne rozmery a obsahovú výšku namiesto pevnej maximálnej výšky, ktorá môže orezať obsah.
+- Obsah MUST NOT byť zmenšený pod čitateľnú veľkosť iba preto, aby sa zachoval počet stĺpcov alebo pevný tvar obrazovky.
+- Viacstĺpcová mriežka MUST znížiť počet stĺpcov, ak dlaždice nedosiahnu minimálnu šírku alebo ak obsah pri Dynamic Type prestane byť čitateľný.
+- Dlaždice v jednom riadku MUST mať rovnakú šírku a spoločnú minimálnu výšku; jednotlivý riadok MAY zväčšiť výšku podľa najvyššieho obsahu.
+- Na veľkom displeji SHOULD obsah používať rozumnú maximálnu šírku alebo väčšie okraje namiesto nekontrolovaného rozťahovania.
+- Vlastná navigácia, plávajúca akcia, klávesnica ani safe area MUST NOT zakrývať posledný obsah alebo dôležitú akciu.
+
+### 6.6 Sémantické varianty dlaždíc a kariet
+
+Spoločná rodina komponentov rozlišuje minimálne tieto roly:
+
+- **Navigation Tile** – vstup do kategórie, situácie alebo hlavnej akcie,
+- **Entity Card** – náhľad konkrétneho dokumentu, vozidla, poistenia alebo iného objektu,
+- **Wallet Card** – vizuálny náhľad vernostnej, členskej alebo obdobnej karty,
+- **Feature Card** – dominantná odporúčaná, kritická alebo produktová akcia,
+- **List Row** – opakovateľný výsledok alebo položka zoznamu.
+
+- Komponenty s rovnakou sémantickou rolou SHOULD používať rovnaký veľkostný variant, odsadenie, zaoblenie, ikonový kontajner a typografickú hierarchiu.
+- Komponenty s rozdielnou rolou MUST NOT byť nútené do rovnakej výšky alebo pomeru strán iba kvôli vizuálnej uniformite.
+- Wallet Card MAY používať produktovo významný pomer strán, ale MUST používať spoločné pravidlá minimálnej čitateľnosti, dotykovej plochy, odsadenia a adaptácie.
+- Rovnaký variant MUST zostať vizuálne konzistentný v rámci jednej mriežky alebo sekcie.
+- Presné spoločné hodnoty MUST byť čítané z `DESIGN_TOKENS.md` alebo zodpovedajúcej implementácie IbaJuraj Foundation, nie opakovane zapisované v jednotlivých obrazovkách.
+
+### 6.7 Hierarchia informácií a vizuálna hustota
+
+Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
+
+1. rozpoznateľná identita,
+2. hlavný názov alebo stav,
+3. najdôležitejší sekundárny kontext,
+4. stavová alebo ďalšia akcia, ak je potrebná.
+
+- Dôležitý názov, stav alebo akcia MUST NOT byť skrytá iba na zachovanie kompaktnej výšky.
+- Technické identifikátory, úplné čísla, dlhé vysvetlenia a sekundárne metadata SHOULD zostať v detaile, ak nie sú potrebné na rozpoznanie položky.
+- Stav MUST NOT byť komunikovaný iba farbou.
+- Celá interaktívna dlaždica SHOULD byť jednou zrozumiteľnou dotykovou plochou; vnorené akcie musia mať samostatný význam a minimálnu dotykovú plochu.
 
 ## 7. Obsah a texty
 
@@ -97,10 +168,11 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - MUST kontrolovať prirodzenosť prekladu, nielen doslovnú správnosť.
 - MUST formátovať čísla, meny, dátumy a jednotky podľa lokality.
 - SHOULD uprednostniť krátke, konkrétne nadpisy pred marketingovými formuláciami.
+- Lokalizované App Store texty a screenshoty MUST prejsť kontrolou prirodzeného znenia, gramatiky, terminológie a lokálneho formátovania; automatický alebo doslovný preklad nie je postačujúci release dôkaz.
 
 ## 8. Stavový model obrazoviek
 
-Každá dátová obrazovka musí podľa potreby riešiť:
+Každá dátová obrazovka MUST podľa potreby riešiť:
 
 1. načítavanie,
 2. obsah,
@@ -112,6 +184,15 @@ Každá dátová obrazovka musí podľa potreby riešiť:
 
 Prázdna obrazovka bez vysvetlenia nie je platný stav.
 
+### 8.1 Spätná väzba, chyby a obnova
+
+- Po uložení, vymazaní, importe, exporte alebo inom významnom výsledku MUST aplikácia jednoznačne oznámiť, čo sa vykonalo.
+- Haptická odozva MAY dopĺňať vizuálne alebo hlasové potvrdenie, ale MUST NOT byť jediným nositeľom výsledku.
+- Používateľská chyba MUST vysvetliť, čo sa stalo, čo zostalo zachované a aký je ďalší krok; MUST NOT zobrazovať neupravený technický text frameworku alebo služby.
+- Opakovateľná operácia SHOULD ponúknuť akciu **Skúsiť znova**.
+- Zlyhanie jednej časti SHOULD NOT zablokovať použiteľný zvyšok aplikácie.
+- Ak je dostupný posledný overený bezpečný stav, aplikácia SHOULD umožniť jeho použitie namiesto prázdnej alebo nefunkčnej obrazovky.
+
 ## 9. Formuláre
 
 - MUST jasne označiť povinné údaje a dôvod, prečo sú potrebné.
@@ -122,8 +203,15 @@ Prázdna obrazovka bez vysvetlenia nie je platný stav.
 - SHOULD meniť polia podľa typu objektu namiesto jedného univerzálneho formulára s nerelevantnými položkami.
 
 - MUST umožniť pohodlné skrytie klávesnice bez nutnosti opustiť obrazovku.
-- IbaJuraj aplikácie SHOULD používať spoločný plávajúci ovládací prvok s ikonou klávesnice a šípkou nadol, ak je potrebné explicitné zatvorenie klávesnice; vlastné textové tlačidlo `Hotovo` nad klávesnicou sa nemá zavádzať bez produktového dôvodu.
+- IbaJuraj aplikácie SHOULD používať spoločný plávajúci ovládací prvok s ikonou klávesnice a šípkou nadol, ak je potrebné explicitné zatvorenie klávesnice; vlastné textové tlačidlo `Hotovo` nad klávesnicou SHOULD NOT byť zavedené bez produktového dôvodu.
 - Scrollovateľný obsah SHOULD podporovať prirodzené interaktívne schovanie klávesnice a ukončenie fokusu tam, kde je to bezpečné pre rozpracované údaje.
+
+### 9.1 Zachovanie rozpracovanej práce
+
+- Rozpracované údaje MUST NOT byť stratené náhodným gestom späť, zmenou tabu, krátkym prechodom do backgroundu alebo obnovením view.
+- Ak opustenie obrazovky zruší neuložené zmeny, aplikácia MUST používateľa upozorniť a pomenovať následok.
+- Zmena tabu SHOULD zachovať platný stav každej hlavnej sekcie, ak produktový workflow nevyžaduje reset.
+- Navigačný stav MAY byť obnovený po opätovnom spustení iba vtedy, keď cieľ stále existuje a jeho obnovenie je bezpečné.
 
 ## 10. Dáta, migrácie a kompatibilita
 
@@ -134,9 +222,45 @@ Prázdna obrazovka bez vysvetlenia nie je platný stav.
 - SHOULD poskytnúť obnovu alebo bezpečný fallback pri zlyhaní migrácie.
 - MUST pri importe validovať typ, veľkosť, schému a dôveryhodnosť súboru.
 
+### 10.1 Životný cyklus používateľských údajov
+
+Pre každý druh uložených údajov MUST byť určené:
+
+- kde sa ukladá,
+- či a ako sa synchronizuje,
+- či je súčasťou zálohy alebo exportu,
+- ako sa vymaže,
+- či vymazanie platí iba lokálne alebo na všetkých zariadeniach.
+
+- Synchronizácia, záloha a export MUST byť chápané ako rozdielne funkcie; jedna z nich MUST NOT byť bez vysvetlenia prezentovaná ako náhrada ostatných.
+- Deštruktívna operácia MUST pomenovať rozsah, dotknuté zariadenia a možnosť obnovy.
+- Obnova MUST validovať celý vstup pred zápisom a MUST NOT uložiť čiastočný neoverený stav.
+- Vypnutie synchronizácie alebo odhlásenie MUST používateľovi vysvetliť, ktoré údaje zostanú lokálne a ktoré prestanú byť dostupné.
+
+### 10.2 Dátum, čas a časové pásmo
+
+Ak aplikácia ukladá, zobrazuje alebo vypočítava doménové dátumy a časy:
+
+- Dátový model MUST rozlišovať kalendárny deň od presného časového okamihu.
+- Kalendárny termín MUST NOT zmeniť deň iba v dôsledku zmeny časového pásma.
+- Formát dátumu a času MUST rešpektovať lokalitu a používateľský kalendár, ak doména výslovne nevyžaduje inak.
+- Výpočty termínov MUST zohľadniť zmenu letného a zimného času, ak pracujú s presným časom.
+- Hranice stavov **dnes**, **zajtra**, **platné** a **po termíne** MUST byť definované jedným zdrojom pravdy a testované na prechode dňa.
+
+### 10.3 Vzdialený obsah a konfigurácia
+
+Ak aplikácia prijíma vzdialený obsahový alebo konfiguračný balík:
+
+- balík MUST mať stabilnú identitu, verziu schémy, verziu obsahu a údaj o kompatibilite,
+- integrita a podľa rizika autenticita balíka MUST byť overená pred použitím,
+- nový balík MUST byť aplikovaný atómovo a MUST NOT nahradiť platný stav čiastočným obsahom,
+- aplikácia SHOULD zachovať posledný overený kompatibilný balík pre offline alebo obnovovací stav,
+- nekompatibilný alebo poškodený balík MUST byť odmietnutý bez straty posledného platného stavu,
+- používateľ SHOULD vedieť rozlíšiť aktuálny, zastaraný a neoverený obsah, ak to ovplyvňuje dôveryhodnosť výsledku.
+
 ## 11. Synchronizácia a zdieľanie
 
-Ak aplikácia synchronizuje alebo zdieľa údaje, musí rozlišovať:
+Ak aplikácia synchronizuje alebo zdieľa údaje, MUST rozlišovať:
 
 - lokálny stav,
 - čakajúce zmeny,
@@ -145,9 +269,27 @@ Ak aplikácia synchronizuje alebo zdieľa údaje, musí rozlišovať:
 - chybu,
 - offline stav.
 
-Používateľ má dostať zrozumiteľný stav, napríklad počet čakajúcich zmien alebo čas poslednej synchronizácie. Konflikty sa nesmú riešiť tichou stratou údajov.
+Používateľ SHOULD dostať zrozumiteľný stav, napríklad počet čakajúcich zmien alebo čas poslednej synchronizácie. Konflikty MUST NOT byť riešené tichou stratou údajov.
 
-## 12. Súkromie a bezpečnosť
+## 12. Upozornenia a systémové oprávnenia
+
+### 12.1 Upozornenia
+
+- Pred systémovou žiadosťou o upozornenia SHOULD aplikácia vysvetliť konkrétny prínos.
+- Upozornenie SHOULD viesť priamo na platný súvisiaci obsah alebo zrozumiteľný náhradný stav.
+- Po zmene alebo vymazaní zdrojového objektu MUST aplikácia zrušiť alebo preplánovať neaktuálne upozornenia.
+- Aplikácia MUST zabrániť neúmyselným duplicitným upozorneniam na tú istú udalosť.
+- Citlivý obsah SHOULD NOT byť zobrazovaný v texte upozornenia bez vedomého používateľského nastavenia.
+- Ak upozornenie nemožno naplánovať, aplikácia SHOULD používateľovi vysvetliť dôvod a možný ďalší krok.
+
+### 12.2 Systémové oprávnenia
+
+- Oprávnenie MUST byť vyžiadané až v kontexte funkcie, ktorá ho potrebuje.
+- Pred prvou systémovou žiadosťou SHOULD aplikácia zrozumiteľne vysvetliť prínos a rozsah oprávnenia.
+- Odmietnutie MUST NOT vytvoriť slepú obrazovku; aplikácia SHOULD ponúknuť použiteľnú alternatívu alebo cestu do systémových Nastavení.
+- Aplikácia MUST NOT žiadať oprávnenie, ktoré aktuálny workflow nepotrebuje.
+
+## 13. Súkromie a bezpečnosť
 
 - MUST zdokumentovať, aké údaje nová funkcia spracúva, prečo, kde sa ukladajú a ako sa vymažú.
 - MUST aktualizovať Privacy Manifest a zásady ochrany súkromia, ak sa zmení spracovanie údajov.
@@ -158,13 +300,13 @@ Používateľ má dostať zrozumiteľný stav, napríklad počet čakajúcich zm
 - MUST zakázať zdieľanie citlivých údajov cez verejnú Telegram skupinu.
 
 - Ak aplikácia ponúka lokálny zámok, biometria, voliteľný PIN aplikácie a automatické uzamknutie SHOULD tvoriť jeden konzistentný bezpečnostný model.
-- Bezpečnostné nastavenia lokálneho zámku SHOULD zostať lokálne v zariadení a nemajú sa synchronizovať ani exportovať spolu s bežnými používateľskými dátami, ak na to nie je výslovný bezpečný návrh.
-- Interná navigácia, prepnutie tabu, otvorenie/zatvorenie interného sheetu ani návrat z vnoreného detailu NESMÚ samy osebe spustiť nové biometrické overenie.
-- Čas automatického uzamknutia sa má vyhodnocovať podľa skutočného životného cyklu aplikácie a odchodu do neaktívneho/background stavu, nie podľa opakovaného `onAppear` jednotlivých obrazoviek.
+- Bezpečnostné nastavenia lokálneho zámku SHOULD zostať lokálne v zariadení a SHOULD NOT sa synchronizovať ani exportovať spolu s bežnými používateľskými dátami, ak na to nie je výslovný bezpečný návrh.
+- Interná navigácia, prepnutie tabu, otvorenie/zatvorenie interného sheetu ani návrat z vnoreného detailu MUST NOT samy osebe spustiť nové biometrické overenie.
+- Čas automatického uzamknutia SHOULD byť vyhodnocovaný podľa skutočného životného cyklu aplikácie a odchodu do neaktívneho/background stavu, nie podľa opakovaného `onAppear` jednotlivých obrazoviek.
 
-## 13. Prístupnosť
+## 14. Prístupnosť
 
-Release kontrola musí overiť:
+Release kontrola MUST overiť:
 
 - VoiceOver názvy, hodnoty a poradie,
 - Dynamic Type,
@@ -174,7 +316,7 @@ Release kontrola musí overiť:
 - význam nezávislý iba od farby,
 - ovládanie bez presných gest, ak existuje dostupnejšia alternatíva.
 
-## 14. Vyhľadávanie
+## 15. Vyhľadávanie
 
 Ak aplikácia obsahuje vyhľadávanie:
 
@@ -184,7 +326,7 @@ Ak aplikácia obsahuje vyhľadávanie:
 - SHOULD vysvetliť, prečo výsledok zodpovedá dotazu.
 - MUST testovať výkon nad realistickým objemom údajov.
 
-## 15. Spoločné komponenty
+## 16. Spoločné komponenty
 
 Komponent sa môže zaradiť do IbaJuraj Foundation, keď:
 
@@ -194,9 +336,9 @@ Komponent sa môže zaradiť do IbaJuraj Foundation, keď:
 4. je stabilný aspoň počas dvoch buildov,
 5. zdieľanie zníži duplicitu bez obmedzenia produktu.
 
-Kandidáti: identita aplikácie, odkazy podpory, dizajnové tokeny, settings riadky, stavové bannery, prázdne a chybové stavy, version footer.
+Kandidáti: identita aplikácie, odkazy podpory, dizajnové tokeny, settings riadky, Navigation Tile, Entity Card, Feature Card, stavové bannery, prázdne a chybové stavy a version footer.
 
-## 16. Testovanie a definícia hotovej funkcie
+## 17. Testovanie a definícia hotovej funkcie
 
 Funkcia je hotová až keď má:
 
@@ -209,11 +351,20 @@ Funkcia je hotová až keď má:
 - privacy kontrolu,
 - aktualizovanú dokumentáciu a changelog.
 
-Historické build testy nemajú byť trvalo naviazané na konkrétne číslo buildu, ak v skutočnosti testujú funkciu.
+Historické build testy SHOULD NOT byť trvalo naviazané na konkrétne číslo buildu, ak v skutočnosti testujú funkciu.
 
-## 17. Release
+### 17.1 Výkon a stabilita
 
-Pred vydaním musí byť overené:
+- Dlhá operácia MUST NOT blokovať hlavné používateľské rozhranie bez viditeľného stavu priebehu.
+- Scrollovanie realistického množstva údajov SHOULD zostať plynulé na najmenšom podporovanom zariadení.
+- Import, synchronizácia, spracovanie príloh a vzdialený obsah SHOULD byť vykonávané mimo hlavného vlákna, ak by mohli spôsobiť viditeľné blokovanie.
+- Zrušiteľná dlhá operácia SHOULD ponúknuť bezpečné zrušenie.
+- View lifecycle MUST NOT bez dôvodu opakovane spúšťať drahé načítanie, zápis alebo autentifikáciu.
+- Release audit MUST overiť pamäť a stabilitu pri realistických prílohách, obrázkoch alebo dátových balíkoch, ak ich produkt používa.
+
+## 18. Release
+
+Pred vydaním MUST byť overené:
 
 - zhoda verzie a buildu vo všetkých metadátach,
 - čistý build a testy,
@@ -230,7 +381,37 @@ Pred vydaním musí byť overené:
 - pri lokálnom zámku kontrola, že bežná interná navigácia nespúšťa opakovanú biometriu,
 - kontrola, že pravé stavové hodnoty v Nastaveniach nie sú orezané ani nevhodne zalomené.
 
-## 18. Živý štandard a návrhy zmien
+### 18.1 Spoločná testovacia matica
+
+Každé vydanie MUST pokryť reprezentatívne kombinácie:
+
+- kompaktný iPhone, štandardný iPhone a veľký iPhone,
+- orientáciu na výšku a, ak ju aplikácia podporuje, orientáciu na šírku,
+- svetlý a tmavý vzhľad,
+- bežnú a accessibility veľkosť Dynamic Type,
+- všetky podporované lokalizácie so zameraním na najdlhšie texty,
+- online, offline, chybový a obnovovací stav, ak aplikácia používa sieť alebo synchronizáciu,
+- čistú inštaláciu a aktualizáciu z aktuálnej verejnej App Store verzie.
+
+Ak aplikácia deklaruje podporu iPadu, Macu alebo inej device family, release matica MUST pokryť aj jej reprezentatívnu veľkosť a vstupné metódy.
+
+Nie je potrebné fyzicky testovať každý model zariadenia, ale zvolená matica MUST pokryť hlavné veľkostné triedy a rizikové kombinácie. Výsledok manuálneho auditu MUST byť zaznamenaný v release dokumentácii.
+
+## 19. Model adopcie
+
+Každá aplikácia MUST evidovať jednu z úrovní:
+
+- **Level 0 – Declared:** existuje `APP_STANDARD_ADOPTION.md` a pripnutá verzia štandardu,
+- **Level 1 – Identity:** spoločná identita, runtime verzia, podpora a verejné odkazy,
+- **Level 2 – Shared UX:** spoločné Nastavenia, navigačné správanie, tokeny a nové alebo migrované komponenty,
+- **Level 3 – Quality Gates:** automatické kontroly metadát, lokalizácie, prístupnosti, integrity a release dokumentácie,
+- **Level 4 – Full Adoption:** v spoločnom rozsahu nezostáva nezdokumentovaná výnimka.
+
+- Nová obrazovka MUST používať aktuálny prijatý štandard okamžite.
+- Existujúca obrazovka MAY byť migrovaná v plánovanom builde, ak je odchýlka evidovaná a neporušuje bezpečnosť alebo integritu údajov.
+- Aplikácia MUST v adopčnom súbore uviesť úroveň, posledný audit, aktívne výnimky a zdroj release dôkazov.
+
+## 20. Živý štandard a návrhy zmien
 
 Štandard sa môže priebežne rozširovať, ale nie nekontrolovane.
 
@@ -239,11 +420,11 @@ Pred vydaním musí byť overené:
 3. Návrh uvedie dôvod, dotknuté aplikácie, migráciu a záväznosť.
 4. Po schválení sa aktualizuje štandard, changelog a podľa možnosti automatická kontrola.
 
-Automatický nástroj nesmie bez schválenia meniť povinné pravidlá.
+Automatický nástroj MUST NOT bez schválenia meniť povinné pravidlá.
 
-## 19. Výnimky
+## 21. Výnimky
 
-Každá výnimka musí uviesť:
+Každá výnimka MUST uviesť:
 
 - pravidlo,
 - dotknutú aplikáciu,
@@ -254,11 +435,11 @@ Každá výnimka musí uviesť:
 
 Výnimka sa eviduje v produktovom súbore `APP_STANDARD_ADOPTION.md` alebo ADR.
 
-## 20. Produktové doplnky
+## 22. Produktové doplnky
 
 - **Strážca Termínov:** Administrative Detail Framework, Agenda ako autoritatívny systém, Progressive Completion, Action over Information, No Dead Ends.
 - **Lex Drive:** Trust before Intelligence, Situation before Law, Answer before Citation, overiteľnosť právneho zdroja, účinnosť právneho stavu a auditovateľnosť.
 - **Kalkulačka 2v1:** kalkulačné workflow, hlasový vstup a doménové formátovanie výsledkov zostávajú produktovo špecifické.
-- **Peňaženka Kariet:** rýchly prístup ku kartám, prezentácia čiarových/2D kódov a zdieľané peňaženky zostávajú produktovo špecifické.
+- **Peňaženka Kariet:** rýchly prístup ku kartám, pomer strán Wallet Card, prezentácia čiarových/2D kódov a zdieľané peňaženky zostávajú produktovo špecifické. Predvolený domovský variant MAY používať adaptívnu mriežku najviac štyroch pripnutých kariet; pripnuté karty SHOULD NOT byť duplicitne zobrazované medzi poslednými použitými.
 
-Tieto doplnky zostávajú produktovo špecifické a nesmú byť mechanicky prenášané medzi aplikáciami. Spoločné systémové vzory sa do tohto štandardu zaraďujú až po overení rovnakej potreby vo viacerých produktoch.
+Tieto doplnky MUST zostať produktovo špecifické a MUST NOT byť mechanicky prenášané medzi aplikáciami. Spoločné systémové vzory MAY byť do tohto štandardu zaradené až po overení rovnakej potreby vo viacerých produktoch.
