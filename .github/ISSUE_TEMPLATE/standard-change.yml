@@ -1,0 +1,43 @@
+name: Návrh zmeny štandardu
+description: Navrhnite spoločné pravidlo alebo opravu IbaJuraj Application Standardu.
+title: "[IJAS] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Návrh musí vysvetliť spoločnú potrebu, dopad na aplikácie a migračný vplyv.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problém
+      description: Aký opakovaný problém alebo spoločnú potrebu návrh rieši?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Dôkazy a dotknuté aplikácie
+      description: Uveďte aplikácie, buildy alebo konkrétne príklady.
+    validations:
+      required: true
+  - type: textarea
+    id: rule
+    attributes:
+      label: Navrhované pravidlo
+      description: Uveďte presné znenie a záväznosť MUST, SHOULD alebo MAY.
+    validations:
+      required: true
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migrácia, kompatibilita a riziká
+      description: Aké zmeny budú potrebné a aké riziká návrh prináša?
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Automatická a manuálna kontrola
+      description: Ako sa dá pravidlo overiť?
+    validations:
+      required: true
