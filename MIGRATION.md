@@ -1,5 +1,38 @@
 # Migrácia IbaJuraj Application Standard
 
+## 1.2.0 → 1.3.0
+
+Verzia 1.3.0 je spätne kompatibilná minor aktualizácia. Nemení používateľské dátové modely. Spresňuje spoločnú hlavičku, navigáciu Nastavení, Vzhľad, Kontakt, O aplikácii, responzívne texty, privacy release gate a merateľnú adopciu.
+
+Aplikácia pri adopcii vykoná tento audit:
+
+1. ponechá vstup do Nastavení vpravo hore na hlavnej úvodnej obrazovke; nemusí ho pridávať do každého tabu,
+2. použije `header.action.*` tokeny alebo ponechá spätne kompatibilný 48 pt variant z 1.2.0,
+3. ponechá najviac dve kruhové akcie na jednej strane hlavičky a gear ako pravú krajnú akciu,
+4. zobrazí **Automaticky / Svetlý / Tmavý** priamo v root Nastavení, ak aplikácia voľbu vzhľadu podporuje,
+5. otvorí bežné vnorené Nastavenia push navigáciou; sheet ponechá iba pre transakčný workflow,
+6. overí rovnaký návrat systémovou šípkou aj swipe-back gestom vrátane neuložených zmien,
+7. presunie Kontakt a O aplikácii do poslednej sekcie **Pomoc a informácie**, ak sú dostupné,
+8. použije kompaktnú kontaktnú obrazovku s formulárom, Telegramom a upozornením na citlivé údaje,
+9. overí kontaktnú URL od aplikácie po predvyplnený formulár na webe,
+10. odstráni `minimumScaleFactor` zo settings názvov a trailing hodnôt; pri nedostatku priestoru použije zalomenie alebo vertikálny variant,
+11. odstráni rozhodovanie layoutu podľa `UIScreen.main.bounds` alebo modelu zariadenia,
+12. centralizuje runtime verziu, build, tag štandardu a úroveň adopcie,
+13. použije presný názov adopcie, napríklad `Level 2 – Shared UX`,
+14. skontroluje Privacy Manifest každého app, widget a extension targetu vrátane required-reason API,
+15. uloží automatické a manuálne release dôkazy podľa `TEST_MATRIX.md` a `RELEASE_CHECKLIST.md`.
+
+Produktové migračné body:
+
+- **Kalkulačka 2v1:** nevydaný draft 1.3.0 nesmie byť označený ako aktívny; lokálny token register sa musí zlúčiť s úplným centrálnym registrom, nie ho nahradiť.
+- **Lex Drive:** ponechať priamy segmented Vzhľad; odstrániť duplicitnú všeobecnú voľbu vzhľadu z produktovej obrazovky výsledkov a trailing hodnoty nezmenšovať.
+- **Strážca Termínov:** migrovať bežný settings strom zo sheet/full-screen cover na push navigáciu a doplniť required-reason API deklarácie.
+- **Peňaženka Kariet:** nahradiť `UIScreen`-based klasifikáciu kontajnerovým layoutom, zjednotiť settings komponenty a doplniť Privacy Manifest.
+
+Dočasný 48 pt kruh Nastavení z 1.2.0 zostáva platný. Nové implementácie SHOULD používať preferovaný 42 pt vizuál v povolenom rozsahu 42–48 pt a minimálnu 44 × 44 pt hit area. Presná nekompatibilná náhrada starého tokenu sa odkladá na budúcu major verziu.
+
+---
+
 ## 1.1.0 → 1.2.0
 
 Verzia 1.2.0 je spätne kompatibilná minor aktualizácia. Nevyžaduje migráciu používateľských dát ani zmenu produktových doménových modelov. Aplikácia však môže odstrániť tab Nastavení a nahradiť ho spoločným vstupom vpravo hore; hlavné pracovné taby zostávajú produktové.

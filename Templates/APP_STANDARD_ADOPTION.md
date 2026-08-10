@@ -3,8 +3,8 @@
 **Application:**  
 **Application version:**  
 **Build:**  
-**Adopted standard:** 1.2.0  
-**Standard tag:** standard-v1.2.0  
+**Adopted standard:** 1.3.0  
+**Standard tag:** standard-v1.3.0  
 **Adoption status:** active  
 **Adoption level:** Level 0 – Declared  
 **Foundation version:** not adopted  
@@ -14,7 +14,7 @@
 ## Autoritatívny zdroj
 
 - Repository: https://github.com/IbaJuraj/ibajuraj-application-standard
-- Adopted tag: standard-v1.2.0
+- Adopted tag: standard-v1.3.0
 
 ## Stav adopcie
 
@@ -43,7 +43,12 @@ Uveďte odkaz na výnimku alebo napíšte `Žiadne`.
 - [ ] adaptívne rozloženie a Dynamic Type,
 - [ ] spoločné dizajnové tokeny a sémantické varianty komponentov,
 - [ ] Nastavenia cez spoločné `gearshape.fill` vpravo hore,
+- [ ] najviac dve header akcie na jednej strane a gear ako pravá krajná akcia,
 - [ ] grouped-card Settings vizuál a priamy segmented prepínač Vzhľadu,
+- [ ] push navigácia, systémová šípka a swipe-back pre bežné vnorené obrazovky,
+- [ ] kontaktný formulár a Telegram vrátane funkčného URL predvyplnenia,
+- [ ] runtime verzia, build, tag a úroveň adopcie z jedného zdroja,
+- [ ] Privacy Manifest každého distribuovaného targetu,
 - [ ] testy a release audit.
 
 ## Manuálne release brány
@@ -55,4 +60,6 @@ Uveďte odkaz na výnimku alebo napíšte `Žiadne`.
 - dlhšie podporované lokalizácie,
 - online, offline, chybový a obnovovací stav podľa funkcií aplikácie,
 - migrácia z verejnej App Store verzie,
+- vyplnená matica podľa `TEST_MATRIX.md`,
+- uzavretý checklist podľa `RELEASE_CHECKLIST.md`,
 - ďalšie produktové kontroly.

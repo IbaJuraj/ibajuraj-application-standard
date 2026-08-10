@@ -11,6 +11,10 @@
     "releasedAt",
     "minimumSupportedVersion",
     "breakingChange",
+    "normativeKeywords",
+    "adoptionLevels",
+    "contracts",
+    "documents",
     "source"
   ],
   "properties": {
@@ -41,6 +45,110 @@
     },
     "breakingChange": {
       "type": "boolean"
+    },
+    "normativeKeywords": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "MUST",
+          "MUST NOT",
+          "SHOULD",
+          "SHOULD NOT",
+          "MAY"
+        ]
+      }
+    },
+    "adoptionLevels": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "level",
+          "id",
+          "name"
+        ],
+        "properties": {
+          "level": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "name": {
+            "type": "string",
+            "pattern": "^Level [0-4] – .+$"
+          }
+        }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "settingsEntry",
+        "appearance",
+        "nestedNavigation",
+        "contact",
+        "layout",
+        "privacy"
+      ],
+      "properties": {
+        "settingsEntry": {
+          "const": "home-top-trailing"
+        },
+        "appearance": {
+          "const": "root-segmented-system-light-dark"
+        },
+        "nestedNavigation": {
+          "const": "native-push-back-button-and-edge-swipe"
+        },
+        "contact": {
+          "const": "form-and-telegram"
+        },
+        "layout": {
+          "const": "available-container-space"
+        },
+        "privacy": {
+          "const": "manifest-per-distributed-target"
+        }
+      }
+    },
+    "documents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standard",
+        "tokens",
+        "migration",
+        "testMatrix",
+        "releaseChecklist",
+        "referencePatterns"
+      ],
+      "properties": {
+        "standard": {
+          "const": "IBAJURAJ_APPLICATION_STANDARD.md"
+        },
+        "tokens": {
+          "const": "DESIGN_TOKENS.md"
+        },
+        "migration": {
+          "const": "MIGRATION.md"
+        },
+        "testMatrix": {
+          "const": "TEST_MATRIX.md"
+        },
+        "releaseChecklist": {
+          "const": "RELEASE_CHECKLIST.md"
+        },
+        "referencePatterns": {
+          "const": "REFERENCE_PATTERNS.md"
+        }
+      }
     },
     "source": {
       "type": "object",

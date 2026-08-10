@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.2.0  
+**Verzia:** 1.3.0  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 9. augusta 2026  
+**Platnosť od:** 10. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -77,25 +77,37 @@ Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používa
 #### 6.3.1 Spoločný vstup do Nastavení
 
 - Nastavenia MUST byť dostupné cez tlačidlo so symbolom `gearshape.fill` vpravo hore na hlavnej obrazovke aplikácie.
+- Hlavná obrazovka je predvolený vstupný root produktu. Tlačidlo Nastavení MAY byť dostupné aj na ďalších primárnych rootoch, ale tento štandard to nevyžaduje.
 - Spodná navigácia MUST obsahovať iba hlavné pracovné časti produktu a MUST NOT obsahovať samostatný tab systémových Nastavení.
 - Produktová obrazovka typu **Moje** MAY zostať pre históriu, obľúbené položky, profil alebo doménový kontext, ale MUST NOT byť jediným kontajnerom systémových Nastavení.
-- Tlačidlo Nastavení MUST používať spoločný priemer, kruhový vizuálny kontajner, odsadenie od safe area, pressed state a accessibility label podľa `DESIGN_TOKENS.md`.
+- Tlačidlo Nastavení MUST používať spoločný vizuálny rozsah, kruhový kontajner, odsadenie od safe area, pressed state a accessibility label podľa `DESIGN_TOKENS.md`.
 - Nastavenia MUST byť samostatnou plnohodnotnou obrazovkou otvorenou bežnou push navigáciou. MUST používať šípku späť a systémový swipe-back; MUST NOT byť bežným modálom s tlačidlom **Zavrieť** alebo **Hotovo**.
 
-#### 6.3.2 Spoločný vizuálny systém Nastavení
+#### 6.3.2 Spoločná hlavička a akcie
+
+- Akcia Nastavení MUST byť pravou krajnou akciou hlavičky hlavnej obrazovky.
+- Jedna strana hlavičky SHOULD obsahovať najviac dve samostatné kruhové akcie; ďalšie sekundárne akcie SHOULD byť zlúčené do menu alebo presunuté do obsahu.
+- Vizuálny kruh a dotyková plocha MUST používať `header.action.*` tokeny. Vizuálny kruh MAY byť menší než dotyková plocha.
+- Názov obrazovky alebo aplikácie MUST zostať čitateľný a MUST sa neprekrývať s akciami ani pri dlhšej lokalizácii a Dynamic Type.
+- Hlavička MUST používať sémantický surface a dostatočný kontrast; produktový akcent MAY zvýrazniť stav, ale SHOULD NOT meniť systémovú akciu na dominantné CTA.
+- Animovaný pressed state MUST rešpektovať Reduce Motion.
+
+#### 6.3.3 Spoločný vizuálny systém Nastavení
 
 - Nastavenia MUST používať grouped-card rozloženie so spoločnými rozmermi, zaoblením, ikonovými dlaždicami, typografiou, section headers, chevronmi, stavovými hodnotami a hustotou podľa `DESIGN_TOKENS.md`.
 - Riadok s vnorenou obrazovkou MUST používať spoločný trailing chevron.
 - Krátka aktuálna hodnota SHOULD byť zobrazená vpravo, ak používateľovi pomáha pochopiť stav bez otvorenia detailu.
 - Jednoduchá voľba MUST NOT vytvárať zbytočnú medziobrazovku. Ak aplikácia ponúka vzhľad **Automaticky / Svetlý / Tmavý**, výber MUST byť priamo na hlavnej obrazovke Nastavení ako segmented control.
 - Zjednotenie vizuálu MUST NOT meniť produktový obsah Nastavení; aplikácia zobrazuje iba relevantné položky a sekcie.
+- Root Nastavení MUST používať systémový navigation title **Nastavenia**. MAY používať veľký titulok; vnorené obrazovky SHOULD používať inline titulok so systémovou šípkou späť.
 
-Odporúčané spoločné sekcie sú:
+Ak sú príslušné funkcie dostupné, sekcie SHOULD používať toto poradie:
 
-- **Aplikácia** – vzhľad a produktovo špecifické správanie,
-- **Zdieľanie** – ľudia, roly, členstvo a pozvánky,
+- **Aplikácia** – vzhľad, jazyk, haptika a všeobecné správanie,
+- **Produktové nastavenia** – funkcie špecifické pre danú aplikáciu,
+- **Zdieľanie** – ľudia, roly, členstvo a pozvánky, ak ich produkt podporuje,
 - **Údaje a zabezpečenie** – zámok, synchronizácia, záloha, export a ochrana údajov,
-- **Pomoc a informácie** – kontakt, návod, súkromie a informácie o aplikácii.
+- **Pomoc a informácie** – kontakt, návod, súkromie a informácie o aplikácii; táto sekcia SHOULD byť posledná.
 
 Spoločné názvy a princípy:
 
@@ -110,19 +122,58 @@ Spoločné názvy a princípy:
 - **Kontakt** – SHOULD viesť priamo do kontaktnej obrazovky a SHOULD NOT byť skrytý za zbytočnou medziobrazovkou.
 - **O aplikácii** – verzia, súkromie, štandard a právne/informačné údaje relevantné pre produkt.
 
+- Položky **Kontakt** a **O aplikácii** SHOULD byť v poslednej sekcii a SHOULD zachovať rovnaké relatívne umiestnenie naprieč aplikáciami.
+
 Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktívna**, **Povolené** alebo **Iba ja**, MUST zostať čitateľná pri podporovaných veľkostiach textu a MUST NOT sa lámať po jednotlivých písmenách.
+
+- Text riadku a trailing hodnota MUST NOT používať `minimumScaleFactor` ako náhradu adaptívneho rozloženia.
+- Ak sa trailing hodnota nezmestí vedľa názvu, MUST sa bezpečne zalomiť alebo presunúť pod názov bez straty významu.
+- Chevron MUST byť použitý iba na riadku, ktorý otvára ďalšiu obrazovku alebo systémový cieľ; switch MUST byť použitý iba pre okamžitú binárnu voľbu.
+- Deštruktívna farba MUST byť vyhradená pre akciu, ktorá skutočne odstraňuje údaje alebo má iný závažný následok.
+
+#### 6.3.4 Vzhľad
+
+- Ak aplikácia ponúka voľbu vzhľadu, root Nastavení MUST zobraziť segmented control **Automaticky / Svetlý / Tmavý** bez ďalšej medziobrazovky.
+- Zmena MUST byť aplikovaná okamžite bez reštartu aplikácie.
+- Režim **Automaticky** MUST sledovať aktuálny systémový vzhľad.
+- Produktová farebná téma MAY byť samostatnou voľbou, ale jej názov a popis MUST jasne odlíšiť farebnú tému od svetlého alebo tmavého vzhľadu.
+- Vybraný segment MUST mať nefarený nositeľ stavu a dostatočný kontrast vo všetkých podporovaných témach.
+
+#### 6.3.5 Kontakt
+
+- Obrazovka Kontakt MUST byť bežnou push obrazovkou a MUST byť dostupná priamo z časti **Pomoc a informácie**.
+- MUST obsahovať krátke vysvetlenie a jasný odkaz na kontaktný formulár.
+- SHOULD obsahovať samostatnú sekundárnu možnosť **Telegram komunita**.
+- Hlavné kontaktné možnosti SHOULD byť najviac dve; ďalšie informácie SHOULD zostať sekundárne.
+- MUST obsahovať upozornenie, aby používateľ neposielal heslá, celé kópie dokladov ani iné citlivé údaje.
+- MAY obsahovať produktovo prispôsobenú sekciu **Čo môžete poslať**.
+- Odkaz na ochranu súkromia MAY byť kompaktný textový odkaz, ak je zásada dostupná aj vo formulári a v Nastaveniach.
+- Kontaktný odkaz SHOULD preniesť identifikátor aplikácie, verziu, build a typ podnetu podľa zmluvy v `SUPPORT_AND_LINKS.md`; technické údaje pridané k správe MUST byť používateľovi viditeľné.
+- Ak externý odkaz nemožno otvoriť, aplikácia MUST zobraziť zrozumiteľnú chybu a SHOULD ponúknuť alternatívny kontaktný kanál.
+
+#### 6.3.6 O aplikácii
+
+- Obrazovka O aplikácii SHOULD obsahovať názov aplikácie, marketingovú verziu, build a prijatú verziu IbaJuraj Application Standardu.
+- Marketingová verzia a build MUST byť načítané z autoritatívnych build nastavení alebo `Bundle`.
+- Verzia, tag a úroveň adopcie štandardu MUST pochádzať z jedného runtime zdroja metadát a MUST zodpovedať `APP_STANDARD_ADOPTION.md`.
+- Nevydaná alebo draft verzia MUST NOT byť prezentovaná ako aktívne prijatý štandard.
+- Obrazovka MAY ponúkať **Ohodnotiť aplikáciu** a **Zdieľať aplikáciu** a SHOULD poskytovať prístup k ochrane súkromia a relevantným právnym informáciám.
 
 ### 6.4 Navigácia: push, modal a návrat
 
-- Bežná vnorená obrazovka v hierarchii MUST používať návrat späť, nie tlačidlo `Hotovo`.
-- Na iOS MUST bežná push navigácia zachovať systémové gesto potiahnutia z ľavého okraja späť, ak neexistuje zdokumentovaný technický alebo produktový dôvod.
+- Bežná vnorená obrazovka v hierarchii MUST používať natívnu push navigáciu a systémovú šípku späť, nie tlačidlo `Hotovo`.
+- Na iOS MUST bežná push navigácia zachovať systémové gesto potiahnutia z ľavého okraja späť. Výnimka vyžaduje zdokumentovaný technický alebo bezpečnostný dôvod.
+- Šípka aj gesto MUST viesť na tú istú predchádzajúcu obrazovku a MUST zachovať jej platný stav a pozíciu posunu.
+- Ak návrat môže zahodiť neuložené zmeny, šípka aj gesto MUST vyvolať rovnaké uloženie alebo rovnaké potvrdenie následku.
+- Vlastná hlavička alebo vlastné tlačidlo späť MUST NOT neúmyselne deaktivovať systémové gesto.
 - `Zrušiť`, `Uložiť`, `Vytvoriť`, `Prijať` alebo obdobné akcie patria formulárom a skutočným modálnym workflow.
 - `Hotovo` MUST NOT byť použité ako náhrada navigácie späť.
+- Sheet alebo full-screen cover MUST byť použitý iba pre ohraničenú transakčnú úlohu, napríklad výber, editor, import, export alebo potvrdenie; MUST NOT nahrádzať bežný navigačný strom Nastavení.
 - Aplikácia SHOULD minimalizovať navigačnú hĺbku a SHOULD NOT vytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
 
 ### 6.5 Adaptívne rozloženie
 
-- Rozloženie MUST reagovať na reálne dostupný priestor, safe area, orientáciu, veľkosť textu a lokalizovaný obsah; MUST NOT sa rozhodovať podľa názvu konkrétneho modelu zariadenia.
+- Rozloženie MUST reagovať na reálne dostupný priestor, safe area, orientáciu, veľkosť textu a lokalizovaný obsah; MUST NOT sa rozhodovať podľa názvu konkrétneho modelu zariadenia ani podľa globálnej hodnoty `UIScreen.main.bounds`.
 - Spoločné komponenty MUST používať minimálne rozmery a obsahovú výšku namiesto pevnej maximálnej výšky, ktorá môže orezať obsah.
 - Obsah MUST NOT byť zmenšený pod čitateľnú veľkosť iba preto, aby sa zachoval počet stĺpcov alebo pevný tvar obrazovky.
 - Viacstĺpcová mriežka MUST znížiť počet stĺpcov, ak dlaždice nedosiahnu minimálnu šírku alebo ak obsah pri Dynamic Type prestane byť čitateľný.
@@ -139,10 +190,12 @@ Spoločná rodina komponentov rozlišuje minimálne tieto roly:
 - **Wallet Card** – vizuálny náhľad vernostnej, členskej alebo obdobnej karty,
 - **Feature Card** – dominantná odporúčaná, kritická alebo produktová akcia,
 - **List Row** – opakovateľný výsledok alebo položka zoznamu.
+- **Calculator Key** – doménový ovládací prvok kalkulačky s vlastnou maticou rozloženia.
 
 - Komponenty s rovnakou sémantickou rolou SHOULD používať rovnaký veľkostný variant, odsadenie, zaoblenie, ikonový kontajner a typografickú hierarchiu.
 - Komponenty s rozdielnou rolou MUST NOT byť nútené do rovnakej výšky alebo pomeru strán iba kvôli vizuálnej uniformite.
 - Wallet Card MAY používať produktovo významný pomer strán, ale MUST používať spoločné pravidlá minimálnej čitateľnosti, dotykovej plochy, odsadenia a adaptácie.
+- Calculator Key MAY používať produktové rozmery a typografiu, ale MUST zachovať minimálnu dotykovú plochu, accessibility label a použiteľný adaptívny variant.
 - Rovnaký variant MUST zostať vizuálne konzistentný v rámci jednej mriežky alebo sekcie.
 - Presné spoločné hodnoty MUST byť čítané z `DESIGN_TOKENS.md` alebo zodpovedajúcej implementácie IbaJuraj Foundation, nie opakovane zapisované v jednotlivých obrazovkách.
 
@@ -293,6 +346,8 @@ Používateľ SHOULD dostať zrozumiteľný stav, napríklad počet čakajúcich
 
 - MUST zdokumentovať, aké údaje nová funkcia spracúva, prečo, kde sa ukladajú a ako sa vymažú.
 - MUST aktualizovať Privacy Manifest a zásady ochrany súkromia, ak sa zmení spracovanie údajov.
+- Každý distribuovaný app, widget a extension target MUST obsahovať alebo zdediť správny Privacy Manifest a deklarovať iba required-reason API dôvody zodpovedajúce skutočnému používaniu.
+- Release kontrola MUST porovnať používané required-reason API s obsahom všetkých distribuovaných Privacy Manifestov; prázdny manifest bez potrebných deklarácií nie je splnením pravidla.
 - MUST neukladať tajné kľúče, tokeny ani osobné údaje do repozitára alebo logov.
 - MUST používať Keychain pre citlivé prihlasovacie údaje a tokeny.
 - MUST validovať a podľa potreby kryptograficky overovať vzdialené balíky.
@@ -338,6 +393,8 @@ Komponent sa môže zaradiť do IbaJuraj Foundation, keď:
 
 Kandidáti: identita aplikácie, odkazy podpory, dizajnové tokeny, settings riadky, Navigation Tile, Entity Card, Feature Card, stavové bannery, prázdne a chybové stavy a version footer.
 
+Pre 1.3.0 sú odporúčanými kandidátmi `IJTopActionButton`, `IJTopActionCluster`, `IJSettingsSection`, `IJSettingsRow`, `IJAppearanceControl`, `IJSupportLinks`, `IJStandardMetadata` a helper adaptívnej mriežky. Produktové karty a doménové workflow MUST zostať mimo spoločného balíka, pokiaľ nespĺňajú všetkých päť podmienok.
+
 ## 17. Testovanie a definícia hotovej funkcie
 
 Funkcia je hotová až keď má:
@@ -380,6 +437,10 @@ Pred vydaním MUST byť overené:
 - pri textových vstupoch kontrola schovania klávesnice vrátane podporovaných klávesníc tretích strán,
 - pri lokálnom zámku kontrola, že bežná interná navigácia nespúšťa opakovanú biometriu,
 - kontrola, že pravé stavové hodnoty v Nastaveniach nie sú orezané ani nevhodne zalomené.
+- kontrola kontaktného odkazu od aplikácie po predvyplnený webový formulár vrátane bezpečného fallbacku,
+- kontrola zhody runtime verzie štandardu, tagu a úrovne adopcie s `APP_STANDARD_ADOPTION.md`,
+- kontrola Privacy Manifestu pre každý distribuovaný app, widget a extension target,
+- kontrola, že bežné vnorené Nastavenia nepoužívajú sheet alebo full-screen cover namiesto push navigácie.
 
 ### 18.1 Spoločná testovacia matica
 
@@ -392,6 +453,8 @@ Každé vydanie MUST pokryť reprezentatívne kombinácie:
 - všetky podporované lokalizácie so zameraním na najdlhšie texty,
 - online, offline, chybový a obnovovací stav, ak aplikácia používa sieť alebo synchronizáciu,
 - čistú inštaláciu a aktualizáciu z aktuálnej verejnej App Store verzie.
+
+Pre layout audit SHOULD matica pokryť dostupnú šírku približne 320, 375 a 430 bodov. Presný model zariadenia nie je normatívny; rozhodujúca je dostupná šírka kontajnera.
 
 Ak aplikácia deklaruje podporu iPadu, Macu alebo inej device family, release matica MUST pokryť aj jej reprezentatívnu veľkosť a vstupné metódy.
 
@@ -407,9 +470,12 @@ Každá aplikácia MUST evidovať jednu z úrovní:
 - **Level 3 – Quality Gates:** automatické kontroly metadát, lokalizácie, prístupnosti, integrity a release dokumentácie,
 - **Level 4 – Full Adoption:** v spoločnom rozsahu nezostáva nezdokumentovaná výnimka.
 
+Názov úrovne MUST používať presne jednu z uvedených hodnôt. Vlastné názvy, napríklad `Level 2 – Enforced`, MUST NOT byť použité ako stav adopcie.
+
 - Nová obrazovka MUST používať aktuálny prijatý štandard okamžite.
 - Existujúca obrazovka MAY byť migrovaná v plánovanom builde, ak je odchýlka evidovaná a neporušuje bezpečnosť alebo integritu údajov.
 - Aplikácia MUST v adopčnom súbore uviesť úroveň, posledný audit, aktívne výnimky a zdroj release dôkazov.
+- Level 3 a Level 4 MUST mať uložené automatické aj manuálne release dôkazy; samotné vyhľadanie textových literálov v zdrojovom kóde nie je dostatočný dôkaz.
 
 ## 20. Živý štandard a návrhy zmien
 

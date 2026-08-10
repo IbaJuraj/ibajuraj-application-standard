@@ -21,6 +21,10 @@ Používa sa sémantické verzionovanie:
 5. aktualizácia štandardu a changelogu,
 6. audit a postupná adopcia aplikáciami.
 
+Pri MINOR alebo MAJOR vydaní SHOULD byť pred finálnym tagom vytvorený release candidate. Kandidát sa overí najmenej na všetkých aktívnych aplikáciách, ktorých sa nové spoločné pravidlo týka. Finálny tag MUST byť vytvorený až po úspešnej validácii release obsahu a zaznamenaní známych výnimiek.
+
+Nový numerický token v MINOR verzii MUST byť aditívny, `preferred`, `minimum` alebo spätne kompatibilný `range`. Nekompatibilná náhrada existujúceho povinného `exact` tokenu vyžaduje MAJOR verziu alebo zachovanie starého variantu počas migračného obdobia.
+
 ## Automatizácia
 
 Audit môže automaticky vytvoriť návrh, upozornenie alebo report. Nemôže bez schválenia zaviesť nové MUST pravidlo, zrušiť výnimku ani zmeniť produktovú architektúru.

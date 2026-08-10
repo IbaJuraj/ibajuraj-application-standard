@@ -1,5 +1,25 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.3.0 – 2026-08-10
+
+- spresnené, že spoločný vstup do Nastavení je povinný na hlavnej úvodnej obrazovke, nie v každom produktovom tabe,
+- zavedený spoločný kontrakt hlavičky s najviac dvomi akciami na jednej strane a Nastaveniami ako pravou krajnou akciou,
+- pridané nové `header.action.*` tokeny s preferovaným 42 pt vizuálom, povoleným rozsahom 42–48 pt a minimálnou 44 pt dotykovou plochou,
+- zachovaný spätne kompatibilný 48 pt settings entry variant z 1.2.0,
+- spresnená architektúra a odporúčané poradie sekcií Nastavení,
+- kodifikovaný priamy segmented Vzhľad podľa vzoru Lex Drive,
+- zavedený kompaktný spoločný vzor obrazovky Kontakt s formulárom, Telegramom a upozornením na citlivé údaje,
+- doplnená kontaktná URL zmluva pre bezpečné predvyplnenie webového formulára,
+- zjednotená obrazovka O aplikácii a jeden runtime zdroj verzie, buildu, tagu a adopcie,
+- sprísnená push navigácia, systémová šípka, swipe-back a rovnaké správanie pri neuložených zmenách,
+- zakázané používanie sheet/full-screen cover ako náhrady bežného settings stromu,
+- zakázané rozhodovanie layoutu podľa `UIScreen.main.bounds` a zmenšovanie settings textov cez `minimumScaleFactor`,
+- doplnený produktový variant Calculator Key bez násilného zjednotenia rozmerov rôznych rolí,
+- rozšírený privacy release gate pre každý app, widget a extension target,
+- sprísnené presné názvy úrovní adopcie a požiadavka uložených release dôkazov pre Level 3 a 4,
+- pridaná testovacia matica, release checklist, referenčné vzory a návrh IJAS-0005,
+- verzia 1.3.0 je spätne kompatibilná minor aktualizácia a nevyžaduje migráciu používateľských dát.
+
 ## 1.2.0 – 2026-08-09
 
 - zavedený spoločný vstup do Nastavení cez `gearshape.fill` vpravo hore a pravidlo, že spodná navigácia obsahuje iba hlavné pracovné časti,

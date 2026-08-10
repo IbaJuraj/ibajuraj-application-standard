@@ -2,7 +2,7 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.2.0**  
+Aktuálna verzia: **1.3.0**  
 Stav: **active**
 
 ## Účel repozitára
@@ -20,6 +20,9 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Apl
 - `GOVERNANCE.md` – verzionovanie a proces zmien,
 - `CHANGELOG.md` – história vydaných verzií,
 - `MIGRATION.md` – migračné pokyny medzi zdrojmi/verziami,
+- `TEST_MATRIX.md` – minimálna manuálna a runtime testovacia matica,
+- `RELEASE_CHECKLIST.md` – spoločné release brány,
+- `REFERENCE_PATTERNS.md` – referenčná informačná hierarchia spoločných obrazoviek,
 - `SUPPORT_AND_LINKS.md` – autoritatívny register verejných odkazov,
 - `Proposals/` – návrhy zmien štandardu,
 - `Templates/` – šablóny adopcie a výnimiek,
@@ -35,6 +38,8 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Apl
 6. Určí pravdivú úroveň adopcie Level 0 až Level 4.
 7. Vykoná automatický a manuálny release audit.
 
+Pre Level 3 a Level 4 musí aplikácia uložiť vyplnenú testovaciu maticu, release checklist a odkazy na dôkazy. Samotný úspech textového validačného skriptu nestačí.
+
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
 ## Verzie a tagy
@@ -48,10 +53,10 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.2.0
+standard-v1.3.0
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.2.0**.
+Aktuálny release: **IbaJuraj Application Standard 1.3.0**.
 
 ## Návrhy zmien
 

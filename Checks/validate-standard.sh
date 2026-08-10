@@ -31,6 +31,9 @@ required_files=(
   "GOVERNANCE.md"
   "CHANGELOG.md"
   "MIGRATION.md"
+  "TEST_MATRIX.md"
+  "RELEASE_CHECKLIST.md"
+  "REFERENCE_PATTERNS.md"
   "RELEASE_NOTES_${version}.md"
   "SHA256SUMS.txt"
   "SUPPORT_AND_LINKS.md"
@@ -63,9 +66,13 @@ def validate(value, rule, path="$"):
         "object": dict,
         "string": str,
         "boolean": bool,
+        "integer": int,
+        "array": list,
     }
     if expected_type in type_map and not isinstance(value, type_map[expected_type]):
         raise SystemExit(f"{path}: očakáva sa typ {expected_type}")
+    if expected_type == "integer" and isinstance(value, bool):
+        raise SystemExit(f"{path}: očakáva sa celé číslo")
     if "const" in rule and value != rule["const"]:
         raise SystemExit(f"{path}: hodnota sa nezhoduje s const")
     if "enum" in rule and value not in rule["enum"]:
@@ -94,6 +101,17 @@ def validate(value, rule, path="$"):
         for key, child in properties.items():
             if key in value:
                 validate(value[key], child, f"{path}.{key}")
+    if isinstance(value, list):
+        if len(value) < rule.get("minItems", 0):
+            raise SystemExit(f"{path}: pole má menej položiek než minItems")
+        if rule.get("uniqueItems"):
+            encoded = [json.dumps(item, sort_keys=True, ensure_ascii=False) for item in value]
+            if len(encoded) != len(set(encoded)):
+                raise SystemExit(f"{path}: položky poľa nie sú jedinečné")
+        item_rule = rule.get("items")
+        if item_rule:
+            for index, item in enumerate(value):
+                validate(item, item_rule, f"{path}[{index}]")
 
 validate(data, schema)
 
@@ -101,6 +119,25 @@ if data["version"] != version:
     raise SystemExit("standard.json version sa nezhoduje so STANDARD_VERSION")
 if data["source"]["tag"] != f"standard-v{version}":
     raise SystemExit("Tag v standard.json sa nezhoduje s verziou")
+
+expected_keywords = ["MUST", "MUST NOT", "SHOULD", "SHOULD NOT", "MAY"]
+if data["normativeKeywords"] != expected_keywords:
+    raise SystemExit("standard.json nemá presný zoznam normatívnych kľúčových slov")
+
+expected_levels = [
+    (0, "declared", "Level 0 – Declared"),
+    (1, "identity", "Level 1 – Identity"),
+    (2, "shared-ux", "Level 2 – Shared UX"),
+    (3, "quality-gates", "Level 3 – Quality Gates"),
+    (4, "full-adoption", "Level 4 – Full Adoption"),
+]
+actual_levels = [(item["level"], item["id"], item["name"]) for item in data["adoptionLevels"]]
+if actual_levels != expected_levels:
+    raise SystemExit("standard.json nemá presný a usporiadaný zoznam úrovní adopcie")
+
+for label, filename in data["documents"].items():
+    if not Path(filename).is_file():
+        raise SystemExit(f"standard.json documents.{label} odkazuje na chýbajúci súbor {filename}")
 
 checks = {
     "IBAJURAJ_APPLICATION_STANDARD.md": rf"\*\*Verzia:\*\*\s*{re.escape(version)}\b",
@@ -122,12 +159,43 @@ if adoption.count(f"standard-v{version}") < 2:
     raise SystemExit("Adopčná šablóna nemá aktuálny tag na všetkých miestach")
 if not re.search(r"\*\*Adoption level:\*\*\s*Level [0-4]\b", adoption):
     raise SystemExit("Adopčná šablóna nemá platnú úroveň adopcie")
+if "Level 2 – Enforced" in adoption:
+    raise SystemExit("Adopčná šablóna obsahuje neplatný vlastný názov úrovne")
 
 for filename in ("IBAJURAJ_APPLICATION_STANDARD.md", "DESIGN_TOKENS.md", "SUPPORT_AND_LINKS.md"):
     normative_text = Path(filename).read_text(encoding="utf-8")
     legacy = re.findall(r"\b(?:MUSÍ|MUSIA|MÁ|NESMIE|NESMÚ)\b", normative_text)
     if legacy:
         raise SystemExit(f"{filename} obsahuje nejednotné normatívne kľúčové slová")
+
+contract_patterns = {
+    "IBAJURAJ_APPLICATION_STANDARD.md": [
+        r"gearshape\.fill.*vpravo hore na hlavnej obrazovke",
+        r"systémovú šípku späť",
+        r"gesto potiahnutia z ľavého okraja späť",
+        r"Automaticky / Svetlý / Tmavý",
+        r"Obrazovka Kontakt MUST byť bežnou push obrazovkou",
+        r"UIScreen\.main\.bounds",
+        r"minimumScaleFactor",
+        r"Privacy Manifest.*app.*widget.*extension target",
+    ],
+    "DESIGN_TOKENS.md": [
+        r"header\.action\.visualDiameter",
+        r"header\.action\.hitArea",
+        r"header\.action\.maximumPerSide",
+        r"settings\.group\.radius",
+        r"contact\.maximumPrimaryActions",
+    ],
+    "SUPPORT_AND_LINKS.md": [
+        r"\?app=<app-id>&type=<type>&subject=<subject>#support",
+        r"Web MUST validovať `app` a `type`",
+    ],
+}
+for filename, patterns in contract_patterns.items():
+    contract_text = Path(filename).read_text(encoding="utf-8")
+    for pattern in patterns:
+        if not re.search(pattern, contract_text, re.IGNORECASE | re.MULTILINE):
+            raise SystemExit(f"{filename} neobsahuje povinný kontrakt: {pattern}")
 PY
 pass "Verzie, JSON schéma, metadata a normatívny jazyk sú konzistentné"
 
