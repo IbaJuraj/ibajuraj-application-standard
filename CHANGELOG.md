@@ -1,5 +1,16 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.3.1 – 2026-08-11
+
+- spresnená ochrana navigačného titulku pred presvitajúcim alebo prekrývajúcim sa posúvaným obsahom,
+- zavedený grouped-card vzor pre tri a viac rovnocenných informačných riadkov,
+- odlíšená sémantika interného prechodu pomocou chevronu od externého odkazu pomocou `arrow.up.right.square`,
+- doplnený kompaktný adaptívny vzor dvojice súhrnných skratiek, ktorý sa pri nedostatku priestoru zloží pod seba,
+- spresnená typografická hierarchia vnorených informačných obrazoviek; obsahový nadpis nemá súperiť s navigačným titulkom,
+- doplnená povinnosť lokalizovať počty položiek podľa plurálových pravidiel podporovaného jazyka,
+- rozšírené referenčné vzory, testovacia matica a release brány o nové vizuálne a navigačné kontroly,
+- verzia 1.3.1 je spätne kompatibilná patch aktualizácia a nevyžaduje migráciu používateľských dát.
+
 ## 1.3.0 – 2026-08-10
 
 - spresnené, že spoločný vstup do Nastavení je povinný na hlavnej úvodnej obrazovke, nie v každom produktovom tabe,

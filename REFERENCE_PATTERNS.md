@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.3.0 – referenčné vzory
+# IbaJuraj Standard 1.3.1 – referenčné vzory
 
 Referenčné vzory vysvetľujú spoločnú informačnú hierarchiu. Nie sú pixelovým screenshot testom a nemenia produktovú identitu aplikácie.
 
@@ -76,7 +76,7 @@ Neposielajte heslá, doklady ani citlivé údaje.
 
 ┌──────────────────────────────────────┐
 │ Verzia                       1.0 (1) │
-│ IbaJuraj Application Standard  1.3.0 │
+│ IbaJuraj Application Standard  1.3.1 │
 └──────────────────────────────────────┘
 ┌──────────────────────────────────────┐
 │ Ohodnotiť aplikáciu                  │
@@ -85,3 +85,33 @@ Neposielajte heslá, doklady ani citlivé údaje.
 ```
 
 Hodnoty sú runtime metadata, nie ručne duplikované reťazce.
+
+## Súhrnné skratky
+
+```text
+┌──────────────────┐ ┌──────────────────┐
+│ História         │ │ Obľúbené         │
+│ 30 položiek      │ │ 1 položka        │
+└──────────────────┘ └──────────────────┘
+```
+
+- Dve rovnocenné skratky SHOULD zostať vedľa seba, ak má každá aspoň minimálnu šírku.
+- Pri väčšom texte alebo nedostatku priestoru sa MUST adaptívne zložiť pod seba.
+- Počet MUST používať lokalizované plurálové pravidlá.
+
+## Informačná skupina a odkazy
+
+```text
+┌──────────────────────────────────────┐
+│ Informácia A                         │
+├──────────────────────────────────────┤
+│ Informácia B                         │
+├──────────────────────────────────────┤
+│ Interný detail                     › │
+│ Externý zdroj                      ↗ │
+└──────────────────────────────────────┘
+```
+
+- Tri a viac rovnocenných vysvetľujúcich riadkov SHOULD tvoriť jednu grouped kartu.
+- Interný push prechod používa chevron; externý odkaz používa `arrow.up.right.square`.
+- Navigačný surface MUST zabrániť presvitaniu posúvaného obsahu cez inline titulok.

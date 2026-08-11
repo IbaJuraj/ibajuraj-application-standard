@@ -1,8 +1,8 @@
 # IbaJuraj Design Tokens
 
-**Verzia:** 1.3.0  
+**Verzia:** 1.3.1  
 **Stav:** autoritatívny spoločný register  
-**Platnosť od:** 10. augusta 2026
+**Platnosť od:** 11. augusta 2026
 
 Tento register definuje spoločné počiatočné hodnoty. Aplikácia ich MUST používať prostredníctvom centrálneho theme alebo foundation rozhrania, nie opakovanými číslami v jednotlivých obrazovkách.
 
@@ -52,6 +52,7 @@ Ak tabuľka neuvádza inak, spacing a radius tokeny sú `exact`, minimálne rozm
 | Variant | Referenčná minimálna šírka | Referenčná minimálna výška | Poznámka |
 |---|---:|---:|---|
 | `navigationTile.compact` | 150 pt | 124 pt | Dvojstĺpcová kategória alebo rýchla akcia |
+| `summaryShortcut.compact` | 150 pt | 112 pt | Krátky názov a počet alebo stav; adaptívna dvojica |
 | `entityCard.standard` | podľa kontajnera | 96 pt | Výška rastie podľa stavu a kontextu |
 | `walletCard.compact` | 150 pt | podľa pomeru strán | Predvolene pomer približne 1,586 : 1 |
 | `featureCard` | podľa kontajnera | 144 pt | Obsahová výška, nie pevné maximum |
@@ -115,6 +116,10 @@ Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný varian
 | `settings.iconTile.radius` | 10 pt |
 | `settings.chevron.symbol` | `chevron.right` |
 | `settings.segmented.minimumHitHeight` | 44 pt |
+| `information.group.radius` | 20 pt |
+| `information.row.horizontalPadding` | 16 pt |
+| `information.row.verticalPadding` | 16 pt |
+| `information.row.dividerLeadingInset` | 64 pt |
 
 - Section header SHOULD používať lokalizovaný uppercase štýl `.footnote` so semibold váhou a sekundárnou farbou.
 - Názov riadku MUST používať Dynamic Type; predvolená rola je `.body` alebo `.headline` podľa hierarchie.
@@ -122,6 +127,18 @@ Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný varian
 - Názov ani trailing hodnota MUST NOT používať `minimumScaleFactor` ako náhradu responzívneho rozloženia.
 - Ikonová dlaždica MAY používať produktový alebo sémantický tint, ale MUST zachovať spoločný rozmer, radius a kontrast.
 - Systémový segmented control SHOULD byť použitý pre priamu voľbu **Automaticky / Svetlý / Tmavý**; MUST NOT byť zmenšený pod použiteľnú dotykovú plochu.
+- Tri alebo viac neinteraktívnych vysvetľujúcich riadkov rovnakej roly SHOULD používať jeden `information.group` kontajner a vnútorné oddeľovače namiesto série samostatných vysokých kariet.
+
+## Navigačný surface a odkazy
+
+| Token | Hodnota | Typ |
+|---|---|---|
+| `navigation.surface` | sémantický `background` alebo `elevatedSurface` | `semantic` |
+| `navigation.internalIndicator` | `chevron.right` | `exact` |
+| `navigation.externalIndicator` | `arrow.up.right.square` | `exact` |
+
+- `navigation.surface` MUST zachovať čitateľnosť inline titulku počas posúvania a MUST zabrániť presvitaniu konkurenčného textu pod titulkom.
+- Interný push cieľ MUST používať `navigation.internalIndicator`; externá URL MUST používať `navigation.externalIndicator` alebo rovnocenný systémový symbol.
 
 ## Kontakt
 
@@ -140,6 +157,7 @@ Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný varian
 - Pri menšej dostupnej šírke alebo accessibility texte MUST mriežka prejsť na jeden stĺpec.
 - Na veľkom displeji SHOULD dlaždica zachovať rozumnú maximálnu šírku a mriežka SHOULD pracovať s okrajmi alebo ďalším stĺpcom podľa produktového významu.
 - Karty v jednom riadku MUST používať rovnakú výslednú výšku; ďalší riadok MAY mať inú obsahovú výšku.
+- Dvojica `summaryShortcut.compact` MAY zostať v dvoch stĺpcoch; pri šírke pod minimum alebo pri accessibility texte MUST použiť jeden stĺpec.
 
 ## Typografia a farby
 

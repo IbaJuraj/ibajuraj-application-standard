@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.3.0 – testovacia matica
+# IbaJuraj Standard 1.3.1 – testovacia matica
 
 Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať rizikové kombinácie podľa svojich funkcií.
 
@@ -26,6 +26,8 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 - [ ] Sheet/full-screen cover sa používa iba pre transakčné workflow.
 - [ ] Vzhľad je priamo v root Nastavení a zmena sa prejaví bez reštartu.
 - [ ] Dlhé trailing hodnoty sa presunú pod názov alebo zalomia bez zmenšenia textu.
+- [ ] Posúvaný obsah nepresvitá cez navigačný titulok ani s ním vizuálne nesúperí.
+- [ ] Interný push prechod používa chevron; externý odkaz používa `arrow.up.right.square`.
 
 ## Kontakt a O aplikácii
 
@@ -42,6 +44,9 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 - [ ] Navigačná mriežka zachová minimálnu šírku 150 pt alebo prejde na menej stĺpcov.
 - [ ] Accessibility text má funkčný jednostĺpcový variant.
 - [ ] Rovnaký variant v jednom riadku má rovnakú výslednú výšku.
+- [ ] Dvojica súhrnných skratiek je kompaktná, rovnocenná a pri nedostatku priestoru sa adaptívne zloží pod seba.
+- [ ] Tri a viac rovnocenných informačných riadkov sú zoskupené do jednej karty s čitateľnými oddeľovačmi.
+- [ ] Obsahový nadpis vnoreného informačného detailu nesúperí s navigačným titulkom.
 - [ ] Wallet Card zachová produktový pomer strán a Calculator Key minimálnu hit area.
 - [ ] Posledný obsah nie je zakrytý tab barom, klávesnicou ani safe area.
 
@@ -52,6 +57,7 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 - [ ] Žiadny stav nie je komunikovaný iba farbou.
 - [ ] Reduce Motion, Increase Contrast a Reduce Transparency nespôsobia stratu funkcie.
 - [ ] Každý interaktívny prvok má minimálnu dotykovú plochu 44 × 44 pt.
+- [ ] Počty položiek používajú správne plurálové tvary pre 0, 1, 2–4 a 5+ podľa podporovaného jazyka.
 
 ## Privacy a distribúcia
 

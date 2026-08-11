@@ -1,5 +1,23 @@
 # Migrácia IbaJuraj Application Standard
 
+## 1.3.0 → 1.3.1
+
+Verzia 1.3.1 je spätne kompatibilná patch aktualizácia. Nemení používateľské dátové modely ani produktovú navigačnú architektúru. Spresňuje čitateľnosť navigačných plôch, zoskupovanie informačného obsahu, sémantiku odkazov, adaptívne súhrnné skratky a lokalizované počty.
+
+Aplikácia pri adopcii vykoná tento audit:
+
+1. overí, že obsah pri posúvaní nepresvitá cez navigačný titulok ani s ním vizuálne nesúperí,
+2. použije chevron pre interný push prechod a `arrow.up.right.square` pre odkaz mimo aplikácie,
+3. zoskupí tri a viac rovnocenných vysvetľujúcich riadkov do jednej informačnej karty s oddeľovačmi,
+4. pri dvojici rovnocenných súhrnných skratiek použije kompaktné dvojstĺpcové rozloženie a pri nedostatku priestoru ich zloží pod seba,
+5. ponechá obsahový nadpis vnorených informačných obrazoviek na úrovni `.title2` alebo nižšej, ak nejde o zámerný hero obsah,
+6. overí plurálové tvary počtov pre nulu, jednu a viac položiek vo všetkých podporovaných jazykoch,
+7. zopakuje kontroly vo Svetlom, Tmavom a Automatickom vzhľade vrátane Dynamic Type.
+
+Používateľské dáta sa nemigrujú. Zmena adopcie pozostáva z UX auditu, aktualizácie lokálnej kópie štandardu a release dôkazov.
+
+---
+
 ## 1.2.0 → 1.3.0
 
 Verzia 1.3.0 je spätne kompatibilná minor aktualizácia. Nemení používateľské dátové modely. Spresňuje spoločnú hlavičku, navigáciu Nastavení, Vzhľad, Kontakt, O aplikácii, responzívne texty, privacy release gate a merateľnú adopciu.

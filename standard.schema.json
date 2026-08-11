@@ -105,13 +105,13 @@
           "const": "root-segmented-system-light-dark"
         },
         "nestedNavigation": {
-          "const": "native-push-back-button-and-edge-swipe"
+          "const": "native-push-back-button-edge-swipe-and-semantic-affordance"
         },
         "contact": {
           "const": "form-and-telegram"
         },
         "layout": {
-          "const": "available-container-space"
+          "const": "available-container-space-safe-navigation-surfaces-and-adaptive-density"
         },
         "privacy": {
           "const": "manifest-per-distributed-target"

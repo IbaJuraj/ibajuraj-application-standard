@@ -2,7 +2,7 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.3.0**  
+Aktuálna verzia: **1.3.1**  
 Stav: **active**
 
 ## Účel repozitára
@@ -53,10 +53,10 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.3.0
+standard-v1.3.1
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.3.0**.
+Aktuálny release: **IbaJuraj Application Standard 1.3.1**.
 
 ## Návrhy zmien
 

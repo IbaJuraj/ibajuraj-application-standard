@@ -1,6 +1,6 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.3.0  
+**Verzia:** 1.3.1  
 **Stav:** autoritatívny spoločný štandard  
 **Platnosť od:** 10. augusta 2026  
 **Vlastník:** IbaJuraj
@@ -100,6 +100,7 @@ Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používa
 - Jednoduchá voľba MUST NOT vytvárať zbytočnú medziobrazovku. Ak aplikácia ponúka vzhľad **Automaticky / Svetlý / Tmavý**, výber MUST byť priamo na hlavnej obrazovke Nastavení ako segmented control.
 - Zjednotenie vizuálu MUST NOT meniť produktový obsah Nastavení; aplikácia zobrazuje iba relevantné položky a sekcie.
 - Root Nastavení MUST používať systémový navigation title **Nastavenia**. MAY používať veľký titulok; vnorené obrazovky SHOULD používať inline titulok so systémovou šípkou späť.
+- Opakované neinteraktívne vysvetlenia s rovnakou vizuálnou rolou SHOULD byť zoskupené do jednej karty s vnútornými oddeľovačmi. Samostatné vysoké karty SHOULD zostať iba pre samostatnú akciu, stav alebo významovo dominantnú funkciu.
 
 Ak sú príslušné funkcie dostupné, sekcie SHOULD používať toto poradie:
 
@@ -170,6 +171,8 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - `Hotovo` MUST NOT byť použité ako náhrada navigácie späť.
 - Sheet alebo full-screen cover MUST byť použitý iba pre ohraničenú transakčnú úlohu, napríklad výber, editor, import, export alebo potvrdenie; MUST NOT nahrádzať bežný navigačný strom Nastavení.
 - Aplikácia SHOULD minimalizovať navigačnú hĺbku a SHOULD NOT vytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
+- Interný cieľ otvorený push navigáciou MUST používať trailing `chevron.right`; ikona externého odkazu, napríklad `arrow.up.right.square`, MUST byť vyhradená pre URL alebo cieľ mimo aktuálneho navigačného stromu aplikácie.
+- Posúvateľný obsah MAY prechádzať pod navigačnú lištu iba vtedy, ak zostáva titulok aj obsah jednoznačne čitateľný. Navigačný surface MUST zabrániť tomu, aby sa text pod lištou vizuálne prekrýval alebo súťažil s navigation title.
 
 ### 6.5 Adaptívne rozloženie
 
@@ -180,6 +183,7 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - Dlaždice v jednom riadku MUST mať rovnakú šírku a spoločnú minimálnu výšku; jednotlivý riadok MAY zväčšiť výšku podľa najvyššieho obsahu.
 - Na veľkom displeji SHOULD obsah používať rozumnú maximálnu šírku alebo väčšie okraje namiesto nekontrolovaného rozťahovania.
 - Vlastná navigácia, plávajúca akcia, klávesnica ani safe area MUST NOT zakrývať posledný obsah alebo dôležitú akciu.
+- Dve rovnocenné súhrnné skratky MAY zostať vedľa seba, ak každá zachová minimálnu šírku 150 pt; pri nedostatku priestoru alebo accessibility texte MUST prejsť na vertikálne rozloženie.
 
 ### 6.6 Sémantické varianty dlaždíc a kariet
 
@@ -190,6 +194,7 @@ Spoločná rodina komponentov rozlišuje minimálne tieto roly:
 - **Wallet Card** – vizuálny náhľad vernostnej, členskej alebo obdobnej karty,
 - **Feature Card** – dominantná odporúčaná, kritická alebo produktová akcia,
 - **List Row** – opakovateľný výsledok alebo položka zoznamu.
+- **Summary Shortcut** – kompaktný vstup zobrazujúci názov a krátky počet alebo stav, typicky v rovnocennej dvojici,
 - **Calculator Key** – doménový ovládací prvok kalkulačky s vlastnou maticou rozloženia.
 
 - Komponenty s rovnakou sémantickou rolou SHOULD používať rovnaký veľkostný variant, odsadenie, zaoblenie, ikonový kontajner a typografickú hierarchiu.
@@ -212,6 +217,7 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Technické identifikátory, úplné čísla, dlhé vysvetlenia a sekundárne metadata SHOULD zostať v detaile, ak nie sú potrebné na rozpoznanie položky.
 - Stav MUST NOT byť komunikovaný iba farbou.
 - Celá interaktívna dlaždica SHOULD byť jednou zrozumiteľnou dotykovou plochou; vnorené akcie musia mať samostatný význam a minimálnu dotykovú plochu.
+- Na vnorenej informačnej obrazovke s inline navigation title SHOULD prvý obsahový nadpis používať `.title2` alebo nižšiu hierarchiu, pokiaľ nejde o zámerný produktový hero. Obsahový nadpis MUST NOT vizuálne súperiť s navigation title.
 
 ## 7. Obsah a texty
 
@@ -220,6 +226,7 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - MUST lokalizovať všetky používateľské texty; právne citácie môžu mať osobitný režim.
 - MUST kontrolovať prirodzenosť prekladu, nielen doslovnú správnosť.
 - MUST formátovať čísla, meny, dátumy a jednotky podľa lokality.
+- Počty položiek MUST používať lokalizované plurálové pravidlá; pevné spojenie čísla s jediným tvarom podstatného mena nie je postačujúce.
 - SHOULD uprednostniť krátke, konkrétne nadpisy pred marketingovými formuláciami.
 - Lokalizované App Store texty a screenshoty MUST prejsť kontrolou prirodzeného znenia, gramatiky, terminológie a lokálneho formátovania; automatický alebo doslovný preklad nie je postačujúci release dôkaz.
 

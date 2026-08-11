@@ -178,6 +178,8 @@ contract_patterns = {
         r"UIScreen\.main\.bounds",
         r"minimumScaleFactor",
         r"Privacy Manifest.*app.*widget.*extension target",
+        r"arrow\.up\.right\.square",
+        r"plurál",
     ],
     "DESIGN_TOKENS.md": [
         r"header\.action\.visualDiameter",
@@ -185,6 +187,9 @@ contract_patterns = {
         r"header\.action\.maximumPerSide",
         r"settings\.group\.radius",
         r"contact\.maximumPrimaryActions",
+        r"summaryShortcut\.compact",
+        r"information\.group\.radius",
+        r"navigation\.externalIndicator",
     ],
     "SUPPORT_AND_LINKS.md": [
         r"\?app=<app-id>&type=<type>&subject=<subject>#support",

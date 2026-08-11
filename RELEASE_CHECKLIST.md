@@ -1,9 +1,9 @@
-# IbaJuraj Standard 1.3.0 – release checklist
+# IbaJuraj Standard 1.3.1 – release checklist
 
 ## Metadata a zdroj pravdy
 
 - [ ] `STANDARD_VERSION`, `standard.json`, dokumenty a adopčný súbor majú zhodnú verziu.
-- [ ] Tag má tvar `standard-v1.3.0` a existuje v autoritatívnom repozitári.
+- [ ] Tag má tvar `standard-v1.3.1` a existuje v autoritatívnom repozitári.
 - [ ] Marketingová verzia a build aplikácie sa načítavajú z build nastavení alebo `Bundle`.
 - [ ] Runtime verzia, tag a úroveň adopcie pochádzajú z jedného zdroja.
 - [ ] Nevydaná verzia nie je prezentovaná ako aktívne prijatá.
@@ -16,6 +16,9 @@
 - [ ] Bežné vnorené obrazovky používajú push, systémovú šípku a swipe-back.
 - [ ] Sheet/full-screen cover zostal iba pre transakčné workflow.
 - [ ] Settings riadky používajú spoločné tokeny a responzívne trailing hodnoty.
+- [ ] Navigačná plocha chráni inline titulok pred presvitaním alebo prekrývaním posúvaného obsahu.
+- [ ] Interné a externé prechody používajú odlišné sémantické indikátory.
+- [ ] Informačné riadky a súhrnné skratky používajú zodpovedajúci grouped a adaptívny variant.
 
 ## Kvalita
 
@@ -23,6 +26,7 @@
 - [ ] Čistý build a automatické testy prešli.
 - [ ] `TEST_MATRIX.md` je vyplnená a dôkazy sú uložené.
 - [ ] VoiceOver, Dynamic Type, kontrast a Reduce Motion boli manuálne overené.
+- [ ] Lokalizované počty a plurálové tvary boli overené vo všetkých podporovaných jazykoch.
 - [ ] Migrácia z aktuálnej verejnej App Store verzie prešla.
 
 ## Súkromie a podpora

@@ -3,8 +3,8 @@
 **Application:**  
 **Application version:**  
 **Build:**  
-**Adopted standard:** 1.3.0  
-**Standard tag:** standard-v1.3.0  
+**Adopted standard:** 1.3.1  
+**Standard tag:** standard-v1.3.1  
 **Adoption status:** active  
 **Adoption level:** Level 0 – Declared  
 **Foundation version:** not adopted  
@@ -14,7 +14,7 @@
 ## Autoritatívny zdroj
 
 - Repository: https://github.com/IbaJuraj/ibajuraj-application-standard
-- Adopted tag: standard-v1.3.0
+- Adopted tag: standard-v1.3.1
 
 ## Stav adopcie
 
@@ -46,6 +46,10 @@ Uveďte odkaz na výnimku alebo napíšte `Žiadne`.
 - [ ] najviac dve header akcie na jednej strane a gear ako pravá krajná akcia,
 - [ ] grouped-card Settings vizuál a priamy segmented prepínač Vzhľadu,
 - [ ] push navigácia, systémová šípka a swipe-back pre bežné vnorené obrazovky,
+- [ ] navigačný titulok chránený pred presvitaním a prekrývaním posúvaného obsahu,
+- [ ] chevron pre interný push a `arrow.up.right.square` pre externý odkaz,
+- [ ] grouped informačné riadky a adaptívne súhrnné skratky,
+- [ ] lokalizované plurálové tvary počtov,
 - [ ] kontaktný formulár a Telegram vrátane funkčného URL predvyplnenia,
 - [ ] runtime verzia, build, tag a úroveň adopcie z jedného zdroja,
 - [ ] Privacy Manifest každého distribuovaného targetu,
