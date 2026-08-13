@@ -1,5 +1,62 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.5.1 – 2026-08-13
+
+### Added
+- povinný Neutral Surface & Text Color Contract pre spoločné Light/Dark neutrálne plochy a textové roly,
+- semantic tokeny `color.appBackground`, `color.cardSurface`, `color.textPrimary`, `color.textSecondary`, `color.separator` a `color.disabled`,
+- povinný Light/Dark screenshot parity gate v runtime audite,
+- explicitná brand-surface výnimka s adaptívnym kontrastom.
+
+### Changed
+- plná adopcia od 1.5.1 vyžaduje zhodný vizuálny výsledok rovnakej neutrálnej role naprieč aplikáciami alebo zaznamenanú výnimku,
+- bežné neutral text/surface roly SHOULD používať systémové semantic colors namiesto lokálnych gray/opacity hodnôt.
+
+### Compatibility
+- spätne kompatibilný patch release,
+- bez povinnej migrácie používateľských dát.
+
+## 1.5.0 – 2026-08-13
+
+- zavedený princíp „zjednocovať správanie a geometriu, nie produktovú identitu“,
+- kodifikovaná hierarchia root obrazoviek a pravidlo jednej dominantnej priority/CTA,
+- zavedený progressive-disclosure kontrakt a limity vizuálnej hustoty,
+- zjednotené sémantické roly search fieldov, filter chips a segmented controls,
+- spresnené pravidlá bottom navigácie a voliteľnej centrálnej globálnej akcie,
+- zavedené spoločné primary CTA, empty-state a context-menu pravidlá,
+- zavedený adaptívny badge/label kontrast vrátane obľúbenosti na brand surfaces,
+- zavedené voliteľné používateľské označenie pre viac rovnakých objektov bez pevného zoznamu rolí,
+- rozšírené responsive pravidlá pre iPad, landscape a adaptívne gridy,
+- zavedené motion/haptics pravidlá a Reduce Motion gate,
+- zavedený Form & Editor kontrakt vrátane vysvetlenia disabled Save a priameho edit flow,
+- zavedené explicitné async a používateľsky čitateľné sync states,
+- rozšírený accessibility quality gate o VoiceOver poradie a veľký Dynamic Type,
+- zavedený source-hygiene audit vrátane ~430-line review threshold, root-view zodpovedností, unused-file auditu a cross-file Swift access-control kontroly,
+- rozšírené design tokeny, referenčné vzory, testovacia matica a release checklist,
+- verzia 1.5.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
+
+## 1.5.0 – 2026-08-13
+
+- zavedený spoločný typografický kontrakt pre hlavné názvy koreňových pracovných obrazoviek,
+- `appPage.title` je zjednotený na `.largeTitle.weight(.bold)` s Dynamic Type,
+- `appPage.subtitle` je zjednotený na `.subheadline` so sekundárnou farbou,
+- zjednotená 6 pt medzera medzi hlavným názvom a podnadpisom,
+- zakázané lokálne pevné bodové veľkosti a `minimumScaleFactor` pre túto spoločnú typografickú rolu,
+- rozšírená testovacia matica, referenčné vzory a release checklist o side-by-side kontrolu title/subtitle páru,
+- verzia 1.5.0 je spätne kompatibilná patch aktualizácia a nevyžaduje migráciu používateľských dát.
+
+## 1.4.0 – 2026-08-13
+
+- zavedený presný spoločný geometrický kontrakt pre Nastavenia naprieč aplikáciami IbaJuraj,
+- kodifikované rozmery settings row: 56 pt minimálna výška, 16/10 pt padding a 36 × 36 pt ikonová dlaždica,
+- spresnené poradie SwiftUI modifierov, aby sa padding nepripočítaval nad spoločnú minimálnu výšku,
+- zjednotená geometria karty Vzhľad a segmented controlu Automaticky / Svetlý / Tmavý,
+- zjednotená geometria kontaktnej obrazovky vrátane 42 × 42 pt ikonových boxov, 16 pt paddingu, 20 pt radiusu a 12 pt medzier,
+- zjednotená geometria obrazovky O aplikácii vrátane 18 pt radiusu, 16 pt paddingu, 24 pt ikonového stĺpca a 12 pt medzier medzi akčnými kartami,
+- doplnené pravidlo, že produktovo odlišný obsah nesmie meniť základnú geometriu rovnakého komponentového variantu,
+- rozšírená testovacia matica a release checklist o side-by-side porovnanie spoločných obrazoviek,
+- verzia 1.4.0 je spätne kompatibilná minor aktualizácia a nevyžaduje migráciu používateľských dát.
+
 ## 1.3.1 – 2026-08-11
 
 - spresnená ochrana navigačného titulku pred presvitajúcim alebo prekrývajúcim sa posúvaným obsahom,

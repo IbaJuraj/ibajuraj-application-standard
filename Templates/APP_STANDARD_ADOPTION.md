@@ -3,8 +3,8 @@
 **Application:**  
 **Application version:**  
 **Build:**  
-**Adopted standard:** 1.3.1  
-**Standard tag:** standard-v1.3.1  
+**Adopted standard:** 1.5.1  
+**Standard tag:** standard-v1.5.1  
 **Adoption status:** active  
 **Adoption level:** Level 0 – Declared  
 **Foundation version:** not adopted  
@@ -14,7 +14,7 @@
 ## Autoritatívny zdroj
 
 - Repository: https://github.com/IbaJuraj/ibajuraj-application-standard
-- Adopted tag: standard-v1.3.1
+- Adopted tag: standard-v1.5.1
 
 ## Stav adopcie
 
@@ -53,6 +53,11 @@ Uveďte odkaz na výnimku alebo napíšte `Žiadne`.
 - [ ] kontaktný formulár a Telegram vrátane funkčného URL predvyplnenia,
 - [ ] runtime verzia, build, tag a úroveň adopcie z jedného zdroja,
 - [ ] Privacy Manifest každého distribuovaného targetu,
+- [ ] root hierarchy, progressive disclosure a spoločné search/filter/CTA roly,
+- [ ] adaptive badge/label kontrast a user-defined labels podľa potreby,
+- [ ] async/sync stavy a Form & Editor kontrakt,
+- [ ] iPad/responsive audit, ak je iPad podporovaný,
+- [ ] source hygiene a cross-file Swift access-control audit,
 - [ ] testy a release audit.
 
 ## Manuálne release brány

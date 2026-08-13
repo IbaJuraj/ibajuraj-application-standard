@@ -1,5 +1,87 @@
 # Migrácia IbaJuraj Application Standard
 
+## 1.5.0 → 1.5.1
+
+Verzia 1.5.1 je spätne kompatibilná patch aktualizácia bez dátovej migrácie. Zavádza povinný Neutral Surface & Text Color Contract a Light/Dark parity gate.
+
+### Povinný adopčný audit
+
+1. Zmapovať root background na spoločný `color.appBackground`.
+2. Zmapovať neutrálne grouped cards/tiles na `color.cardSurface`.
+3. Zjednotiť primary, secondary, separator a disabled semantic text/surface roly.
+4. Odstrániť alebo odôvodniť lokálne custom gray/opacity neutrálne farby.
+5. Zachovať produktové/brand farby iba na produktových semantic/brand surfaces.
+6. Vykonať screenshot parity audit v Light aj Dark Mode.
+7. Zaznamenať každú zámernú odchýlku ako Standard Exception.
+
+### Kompatibilita
+
+- Nevyžaduje zmenu persistentných doménových modelov.
+- Nevyžaduje zmenu navigačnej štruktúry ani počtu tabov.
+- Môže vyžadovať vizuálnu úpravu neutrálneho pozadia, dlaždíc a textov.
+
+## 1.4.1 → 1.5.0
+
+Verzia 1.5.0 je spätne kompatibilná minor aktualizácia. Sama osebe nevyžaduje dátovú migráciu. Adopčný build SHOULD vykonať audit spoločných UX a source-hygiene oblastí.
+
+### Povinný adopčný audit
+
+1. Skontrolovať root hierarchy: title/subtitle/settings a jednu dominantnú obsahovú prioritu.
+2. Skontrolovať duplicitu stavových badgeov, textov a CTA; použiť progressive disclosure tam, kde obsah zbytočne súperí.
+3. Zjednotiť search/filter/segmented roly a primary CTA varianty podľa 1.5.0 tokenov pri prirodzenej úprave obrazoviek.
+4. Skontrolovať empty states, context menu a deštruktívne akcie.
+5. Skontrolovať kontrast badgeov/obľúbenosti na produktových farbách.
+6. Ak produkt potrebuje rozlíšiť viac rovnakých objektov, zvážiť voliteľné používateľské pole Označenie bez pevného zoznamu hodnôt.
+7. Pre iPad-capable target vykonať responsive audit portrait + landscape a overiť max-width/adaptívny grid.
+8. Skontrolovať Form & Editor flow, disabled Save vysvetlenie a zbytočné medziobrazovky.
+9. Skontrolovať async/sync používateľské stavy, aby „Synchronizované“ znamenalo potvrdený výsledok.
+10. Vykonať source-hygiene audit: workflow súbory nad ~430 riadkov, root-view zodpovednosti, nepoužívané produkčné súbory, zastarané validátory a cross-file access control po refaktore.
+11. Overiť VoiceOver poradie, veľký Dynamic Type a Reduce Motion pre primárne flow.
+
+### Kompatibilita
+
+- Persistentné doménové modely sa nemenia iba kvôli adopcii 1.5.0.
+- Produktové názvy, počet tabov, farby a doménové IA zostávajú vo vlastníctve produktu.
+- Existujúce komponenty MAY migrovať postupne pri prirodzenej úprave, ak nemajú aktuálny accessibility alebo integrity problém.
+
+## 1.4.0 → 1.5.0
+
+Verzia 1.5.0 je spätne kompatibilná patch aktualizácia bez dátovej migrácie. Zjednocuje typografiu hlavného root headera naprieč aplikáciami.
+
+Pri adopcii aplikácia:
+
+1. nahradí lokálnu pevnú veľkosť hlavného root názvu rolou `.largeTitle.weight(.bold)`,
+2. nahradí lokálnu váhu alebo veľkosť podnadpisu rolou `.subheadline` so sekundárnou farbou,
+3. nastaví 6 pt medzeru medzi title a subtitle,
+4. odstráni `minimumScaleFactor` a bodové override z tejto spoločnej roly,
+5. overí Dynamic Type a prirodzené zalomenie dlhého podnadpisu,
+6. vykoná side-by-side screenshot audit aspoň proti jednej zosúladenej aplikácii.
+
+Používateľské dáta sa nemenia.
+
+---
+
+## 1.3.1 → 1.4.0
+
+Verzia 1.4.0 je spätne kompatibilná minor aktualizácia. Nemení používateľské dátové modely. Zavádza presný spoločný geometrický kontrakt pre **Nastavenia**, **Vzhľad**, **Kontakt** a **O aplikácii**, aby rovnaké komponenty nepôsobili v jednej aplikácii kompaktnejšie a v druhej vzdušnejšie.
+
+Aplikácia pri adopcii vykoná tento audit:
+
+1. porovná root Nastavení s centrálnymi tokenmi a odstráni lokálne rozmery pre rovnaké settings komponenty,
+2. nastaví settings row na 16 pt horizontálny padding, 10 pt vertikálny padding, 36 × 36 pt ikonovú dlaždicu a minimálnu výšku 56 pt,
+3. overí správne poradie modifierov: padding pred `frame(minHeight: 56)`,
+4. zjednotí kartu **Vzhľad** na header padding 16/10 pt a segmented control s minimálnou 44 pt dotykovou výškou, 16 pt horizontálnym a 10 pt spodným paddingom,
+5. zjednotí grouped-card radius 22 pt, section spacing 24 pt a divider inset 64 pt,
+6. zjednotí hlavné kontaktné akcie na 16 pt padding, 42 × 42 pt ikonu, radius 20 pt a 12 pt medzeru medzi kartami,
+7. zjednotí **O aplikácii** na 18 pt radius, 16 pt padding, 24 pt ikonový stĺpec a 12 pt medzery medzi samostatnými akčnými kartami,
+8. ponechá produktovo odlišný obsah, ale overí, že rovnaký komponent s rovnakým počtom riadkov má rovnakú základnú výšku naprieč aplikáciami,
+9. vykoná side-by-side runtime audit najmenej v Tmavom a Svetlom režime a pri default Dynamic Type,
+10. uloží screenshotové dôkazy pre Nastavenia, Kontakt a O aplikácii.
+
+Používateľské dáta sa nemigrujú. Zmena je vizuálna a komponentová; aplikácie môžu prejsť na 1.4.0 v najbližšom plánovanom UI builde.
+
+---
+
 ## 1.3.0 → 1.3.1
 
 Verzia 1.3.1 je spätne kompatibilná patch aktualizácia. Nemení používateľské dátové modely ani produktovú navigačnú architektúru. Spresňuje čitateľnosť navigačných plôch, zoskupovanie informačného obsahu, sémantiku odkazov, adaptívne súhrnné skratky a lokalizované počty.

@@ -14,11 +14,31 @@
     "MAY"
   ],
   "adoptionLevels": [
-    {"level": 0,"id": "declared","name": "Level 0 – Declared"},
-    {"level": 1,"id": "identity","name": "Level 1 – Identity"},
-    {"level": 2,"id": "shared-ux","name": "Level 2 – Shared UX"},
-    {"level": 3,"id": "quality-gates","name": "Level 3 – Quality Gates"},
-    {"level": 4,"id": "full-adoption","name": "Level 4 – Full Adoption"}
+    {
+      "level": 0,
+      "id": "declared",
+      "name": "Level 0 – Declared"
+    },
+    {
+      "level": 1,
+      "id": "identity",
+      "name": "Level 1 – Identity"
+    },
+    {
+      "level": 2,
+      "id": "shared-ux",
+      "name": "Level 2 – Shared UX"
+    },
+    {
+      "level": 3,
+      "id": "quality-gates",
+      "name": "Level 3 – Quality Gates"
+    },
+    {
+      "level": 4,
+      "id": "full-adoption",
+      "name": "Level 4 – Full Adoption"
+    }
   ],
   "contracts": {
     "settingsEntry": "home-top-trailing",

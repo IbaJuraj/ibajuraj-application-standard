@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.3.1 – testovacia matica
+# IbaJuraj Standard 1.5.1 – testovacia matica
 
 Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať rizikové kombinácie podľa svojich funkcií.
 
@@ -15,6 +15,14 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 | Inštalácia | čistá inštalácia a aktualizácia z verejnej verzie |
 | Vstup | dotyk, VoiceOver a podporované klávesnice |
 
+## Typografia hlavnej pracovnej obrazovky
+
+- [ ] Hlavný root title používa `.largeTitle.weight(.bold)` bez lokálnej pevnej bodovej veľkosti.
+- [ ] Podnadpis používa `.subheadline`, sekundárnu farbu a prirodzené zalomenie.
+- [ ] Medzera title/subtitle je 6 pt.
+- [ ] Title/subtitle pár je side-by-side typograficky zhodný s referenčnou IbaJuraj aplikáciou.
+- [ ] Default, XXL a accessibility XXXL nespôsobujú orezanie alebo použitie `minimumScaleFactor`.
+
 ## Navigácia a Nastavenia
 
 - [ ] Gear je vpravo hore na hlavnej úvodnej obrazovke a má accessibility label **Nastavenia**.
@@ -28,6 +36,9 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 - [ ] Dlhé trailing hodnoty sa presunú pod názov alebo zalomia bez zmenšenia textu.
 - [ ] Posúvaný obsah nepresvitá cez navigačný titulok ani s ním vizuálne nesúperí.
 - [ ] Interný push prechod používa chevron; externý odkaz používa `arrow.up.right.square`.
+- [ ] Settings row má pri rovnakom obsahu rovnakú základnú výšku naprieč aplikáciami; používa 16/10 pt padding, 36 × 36 pt ikonovú dlaždicu a `minHeight` 56 pt.
+- [ ] Padding settings row sa aplikuje pred `frame(minHeight:)`; nevzniká dodatočná výška spôsobená opačným poradím modifierov.
+- [ ] Segmented **Vzhľad** má rovnakú výšku a odsadenie vo všetkých aplikáciách, ktoré ho používajú.
 
 ## Kontakt a O aplikácii
 
@@ -37,6 +48,9 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 - [ ] Chyba otvorenia externého odkazu je zrozumiteľná a ponúka alternatívu.
 - [ ] Verzia a build na obrazovke O aplikácii zodpovedajú `Bundle`.
 - [ ] Verzia, tag a úroveň adopcie štandardu zodpovedajú `APP_STANDARD_ADOPTION.md`.
+- [ ] Kontaktné akčné karty používajú rovnakú geometriu: 16 pt padding, 42 × 42 pt ikona, 20 pt radius a 12 pt medzera.
+- [ ] About metadata a akčné karty používajú rovnakú geometriu: 18 pt radius, 16 pt padding, 24 pt ikonový stĺpec a 12 pt medzera medzi akciami.
+- [ ] Side-by-side screenshot audit Nastavenia / Kontakt / O aplikácii neukazuje rozdiel v základnej hustote rovnakých komponentov.
 
 ## Layout a dlaždice
 
@@ -70,3 +84,36 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 ## Záznam výsledku
 
 Výsledok MUST uvádzať dátum, verziu aplikácie, build, testované prostredia, meno auditora, nálezy, výnimky a odkazy na screenshoty alebo logy. Prázdny checklist bez dôkazov nie je platný Level 3 alebo Level 4 audit.
+
+
+## 1.5.0 – doplňujúce scenáre
+
+- [ ] Root: jedna dominantná priorita je pochopiteľná do približne 3 sekúnd.
+- [ ] Root: kritický stav neopakuje rovnakú informáciu vo viacerých konkurenčných vrstvách.
+- [ ] Search/filter: rovnaké roly majú konzistentnú geometriu a focus state.
+- [ ] Empty state: max. jedno hlavné CTA a žiadny slepý koniec.
+- [ ] Context menu: destructive action je oddelená a správne pomenovaná.
+- [ ] Badge/favorite: kontrast je čitateľný na svetlom, tmavom aj brand surface.
+- [ ] User label: prázdna hodnota nerezeruje riadok; dlhá hodnota bezpečne skracuje/zalamuje podľa variantu.
+- [ ] Form: disabled Save má viditeľnú príčinu.
+- [ ] Async: processing/success/failure je zrozumiteľný a nedá sa nebezpečne duplikovať operácia.
+- [ ] Sync: „Synchronizované“ sa zobrazí iba po potvrdenom výsledku.
+- [ ] iPad: portrait + landscape, max-width/adaptive grid, klávesnica/popover podľa funkcie.
+- [ ] Reduce Motion + selection/success/warning haptics podľa relevantnosti.
+- [ ] VoiceOver order + veľký Dynamic Type pre primárne flow.
+- [ ] Source hygiene: audit >430 riadkov, unused files a zastaraných validator paths.
+- [ ] Cross-file extension refactor: Xcode build overí access-control mutability a visibility.
+## 1.5.1 – Light/Dark Neutral Parity Gate
+
+Pre každú aplikáciu a každý podporovaný appearance režim:
+
+- [ ] Root/background surface používa spoločný `color.appBackground`.
+- [ ] Card/tile surface používa spoločný `color.cardSurface`.
+- [ ] Primary text má rovnakú sémantickú rolu a vizuálnu intenzitu.
+- [ ] Secondary text má rovnakú sémantickú rolu a vizuálnu intenzitu.
+- [ ] Separator a disabled states sú sémantické, nie lokálne custom gray.
+- [ ] Light Mode screenshot parity bola porovnaná s referenčnou aplikáciou.
+- [ ] Dark Mode screenshot parity bola porovnaná s referenčnou aplikáciou.
+- [ ] Brand surface výnimky majú čitateľný adaptívny kontrast.
+- [ ] Odchýlka má explicitnú `STANDARD_EXCEPTION.md`, ak je produktovo nevyhnutná.
+
