@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.3.1  
+**Verzia:** 1.5.1  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 10. augusta 2026  
+**Platnosť od:** 13. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -59,6 +59,8 @@ Aplikácie môžu mať rozdielny počet tabov, navigáciu, dashboard a doménov�
 - prázdne, chybové, načítavacie a offline stavy,
 - Nastavenia, Pomoc a O aplikácii.
 
+Spoločný štandard MUST zjednocovať **správanie, geometriu a sémantické roly**, nie produktový obsah ani vizuálnu identitu. Lex Drive MAY zostať právne strohý, Strážca Termínov MAY používať bohatšiu stavovú signalizáciu a Peňaženka Kariet MAY používať vizuál značiek, ak rovnaké používateľské roly zostávajú ovládateľné rovnakým spôsobom.
+
 ### 6.2 Povinné pravidlá
 
 - MUST podporovať Dynamic Type bez straty obsahu alebo funkcie.
@@ -101,6 +103,9 @@ Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používa
 - Zjednotenie vizuálu MUST NOT meniť produktový obsah Nastavení; aplikácia zobrazuje iba relevantné položky a sekcie.
 - Root Nastavení MUST používať systémový navigation title **Nastavenia**. MAY používať veľký titulok; vnorené obrazovky SHOULD používať inline titulok so systémovou šípkou späť.
 - Opakované neinteraktívne vysvetlenia s rovnakou vizuálnou rolou SHOULD byť zoskupené do jednej karty s vnútornými oddeľovačmi. Samostatné vysoké karty SHOULD zostať iba pre samostatnú akciu, stav alebo významovo dominantnú funkciu.
+- Spoločné Nastavenia rodiny aplikácií MUST používať rovnakú geometriu komponentov pre rovnakú sémantickú rolu. Riadok typu settings row, ikonová dlaždica, section spacing, group radius a divider inset MUST používať presné tokeny z `DESIGN_TOKENS.md`; produktový obsah MAY byť odlišný.
+- Implementácia `settings.row.minimumHeight` MUST aplikovať vnútorný padding pred minimálnym `frame(minHeight:)`, aby sa padding nepripočítal nad spoločnú minimálnu výšku a nevznikali rozdielne hustoty medzi aplikáciami.
+- Dve aplikácie MAY mať rozdielny počet položiek alebo dlhší text, ale rovnaký komponent pri rovnakom obsahu a Dynamic Type MUST mať rovnakú základnú výšku, odsadenie, ikonovú geometriu a radius.
 
 Ak sú príslušné funkcie dostupné, sekcie SHOULD používať toto poradie:
 
@@ -139,6 +144,8 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - Režim **Automaticky** MUST sledovať aktuálny systémový vzhľad.
 - Produktová farebná téma MAY byť samostatnou voľbou, ale jej názov a popis MUST jasne odlíšiť farebnú tému od svetlého alebo tmavého vzhľadu.
 - Vybraný segment MUST mať nefarený nositeľ stavu a dostatočný kontrast vo všetkých podporovaných témach.
+- Karta **Vzhľad** MUST používať spoločnú geometriu `settings.appearance.*`: header s ikonou a názvom, systémový segmented control s minimálnou 44 pt dotykovou výškou, identické horizontálne odsadenie a identický horný/spodný padding naprieč aplikáciami.
+- Segmented control MUST NOT byť lokálne zväčšovaný alebo zmenšovaný produktovým paddingom, ak ide o rovnakú voľbu **Automaticky / Svetlý / Tmavý**.
 
 #### 6.3.5 Kontakt
 
@@ -151,6 +158,8 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - Odkaz na ochranu súkromia MAY byť kompaktný textový odkaz, ak je zásada dostupná aj vo formulári a v Nastaveniach.
 - Kontaktný odkaz SHOULD preniesť identifikátor aplikácie, verziu, build a typ podnetu podľa zmluvy v `SUPPORT_AND_LINKS.md`; technické údaje pridané k správe MUST byť používateľovi viditeľné.
 - Ak externý odkaz nemožno otvoriť, aplikácia MUST zobraziť zrozumiteľnú chybu a SHOULD ponúknuť alternatívny kontaktný kanál.
+- Hlavné kontaktné akcie MUST používať spoločnú geometriu `contact.action.*`: rovnakú ikonovú dlaždicu, vnútorný padding, radius a medzeru medzi kartami. Produktový text MAY meniť výslednú výšku iba vtedy, keď sa reálne zalomí na viac riadkov.
+- Úvodný blok a sekcia **Čo môžete poslať** SHOULD používať rovnakú informačnú hustotu a spacing ako ostatné IbaJuraj aplikácie; produktový obsah MAY byť odlišný.
 
 #### 6.3.6 O aplikácii
 
@@ -159,6 +168,8 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - Verzia, tag a úroveň adopcie štandardu MUST pochádzať z jedného runtime zdroja metadát a MUST zodpovedať `APP_STANDARD_ADOPTION.md`.
 - Nevydaná alebo draft verzia MUST NOT byť prezentovaná ako aktívne prijatý štandard.
 - Obrazovka MAY ponúkať **Ohodnotiť aplikáciu** a **Zdieľať aplikáciu** a SHOULD poskytovať prístup k ochrane súkromia a relevantným právnym informáciám.
+- Rovnaké typy informačných a akčných riadkov na obrazovke **O aplikácii** MUST používať spoločnú geometriu `about.*`: rovnaký radius, padding, ikonový stĺpec a medzery medzi kartami.
+- Základný blok metadata SHOULD obsahovať minimálne **Verzia**, **IbaJuraj Application Standard** a **Vývojár**. Odkazy a produktové položky ako **Web IbaJuraj Apps**, **Ochrana súkromia**, **Novinky**, **Stav aplikácie**, **Právne upozornenie**, **Ohodnotiť aplikáciu** alebo **Zdieľať aplikáciu** MAY byť pridané podľa produktu, ale pri rovnakej sémantickej roli MUST používať rovnaký komponentový variant.
 
 ### 6.4 Navigácia: push, modal a návrat
 
@@ -219,6 +230,80 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Celá interaktívna dlaždica SHOULD byť jednou zrozumiteľnou dotykovou plochou; vnorené akcie musia mať samostatný význam a minimálnu dotykovú plochu.
 - Na vnorenej informačnej obrazovke s inline navigation title SHOULD prvý obsahový nadpis používať `.title2` alebo nižšiu hierarchiu, pokiaľ nejde o zámerný produktový hero. Obsahový nadpis MUST NOT vizuálne súperiť s navigation title.
 
+### 6.8 Hierarchia koreňovej pracovnej obrazovky
+
+- Primárny root SHOULD používateľovi do troch sekúnd vysvetliť, **kde je, čo je najdôležitejší stav a čo môže urobiť ďalej**.
+- Root SHOULD používať jednu dominantnú obsahovú prioritu. Viaceré rovnocenné hero bloky alebo CTA nad prvým scrollom SHOULD NOT súperiť o pozornosť.
+- Ak root používa veľký title/subtitle pár, MUST používať spoločné `appPage.*` tokeny. Settings gear zostáva pravou krajnou systémovou akciou podľa 6.3.1 a 6.3.2.
+- Pozdrav, informačný status, kritické upozornenie a CTA SHOULD NOT byť vrstvené do jedného komponentu, ak nesú odlišný význam.
+- Rovnaká kritická informácia SHOULD NOT byť súčasne opakovaná badgeom, nadpisom, stavovým textom a CTA textom bez ďalšej informačnej hodnoty.
+
+### 6.9 Progressive disclosure a vizuálna hustota
+
+- MUST zobrazovať najčastejšie potrebnú informáciu skôr než zriedkavý detail.
+- Sekcia SHOULD mať jeden dominantný status a najviac jedno hlavné CTA; sekundárne akcie MAY byť v riadku, `...` menu alebo obrazovke Podrobnosti.
+- Podrobné právne, diagnostické, technické alebo administratívne údaje SHOULD byť dostupné bez ich povinného zobrazenia na každom roote.
+- Aplikácia MUST NOT skrývať kritickú informáciu iba kvôli vizuálnemu zjednodušeniu. Progressive disclosure znižuje šum, nie dostupnosť dôležitého obsahu.
+
+### 6.10 Search, filtre a segmented controls
+
+- Vyhľadávacie pole s rovnakou rolou MUST používať spoločnú výšku, radius, horizontálny padding, ikonovú rolu a focus/error stav podľa `DESIGN_TOKENS.md`.
+- Filtračné chips MUST mať rovnakú sémantiku aktívneho/neaktívneho stavu a minimálnu dotykovú plochu; horizontálny zoznam MAY scrollovať.
+- Segmented control SHOULD byť použitý pre malý počet navzájom sa vylučujúcich pohľadov alebo režimov, nie ako náhrada rozsiahleho filtrovacieho systému.
+- Filter MUST zachovať čitateľný názov aj pri lokalizácii; text MUST NOT byť zmenšovaný cez `minimumScaleFactor` ako primárne riešenie.
+
+### 6.11 Spodná navigácia a globálne akcie
+
+- Spodná navigácia MUST obsahovať iba hlavné pracovné oblasti produktu.
+- Aktívny tab MUST byť jednoznačný ikonou aj textom alebo inou než iba farebnou zmenou.
+- Centrálna dominantná akcia, napríklad `+`, MAY byť použitá iba ak je globálna, častá a významovo rovnaká z väčšiny hlavných tabov.
+- Produkt MUST NOT pridávať centrálne `+` iba kvôli vizuálnej konzistencii s inou aplikáciou.
+- Bottom bar MUST rešpektovať safe area, Dynamic Type a nesmie zakrývať poslednú interaktívnu položku obsahu.
+
+### 6.12 Primary CTA, empty state a context actions
+
+- Primárne CTA s rovnakou rolou MUST používať spoločný button variant, výšku, radius, disabled a loading stav podľa `DESIGN_TOKENS.md`.
+- Empty state SHOULD obsahovať ikonu, krátky názov, najviac jednu stručnú vysvetľujúcu vetu a najviac jedno hlavné CTA.
+- Kontextové menu SHOULD radiť akcie: hlavná úprava → stavová/obľúbená akcia → archivácia alebo presun → deštruktívna akcia. Produkt MAY poradie upraviť podľa doménovej priority.
+- Deštruktívna akcia MUST byť vizuálne oddelená a MUST používať deštruktívnu sémantiku.
+
+### 6.13 Badge, label, obľúbenosť a používateľské označenie
+
+- Badge MUST byť čitateľný na aktuálnom pozadí. Implementácia MUST zvoliť adaptívny foreground/background alebo kontrastný kontajner; pevná farba indikátora MUST NOT zaniknúť na produktovom pozadí.
+- Stavová hviezda, bodka alebo iná značka MUST NOT používať farbu ako jediný nositeľ významu.
+- Krátke trhové alebo systémové označenie, napríklad `SK`, `CZ`, MAY byť badge.
+- Ak používateľ môže mať viac objektov rovnakého typu, značky alebo trhu, produkt SHOULD ponúknuť voliteľné vlastné **Označenie** (napr. „Romanova“, „Firemná“, „Moja“).
+- Vlastné označenie MUST byť používateľský text, nie uzavretý zoznam predpokladaných rolí.
+- Ak označenie nie je vyplnené, komponent SHOULD uvoľniť jeho priestor namiesto zobrazovania prázdneho placeholdera.
+
+### 6.13.1 Neutral Surface & Text Color Contract
+
+- Základné neutrálne plochy a textové roly MUST byť vizuálne zhodné naprieč aplikáciami rodiny IbaJuraj v rovnakom appearance režime.
+- Implementácia SHOULD používať sémantické systémové farby namiesto lokálnych hex hodnôt alebo voľných `.gray`, `.black.opacity(...)` a `.white.opacity(...)` pre štandardné neutrálne roly.
+- `appBackground` MUST mapovať na `systemGroupedBackground` v Light Mode a `systemBackground` v Dark Mode. Referenčný výsledok je približne `#F2F2F7` / `#000000`.
+- `cardSurface` / `tileSurface` MUST mapovať na `secondarySystemGroupedBackground`. Referenčný výsledok je približne `#FFFFFF` / `#1C1C1E`.
+- `elevatedSurface` MAY používať ďalšiu systémovú elevated/secondary surface iba vtedy, keď ide o skutočne odlišnú vizuálnu vrstvu; MUST NOT nahrádzať základnú card/tile surface bez produktového dôvodu.
+- Primárny text MUST používať `label`/`primary`; sekundárny text MUST používať `secondaryLabel`/`secondary`; separátory MUST používať sémantický `separator`.
+- Produktový accent, success, warning, danger a information MAY zostať špecifické pre aplikáciu. Tieto farby MUST NOT meniť základný neutrál background/card/text kontrakt.
+- Brand surfaces v Peňaženke Kariet a obdobné produktové brand plochy MAY používať vlastné farby. Text, badge, favorite indikátor a ostatné affordances na nich MUST adaptovať kontrast podľa aktuálneho surface.
+- Light/Dark parity MUST byť súčasťou runtime adopčného gate: porovnávajú sa minimálne root background, card/tile surface, primary text, secondary text, separator a disabled state.
+- Aplikácia MUST NOT byť označená ako plne adoptujúca Standard 1.5.1, ak rovnaká neutrálna rola používa medzi aplikáciami odlišný odtieň bez zaznamenanej výnimky.
+
+### 6.14 Responsive layout pre iPhone a iPad
+
+- Layout MUST vychádzať z dostupného kontajnerového priestoru, size classes a safe areas; MUST NOT byť vetvený podľa marketingového názvu zariadenia.
+- iPad layout SHOULD používať rozumný `maxWidth` alebo adaptívne stĺpce, aby sa iPhone obsah iba neroztiahol na celú šírku.
+- Grid MUST adaptovať počet stĺpcov podľa minimálnej šírky komponentu a Dynamic Type.
+- Podporovaný iPad MUST mať runtime audit aspoň v jednej portrait a jednej landscape konfigurácii.
+- Dlhý text, klávesnica, sheet a popover MUST zostať použiteľné pri Split View alebo inom zúženom kontajneri, ak ho platforma pre produkt podporuje.
+
+### 6.15 Motion a haptics
+
+- Animácia SHOULD vysvetľovať zmenu stavu alebo priestorový vzťah a SHOULD NOT byť dekoráciou, ktorá spomaľuje bežnú úlohu.
+- Bežná mikroanimácia SHOULD používať krátku dĺžku podľa `motion.*` tokenov.
+- Haptika SHOULD rozlišovať selection, success a warning/error iba tam, kde poskytuje spätnú väzbu; SHOULD NOT sa spúšťať pri každom scroll alebo pasívnom prechode.
+- Reduce Motion MUST byť rešpektovaný. Kritická funkcia MUST NOT závisieť od animácie.
+
 ## 7. Obsah a texty
 
 - MUST používať zrozumiteľný jazyk a vysvetliť odborné pojmy.
@@ -253,7 +338,24 @@ Prázdna obrazovka bez vysvetlenia nie je platný stav.
 - Zlyhanie jednej časti SHOULD NOT zablokovať použiteľný zvyšok aplikácie.
 - Ak je dostupný posledný overený bezpečný stav, aplikácia SHOULD umožniť jeho použitie namiesto prázdnej alebo nefunkčnej obrazovky.
 
+### 8.2 Async a spracovávajúce stavy
+
+- Asynchrónna operácia SHOULD mať explicitný stav `idle`, `processing` a výsledok `success`, `partial` alebo `failure` podľa významu funkcie.
+- Počas spracovania MUST byť zrejmé, že aplikácia pracuje; MUST NOT pôsobiť zamrznuto.
+- Ak opakované spustenie môže vytvoriť duplicitu alebo konflikt, príslušná akcia MUST byť počas spracovania zablokovaná alebo idempotentná.
+- Po chybe SHOULD byť dostupný konkrétny ďalší krok: skúsiť znova, upraviť údaje, otvoriť Nastavenia alebo pokračovať lokálne.
+
+
 ## 9. Formuláre
+
+### 9.0 Spoločný Form & Editor kontrakt
+
+- Formulár MUST jasne rozlíšiť povinné a voliteľné údaje bez spoliehania sa iba na farbu.
+- Ak je `Uložiť` deaktivované, obrazovka SHOULD používateľovi zrozumiteľne ukázať, ktorý povinný údaj chýba alebo je neplatný.
+- Inline validačná správa SHOULD byť pri poli alebo skupine, ktorej sa týka; všeobecný alert sa používa pre globálnu chybu.
+- Editor SHOULD používať stabilné poradie: náhľad alebo identita → základné údaje → vzhľad/zaradenie → doplnkové údaje → technické/rozšírené možnosti. Produkt MAY nepoužité sekcie vynechať.
+- Výber súvisiacej entity (vozidlo, osoba, účet, karta a pod.) SHOULD používať rovnaký picker/list pattern naprieč aplikáciou.
+- Bežný edit flow MUST smerovať priamo k editácii a SHOULD NOT vyžadovať zbytočné `Upraviť → detail → Upraviť`.
 
 - MUST jasne označiť povinné údaje a dôvod, prečo sú potrebné.
 - MUST zobrazovať validáciu pri konkrétnom poli.
@@ -331,6 +433,21 @@ Ak aplikácia synchronizuje alebo zdieľa údaje, MUST rozlišovať:
 
 Používateľ SHOULD dostať zrozumiteľný stav, napríklad počet čakajúcich zmien alebo čas poslednej synchronizácie. Konflikty MUST NOT byť riešené tichou stratou údajov.
 
+### 11.1 Spoločné stavy synchronizácie
+
+Ak produkt zobrazuje používateľovi stav synchronizácie, SHOULD používať tieto významové stavy alebo ich produktovo zrozumiteľné ekvivalenty:
+
+- **Synchronizované** – lokálny a vzdialený stav sú potvrdene zhodné,
+- **Synchronizuje sa** – prebieha odosielanie alebo sťahovanie,
+- **Čaká na synchronizáciu** – lokálna zmena ešte nebola potvrdená vzdialeným úložiskom,
+- **Iba lokálne / Offline** – vzdialený zdroj nie je dostupný alebo nie je zapnutý,
+- **Konflikt** – existujú dve nezlučiteľné verzie,
+- **Chyba synchronizácie** – synchronizácia zlyhala a používateľ má dostať ďalší krok.
+
+- Stav **Synchronizované** MUST NOT byť zobrazený iba preto, že je účet dostupný; musí vychádzať z posledného potvrdeného sync výsledku.
+- Synchronizácia MUST zachovať lokálnu integritu pri zlyhaní siete.
+- Manuálne `Synchronizovať teraz` MAY dopĺňať automatickú synchronizáciu, ale MUST NOT byť jediným mechanizmom, ak produkt deklaruje automatickú synchronizáciu.
+
 ## 12. Upozornenia a systémové oprávnenia
 
 ### 12.1 Upozornenia
@@ -378,6 +495,14 @@ Release kontrola MUST overiť:
 - význam nezávislý iba od farby,
 - ovládanie bez presných gest, ak existuje dostupnejšia alternatíva.
 
+### 14.1 Accessibility Quality Gate
+
+- Interaktívna ikonová akcia MUST mať zmysluplný accessibility label; dekoratívna ikona SHOULD byť skrytá pred VoiceOver.
+- VoiceOver poradie MUST sledovať vizuálnu a významovú hierarchiu obrazovky.
+- Kritický stav MUST byť zrozumiteľný aj bez farby a animácie.
+- Pri zväčšenom texte MUST zostať dostupná hlavná akcia a identita objektu; sekundárny layout MAY prejsť z horizontálneho na vertikálny.
+- Release audit Level 3+ MUST overiť aspoň jeden najväčší praktický Dynamic Type režim a základný VoiceOver pre primárne flow.
+
 ## 15. Vyhľadávanie
 
 Ak aplikácia obsahuje vyhľadávanie:
@@ -401,6 +526,16 @@ Komponent sa môže zaradiť do IbaJuraj Foundation, keď:
 Kandidáti: identita aplikácie, odkazy podpory, dizajnové tokeny, settings riadky, Navigation Tile, Entity Card, Feature Card, stavové bannery, prázdne a chybové stavy a version footer.
 
 Pre 1.3.0 sú odporúčanými kandidátmi `IJTopActionButton`, `IJTopActionCluster`, `IJSettingsSection`, `IJSettingsRow`, `IJAppearanceControl`, `IJSupportLinks`, `IJStandardMetadata` a helper adaptívnej mriežky. Produktové karty a doménové workflow MUST zostať mimo spoločného balíka, pokiaľ nespĺňajú všetkých päť podmienok.
+
+### 16.1 Source hygiene a veľkosť workflow súborov
+
+- Produkčný zdrojový súbor, ktorý už nemá referenciu alebo nie je súčasťou aktívneho targetu, SHOULD byť odstránený alebo explicitne archivovaný mimo produkčného stromu.
+- Workflow Swift súbor SHOULD zostať približne pod **430 riadkami**. Prekročenie nie je automatická chyba, ale SHOULD spustiť audit zodpovedností a možnosti rozdelenia.
+- Root view SHOULD byť primárne composition/navigation vrstva a SHOULD NOT vlastniť rozsiahlu importnú, OCR, sync alebo doménovú logiku.
+- Veľký store/model controller SHOULD byť delený podľa zodpovednosti pomocou služieb alebo focused extensions bez obchádzania enkapsulácie.
+- Rozdelenie jedného typu do viacerých Swift súborov MUST rešpektovať Swift access control; stav alebo mutačné API potrebné cross-file extensionom MUST mať zámerne zvolenú internú úroveň, nie náhodne `private`.
+- Source-hygiene validator MUST kontrolovať aktuálne cesty a MUST NOT úspešne prejsť iba na základe historických názvov súborov.
+- Release balík SHOULD presunúť historické build audity a jednorazové validačné reporty do `Development/`, `ReleaseNotes/` alebo inej neprodukčnej histórie.
 
 ## 17. Testovanie a definícia hotovej funkcie
 

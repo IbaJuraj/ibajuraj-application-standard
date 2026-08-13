@@ -41,6 +41,8 @@ required_files=(
   "Proposals/TEMPLATE.md"
   "Templates/APP_STANDARD_ADOPTION.md"
   "Templates/STANDARD_EXCEPTION.md"
+  "Proposals/IJAS-0008-family-interaction-density-and-source-hygiene.md"
+  "Proposals/IJAS-0009-neutral-surface-and-text-color-contract.md"
 )
 
 for path in "${required_files[@]}"; do
@@ -180,6 +182,14 @@ contract_patterns = {
         r"Privacy Manifest.*app.*widget.*extension target",
         r"arrow\.up\.right\.square",
         r"plurál",
+        r"Progressive disclosure",
+        r"Označenie.*Romanova",
+        r"430 riadkami",
+        r"Synchronizované.*potvrdene",
+        r"Reduce Motion",
+        r"Neutral Surface & Text Color Contract",
+        r"systemGroupedBackground",
+        r"secondarySystemGroupedBackground",
     ],
     "DESIGN_TOKENS.md": [
         r"header\.action\.visualDiameter",
@@ -190,6 +200,14 @@ contract_patterns = {
         r"summaryShortcut\.compact",
         r"information\.group\.radius",
         r"navigation\.externalIndicator",
+        r"search\.field\.minimumHeight",
+        r"button\.primary\.minimumHeight",
+        r"badge\.minimumHeight",
+        r"source\.workflowFile\.reviewThresholdLines",
+        r"color\.appBackground",
+        r"color\.cardSurface",
+        r"color\.textPrimary",
+        r"color\.textSecondary",
     ],
     "SUPPORT_AND_LINKS.md": [
         r"\?app=<app-id>&type=<type>&subject=<subject>#support",

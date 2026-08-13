@@ -2,7 +2,7 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.3.1**  
+Aktuálna verzia: **1.5.1**  
 Stav: **active**
 
 ## Účel repozitára
@@ -42,7 +42,13 @@ Pre Level 3 a Level 4 musí aplikácia uložiť vyplnenú testovaciu maticu, rel
 
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
+### Nové v 1.5.1
+
+Verzia 1.5.1 dopĺňa povinný Neutral Surface & Text Color Contract: spoločné Light/Dark background, card/tile, primary/secondary text, separator a disabled semantic roly naprieč aplikáciami. Produktové a brand farby zostávajú zachované, ale nesmú rozbiť kontrast ani neutrálnu vizuálnu paritu.
+
 ## Verzie a tagy
+
+standard-v1.5.1
 
 Používa sa sémantické verzionovanie:
 
@@ -53,10 +59,10 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.3.1
+standard-v1.5.1
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.3.1**.
+Aktuálny release: **IbaJuraj Application Standard 1.5.1**.
 
 ## Návrhy zmien
 

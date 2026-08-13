@@ -95,7 +95,8 @@
         "nestedNavigation",
         "contact",
         "layout",
-        "privacy"
+        "privacy",
+        "neutralSurfaces"
       ],
       "properties": {
         "settingsEntry": {
@@ -115,6 +116,9 @@
         },
         "privacy": {
           "const": "manifest-per-distributed-target"
+        },
+        "neutralSurfaces": {
+          "const": "semantic-neutral-surface-and-text-parity"
         }
       }
     },
