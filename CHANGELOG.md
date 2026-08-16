@@ -124,7 +124,7 @@
 - zavedené úrovne adopcie a spoločná testovacia matica zariadení, orientácie, lokalizácie, prístupnosti a sieťových stavov,
 - opravený neúplný obsah repozitára a doplnené chýbajúce GitHub workflow a šablóny,
 - opravený register SHA-256 kontrolných súčtov a rozšírená automatická validácia release,
-- zjednotený normatívny jazyk MUST / SHOULD / MAY a používateľské pomenovanie položky Kontakt,
+- zjednotený normatívny jazyk MUST / MUST NOT / SHOULD / SHOULD NOT / MAY a používateľské pomenovanie položky Kontakt,
 - verzia 1.2.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
 
 ## 1.1.0 – 2026-08-07
