@@ -2,7 +2,7 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia kandidáta: **1.6.0**  
+Aktuálna verzia: **1.6.0**  
 Stav: **draft / release candidate 1**
 
 ## Účel repozitára
