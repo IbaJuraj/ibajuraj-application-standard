@@ -1,5 +1,28 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.6.0 – 2026-08-16
+
+### Added
+- používateľský About metadata contract: verzia aplikácie + build, pri IbaJuraj Application Standard iba `Verzia X.Y.Z`,
+- zákaz zobrazovania interného adoption level/runtime gate/audit stavu v bežnom About UI,
+- kompaktný kontrakt pre súhrnné sekcie typu `Na prvý pohľad` a prioritu hlavnej ďalšej akcie.
+
+### Compatibility
+- spätne kompatibilná MINOR aktualizácia bez migrácie doménových používateľských dát,
+- vyžaduje iba úpravu prezentačných komponentov tam, kde aplikácia zobrazuje interné metadata alebo neprimerane vysoký summary blok.
+
+## 1.5.2 – 2026-08-14
+
+### Changed
+- spresnený Neutral Surface kontrakt: explicitná používateľská farebná téma MAY zmeniť root/background surface, zatiaľ čo Predvolená téma MUST zostať family-neutral,
+- ak aplikácia ponúka Vzhľad aj Farebnú tému, obe voľby MUST používať oddelený persistentný stav a kompatibilné Light/Dark varianty,
+- plné accent tlačidlá a badge MUST voliť foreground podľa kontrastu namiesto pevnej bielej,
+- runtime gate pre aplikácie s farebnými témami overuje Predvolenú, jednu svetlú a jednu tmavú tému.
+
+### Compatibility
+- spätne kompatibilný patch release,
+- bez povinnej migrácie doménových používateľských dát; aplikácia MAY vykonať jednorazovú migráciu starého theme preference modelu.
+
 ## 1.5.1 – 2026-08-13
 
 ### Added
@@ -101,7 +124,7 @@
 - zavedené úrovne adopcie a spoločná testovacia matica zariadení, orientácie, lokalizácie, prístupnosti a sieťových stavov,
 - opravený neúplný obsah repozitára a doplnené chýbajúce GitHub workflow a šablóny,
 - opravený register SHA-256 kontrolných súčtov a rozšírená automatická validácia release,
-- zjednotený normatívny jazyk MUST / MUST NOT / SHOULD / SHOULD NOT / MAY a používateľské pomenovanie položky Kontakt,
+- zjednotený normatívny jazyk MUST / SHOULD / MAY a používateľské pomenovanie položky Kontakt,
 - verzia 1.2.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
 
 ## 1.1.0 – 2026-08-07
