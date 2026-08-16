@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.5.1  
+**Verzia:** 1.6.0  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 13. augusta 2026  
+**Platnosť od:** 14. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -164,8 +164,10 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 #### 6.3.6 O aplikácii
 
 - Obrazovka O aplikácii SHOULD obsahovať názov aplikácie, marketingovú verziu, build a prijatú verziu IbaJuraj Application Standardu.
+- Používateľsky zobrazená verzia aplikácie MUST obsahovať marketingovú verziu aj číslo buildu; odporúčaný tvar je samostatne `Verzia X.Y` a `Build N` alebo rovnocenné spoločné zobrazenie bez interných release názvov.
+- Položka **IbaJuraj Application Standard** MUST v bežnom používateľskom UI zobrazovať iba prijatú verziu vo forme `Verzia X.Y.Z`. Interný tag, adoption level, runtime gate, audit stav a ostatné implementačné metadata MUST zostať v `APP_STANDARD_ADOPTION.md`, diagnostike alebo auditných súboroch a MUST NOT byť súčasťou bežného About UI.
 - Marketingová verzia a build MUST byť načítané z autoritatívnych build nastavení alebo `Bundle`.
-- Verzia, tag a úroveň adopcie štandardu MUST pochádzať z jedného runtime zdroja metadát a MUST zodpovedať `APP_STANDARD_ADOPTION.md`.
+- Verzia, tag a úroveň adopcie štandardu MUST pochádzať z jedného runtime zdroja metadát a MUST zodpovedať `APP_STANDARD_ADOPTION.md`; používateľské UI z tohto zdroja prezentuje iba údaje určené v predchádzajúcich bodoch.
 - Nevydaná alebo draft verzia MUST NOT byť prezentovaná ako aktívne prijatý štandard.
 - Obrazovka MAY ponúkať **Ohodnotiť aplikáciu** a **Zdieľať aplikáciu** a SHOULD poskytovať prístup k ochrane súkromia a relevantným právnym informáciám.
 - Rovnaké typy informačných a akčných riadkov na obrazovke **O aplikácii** MUST používať spoločnú geometriu `about.*`: rovnaký radius, padding, ikonový stĺpec a medzery medzi kartami.
@@ -225,6 +227,9 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 4. stavová alebo ďalšia akcia, ak je potrebná.
 
 - Dôležitý názov, stav alebo akcia MUST NOT byť skrytá iba na zachovanie kompaktnej výšky.
+- Súhrnná sekcia typu **Na prvý pohľad**, **Prehľad** alebo ekvivalent SHOULD byť kompaktná a MUST NOT zaberať neprimeranú časť prvého viewportu iba kvôli 3–4 metrikám.
+- Ak sú zobrazené 3–4 krátke metriky, implementácia SHOULD preferovať nízky adaptívny grid alebo metric strip; veľké samostatné karty sú vhodné iba vtedy, ak nesú samostatný význam alebo interakciu.
+- Súhrn MUST NOT opakovať dlhé vysvetlenie, ktoré je už uvedené v hero/status bloku. Sekcia **Čo treba urobiť** alebo hlavná ďalšia akcia SHOULD byť na štandardnom iPhone dosiahnuteľná bez zbytočne dlhého posunu, ak tomu nebráni reálne množstvo dôležitého obsahu.
 - Technické identifikátory, úplné čísla, dlhé vysvetlenia a sekundárne metadata SHOULD zostať v detaile, ak nie sú potrebné na rozpoznanie položky.
 - Stav MUST NOT byť komunikovaný iba farbou.
 - Celá interaktívna dlaždica SHOULD byť jednou zrozumiteľnou dotykovou plochou; vnorené akcie musia mať samostatný význam a minimálnu dotykovú plochu.
@@ -280,14 +285,16 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 
 - Základné neutrálne plochy a textové roly MUST byť vizuálne zhodné naprieč aplikáciami rodiny IbaJuraj v rovnakom appearance režime.
 - Implementácia SHOULD používať sémantické systémové farby namiesto lokálnych hex hodnôt alebo voľných `.gray`, `.black.opacity(...)` a `.white.opacity(...)` pre štandardné neutrálne roly.
-- `appBackground` MUST mapovať na `systemGroupedBackground` v Light Mode a `systemBackground` v Dark Mode. Referenčný výsledok je približne `#F2F2F7` / `#000000`.
-- `cardSurface` / `tileSurface` MUST mapovať na `secondarySystemGroupedBackground`. Referenčný výsledok je približne `#FFFFFF` / `#1C1C1E`.
+- Ak používateľ nezvolil vlastnú produktovú farebnú tému, `appBackground` MUST mapovať na `systemGroupedBackground` v Light Mode a `systemBackground` v Dark Mode. Referenčný výsledok je približne `#F2F2F7` / `#000000`.
+- Aplikácia MAY ponúknuť výslovne používateľom zvolenú **produktovú farebnú tému**, ktorá nahradí iba root/background surface. Táto voľba MUST byť vedomá, reverzibilná a MUST obsahovať možnosť **Predvolená** alebo ekvivalent, ktorá obnoví spoločný neutrálny `appBackground`.
+- Ak aplikácia ponúka súčasne **Vzhľad** (`Automaticky / Svetlý / Tmavý`) aj produktovú farebnú tému, tieto voľby MUST mať oddelený persistentný stav. Farebná téma MUST mať čitateľný Light aj Dark variant alebo MUST jasne obmedziť dostupnosť na kompatibilný appearance režim; prepnutie Vzhľadu MUST NOT poškodiť alebo nečitateľne skombinovať uloženú tému.
+- `cardSurface` / `tileSurface` MUST naďalej mapovať na `secondarySystemGroupedBackground`, pokiaľ nejde o explicitnú brand/product surface s vlastným kontrastným kontraktom. Referenčný výsledok je približne `#FFFFFF` / `#1C1C1E`.
 - `elevatedSurface` MAY používať ďalšiu systémovú elevated/secondary surface iba vtedy, keď ide o skutočne odlišnú vizuálnu vrstvu; MUST NOT nahrádzať základnú card/tile surface bez produktového dôvodu.
 - Primárny text MUST používať `label`/`primary`; sekundárny text MUST používať `secondaryLabel`/`secondary`; separátory MUST používať sémantický `separator`.
-- Produktový accent, success, warning, danger a information MAY zostať špecifické pre aplikáciu. Tieto farby MUST NOT meniť základný neutrál background/card/text kontrakt.
+- Produktový accent, success, warning, danger a information MAY zostať špecifické pre aplikáciu. Na plných accent tlačidlách alebo badgeoch MUST foreground adaptovať kontrast podľa zvoleného fillu; pevná biela MUST NOT byť použitá, ak nedosahuje dostatočný kontrast.
 - Brand surfaces v Peňaženke Kariet a obdobné produktové brand plochy MAY používať vlastné farby. Text, badge, favorite indikátor a ostatné affordances na nich MUST adaptovať kontrast podľa aktuálneho surface.
-- Light/Dark parity MUST byť súčasťou runtime adopčného gate: porovnávajú sa minimálne root background, card/tile surface, primary text, secondary text, separator a disabled state.
-- Aplikácia MUST NOT byť označená ako plne adoptujúca Standard 1.5.1, ak rovnaká neutrálna rola používa medzi aplikáciami odlišný odtieň bez zaznamenanej výnimky.
+- Light/Dark parity MUST byť súčasťou runtime adopčného gate: porovnávajú sa minimálne root background, card/tile surface, primary text, secondary text, separator a disabled state. Ak produkt podporuje používateľské farebné témy, runtime gate MUST navyše overiť Predvolenú tému a minimálne jednu svetlú a jednu tmavú produktovú tému.
+- Aplikácia MUST NOT byť označená ako plne adoptujúca aktuálny Standard, ak rovnaká neutrálna rola používa medzi aplikáciami odlišný odtieň bez zaznamenanej výnimky alebo ak používateľská téma zhorší čitateľnosť/kontrast.
 
 ### 6.14 Responsive layout pre iPhone a iPad
 
