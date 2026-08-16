@@ -1,4 +1,31 @@
+## 1.5.2 → 1.6.0
+
+Verzia 1.6.0 je spätne kompatibilná MINOR aktualizácia bez migrácie doménových dát.
+
+- V **O aplikácii** zobrazte pri aplikácii marketingovú verziu aj build.
+- Pri **IbaJuraj Application Standard** zobrazte používateľovi iba `Verzia X.Y.Z`; level, tag a runtime/audit stav ponechajte iba v interných metadátach.
+- Skontrolujte všetky detailné obrazovky so sekciou **Na prvý pohľad** a znížte zbytočnú vertikálnu výšku summary metrík tak, aby hlavná úloha detailu nebola vytláčaná bez obsahového dôvodu.
+- Nevyžaduje sa zmena uložených používateľských dát.
+
 # Migrácia IbaJuraj Application Standard
+
+## 1.5.1 → 1.5.2
+
+Verzia 1.5.2 je spätne kompatibilná patch aktualizácia. Spresňuje správanie explicitne používateľom volených produktových farebných tém a kontrast plných accent surfaces.
+
+### Povinný adopčný audit pre aplikáciu s Farebnou témou
+
+1. Zachovať Predvolenú tému ako spoločný neutral `color.appBackground`.
+2. Oddeliť persistentný stav Vzhľadu od persistentného stavu produktovej Farebnej témy.
+3. Každá používateľská téma musí zostať čitateľná v podporovanom Light/Dark režime alebo musí byť jasne obmedzená na kompatibilný appearance režim.
+4. `cardSurface`, primary/secondary text, separator a disabled semantic roly zostávajú podľa spoločného kontraktu, ak nejde o explicitnú product/brand surface.
+5. Na plných accent tlačidlách vybrať foreground podľa kontrastu voči fillu.
+6. Runtime overiť Predvolenú tému a minimálne jednu svetlú a jednu tmavú produktovú tému.
+
+### Kompatibilita
+
+- Nevyžaduje migráciu doménových používateľských dát.
+- Aplikácia s historicky zlúčeným appearance/theme stavom MAY vykonať jednorazovú migráciu preference kľúčov pri prvom štarte.
 
 ## 1.5.0 → 1.5.1
 
