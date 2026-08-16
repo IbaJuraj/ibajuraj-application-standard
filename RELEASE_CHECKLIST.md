@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.5.1 – release checklist
+# IbaJuraj Standard 1.6.0 – release checklist
 
 ## Metadata a zdroj pravdy
 
@@ -76,4 +76,21 @@
 - [ ] V bežných neutrálnych roliach nie sú neodôvodnené custom gray/opacity farby.
 - [ ] Screenshot parity Light/Dark je zaznamenaná v runtime audite.
 - [ ] Brand surfaces a favorite/badge indikátory spĺňajú kontrast.
+## IbaJuraj Standard 1.5.2 – User Theme & Accent Gate
 
+- [ ] Ak produkt nemá vlastnú Farebnú tému, Predvolený neutral contract ostáva bez zmeny.
+- [ ] Ak produkt má Farebnú tému, Predvolená voľba obnoví family-neutral root background.
+- [ ] Vzhľad a Farebná téma nie sú uložené v jednom spoločnom enum/state kľúči.
+- [ ] Farebná téma má čitateľný Light/Dark variant alebo je jasne obmedzená na kompatibilný appearance.
+- [ ] Preview tmavých aj svetlých tém je viditeľný v Settings.
+- [ ] Plné accent tlačidlá/badge používajú kontrastný foreground, nie bezpodmienečne biely.
+- [ ] Runtime dôkaz obsahuje Predvolenú + aspoň jednu svetlú a jednu tmavú používateľskú tému.
+
+
+
+## IbaJuraj Standard 1.6.0 – About & Summary Density Gate
+
+- [ ] O aplikácii zobrazuje marketingovú verziu a build.
+- [ ] IbaJuraj Application Standard sa používateľovi zobrazuje iba ako `Verzia X.Y.Z`.
+- [ ] Interný Level/tag/runtime gate nie je v bežnom About UI.
+- [ ] Summary/Na prvý pohľad neprimerane nevytláča hlavnú akciu z prvého viewportu.
