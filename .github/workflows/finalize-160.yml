@@ -19,12 +19,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reconstruct final RC3 normative files
+      - name: Remove temporary release upload files
         shell: bash
         run: |
           set -euo pipefail
-          cat .release-upload/standard.*.b64 | tr -d '\n' | base64 --decode > IBAJURAJ_APPLICATION_STANDARD.md
-          cat .release-upload/tokens.*.b64 | tr -d '\n' | base64 --decode > DESIGN_TOKENS.md
           rm -rf .release-upload
           rm -f .github/workflows/finalize-160.yml
 
