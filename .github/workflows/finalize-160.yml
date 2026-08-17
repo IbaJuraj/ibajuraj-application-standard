@@ -1,0 +1,54 @@
+name: Finalize Standard 1.6.0
+
+on:
+  push:
+    branches:
+      - release/standard-v1.6.0-rc1
+    paths:
+      - '.release-upload/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconstruct final RC3 normative files
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .release-upload/standard.*.b64 | tr -d '\n' | base64 --decode > IBAJURAJ_APPLICATION_STANDARD.md
+          cat .release-upload/tokens.*.b64 | tr -d '\n' | base64 --decode > DESIGN_TOKENS.md
+          rm -rf .release-upload
+          rm -f .github/workflows/finalize-160.yml
+
+      - name: Regenerate SHA-256 manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -type f \
+            -not -path './.git/*' \
+            -not -path './SHA256SUMS.txt' \
+            -print | sed 's#^./##' | LC_ALL=C sort | while IFS= read -r file; do
+              sha256sum "$file"
+            done > SHA256SUMS.txt
+
+      - name: Validate final Standard
+        shell: bash
+        run: bash Checks/validate-standard.sh
+
+      - name: Commit final Standard 1.6.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'IbaJuraj'
+          git config user.email '134379854+IbaJuraj@users.noreply.github.com'
+          git add -A
+          git commit -m 'Finalize IbaJuraj Application Standard 1.6.0'
+          git push origin HEAD:release/standard-v1.6.0-rc1
