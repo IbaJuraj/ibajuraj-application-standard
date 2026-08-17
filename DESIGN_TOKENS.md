@@ -1,8 +1,8 @@
 # IbaJuraj Design Tokens
 
-**Verzia:** 1.5.1  
+**Verzia:** 1.6.0  
 **Stav:** autoritatívny spoločný register  
-**Platnosť od:** 13. augusta 2026
+**Platnosť od:** 14. augusta 2026
 
 Tento register definuje spoločné počiatočné hodnoty. Aplikácia ich MUST používať prostredníctvom centrálneho theme alebo foundation rozhrania, nie opakovanými číslami v jednotlivých obrazovkách.
 
@@ -216,11 +216,11 @@ Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný varian
 - Produktový akcent MAY byť odlišný, ak zostáva konzistentný a spĺňa kontrast.
 
 
-## 1.5.1 – Neutral Surface & Text Color Contract
+## 1.5.2 – Neutral Surface, User Theme & Text Contrast Contract
 
 | Token | Light | Dark | Preferovaná systémová mapa | Záväznosť |
 |---|---|---|---|---|
-| `color.appBackground` | približne `#F2F2F7` | `#000000` | `systemGroupedBackground` / `systemBackground` | `MUST` |
+| `color.appBackground` | približne `#F2F2F7` | `#000000` | `systemGroupedBackground` / `systemBackground` | `MUST` pre Predvolenú tému |
 | `color.cardSurface` | `#FFFFFF` | približne `#1C1C1E` | `secondarySystemGroupedBackground` | `MUST` |
 | `color.elevatedSurface` | systémová secondary/elevated surface | systémová secondary/elevated surface | platform semantic color | `MAY` podľa role |
 | `color.textPrimary` | `#000000` | `#FFFFFF` | `label` / `primary` | `MUST` |
@@ -231,7 +231,10 @@ Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný varian
 - Hex hodnoty sú referenčný vizuálny cieľ, nie dôvod obísť sémantické systémové farby.
 - Bežný neutrál text SHOULD NOT používať lokálne `.gray`, `.white.opacity(...)` ani `.black.opacity(...)`, ak existuje zodpovedajúca sémantická rola.
 - Brand surface MAY obísť `color.cardSurface`, ale MUST zachovať kontrast textu a indikátorov.
-- Rovnaký token MUST mať rovnaký vizuálny výsledok v každej aplikácii rodiny IbaJuraj.
+- `color.userThemeBackground` MAY nahradiť iba root/background surface po výslovnom výbere používateľa; Predvolená téma MUST vrátiť `color.appBackground`.
+- Ak existuje Vzhľad aj farebná téma, persistence MUST byť oddelená (`appearanceMode` a `productTheme` alebo ekvivalent) a theme variant MUST zostať čitateľný v podporovanom appearance režime.
+- `color.accentForeground` MUST byť zvolený podľa kontrastu voči plnému accent fillu; pre svetlé akcenty MAY byť čierny, pre tmavé MAY byť biely.
+- Rovnaký neutrálny token MUST mať rovnaký vizuálny výsledok v každej aplikácii rodiny IbaJuraj; explicitná používateľská theme surface je samostatná produktová rola.
 
 ## 1.5.0 – spoločné interaction a content-density tokeny
 

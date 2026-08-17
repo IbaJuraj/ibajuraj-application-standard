@@ -100,7 +100,7 @@
       ],
       "properties": {
         "settingsEntry": {
-          "const": "home-top-trailing"
+          "const": "primary-root-top-trailing"
         },
         "appearance": {
           "const": "root-segmented-system-light-dark"

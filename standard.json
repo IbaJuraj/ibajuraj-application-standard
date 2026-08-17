@@ -1,9 +1,9 @@
 {
   "$schema": "./standard.schema.json",
   "name": "IbaJuraj Application Standard",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "status": "active",
-  "releasedAt": "2026-08-13",
+  "releasedAt": "2026-08-17",
   "minimumSupportedVersion": "1.0.0",
   "breakingChange": false,
   "normativeKeywords": [
@@ -41,7 +41,7 @@
     }
   ],
   "contracts": {
-    "settingsEntry": "home-top-trailing",
+    "settingsEntry": "primary-root-top-trailing",
     "appearance": "root-segmented-system-light-dark",
     "nestedNavigation": "native-push-back-button-edge-swipe-and-semantic-affordance",
     "contact": "form-and-telegram",
@@ -60,7 +60,7 @@
   "source": {
     "repository": "https://github.com/IbaJuraj/ibajuraj-application-standard",
     "latestMetadata": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.json",
-    "tag": "standard-v1.5.1",
+    "tag": "standard-v1.6.0",
     "document": "IBAJURAJ_APPLICATION_STANDARD.md"
   }
 }

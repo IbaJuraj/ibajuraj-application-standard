@@ -1,5 +1,33 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.6.0 – 2026-08-17
+
+### Added
+- používateľský About metadata contract: verzia aplikácie + build, pri IbaJuraj Application Standard iba `Verzia X.Y.Z`,
+- zákaz zobrazovania interného adoption level/runtime gate/audit stavu v bežnom About UI,
+- kompaktný kontrakt pre súhrnné sekcie typu `Na prvý pohľad` a prioritu hlavnej ďalšej akcie,
+- povinný jednokrokový vstup do Nastavení z každého primárneho rootu produktu,
+- konzistentnú používateľskú stavovú terminológiu naprieč root/list/detail a zákaz technických signed hodnôt tam, kde existuje prirodzené stavové znenie,
+- preferenciu priameho CTA na jediný konkrétny kritický objekt namiesto všeobecného zoznamu.
+- povinnú spoločnú vertikálnu baseline primárnych root nadpisov a jednotnú geometriu trailing Settings akcie naprieč hlavnými tabmi,
+- tokeny `appPage.rootTitleTopInset` a `appPage.rootHeaderBaseline` pre root header alignment.
+
+### Compatibility
+- spätne kompatibilná MINOR aktualizácia bez migrácie doménových používateľských dát,
+- vyžaduje iba úpravu prezentačných komponentov tam, kde aplikácia zobrazuje interné metadata alebo neprimerane vysoký summary blok.
+
+## 1.5.2 – 2026-08-14
+
+### Changed
+- spresnený Neutral Surface kontrakt: explicitná používateľská farebná téma MAY zmeniť root/background surface, zatiaľ čo Predvolená téma MUST zostať family-neutral,
+- ak aplikácia ponúka Vzhľad aj Farebnú tému, obe voľby MUST používať oddelený persistentný stav a kompatibilné Light/Dark varianty,
+- plné accent tlačidlá a badge MUST voliť foreground podľa kontrastu namiesto pevnej bielej,
+- runtime gate pre aplikácie s farebnými témami overuje Predvolenú, jednu svetlú a jednu tmavú tému.
+
+### Compatibility
+- spätne kompatibilný patch release,
+- bez povinnej migrácie doménových používateľských dát; aplikácia MAY vykonať jednorazovú migráciu starého theme preference modelu.
+
 ## 1.5.1 – 2026-08-13
 
 ### Added
@@ -32,7 +60,7 @@
 - zavedené explicitné async a používateľsky čitateľné sync states,
 - rozšírený accessibility quality gate o VoiceOver poradie a veľký Dynamic Type,
 - zavedený source-hygiene audit vrátane ~430-line review threshold, root-view zodpovedností, unused-file auditu a cross-file Swift access-control kontroly,
-- rozšírené design tokeny, referenčné vzory, testovacia matica a release checklist,
+- rozšírené design tokens, referenčné vzory, testovacia matica a release checklist,
 - verzia 1.5.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
 
 ## 1.5.0 – 2026-08-13

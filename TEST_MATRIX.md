@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.5.1 – testovacia matica
+# IbaJuraj Standard 1.6.0 – testovacia matica
 
 Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať rizikové kombinácie podľa svojich funkcií.
 
@@ -116,4 +116,25 @@ Pre každú aplikáciu a každý podporovaný appearance režim:
 - [ ] Dark Mode screenshot parity bola porovnaná s referenčnou aplikáciou.
 - [ ] Brand surface výnimky majú čitateľný adaptívny kontrast.
 - [ ] Odchýlka má explicitnú `STANDARD_EXCEPTION.md`, ak je produktovo nevyhnutná.
+## 1.5.2 – User Theme & Accent Contrast Gate
 
+Ak aplikácia ponúka produktové farebné témy:
+
+- [ ] Predvolená téma používa spoločný `color.appBackground` v Light aj Dark.
+- [ ] Vzhľad a Farebná téma používajú oddelený persistentný stav.
+- [ ] Prepnutie Vzhľadu nemení/nekorumpuje uloženú Farebnú tému a výsledok zostáva čitateľný.
+- [ ] Minimálne jedna svetlá a jedna tmavá Farebná téma reálne menia root background.
+- [ ] Card/tile surface a primary/secondary text zostávajú v semantic roliach.
+- [ ] Farebné preview prvky sú viditeľné na svetlom aj tmavom Settings surface.
+- [ ] Plný accent fill používa čierny alebo biely foreground podľa kontrastu; žiadny podporovaný accent nemá nečitateľný symbol/text.
+
+
+
+## 1.6.0 – About Metadata & Compact Summary Gate
+
+| Kontrola | Light | Dark | Dynamic Type | Výsledok |
+|---|---|---|---|---|
+| App verzia + build | ☐ | ☐ | ☐ | ☐ |
+| Standard iba `Verzia X.Y.Z` | ☐ | ☐ | ☐ | ☐ |
+| Žiadny interný Level/tag/runtime gate v About | ☐ | ☐ | ☐ | ☐ |
+| Kompaktný `Na prvý pohľad` na štandardnom iPhone | ☐ | ☐ | ☐ | ☐ |
