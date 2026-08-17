@@ -3,7 +3,7 @@
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
 Aktuálna verzia: **1.6.0**  
-Stav: **draft / release candidate 1**
+Stav: **finálne vydanie**
 
 ## Účel repozitára
 
@@ -67,3 +67,5 @@ Aktuálny release: **IbaJuraj Application Standard 1.6.0**.
 ## Návrhy zmien
 
 Zmena začína návrhom podľa `Proposals/TEMPLATE.md`. Automatický nástroj môže vytvoriť návrh alebo report, ale nesmie bez schválenia zaviesť nové MUST pravidlo.
+
+Finálne vydanie 1.6.0 zahŕňa aj RC3 root header baseline contract, overený v Strážca Termínov v1.55 Build 78.

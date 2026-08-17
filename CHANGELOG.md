@@ -1,11 +1,16 @@
 # Changelog – IbaJuraj Application Standard
 
-## 1.6.0 – 2026-08-16
+## 1.6.0 – 2026-08-17
 
 ### Added
 - používateľský About metadata contract: verzia aplikácie + build, pri IbaJuraj Application Standard iba `Verzia X.Y.Z`,
 - zákaz zobrazovania interného adoption level/runtime gate/audit stavu v bežnom About UI,
-- kompaktný kontrakt pre súhrnné sekcie typu `Na prvý pohľad` a prioritu hlavnej ďalšej akcie.
+- kompaktný kontrakt pre súhrnné sekcie typu `Na prvý pohľad` a prioritu hlavnej ďalšej akcie,
+- povinný jednokrokový vstup do Nastavení z každého primárneho rootu produktu,
+- konzistentnú používateľskú stavovú terminológiu naprieč root/list/detail a zákaz technických signed hodnôt tam, kde existuje prirodzené stavové znenie,
+- preferenciu priameho CTA na jediný konkrétny kritický objekt namiesto všeobecného zoznamu.
+- povinnú spoločnú vertikálnu baseline primárnych root nadpisov a jednotnú geometriu trailing Settings akcie naprieč hlavnými tabmi,
+- tokeny `appPage.rootTitleTopInset` a `appPage.rootHeaderBaseline` pre root header alignment.
 
 ### Compatibility
 - spätne kompatibilná MINOR aktualizácia bez migrácie doménových používateľských dát,
@@ -55,7 +60,7 @@
 - zavedené explicitné async a používateľsky čitateľné sync states,
 - rozšírený accessibility quality gate o VoiceOver poradie a veľký Dynamic Type,
 - zavedený source-hygiene audit vrátane ~430-line review threshold, root-view zodpovedností, unused-file auditu a cross-file Swift access-control kontroly,
-- rozšírené design tokeny, referenčné vzory, testovacia matica a release checklist,
+- rozšírené design tokens, referenčné vzory, testovacia matica a release checklist,
 - verzia 1.5.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
 
 ## 1.5.0 – 2026-08-13
