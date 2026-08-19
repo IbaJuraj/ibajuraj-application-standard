@@ -1,3 +1,25 @@
+## 1.6.0 → 1.6.1
+
+Verzia 1.6.1 je spätne kompatibilná PATCH aktualizácia bez migrácie doménových používateľských dát.
+
+- Nahraďte hardcoded runtime build/verziu v kompatibilitných, update a diagnostických službách hodnotou z autoritatívnych build metadát alebo `Bundle`.
+- Overte všetky rodiny push detailov: Back a systémový swipe-back musia fungovať konzistentne z každého vstupu.
+- Dlhé katalógy môžu zaviesť pinned section headers a collapsing title tam, kde zlepšujú orientáciu.
+- Detaily s rozhodnutím/následkom presuňte na outcome-first/practical-first hierarchiu; sekundárne procesné a zdrojové údaje použite cez progressive disclosure.
+- Ak sa používa badge `NOVÉ`, pridajte centrálne pravidlo expirácie/lifecycle.
+- Dátumy pre časovo verziované pravidlá obmedzte na rozsah, pre ktorý existuje kompatibilný overený obsah.
+- Vyhľadávanie doplňte o navigačné mosty, ak výsledok pozná konkrétny cieľ.
+- Level 3+ katalógy doplňte o completeness test všetkých publikovaných položiek a behaviorálne route testy.
+- Doménová dátová migrácia nie je potrebná.
+
+
+## 1.6.0 – primary-root Settings, state clarity and root header alignment
+
+- Každý primárny root s vlastnou hlavičkou doplňte o rovnaký `gearshape.fill` vstup do systémových Nastavení; používateľ nemá prechádzať na iný tab iba kvôli Nastaveniam.
+- Skontrolujte, že rovnaký stav používa rovnaké používateľské znenie na roote, v zozname aj detaile a že záporné technické intervaly nie sú priamo zobrazované používateľovi.
+- Ak kritická karta identifikuje jeden objekt, preferujte priame otvorenie jeho detailu pred všeobecným zoznamom.
+- Žiadna migrácia doménových dát nie je potrebná.
+
 ## 1.5.2 → 1.6.0
 
 Verzia 1.6.0 je spätne kompatibilná MINOR aktualizácia bez migrácie doménových dát.
@@ -233,3 +255,6 @@ https://github.com/IbaJuraj/ibajuraj-application-standard
 ### Dôležité pravidlo
 
 Obsah štandardu sa po migrácii upravuje iba v tomto repozitári. Web IbaJuraj Apps môže štandard prezentovať alebo naň odkazovať, ale nesmie sa stať druhým zdrojom pravdy.
+
+### 1.6.0 – Root header baseline
+Primary root screens must migrate to one shared root-title top inset/baseline and matching trailing Settings action geometry.
