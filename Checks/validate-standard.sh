@@ -172,7 +172,7 @@ for filename in ("IBAJURAJ_APPLICATION_STANDARD.md", "DESIGN_TOKENS.md", "SUPPOR
 
 contract_patterns = {
     "IBAJURAJ_APPLICATION_STANDARD.md": [
-        r"gearshape\.fill.*vpravo hore na hlavnej obrazovke",
+        r"gearshape\.fill.*vpravo hore na každom primárnom roote",
         r"systémovú šípku späť",
         r"gesto potiahnutia z ľavého okraja späť",
         r"Automaticky / Svetlý / Tmavý",
