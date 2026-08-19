@@ -1,5 +1,28 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.6.1 – 2026-08-19
+
+### Added
+- jeden autoritatívny runtime zdroj pravdy pre kompatibilitné, diagnostické a dátové metadata,
+- spoločná navigačná politika pre celé rodiny detailov vrátane natívneho swipe-back bez route výnimiek,
+- outcome-first / practical-first hierarchia pre rozhodovacie, sankčné a vysvetľovacie detaily,
+- pinned/sticky section header vzor pre dlhé katalógy a collapsing-title pravidlo pri duplicitných názvoch,
+- explicitný lifecycle pre dočasné badge typu `NOVÉ`,
+- časové obmedzenie doménových vstupov na skutočne podporované dátové pokrytie,
+- navigačné mosty z výsledkov vyhľadávania na konkrétne použiteľné ciele,
+- completeness audit všetkých publikovaných položiek a behaviorálne regresné testy kritických rout.
+
+### Changed
+- neutral root surfaces sa nesmú lokálne približovať vlastnými opacity/gray hodnotami,
+- bežná typografia používa semantic/relative Dynamic Type roly,
+- interné implementačné a auditné poznámky sú explicitne zakázané v produkčnom používateľskom UI,
+- sémantická farba musí vyjadrovať význam stavu, nie iba veľkosť sankcie alebo čísla,
+- dátum/verzia overenia obsahu musí pochádzať z konkrétneho zdroja alebo balíka.
+
+### Compatibility
+- spätne kompatibilný PATCH release bez migrácie doménových používateľských dát,
+- aplikácie musia skontrolovať hardcoded runtime metadata, globálnu navigačnú politiku, published-item completeness a časové rozsahy, ak tieto funkcie používajú.
+
 ## 1.6.0 – 2026-08-17
 
 ### Added
@@ -60,7 +83,7 @@
 - zavedené explicitné async a používateľsky čitateľné sync states,
 - rozšírený accessibility quality gate o VoiceOver poradie a veľký Dynamic Type,
 - zavedený source-hygiene audit vrátane ~430-line review threshold, root-view zodpovedností, unused-file auditu a cross-file Swift access-control kontroly,
-- rozšírené design tokens, referenčné vzory, testovacia matica a release checklist,
+- rozšírené design tokeny, referenčné vzory, testovacia matica a release checklist,
 - verzia 1.5.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
 
 ## 1.5.0 – 2026-08-13
