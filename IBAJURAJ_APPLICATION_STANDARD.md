@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.6.0  
+**Verzia:** 1.6.1  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 14. augusta 2026  
+**Platnosť od:** 19. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -32,6 +32,7 @@ Záväznosť pravidla určuje iba jedno z týchto veľkými písmenami zapísan�
 
 - MUST používať značku **IbaJuraj** ako spoločnú autorskú a produktovú identitu.
 - MUST načítavať marketingovú verziu a build z autoritatívnych build nastavení alebo `Bundle`; hodnoty MUST NOT byť ručne duplikované v používateľskom kóde.
+- Všetky runtime metadata, ktoré ovplyvňujú kompatibilitu, aktualizácie, diagnostiku, synchronizáciu alebo dôveryhodnosť dátového obsahu, MUST pochádzať z jedného autoritatívneho runtime zdroja. Verzia, build, kompatibilitný build, verzia schémy a obdobné hodnoty MUST NOT byť paralelne hardcoded v samostatných view, službách alebo validátoroch.
 - MUST používať jednotné verejné odkazy definované v `SUPPORT_AND_LINKS.md`.
 - SHOULD zobrazovať názov aplikácie, verziu, build, web, ochranu súkromia a podporu v časti O aplikácii.
 
@@ -70,6 +71,7 @@ Spoločný štandard MUST zjednocovať **správanie, geometriu a sémantické ro
 - MUST pri deštruktívnej akcii pomenovať objekt a následok.
 - SHOULD používať systémové komponenty Apple, ak produktová potreba nevyžaduje vlastné riešenie.
 - SHOULD obmedziť veľké monolitické view súbory a deliť ich podľa zodpovedností.
+- Bežný používateľský text MUST používať sémantické alebo relatívne Dynamic Type roly. Pevná bodová veľkosť SHOULD byť vyhradená pre zdokumentovanú špecifickú vizuálnu rolu a MUST mať overený accessibility variant.
 
 
 ### 6.3 Spoločné systémové nastavenia
@@ -78,8 +80,9 @@ Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používa
 
 #### 6.3.1 Spoločný vstup do Nastavení
 
-- Nastavenia MUST byť dostupné cez tlačidlo so symbolom `gearshape.fill` vpravo hore na hlavnej obrazovke aplikácie.
-- Hlavná obrazovka je predvolený vstupný root produktu. Tlačidlo Nastavení MAY byť dostupné aj na ďalších primárnych rootoch, ale tento štandard to nevyžaduje.
+- Nastavenia MUST byť dostupné cez tlačidlo so symbolom `gearshape.fill` vpravo hore na každom primárnom roote produktu, ktorý má vlastnú root hlavičku.
+- Primárny root je hlavná pracovná obrazovka dostupná priamo zo spodnej alebo rovnocennej hlavnej navigácie. Používateľ MUST NOT byť nútený prepnúť na iný primárny root iba preto, aby otvoril systémové Nastavenia.
+- Ak konkrétny primárny root objektívne nemôže bezpečne niesť header action bez porušenia čitateľnosti alebo hlavnej úlohy, produkt MAY použiť zdokumentovanú výnimku a ekvivalentný priamy vstup; taká výnimka MUST zostať jednokroková a nesmie byť skrytá v sekundárnom obsahu.
 - Spodná navigácia MUST obsahovať iba hlavné pracovné časti produktu a MUST NOT obsahovať samostatný tab systémových Nastavení.
 - Produktová obrazovka typu **Moje** MAY zostať pre históriu, obľúbené položky, profil alebo doménový kontext, ale MUST NOT byť jediným kontajnerom systémových Nastavení.
 - Tlačidlo Nastavení MUST používať spoločný vizuálny rozsah, kruhový kontajner, odsadenie od safe area, pressed state a accessibility label podľa `DESIGN_TOKENS.md`.
@@ -87,7 +90,7 @@ Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používa
 
 #### 6.3.2 Spoločná hlavička a akcie
 
-- Akcia Nastavení MUST byť pravou krajnou akciou hlavičky hlavnej obrazovky.
+- Akcia Nastavení MUST byť pravou krajnou systémovou akciou hlavičky každého primárneho rootu, na ktorom sa zobrazuje.
 - Jedna strana hlavičky SHOULD obsahovať najviac dve samostatné kruhové akcie; ďalšie sekundárne akcie SHOULD byť zlúčené do menu alebo presunuté do obsahu.
 - Vizuálny kruh a dotyková plocha MUST používať `header.action.*` tokeny. Vizuálny kruh MAY byť menší než dotyková plocha.
 - Názov obrazovky alebo aplikácie MUST zostať čitateľný a MUST sa neprekrývať s akciami ani pri dlhšej lokalizácii a Dynamic Type.
@@ -186,6 +189,8 @@ Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktív
 - Aplikácia SHOULD minimalizovať navigačnú hĺbku a SHOULD NOT vytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
 - Interný cieľ otvorený push navigáciou MUST používať trailing `chevron.right`; ikona externého odkazu, napríklad `arrow.up.right.square`, MUST byť vyhradená pre URL alebo cieľ mimo aktuálneho navigačného stromu aplikácie.
 - Posúvateľný obsah MAY prechádzať pod navigačnú lištu iba vtedy, ak zostáva titulok aj obsah jednoznačne čitateľný. Navigačný surface MUST zabrániť tomu, aby sa text pod lištou vizuálne prekrýval alebo súťažil s navigation title.
+- Navigačná politika pre jednu rodinu detailov MUST byť implementovaná spoločným spôsobom, nie iba na vybraných routach. Detail otvorený z rôznych vstupov MUST zachovať rovnakú šípku späť, systémový swipe-back a návrat o jednu úroveň, pokiaľ nejde o zámerný modal flow.
+- Ak obrazovka používa veľký obsahový názov aj navigation title s rovnakým textom, SHOULD použiť collapsing large-title vzor alebo jednu z rolí skryť, aby nevznikala vizuálna duplicita.
 
 ### 6.5 Adaptívne rozloženie
 
@@ -234,14 +239,19 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Stav MUST NOT byť komunikovaný iba farbou.
 - Celá interaktívna dlaždica SHOULD byť jednou zrozumiteľnou dotykovou plochou; vnorené akcie musia mať samostatný význam a minimálnu dotykovú plochu.
 - Na vnorenej informačnej obrazovke s inline navigation title SHOULD prvý obsahový nadpis používať `.title2` alebo nižšiu hierarchiu, pokiaľ nejde o zámerný produktový hero. Obsahový nadpis MUST NOT vizuálne súperiť s navigation title.
+- Detail, v ktorom používateľ potrebuje rozhodnutie, následok alebo ďalší krok, SHOULD používať **outcome-first / practical-first** hierarchiu: najprv zrozumiteľný výsledok a praktický význam, potom sekundárne procesné, technické alebo právne podrobnosti.
+- Sémantická farba MUST zodpovedať významu stavu. `danger`/červená MUST NOT byť použitá iba preto, že číslo alebo sankcia je vysoká, ak produkt týmto surface inde označuje kritický, zakázaný alebo právne závažný stav.
 
 ### 6.8 Hierarchia koreňovej pracovnej obrazovky
 
 - Primárny root SHOULD používateľovi do troch sekúnd vysvetliť, **kde je, čo je najdôležitejší stav a čo môže urobiť ďalej**.
 - Root SHOULD používať jednu dominantnú obsahovú prioritu. Viaceré rovnocenné hero bloky alebo CTA nad prvým scrollom SHOULD NOT súperiť o pozornosť.
 - Ak root používa veľký title/subtitle pár, MUST používať spoločné `appPage.*` tokeny. Settings gear zostáva pravou krajnou systémovou akciou podľa 6.3.1 a 6.3.2.
+- Všetky primárne rooty v rámci jednej aplikácie MUST ukotviť hlavný root nadpis na rovnakej vertikálnej baseline voči safe-area/root content anchoru. Root title a pravá systémová header akcia MUST používať spoločný top inset a rovnakú header geometriu; prepnutie medzi tabmi nesmie spôsobovať viditeľné vertikálne „skákanie“ nadpisu alebo Settings akcie.
 - Pozdrav, informačný status, kritické upozornenie a CTA SHOULD NOT byť vrstvené do jedného komponentu, ak nesú odlišný význam.
 - Rovnaká kritická informácia SHOULD NOT byť súčasne opakovaná badgeom, nadpisom, stavovým textom a CTA textom bez ďalšej informačnej hodnoty.
+- Rovnaký doménový stav MUST používať konzistentnú používateľskú terminológiu naprieč rootom, zoznamom, detailom a súhrnnou kartou; technické reprezentácie ako záporný počet dní SHOULD byť preložené do prirodzeného používateľského významu, napríklad `7 dní po termíne`.
+- Ak kritická alebo prioritná karta jednoznačne identifikuje jeden konkrétny objekt, jej primárne CTA SHOULD viesť priamo na tento objekt namiesto všeobecného agregovaného zoznamu, pokiaľ taký priamy vstup nie je nebezpečný alebo významovo neúplný.
 
 ### 6.9 Progressive disclosure a vizuálna hustota
 
@@ -249,6 +259,8 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Sekcia SHOULD mať jeden dominantný status a najviac jedno hlavné CTA; sekundárne akcie MAY byť v riadku, `...` menu alebo obrazovke Podrobnosti.
 - Podrobné právne, diagnostické, technické alebo administratívne údaje SHOULD byť dostupné bez ich povinného zobrazenia na každom roote.
 - Aplikácia MUST NOT skrývať kritickú informáciu iba kvôli vizuálnemu zjednodušeniu. Progressive disclosure znižuje šum, nie dostupnosť dôležitého obsahu.
+- Dlhý katalóg SHOULD pri strate kontextu používať pinned/sticky section header pod safe area alebo navigation surface. Aktuálny názov skupiny zostáva viditeľný, kým ho prirodzene nenahradí nasledujúca skupina.
+- Sekundárne procesné, diagnostické a úplné zdrojové údaje SHOULD byť rozbaliteľné alebo dostupné v detaile, ak ich okamžité zobrazenie vytláča používateľský výsledok z prvého viewportu.
 
 ### 6.10 Search, filtre a segmented controls
 
@@ -280,11 +292,13 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Ak používateľ môže mať viac objektov rovnakého typu, značky alebo trhu, produkt SHOULD ponúknuť voliteľné vlastné **Označenie** (napr. „Romanova“, „Firemná“, „Moja“).
 - Vlastné označenie MUST byť používateľský text, nie uzavretý zoznam predpokladaných rolí.
 - Ak označenie nie je vyplnené, komponent SHOULD uvoľniť jeho priestor namiesto zobrazovania prázdneho placeholdera.
+- Dočasné stavové označenie typu **NOVÉ** MUST mať explicitný životný cyklus, napríklad `introducedBuild` a `newUntilBuild`, dátum expirácie alebo rovnocenné centrálne pravidlo. MUST NOT zostať v UI natrvalo iba preto, že bolo raz pridané.
 
 ### 6.13.1 Neutral Surface & Text Color Contract
 
 - Základné neutrálne plochy a textové roly MUST byť vizuálne zhodné naprieč aplikáciami rodiny IbaJuraj v rovnakom appearance režime.
 - Implementácia SHOULD používať sémantické systémové farby namiesto lokálnych hex hodnôt alebo voľných `.gray`, `.black.opacity(...)` a `.white.opacity(...)` pre štandardné neutrálne roly.
+- Primárne root surfaces rovnakej sémantickej role MUST používať spoločný `color.appBackground` alebo jeho centrálny theme alias. Lokálne približovanie neutrálneho root pozadia pomocou vlastnej `.opacity(...)`, custom gray alebo paralelného tokenu MUST NOT vytvárať odlišný odtieň medzi hlavnými obrazovkami.
 - Ak používateľ nezvolil vlastnú produktovú farebnú tému, `appBackground` MUST mapovať na `systemGroupedBackground` v Light Mode a `systemBackground` v Dark Mode. Referenčný výsledok je približne `#F2F2F7` / `#000000`.
 - Aplikácia MAY ponúknuť výslovne používateľom zvolenú **produktovú farebnú tému**, ktorá nahradí iba root/background surface. Táto voľba MUST byť vedomá, reverzibilná a MUST obsahovať možnosť **Predvolená** alebo ekvivalent, ktorá obnoví spoločný neutrálny `appBackground`.
 - Ak aplikácia ponúka súčasne **Vzhľad** (`Automaticky / Svetlý / Tmavý`) aj produktovú farebnú tému, tieto voľby MUST mať oddelený persistentný stav. Farebná téma MUST mať čitateľný Light aj Dark variant alebo MUST jasne obmedziť dostupnosť na kompatibilný appearance režim; prepnutie Vzhľadu MUST NOT poškodiť alebo nečitateľne skombinovať uloženú tému.
@@ -321,6 +335,8 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Počty položiek MUST používať lokalizované plurálové pravidlá; pevné spojenie čísla s jediným tvarom podstatného mena nie je postačujúce.
 - SHOULD uprednostniť krátke, konkrétne nadpisy pred marketingovými formuláciami.
 - Lokalizované App Store texty a screenshoty MUST prejsť kontrolou prirodzeného znenia, gramatiky, terminológie a lokálneho formátovania; automatický alebo doslovný preklad nie je postačujúci release dôkaz.
+- Technické, auditné, implementačné a testovacie poznámky MUST NOT byť súčasťou používateľského produkčného UI, pokiaľ nejde o zámernú diagnostickú obrazovku.
+- Nadpisy a názvy položiek MUST byť jazykovo samostatné a zrozumiteľné v kontexte obrazovky; fragment, ktorý pôsobí ako nedokončená veta alebo interný názov, SHOULD byť preformulovaný do prirodzeného používateľského jazyka.
 
 ## 8. Stavový model obrazoviek
 
@@ -415,6 +431,7 @@ Ak aplikácia ukladá, zobrazuje alebo vypočítava doménové dátumy a časy:
 - Formát dátumu a času MUST rešpektovať lokalitu a používateľský kalendár, ak doména výslovne nevyžaduje inak.
 - Výpočty termínov MUST zohľadniť zmenu letného a zimného času, ak pracujú s presným časom.
 - Hranice stavov **dnes**, **zajtra**, **platné** a **po termíne** MUST byť definované jedným zdrojom pravdy a testované na prechode dňa.
+- Ak doménový výsledok závisí od časovej verzie pravidiel alebo dát, vstupný dátum MUST byť obmedzený na skutočne podporované časové pokrytie. Aplikácia MUST NOT ponúknuť dátum, pre ktorý nevie garantovať kompatibilný a overený výsledok, bez jasne označeného neovereného režimu.
 
 ### 10.3 Vzdialený obsah a konfigurácia
 
@@ -426,6 +443,8 @@ Ak aplikácia prijíma vzdialený obsahový alebo konfiguračný balík:
 - aplikácia SHOULD zachovať posledný overený kompatibilný balík pre offline alebo obnovovací stav,
 - nekompatibilný alebo poškodený balík MUST byť odmietnutý bez straty posledného platného stavu,
 - používateľ SHOULD vedieť rozlíšiť aktuálny, zastaraný a neoverený obsah, ak to ovplyvňuje dôveryhodnosť výsledku.
+- Kompatibilita vzdialeného balíka s aplikáciou MUST byť vyhodnotená voči skutočnému runtime buildu/verzii z autoritatívnych build metadát, nie voči ručne zapísanej hodnote v službe alebo view.
+- Dátum, verzia alebo identita overenia obsahu MUST pochádzať z konkrétneho zdroja alebo balíka, ktorého sa týka; všeobecná hardcoded fallback hodnota MUST NOT predstierať aktuálne overenie.
 
 ## 11. Synchronizácia a zdieľanie
 
@@ -519,6 +538,7 @@ Ak aplikácia obsahuje vyhľadávanie:
 - MUST mať užitočný prázdny výsledok s ďalším krokom.
 - SHOULD vysvetliť, prečo výsledok zodpovedá dotazu.
 - MUST testovať výkon nad realistickým objemom údajov.
+- Ak výsledok zodpovedá existujúcemu konkrétnemu detailu, kategórii alebo workflow, SHOULD ponúknuť jeden alebo viac kontextovo vhodných navigačných mostov. Textová odpoveď SHOULD NOT byť slepým koncom, ak aplikácia pozná použiteľný ďalší cieľ.
 
 ## 16. Spoločné komponenty
 
@@ -559,6 +579,9 @@ Funkcia je hotová až keď má:
 
 Historické build testy SHOULD NOT byť trvalo naviazané na konkrétne číslo buildu, ak v skutočnosti testujú funkciu.
 
+- Ak aplikácia publikuje katalóg, register alebo inú konečnú množinu položiek, Level 3+ audit MUST automaticky overiť všetky publikované položky v rozsahu relevantných invariantov, nie iba kurátorovanú podmnožinu.
+- Regresný test kritickej navigácie alebo aplikačnej logiky SHOULD overovať výsledné správanie a cieľ, nie iba prítomnosť literálu, modifiera alebo názvu funkcie v zdrojovom kóde.
+
 ### 17.1 Výkon a stabilita
 
 - Dlhá operácia MUST NOT blokovať hlavné používateľské rozhranie bez viditeľného stavu priebehu.
@@ -590,6 +613,9 @@ Pred vydaním MUST byť overené:
 - kontrola zhody runtime verzie štandardu, tagu a úrovne adopcie s `APP_STANDARD_ADOPTION.md`,
 - kontrola Privacy Manifestu pre každý distribuovaný app, widget a extension target,
 - kontrola, že bežné vnorené Nastavenia nepoužívajú sheet alebo full-screen cover namiesto push navigácie.
+- kontrola, že kompatibilitné a diagnostické runtime metadata pochádzajú zo skutočného buildu/verzie aplikácie a nie z hardcoded historickej hodnoty,
+- pri katalógoch kontrola completeness nad všetkými publikovanými položkami a funkčnosti navigačných mostov pre reprezentatívne výsledky,
+- pri dlhých katalógoch runtime kontrola sticky/pinned section headerov, collapsing titulkov a safe-area správania.
 
 ### 18.1 Spoločná testovacia matica
 
