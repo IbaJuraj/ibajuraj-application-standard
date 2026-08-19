@@ -3,7 +3,7 @@
 ## Metadata a zdroj pravdy
 
 - [ ] `STANDARD_VERSION`, `standard.json`, dokumenty a adopčný súbor majú zhodnú verziu.
-- [ ] Tag má tvar `standard-v1.4.0` a existuje v autoritatívnom repozitári.
+- [ ] Tag má tvar `standard-v1.6.1` a existuje v autoritatívnom repozitári.
 - [ ] Marketingová verzia a build aplikácie sa načítavajú z build nastavení alebo `Bundle`.
 - [ ] Runtime verzia, tag a úroveň adopcie pochádzajú z jedného zdroja.
 - [ ] Nevydaná verzia nie je prezentovaná ako aktívne prijatá.
