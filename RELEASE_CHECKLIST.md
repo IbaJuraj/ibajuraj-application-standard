@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.6.0 – release checklist
+# IbaJuraj Standard 1.6.1 – release checklist
 
 ## Metadata a zdroj pravdy
 
@@ -94,3 +94,28 @@
 - [ ] IbaJuraj Application Standard sa používateľovi zobrazuje iba ako `Verzia X.Y.Z`.
 - [ ] Interný Level/tag/runtime gate nie je v bežnom About UI.
 - [ ] Summary/Na prvý pohľad neprimerane nevytláča hlavnú akciu z prvého viewportu.
+
+## Standard 1.6.0 final gate
+
+- [ ] Settings sú priamo dostupné z každého primárneho rootu bez nutnosti prepnúť tab.
+- [ ] Stavová terminológia je konzistentná medzi rootom, zoznamom a detailom.
+- [ ] Kritické karty s jediným objektom používajú priame CTA na objekt, ak je to bezpečné.
+- [ ] FAB/overlay, navigation surface a safe area neprekrývajú obsah ani hlavné akcie.
+
+- [ ] Primary root titles and Settings actions share the same vertical baseline/top inset across all main tabs.
+
+
+## IbaJuraj Standard 1.6.1 – Whole-App Integrity Gate
+
+- [ ] Kompatibilitné, update a diagnostické runtime metadata používajú skutočný `Bundle`/build source of truth; žiadna historická hardcoded hodnota neovplyvňuje rozhodovanie.
+- [ ] Back + swipe-back je konzistentný pre celé rodiny detailov a pre vstupy z rootu, katalógu, vyhľadávania aj deep-linku.
+- [ ] Dlhé katalógy majú overený section context, safe-area správanie a prípadný pinned header.
+- [ ] Root surfaces používajú rovnaký semantic background token; neexistuje paralelné lokálne neutrálne pozadie bez výnimky.
+- [ ] Outcome-first/practical-first detail neodkladá hlavný výsledok za dlhý technický alebo právny blok.
+- [ ] Sémantické farby zodpovedajú významu; danger nie je dekoratívne synonymum pre veľkú sankciu.
+- [ ] `NOVÉ` a obdobné dočasné označenia majú životný cyklus.
+- [ ] Časovo závislé vstupy rešpektujú reálne dátové pokrytie.
+- [ ] Všetky publikované položky katalógu prešli completeness invariantmi a reprezentatívne navigačné mosty vedú na správny cieľ.
+- [ ] Dátum/verzia právneho alebo dátového overenia pochádza zo zdroja konkrétneho balíka, nie z hardcoded fallbacku.
+- [ ] Produkčné UI neobsahuje interné technické/auditné vety.
+- [ ] Dynamic Type audit neodhalil bežný text fixovaný na neadaptívnu bodovú veľkosť bez zdokumentovanej výnimky.
