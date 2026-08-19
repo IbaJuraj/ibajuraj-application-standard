@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.6.0 – testovacia matica
+# IbaJuraj Standard 1.6.1 – testovacia matica
 
 Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať rizikové kombinácie podľa svojich funkcií.
 
@@ -138,3 +138,32 @@ Ak aplikácia ponúka produktové farebné témy:
 | Standard iba `Verzia X.Y.Z` | ☐ | ☐ | ☐ | ☐ |
 | Žiadny interný Level/tag/runtime gate v About | ☐ | ☐ | ☐ | ☐ |
 | Kompaktný `Na prvý pohľad` na štandardnom iPhone | ☐ | ☐ | ☐ | ☐ |
+
+### Standard 1.6.0 – primary-root Settings & state clarity
+
+- [ ] Každý primárny root dostupný z hlavnej navigácie má priamy jednokrokový vstup do Nastavení alebo zdokumentovanú výnimku.
+- [ ] Settings gear je pravá krajná systémová header action a má rovnakú geometriu/accessibility label.
+- [ ] Rovnaký stav používa rovnaký používateľský názov na roote, v zozname a detaile.
+- [ ] Overdue/expired interval sa nezobrazuje ako záporná technická hodnota, ak možno použiť prirodzený text.
+- [ ] Jediný konkrétny kritický objekt má priame CTA na svoj detail, ak to doménový workflow umožňuje.
+
+### Root header baseline gate (1.6.0)
+- Switch between every primary root and verify the root title and Settings action do not move vertically.
+- Repeat in Light/Dark and at supported Dynamic Type sizes.
+
+
+## 1.6.1 – Whole-app integrity & outcome-first gate
+
+- [ ] Runtime verzia/build zobrazené v UI, diagnostike a kompatibilitnom validátore pochádzajú z rovnakého autoritatívneho zdroja.
+- [ ] Každá testovaná rodina push detailov podporuje systémový Back aj edge swipe-back z každého hlavného vstupu.
+- [ ] Dlhý katalóg zachováva kontext aktuálnej skupiny pinned headerom alebo zdokumentovaným rovnocenným riešením.
+- [ ] Duplicitný veľký title + rovnaký navigation title je odstránený alebo používa collapsing pattern.
+- [ ] Outcome-first detail ukáže používateľský výsledok a praktický význam pred sekundárnym právnym/technickým detailom.
+- [ ] `danger`/červená nie je použitá iba na zvýraznenie veľkého čísla bez zodpovedajúceho významu.
+- [ ] Všetky primárne rooty rovnakej role používajú spoločný neutral background token v Light aj Dark.
+- [ ] `NOVÉ` a podobné dočasné badge majú overiteľný lifecycle a expirujú podľa centrálneho pravidla.
+- [ ] Časovo závislý vstup neumožňuje dátum mimo dostupného overeného dátového pokrytia.
+- [ ] Vyhľadávací výsledok s konkrétnym cieľom obsahuje funkčný navigačný most.
+- [ ] Completeness test prešiel nad všetkými publikovanými položkami katalógu, nie iba nad kurátorovanou podmnožinou.
+- [ ] Kritické route testy overujú výsledný cieľ/správanie, nie iba prítomnosť textu v zdrojovom kóde.
+- [ ] Produkčné UI neobsahuje interné implementačné, auditné ani testovacie poznámky.
