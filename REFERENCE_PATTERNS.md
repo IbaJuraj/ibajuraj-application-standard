@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.5.1 – referenčné vzory
+# IbaJuraj Standard 1.6.1 – referenčné vzory
 
 Referenčné vzory vysvetľujú spoločnú informačnú hierarchiu. Nie sú pixelovým screenshot testom a nemenia produktovú identitu aplikácie.
 
@@ -164,3 +164,33 @@ Referenčná hierarchia neutrálnej obrazovky:
 
 Light a Dark variant tej istej obrazovky musia meniť iba appearance mapovanie sémantických rolí, nie lokálnu logiku farieb.
 
+
+
+## Outcome-first / practical-first detail
+
+```text
+[Názov výsledku]
+[hlavný stav / následok]
+[čo to znamená pre používateľa]
+[čo treba urobiť alebo čo nasleduje]
+
+[Právny/technický základ ▾]
+[Proces a zdroje ▾]
+```
+
+- Používateľský výsledok a praktický význam sú pred sekundárnym právnym, diagnostickým alebo procesným detailom.
+- `danger`, `warning`, `success` a `information` vyjadrujú význam, nie iba veľkosť čísla.
+
+## Dlhý katalóg so sekčným kontextom
+
+```text
+[collapsing title / kompaktný navigation title]
+[sticky názov aktuálnej skupiny]
+[položka]
+[položka]
+[položka]
+--- ďalšia skupina prirodzene nahradí sticky header ---
+```
+
+- Pinned header zostáva pod safe area/navigation surface a neprekrýva obsah.
+- Rovnaký detail otvorený z katalógu, vyhľadávania alebo quick linku používa rovnaký Back + swipe-back kontrakt.
