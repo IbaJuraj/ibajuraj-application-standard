@@ -2,7 +2,7 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.6.0**  
+Aktuálna verzia: **1.6.1**  
 Stav: **finálne vydanie**
 
 ## Účel repozitára
@@ -13,8 +13,7 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Apl
 
 ## Hlavné súbory
 
-- `IBAJURAJ_APPLICATION_STANDARD.md` – základné záväzné spoločné pravidlá,
-- `STANDARD_1.6.0_FINAL_AMENDMENT.md` – normatívny finálny dodatok 1.6.0; pri konflikte má prednosť pred základným textom 1.6.0,
+- `IBAJURAJ_APPLICATION_STANDARD.md` – záväzné spoločné pravidlá,
 - `DESIGN_TOKENS.md` – spoločné rozmery, rozostupy a komponentové varianty,
 - `STANDARD_VERSION` – jednoduchá strojovo čitateľná verzia,
 - `standard.json` – metadata pre automatické kontroly,
@@ -29,12 +28,10 @@ Produktové pravidlá zostávajú v repozitároch jednotlivých aplikácií. Apl
 - `Templates/` – šablóny adopcie a výnimiek,
 - `Checks/` – automatické validačné skripty.
 
-Pre finálne vydanie **1.6.0** tvoria normatívny Standard spoločne `IBAJURAJ_APPLICATION_STANDARD.md` a `STANDARD_1.6.0_FINAL_AMENDMENT.md`. Dodatok obsahuje posledné RC2/RC3 rozhodnutia overené runtime auditom a pri konflikte má prednosť.
-
 ## Ako aplikácia prijme štandard
 
 1. Skontroluje najnovšiu verziu v `standard.json`.
-2. Prečíta `CHANGELOG.md`, `MIGRATION.md` a pre 1.6.0 aj finálny normatívny dodatok a posúdi dopad.
+2. Prečíta `CHANGELOG.md` a `MIGRATION.md` a posúdi dopad.
 3. Upraví kód, testy a dokumentáciu.
 4. Skopíruje dokumenty z konkrétneho tagu, nie z pohyblivého `main`.
 5. Aktualizuje svoj `APP_STANDARD_ADOPTION.md`.
@@ -45,11 +42,17 @@ Pre Level 3 a Level 4 musí aplikácia uložiť vyplnenú testovaciu maticu, rel
 
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
+### Nové v 1.6.1
+
+Verzia 1.6.1 kodifikuje zistenia z whole-app auditu: jeden runtime zdroj pravdy pre kompatibilitné metadata, spoločnú navigačnú politiku vrátane swipe-back, outcome-first/practical-first hierarchiu detailov, sticky sekčné nadpisy pri dlhých katalógoch, explicitný lifecycle dočasných badgeov, časové obmedzenie dát podľa reálneho pokrytia, navigačné mosty vo vyhľadávaní a completeness audit všetkých publikovaných položiek. Spresňuje aj neutral root surface, Dynamic Type a zákaz interných technických textov v produkčnom UI.
+
 ### Nové v 1.6.0
 
-Verzia 1.6.0 zjednocuje používateľské metadata na obrazovke **O aplikácii**, zavádza spoločný kontrakt pre kompaktné súhrnné sekcie typu **Na prvý pohľad**, sprístupňuje Nastavenia z každého primárneho rootu, zjednocuje stavovú terminológiu a priame CTA pre jednoznačné kritické objekty a zavádza spoločnú root-header baseline. Používateľ vidí marketingovú verziu + build aplikácie a pri IbaJuraj Application Standard iba `Verzia X.Y.Z`; interné adoption/audit údaje zostávajú mimo bežného UI.
+Verzia 1.6.0 zjednocuje používateľské metadata na obrazovke **O aplikácii** a zavádza spoločný kontrakt pre kompaktné súhrnné sekcie typu **Na prvý pohľad**. Používateľ vidí marketingovú verziu + build aplikácie a pri IbaJuraj Application Standard iba `Verzia X.Y.Z`; interné adoption/audit údaje zostávajú mimo bežného UI. Súhrnné metriky nesmú vytláčať hlavnú úlohu detailu z prvého viewportu.
 
 ## Verzie a tagy
+
+standard-v1.6.1
 
 Používa sa sémantické verzionovanie:
 
@@ -60,13 +63,13 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.6.0
+standard-v1.6.1
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.6.0**.
+Aktuálny release: **IbaJuraj Application Standard 1.6.1**.
 
 ## Návrhy zmien
 
 Zmena začína návrhom podľa `Proposals/TEMPLATE.md`. Automatický nástroj môže vytvoriť návrh alebo report, ale nesmie bez schválenia zaviesť nové MUST pravidlo.
 
-Finálne vydanie 1.6.0 bolo runtime overené na Strážca Termínov v1.55 Build 78 vrátane spoločnej root header baseline a priameho vstupu do Nastavení z primárnych rootov.
+Verzia 1.6.1 zachováva RC3 root header baseline contract z 1.6.0 a dopĺňa whole-app integrity, navigation a outcome-first pravidlá odvodené z runtime auditov aplikácií IbaJuraj.
