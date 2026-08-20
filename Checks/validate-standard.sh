@@ -43,6 +43,7 @@ required_files=(
   "Templates/STANDARD_EXCEPTION.md"
   "Proposals/IJAS-0008-family-interaction-density-and-source-hygiene.md"
   "Proposals/IJAS-0009-neutral-surface-and-text-color-contract.md"
+  "Proposals/IJAS-0012-header-family-alignment-contract.md"
 )
 
 for path in "${required_files[@]}"; do
@@ -190,6 +191,8 @@ contract_patterns = {
         r"Neutral Surface & Text Color Contract",
         r"systemGroupedBackground",
         r"secondarySystemGroupedBackground",
+        r"header family geometriu",
+        r"hardcoded `padding\(\.top\)`",
     ],
     "DESIGN_TOKENS.md": [
         r"header\.action\.visualDiameter",
@@ -208,6 +211,9 @@ contract_patterns = {
         r"color\.cardSurface",
         r"color\.textPrimary",
         r"color\.textSecondary",
+        r"appPage\.headerFamilyTopAnchor",
+        r"appPage\.headerFamilyTitleBaseline",
+        r"appPage\.headerFamilyTrailingBaseline",
     ],
     "SUPPORT_AND_LINKS.md": [
         r"\?app=<app-id>&type=<type>&subject=<subject>#support",

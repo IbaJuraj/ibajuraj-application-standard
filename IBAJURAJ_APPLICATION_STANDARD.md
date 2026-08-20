@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.6.1  
+**Verzia:** 1.6.2  
 **Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 19. augusta 2026  
+**Platnosť od:** 20. augusta 2026  
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -248,6 +248,9 @@ Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
 - Root SHOULD používať jednu dominantnú obsahovú prioritu. Viaceré rovnocenné hero bloky alebo CTA nad prvým scrollom SHOULD NOT súperiť o pozornosť.
 - Ak root používa veľký title/subtitle pár, MUST používať spoločné `appPage.*` tokeny. Settings gear zostáva pravou krajnou systémovou akciou podľa 6.3.1 a 6.3.2.
 - Všetky primárne rooty v rámci jednej aplikácie MUST ukotviť hlavný root nadpis na rovnakej vertikálnej baseline voči safe-area/root content anchoru. Root title a pravá systémová header akcia MUST používať spoločný top inset a rovnakú header geometriu; prepnutie medzi tabmi nesmie spôsobovať viditeľné vertikálne „skákanie“ nadpisu alebo Settings akcie.
+- Obrazovky, ktoré používajú rovnaký produktový header pattern, MUST používať spoločnú **header family geometriu** aj vtedy, keď jedna obrazovka je root a druhá je vnorená alebo obsahuje Back akciu. Prítomnosť leading Back akcie MUST NOT svojvoľne posunúť title/subtitle pár ani pravú systémovú akciu oproti referenčnej obrazovke rovnakej rodiny.
+- Header family SHOULD byť implementovaná jedným zdieľaným komponentom alebo jednou sadou tokenov; lokálne hardcoded `padding(.top)`, `offset(y:)`, vlastné safe-area kompenzácie alebo per-screen konštanty MUST NOT byť primárnym mechanizmom zarovnania, ak existuje spoločný header pattern.
+- Ak produkt určí referenčný root header (typicky Home), ostatné obrazovky rovnakej header family MUST pri rovnakom size class, Dynamic Type a orientation zachovať rovnaký top anchor, title baseline a trailing-action baseline, pokiaľ zdokumentovaná výnimka nevyžaduje odlišnú geometriu.
 - Pozdrav, informačný status, kritické upozornenie a CTA SHOULD NOT byť vrstvené do jedného komponentu, ak nesú odlišný význam.
 - Rovnaká kritická informácia SHOULD NOT byť súčasne opakovaná badgeom, nadpisom, stavovým textom a CTA textom bez ďalšej informačnej hodnoty.
 - Rovnaký doménový stav MUST používať konzistentnú používateľskú terminológiu naprieč rootom, zoznamom, detailom a súhrnnou kartou; technické reprezentácie ako záporný počet dní SHOULD byť preložené do prirodzeného používateľského významu, napríklad `7 dní po termíne`.

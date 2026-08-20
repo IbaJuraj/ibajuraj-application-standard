@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.6.1 – referenčné vzory
+# IbaJuraj Standard 1.6.2 – referenčné vzory
 
 Referenčné vzory vysvetľujú spoločnú informačnú hierarchiu. Nie sú pixelovým screenshot testom a nemenia produktovú identitu aplikácie.
 
@@ -194,3 +194,17 @@ Light a Dark variant tej istej obrazovky musia meniť iba appearance mapovanie s
 
 - Pinned header zostáva pod safe area/navigation surface a neprekrýva obsah.
 - Rovnaký detail otvorený z katalógu, vyhľadávania alebo quick linku používa rovnaký Back + swipe-back kontrakt.
+
+## Header family alignment
+
+Použite jeden spoločný header pattern pre obrazovky, ktoré majú rovnakú vizuálnu identitu, aj keď niektoré obsahujú Back akciu.
+
+```text
+[leading slot / Back]   [title + subtitle anchor]   [trailing Settings/action]
+                         ↑ rovnaká baseline          ↑ rovnaká centerline
+```
+
+- Home alebo iný určený root môže byť referenčnou geometriou.
+- Back akcia obsadí leading slot; nesmie posúvať title ani trailing action smerom nadol.
+- Nepoužívajte per-screen `padding(.top)` alebo `offset(y:)` na vizuálne dorovnávanie rovnakej header family.
+- Runtime parity kontrola porovná referenčný root s aspoň jednou vnorenou obrazovkou rovnakej rodiny v Light/Dark a pri podporovanom Dynamic Type.

@@ -33,3 +33,5 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0008-family-interaction-density-and-source-hygiene.md` – accepted for Standard 1.5.0.
 - `IJAS-0009-neutral-surface-and-text-color-contract.md` – accepted for Standard 1.5.1.
 - `IJAS-0010-user-selected-theme-surface-and-accent-contrast.md` – implemented in Standard 1.5.2.
+
+- `IJAS-0012-header-family-alignment-contract.md` – Header Family Alignment Contract (implemented in Standard 1.6.2)

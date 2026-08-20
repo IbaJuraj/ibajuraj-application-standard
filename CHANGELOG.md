@@ -1,5 +1,20 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.6.2 – 2026-08-20
+
+### Added
+- Header Family Alignment Contract pre obrazovky používajúce rovnaký produktový header pattern, vrátane root a vnorených obrazoviek.
+- semantic tokeny `appPage.headerFamilyTopAnchor`, `appPage.headerFamilyTitleBaseline`, `appPage.headerFamilyTrailingBaseline` a minimálny leading slot.
+- runtime parity gate, ktorý porovná referenčný header s ďalšou obrazovkou rovnakej rodiny.
+
+### Changed
+- prítomnosť Back akcie nesmie svojvoľne meniť vertikálnu polohu title/subtitle páru ani trailing Settings/system action,
+- lokálne hardcoded top padding/offset/safe-area kompenzácie nesmú nahrádzať spoločnú header geometriu, ak existuje zdieľaný pattern.
+
+### Compatibility
+- spätne kompatibilný PATCH release bez migrácie doménových používateľských dát,
+- aplikácie musia skontrolovať iba obrazovky, ktoré zdieľajú rovnaký header pattern, ale používajú rozdielne lokálne odsadenia.
+
 ## 1.6.1 – 2026-08-19
 
 ### Added

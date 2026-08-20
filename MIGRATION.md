@@ -258,3 +258,13 @@ Obsah štandardu sa po migrácii upravuje iba v tomto repozitári. Web IbaJuraj 
 
 ### 1.6.0 – Root header baseline
 Primary root screens must migrate to one shared root-title top inset/baseline and matching trailing Settings action geometry.
+
+## Migrácia 1.6.1 → 1.6.2
+
+Ide o prezentačný PATCH bez migrácie používateľských dát.
+
+1. Identifikujte obrazovky používajúce rovnaký produktový header pattern (napr. Home a vnorené search/assistant obrazovky).
+2. Odstráňte lokálne `padding(.top)`, `offset(y:)` a vlastné safe-area kompenzácie, ktoré menia baseline rovnakého headeru.
+3. Presuňte geometriu do zdieľaného header komponentu alebo tokenov `appPage.headerFamily.*`.
+4. Back akciu implementujte v stabilnom leading slote bez posunu title/trailing action.
+5. Runtime porovnajte referenčný root a aspoň jednu vnorenú obrazovku v Light/Dark a pri podporovanom Dynamic Type.

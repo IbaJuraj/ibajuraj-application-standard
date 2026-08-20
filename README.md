@@ -2,8 +2,10 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.6.1**  
+Aktuálna verzia: **1.6.2**  
 Stav: **finálne vydanie**
+
+Najnovší patch 1.6.2 dopĺňa Header Family Alignment Contract: rovnaký produktový header musí zachovať top anchor, title baseline a trailing-action baseline naprieč root aj vnorenými obrazovkami bez lokálnych hardcoded offsetov.
 
 ## Účel repozitára
 
@@ -42,6 +44,11 @@ Pre Level 3 a Level 4 musí aplikácia uložiť vyplnenú testovaciu maticu, rel
 
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
+
+### Nové v 1.6.2
+
+Verzia 1.6.2 dopĺňa Header Family Alignment Contract. Obrazovky používajúce rovnaký produktový header musia zachovať spoločný top anchor, title baseline a trailing-action baseline aj vtedy, keď jedna z nich obsahuje Back akciu. Zdieľaný header sa nemá dorovnávať lokálnymi hardcoded top offsetmi.
+
 ### Nové v 1.6.1
 
 Verzia 1.6.1 kodifikuje zistenia z whole-app auditu: jeden runtime zdroj pravdy pre kompatibilitné metadata, spoločnú navigačnú politiku vrátane swipe-back, outcome-first/practical-first hierarchiu detailov, sticky sekčné nadpisy pri dlhých katalógoch, explicitný lifecycle dočasných badgeov, časové obmedzenie dát podľa reálneho pokrytia, navigačné mosty vo vyhľadávaní a completeness audit všetkých publikovaných položiek. Spresňuje aj neutral root surface, Dynamic Type a zákaz interných technických textov v produkčnom UI.
@@ -52,7 +59,7 @@ Verzia 1.6.0 zjednocuje používateľské metadata na obrazovke **O aplikácii**
 
 ## Verzie a tagy
 
-standard-v1.6.1
+standard-v1.6.2
 
 Používa sa sémantické verzionovanie:
 
@@ -63,10 +70,10 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.6.1
+standard-v1.6.2
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.6.1**.
+Aktuálny release: **IbaJuraj Application Standard 1.6.2**.
 
 ## Návrhy zmien
 

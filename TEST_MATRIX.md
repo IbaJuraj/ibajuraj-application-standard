@@ -167,3 +167,12 @@ Ak aplikácia ponúka produktové farebné témy:
 - [ ] Completeness test prešiel nad všetkými publikovanými položkami katalógu, nie iba nad kurátorovanou podmnožinou.
 - [ ] Kritické route testy overujú výsledný cieľ/správanie, nie iba prítomnosť textu v zdrojovom kóde.
 - [ ] Produkčné UI neobsahuje interné implementačné, auditné ani testovacie poznámky.
+
+## Header Family Alignment Gate (1.6.2)
+
+- [ ] Referenčný root a peer/nested screen rovnakej header family majú rovnaký top anchor a title baseline.
+- [ ] Trailing Settings/system action nemení vertikálnu polohu medzi peer obrazovkami.
+- [ ] Leading Back akcia neposúva title/subtitle ani trailing action.
+- [ ] Test prebehne aspoň v Light a Dark režime.
+- [ ] Pri podporovanom väčšom Dynamic Type nevznikne kolízia, prekrývanie ani improvizovaný per-screen offset.
+- [ ] Source audit neodhalí lokálne hardcoded top offsety na obrazovkách, ktoré majú zdieľať spoločný header pattern.

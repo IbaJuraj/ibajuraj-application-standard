@@ -1,9 +1,9 @@
-# IbaJuraj Standard 1.6.1 – release checklist
+# IbaJuraj Standard 1.6.2 – release checklist
 
 ## Metadata a zdroj pravdy
 
 - [ ] `STANDARD_VERSION`, `standard.json`, dokumenty a adopčný súbor majú zhodnú verziu.
-- [ ] Tag má tvar `standard-v1.6.1` a existuje v autoritatívnom repozitári.
+- [ ] Tag má tvar `standard-v1.6.2` a existuje v autoritatívnom repozitári.
 - [ ] Marketingová verzia a build aplikácie sa načítavajú z build nastavení alebo `Bundle`.
 - [ ] Runtime verzia, tag a úroveň adopcie pochádzajú z jedného zdroja.
 - [ ] Nevydaná verzia nie je prezentovaná ako aktívne prijatá.
@@ -119,3 +119,9 @@
 - [ ] Dátum/verzia právneho alebo dátového overenia pochádza zo zdroja konkrétneho balíka, nie z hardcoded fallbacku.
 - [ ] Produkčné UI neobsahuje interné technické/auditné vety.
 - [ ] Dynamic Type audit neodhalil bežný text fixovaný na neadaptívnu bodovú veľkosť bez zdokumentovanej výnimky.
+
+### Header family alignment (1.6.2)
+- [ ] Root a vnorené obrazovky rovnakej header family používajú spoločnú geometriu.
+- [ ] Nadpis a trailing systémová akcia vizuálne neskáču medzi peer obrazovkami.
+- [ ] Back akcia nemení top anchor title/subtitle páru.
+- [ ] Neexistuje per-screen hardcoded top offset tam, kde má byť použitý spoločný header component/token.

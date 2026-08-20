@@ -1,8 +1,8 @@
 # IbaJuraj Design Tokens
 
-**Verzia:** 1.6.1  
+**Verzia:** 1.6.2  
 **Stav:** autoritatívny spoločný register  
-**Platnosť od:** 19. augusta 2026
+**Platnosť od:** 20. augusta 2026
 
 Tento register definuje spoločné počiatočné hodnoty. Aplikácia ich MUST používať prostredníctvom centrálneho theme alebo foundation rozhrania, nie opakovanými číslami v jednotlivých obrazovkách.
 
@@ -71,6 +71,10 @@ Referenčná minimálna veľkosť MUST NOT byť použitá ako pevná maximálna 
 | `appPage.titleSubtitleGap` | 6 pt | `exact` |
 | `appPage.rootTitleTopInset` | 0 pt od spoločného root content/safe-area anchoru | `exact` |
 | `appPage.rootHeaderBaseline` | rovnaká vertikálna baseline na všetkých primárnych rootoch produktu | `semantic` |
+| `appPage.headerFamilyTopAnchor` | spoločný safe-area/root content anchor pre obrazovky rovnakej header family | `semantic` |
+| `appPage.headerFamilyTitleBaseline` | rovnaká title baseline v rámci header family pri rovnakom prostredí | `semantic` |
+| `appPage.headerFamilyTrailingBaseline` | rovnaká baseline/centerline trailing systémovej akcie v rámci header family | `semantic` |
+| `appPage.headerLeadingSlotMinimum` | 44 pt | `minimum` |
 | `appPage.titleLineBehavior` | Dynamic Type; bez lokálneho bodového override a bez `minimumScaleFactor` | `semantic` |
 | `appPage.subtitleLineBehavior` | prirodzené viacriadkové zalomenie | `semantic` |
 
