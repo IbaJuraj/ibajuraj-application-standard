@@ -48,10 +48,10 @@
     "layout": "available-container-space-safe-navigation-surfaces-and-adaptive-density",
     "privacy": "manifest-per-distributed-target",
     "neutralSurfaces": "semantic-neutral-surface-and-text-parity",
-    "floatingNavigationClearance": "dynamic-content-clearance-for-floating-navigation-surfaces",
-    "pinnedHeaders": "eligible-only-non-obstructive-semantic-pinned-sections",
-    "generatedAssistance": "verified-source-bounded-transparent-fallback-safe",
-    "authoritativeData": "single-source-traceable-temporal-and-ui-separated"
+    "floatingTabBarClearance": "dynamic-safe-area-aware-compact-final-clearance",
+    "pinnedHeaders": "eligible-context-only-no-content-occlusion",
+    "generatedAssistance": "verified-grounded-safe-fallback-transparent-feedback",
+    "authoritativeData": "single-source-traceable-temporal-no-parallel-model"
   },
   "documents": {
     "standard": "IBAJURAJ_APPLICATION_STANDARD.md",
