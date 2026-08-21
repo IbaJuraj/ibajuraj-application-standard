@@ -8,8 +8,8 @@ Autoritatívna verzia je verzia publikovaná v spoločnom GitHub repozitári Iba
 
 Používa sa sémantické verzionovanie:
 
-- PATCH – oprava formulácie bez zmeny významu,
-- MINOR – nové spätne kompatibilné pravidlo alebo odporúčanie,
+- PATCH – spätne kompatibilné spresnenie, oprava alebo quality/safety hardening existujúceho spoločného kontraktu; MAY pridať podmienené pravidlo pre funkciu, ktorú nie všetky aplikácie používajú, ak nevyžaduje migráciu nedotknutých produktov,
+- MINOR – nový spoločný capability/contract, ktorý rozširuje povinný rozsah adopcie relevantných aplikácií alebo vyžaduje plánovaný širší adopčný krok,
 - MAJOR – zmena, ktorá vyžaduje migráciu aplikácií alebo mení záväzné správanie.
 
 ## Proces zmeny
