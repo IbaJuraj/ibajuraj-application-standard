@@ -1,6 +1,6 @@
-# IbaJuraj Application Standard 1.5.0
+# IbaJuraj Application Standard 1.4.1
 
-Patch 1.5.0 uzatvára rozdiely v typografii hlavných pracovných obrazoviek medzi aplikáciami IbaJuraj.
+Patch 1.4.1 uzatvára rozdiely v typografii hlavných pracovných obrazoviek medzi aplikáciami IbaJuraj.
 
 ## Hlavná zmena
 
