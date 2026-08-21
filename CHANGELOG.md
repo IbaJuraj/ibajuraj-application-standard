@@ -1,5 +1,29 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.6.3 – 2026-08-21
+
+### Added
+- Floating Tab Bar Content Clearance Contract s dynamickým safe-area-aware insetom a kompaktnou 16–24 pt vizuálnou rezervou.
+- Pinned Header Eligibility pravidlá: sticky header iba pri reálnej strate katalógového kontextu, bez prekrývania obsahu alebo navigation headeru.
+- voliteľný Rotating Content Pattern pre stabilné, kontrolované sady bez duplicít.
+- Verified AI & Generated Assistance Contract vrátane grounded answer, safe fallbacku, feedback preview a produkčnej izolácie DEBUG/mock režimov.
+- Authoritative Data Separation & Traceability Contract a safe relevance pravidlo pri nízkej istote.
+- regresné pravidlo: potvrdená runtime chyba s rizikom opakovania má dostať behaviorálny regresný test alebo zdokumentovanú výnimku.
+
+### Changed
+- spresnená komponentová family geometry: peer obrazovka sama osebe nie je dôvodom na odlišnú geometriu rovnakého variantu,
+- source-hygiene line threshold je explicitne review trigger, nie mechanický hard limit; audit zodpovedností má prednosť pred line countom,
+- verzionovanie PATCH v governance explicitne pripúšťa conditional quality/safety hardening bez migrácie nedotknutých produktov,
+- opravený nadpis `TEST_MATRIX.md` na aktuálnu verziu a odstránená duplicitná lokalizačná veta v hlavnom štandarde.
+
+### Fixed
+- historická typografická patch sekcia bola v changelogu omylom druhýkrát označená ako 1.5.0; správne patrí k 1.4.1,
+- `RELEASE_NOTES_1.4.1.md` bol nesprávne označený ako Standard 1.5.0.
+
+### Compatibility
+- spätne kompatibilný PATCH/hardening release bez migrácie doménových používateľských dát,
+- nové AI pravidlá sú podmienené použitím AI/generovaných odpovedí; aplikácie bez tejto funkcie nemajú nový AI adopčný zásah.
+
 ## 1.6.2 – 2026-08-20
 
 ### Added
@@ -101,7 +125,7 @@
 - rozšírené design tokeny, referenčné vzory, testovacia matica a release checklist,
 - verzia 1.5.0 je spätne kompatibilná minor aktualizácia a sama osebe nevyžaduje migráciu používateľských dát.
 
-## 1.5.0 – 2026-08-13
+## 1.4.1 – 2026-08-13
 
 - zavedený spoločný typografický kontrakt pre hlavné názvy koreňových pracovných obrazoviek,
 - `appPage.title` je zjednotený na `.largeTitle.weight(.bold)` s Dynamic Type,
