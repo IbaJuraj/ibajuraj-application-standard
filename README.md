@@ -2,10 +2,11 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.6.2**  
-Stav: **finálne vydanie**
+Aktuálna verzia: **1.6.3**  
 
-Najnovší patch 1.6.2 dopĺňa Header Family Alignment Contract: rovnaký produktový header musí zachovať top anchor, title baseline a trailing-action baseline naprieč root aj vnorenými obrazovkami bez lokálnych hardcoded offsetov.
+Najnovší patch 1.6.3 zjednocuje safe clearance pri floating navigácii, eligibility pinned headerov, kontrolovanú rotáciu obsahu a pridáva spoločné bezpečnostné pravidlá pre AI/generované odpovede, autoritatívne dáta, low-confidence fallback a regresné testovanie.
+
+Stav: **finálne vydanie**
 
 ## Účel repozitára
 
@@ -44,14 +45,13 @@ Pre Level 3 a Level 4 musí aplikácia uložiť vyplnenú testovaciu maticu, rel
 
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
+### Nové v 1.6.3
+
+Verzia 1.6.3 je spätne kompatibilný PATCH/hardening release. Dopĺňa Floating Tab Bar Content Clearance Contract, Pinned Header Eligibility, voliteľný Rotating Content Pattern, Verified AI & Generated Assistance Contract, Authoritative Data Separation & Traceability a povinné bezpečné správanie pri nízkej istote. Zároveň opravuje historické nekonzistencie testovacej matice a verzie 1.4.1 v release dokumentácii.
 
 ### Nové v 1.6.2
 
 Verzia 1.6.2 dopĺňa Header Family Alignment Contract. Obrazovky používajúce rovnaký produktový header musia zachovať spoločný top anchor, title baseline a trailing-action baseline aj vtedy, keď jedna z nich obsahuje Back akciu. Zdieľaný header sa nemá dorovnávať lokálnymi hardcoded top offsetmi.
-
-### Nové v 1.6.1
-
-Verzia 1.6.1 kodifikuje zistenia z whole-app auditu: jeden runtime zdroj pravdy pre kompatibilitné metadata, spoločnú navigačnú politiku vrátane swipe-back, outcome-first/practical-first hierarchiu detailov, sticky sekčné nadpisy pri dlhých katalógoch, explicitný lifecycle dočasných badgeov, časové obmedzenie dát podľa reálneho pokrytia, navigačné mosty vo vyhľadávaní a completeness audit všetkých publikovaných položiek. Spresňuje aj neutral root surface, Dynamic Type a zákaz interných technických textov v produkčnom UI.
 
 ### Nové v 1.6.0
 
@@ -59,24 +59,24 @@ Verzia 1.6.0 zjednocuje používateľské metadata na obrazovke **O aplikácii**
 
 ## Verzie a tagy
 
-standard-v1.6.2
+standard-v1.6.3
 
 Používa sa sémantické verzionovanie:
 
-- PATCH – oprava bez zmeny významu,
-- MINOR – nové spätne kompatibilné pravidlo,
+- PATCH – spätne kompatibilné spresnenie/oprava alebo conditional quality/safety hardening bez migrácie nedotknutých produktov,
+- MINOR – nový spoločný capability/contract s širším adopčným dopadom,
 - MAJOR – zmena vyžadujúca migráciu alebo meniaca záväzné správanie.
 
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.6.2
+standard-v1.6.3
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.6.2**.
+Aktuálny release: **IbaJuraj Application Standard 1.6.3**.
 
 ## Návrhy zmien
 
 Zmena začína návrhom podľa `Proposals/TEMPLATE.md`. Automatický nástroj môže vytvoriť návrh alebo report, ale nesmie bez schválenia zaviesť nové MUST pravidlo.
 
-Verzia 1.6.1 zachováva RC3 root header baseline contract z 1.6.0 a dopĺňa whole-app integrity, navigation a outcome-first pravidlá odvodené z runtime auditov aplikácií IbaJuraj.
+Verzia 1.6.3 zachováva pravidlá 1.6.2 a rozširuje ich o navigation-surface, AI safety, authoritative-data a regression hardening bez migrácie doménových používateľských dát.
