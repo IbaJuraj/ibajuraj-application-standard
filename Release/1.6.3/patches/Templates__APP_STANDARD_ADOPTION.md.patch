@@ -1,0 +1,23 @@
+diff --git a/Templates/APP_STANDARD_ADOPTION.md b/Templates/APP_STANDARD_ADOPTION.md
+index 9f7249a..16baae1 100644
+--- a/Templates/APP_STANDARD_ADOPTION.md
++++ b/Templates/APP_STANDARD_ADOPTION.md
+@@ -3,8 +3,8 @@
+ **Application:**  
+ **Application version:**  
+ **Build:**  
+-**Adopted standard:** 1.6.2  
+-**Standard tag:** standard-v1.6.2  
++**Adopted standard:** 1.6.3  
++**Standard tag:** standard-v1.6.3  
+ **Adoption status:** active  
+ **Adoption level:** Level 0 – Declared  
+ **Foundation version:** not adopted  
+@@ -14,7 +14,7 @@
+ ## Autoritatívny zdroj
+ 
+ - Repository: https://github.com/IbaJuraj/ibajuraj-application-standard
+-- Adopted tag: standard-v1.6.2
++- Adopted tag: standard-v1.6.3
+ 
+ ## Stav adopcie
