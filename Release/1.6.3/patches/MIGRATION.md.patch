@@ -1,0 +1,54 @@
+diff --git a/MIGRATION.md b/MIGRATION.md
+index b2d514c..86cbf7f 100644
+--- a/MIGRATION.md
++++ b/MIGRATION.md
+@@ -1,3 +1,27 @@
++# Migrácia IbaJuraj Application Standard
++
++## 1.6.2 → 1.6.3
++
++Verzia 1.6.3 je spätne kompatibilný PATCH/hardening release bez migrácie doménových používateľských dát. Auditujte iba funkcie, ktoré aplikácia používa.
++
++1. Ak aplikácia používa floating bottom navigation, nahraďte per-screen hardcoded spacery spoločným dynamickým clearance princípom a runtime overte všetky peer root taby.
++2. Skontrolujte pinned/sticky section headre. Ponechajte ich iba v dlhých katalógových skupinách, kde zachovávajú orientáciu; featured/úvodné sekcie nepripínajte automaticky.
++3. Ak sa rotuje odporúčaný obsah, stabilizujte sadu počas definovanej relácie/cyklu, odstráňte duplicity a chaotický náhodný výber.
++4. Ak aplikácia používa AI/generované odpovede, oddelte autoritatívny retrieval/resolver od jazykovej composition vrstvy; overte grounded source path, low-confidence správanie, unavailable-model fallback a produkčnú izoláciu DEBUG/mock režimov.
++5. Ak aplikácia pracuje s autoritatívnymi alebo časovo verziovanými dátami, skontrolujte paralelné hardcoded kópie v UI a zachovanie source/version/effective-date traceability.
++6. Každú potvrdenú runtime chybu s realistickým rizikom opakovania pridajte do regresného test setu alebo zdokumentujte výnimku.
++7. Nevyžaduje sa zmena uložených používateľských dát iba kvôli adopcii 1.6.3.
++
++## Migrácia 1.6.1 → 1.6.2
++
++Ide o prezentačný PATCH bez migrácie používateľských dát.
++
++1. Identifikujte obrazovky používajúce rovnaký produktový header pattern (napr. Home a vnorené search/assistant obrazovky).
++2. Odstráňte lokálne `padding(.top)`, `offset(y:)` a vlastné safe-area kompenzácie, ktoré menia baseline rovnakého headeru.
++3. Presuňte geometriu do zdieľaného header komponentu alebo tokenov `appPage.headerFamily.*`.
++4. Back akciu implementujte v stabilnom leading slote bez posunu title/trailing action.
++5. Runtime porovnajte referenčný root a aspoň jednu vnorenú obrazovku rovnakej rodiny v Light/Dark a pri podporovanom Dynamic Type.
++
+ ## 1.6.0 → 1.6.1
+ 
+ Verzia 1.6.1 je spätne kompatibilná PATCH aktualizácia bez migrácie doménových používateľských dát.
+@@ -29,8 +53,6 @@ Verzia 1.6.0 je spätne kompatibilná MINOR aktualizácia bez migrácie doménov
+ - Skontrolujte všetky detailné obrazovky so sekciou **Na prvý pohľad** a znížte zbytočnú vertikálnu výšku summary metrík tak, aby hlavná úloha detailu nebola vytláčaná bez obsahového dôvodu.
+ - Nevyžaduje sa zmena uložených používateľských dát.
+ 
+-# Migrácia IbaJuraj Application Standard
+-
+ ## 1.5.1 → 1.5.2
+ 
+ Verzia 1.5.2 je spätne kompatibilná patch aktualizácia. Spresňuje správanie explicitne používateľom volených produktových farebných tém a kontrast plných accent surfaces.
+@@ -258,13 +280,4 @@ Obsah štandardu sa po migrácii upravuje iba v tomto repozitári. Web IbaJuraj
+ 
+ ### 1.6.0 – Root header baseline
+ Primary root screens must migrate to one shared root-title top inset/baseline and matching trailing Settings action geometry.
+-## Migrácia 1.6.1 → 1.6.2
+-
+-Ide o prezentačný PATCH bez migrácie používateľských dát.
+-
+-1. Identifikujte obrazovky používajúce rovnaký produktový header pattern (napr. Home a vnorené search/assistant obrazovky).
+-2. Odstráňte lokálne `padding(.top)`, `offset(y:)` a vlastné safe-area kompenzácie, ktoré menia baseline rovnakého headeru.
+-3. Presuňte geometriu do zdieľaného header komponentu alebo tokenov `appPage.headerFamily.*`.
+-4. Back akciu implementujte v stabilnom leading slote bez posunu title/trailing action.
+-5. Runtime porovnajte referenčný root a aspoň jednu vnorenú obrazovku rovnakej rodiny v Light/Dark a pri podporovanom Dynamic Type.
