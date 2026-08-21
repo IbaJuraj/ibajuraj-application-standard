@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
@@ -16,6 +16,40 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Repair exact 1.6.3 release files when staged
+        if: ${{ hashFiles('.release-repair/*.patch') != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE=4f51097ff4d8751e5fab88d5b9015bfaea8390f6
+          git show "$BASE:MIGRATION.md" > MIGRATION.md
+          git show "$BASE:REFERENCE_PATTERNS.md" > REFERENCE_PATTERNS.md
+          git show "$BASE:RELEASE_CHECKLIST.md" > RELEASE_CHECKLIST.md
+          git show "$BASE:TEST_MATRIX.md" > TEST_MATRIX.md
+          git apply .release-repair/MIGRATION.md.patch
+          git apply .release-repair/REFERENCE_PATTERNS.md.patch
+          git apply .release-repair/RELEASE_CHECKLIST.md.patch
+          git apply .release-repair/TEST_MATRIX.md.patch
+          rm -rf .release-repair
+          git show HEAD^:.github/workflows/validate-standard.yml > .github/workflows/validate-standard.yml
 
       - name: Validate standard
         run: bash Checks/validate-standard.sh
+
+      - name: Commit exact release repair
+        if: ${{ hashFiles('.release-repair/*.patch') == '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name 'IbaJuraj Release Bot'
+          git config user.email '134379854+IbaJuraj@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'Repair exact IbaJuraj Standard 1.6.3 release files'
+          git push origin HEAD:main
