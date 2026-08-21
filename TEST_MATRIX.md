@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.6.1 – testovacia matica
+# IbaJuraj Standard 1.6.3 – testovacia matica
 
 Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať rizikové kombinácie podľa svojich funkcií.
 
@@ -167,7 +167,6 @@ Ak aplikácia ponúka produktové farebné témy:
 - [ ] Completeness test prešiel nad všetkými publikovanými položkami katalógu, nie iba nad kurátorovanou podmnožinou.
 - [ ] Kritické route testy overujú výsledný cieľ/správanie, nie iba prítomnosť textu v zdrojovom kóde.
 - [ ] Produkčné UI neobsahuje interné implementačné, auditné ani testovacie poznámky.
-
 ## Header Family Alignment Gate (1.6.2)
 
 - [ ] Referenčný root a peer/nested screen rovnakej header family majú rovnaký top anchor a title baseline.
@@ -176,3 +175,30 @@ Ak aplikácia ponúka produktové farebné témy:
 - [ ] Test prebehne aspoň v Light a Dark režime.
 - [ ] Pri podporovanom väčšom Dynamic Type nevznikne kolízia, prekrývanie ani improvizovaný per-screen offset.
 - [ ] Source audit neodhalí lokálne hardcoded top offsety na obrazovkách, ktoré majú zdieľať spoločný header pattern.
+## 1.6.3 – Navigation Surface, AI & Authoritative Data Gate
+
+### Floating bottom navigation
+- [ ] Posledný obsah na každom peer root tabe možno vytiahnuť celý nad floating tab bar.
+- [ ] Po úplnom doscrollovaní zostáva približne 16–24 pt vizuálnej rezervy nad hornou hranou baru, nie neprimerane veľká prázdna plocha.
+- [ ] Peer taby používajú spoločný clearance princíp bez per-screen hardcoded spacerov.
+
+### Pinned header eligibility
+- [ ] Pinned header sa používa iba tam, kde dlhý katalóg potrebuje zachovať kontext; featured/úvodné sekcie nie sú pripnuté bez dôvodu.
+- [ ] Pinned header neprekrýva prvý riadok, má semantic background a nesúperí s navigation title/header family.
+
+### Rotating content, ak sa používa
+- [ ] Sada je stabilná počas definovanej relácie/cyklu a nemá duplicity.
+- [ ] Po sebe idúce sady nie sú chaoticky náhodné a dôležitý obsah nie je dlhodobo vynechaný.
+
+### AI / generated assistance, ak sa používa
+- [ ] Autoritatívne fakty odpovede sú dohľadateľné k aplikácii/overeným podkladom; modelová pamäť nie je jediný zdroj deklarovaného overeného faktu.
+- [ ] Nízka istota alebo chýbajúce podklady vedú k doplňujúcej otázke, bezpečnému fallbacku alebo jasnému „nedostatok podkladov“, nie k nesúvisiacemu najbližšiemu výsledku.
+- [ ] Ak je AI voliteľné rozšírenie, nedostupnosť modelu nezablokuje základný deterministický workflow.
+- [ ] Používateľ môže otvoriť zdrojový/autoritatívny detail, ak to doména vyžaduje.
+- [ ] Feedback nič neodosiela automaticky; používateľ vidí obsah otázky/diagnostiky pred odoslaním.
+- [ ] Release UI neobsahuje interné AI Test/DEBUG/mock ovládacie prvky ani test fixtures.
+
+### Authoritative data integrity
+- [ ] UI nevlastní paralelnú hardcoded kópiu autoritatívneho údaja, ak existuje centrálny model/resolver.
+- [ ] Časovo verziovaný výsledok používa správnu verziu pre testovaný dátum a nová verzia neprepisuje historický výsledok.
+- [ ] Potvrdená runtime chyba s rizikom opakovania má regresný test alebo zdokumentované odôvodnenie výnimky.
