@@ -1,9 +1,9 @@
-# IbaJuraj Standard 1.6.2 – release checklist
+# IbaJuraj Standard 1.6.3 – release checklist
 
 ## Metadata a zdroj pravdy
 
 - [ ] `STANDARD_VERSION`, `standard.json`, dokumenty a adopčný súbor majú zhodnú verziu.
-- [ ] Tag má tvar `standard-v1.6.2` a existuje v autoritatívnom repozitári.
+- [ ] Tag má tvar `standard-v1.6.3` a existuje v autoritatívnom repozitári.
 - [ ] Marketingová verzia a build aplikácie sa načítavajú z build nastavení alebo `Bundle`.
 - [ ] Runtime verzia, tag a úroveň adopcie pochádzajú z jedného zdroja.
 - [ ] Nevydaná verzia nie je prezentovaná ako aktívne prijatá.
@@ -119,9 +119,21 @@
 - [ ] Dátum/verzia právneho alebo dátového overenia pochádza zo zdroja konkrétneho balíka, nie z hardcoded fallbacku.
 - [ ] Produkčné UI neobsahuje interné technické/auditné vety.
 - [ ] Dynamic Type audit neodhalil bežný text fixovaný na neadaptívnu bodovú veľkosť bez zdokumentovanej výnimky.
-
 ### Header family alignment (1.6.2)
 - [ ] Root a vnorené obrazovky rovnakej header family používajú spoločnú geometriu.
 - [ ] Nadpis a trailing systémová akcia vizuálne neskáču medzi peer obrazovkami.
 - [ ] Back akcia nemení top anchor title/subtitle páru.
 - [ ] Neexistuje per-screen hardcoded top offset tam, kde má byť použitý spoločný header component/token.
+## IbaJuraj Standard 1.6.3 – Navigation, AI & Data Integrity Gate
+
+- [ ] Floating bottom navigation používa dynamický clearance a všetky peer root taby majú posledný obsah celý viditeľný.
+- [ ] Pinned/sticky headre sú použité iba tam, kde pomáhajú orientácii, a runtime neprekrývajú obsah ani navigation title.
+- [ ] Rotovaný obsah je stabilný počas definovanej relácie, bez duplicít a bez chaotického náhodného výberu, ak sa pattern používa.
+- [ ] AI/generované odpovede sú grounded v autoritatívnych/overených podkladoch primerane doméne.
+- [ ] Nízka istota alebo chýbajúce podklady nespôsobia nesúvisiaci definitívny výsledok.
+- [ ] AI fallback bol overený na zariadení/prostredí bez podporovaného modelu, ak je AI voliteľným rozšírením.
+- [ ] Produkčný build neobsahuje používateľsky viditeľné DEBUG/mock/test ovládacie prvky ani test fixtures.
+- [ ] Feedback/diagnostika sa neodosiela automaticky a používateľ vidí odosielaný obsah.
+- [ ] Autoritatívne dáta majú jeden zdroj pravdy; UI neobsahuje paralelnú hardcoded kópiu.
+- [ ] Časovo verziované dáta a zdrojová traceability boli overené pre reprezentatívny historický/aktuálny dátum, ak ich produkt používa.
+- [ ] Nové potvrdené runtime regresie boli pridané do regresného test setu alebo majú zdokumentovanú výnimku.
