@@ -96,7 +96,11 @@
         "contact",
         "layout",
         "privacy",
-        "neutralSurfaces"
+        "neutralSurfaces",
+        "floatingTabBarClearance",
+        "pinnedHeaders",
+        "generatedAssistance",
+        "authoritativeData"
       ],
       "properties": {
         "settingsEntry": {
@@ -119,6 +123,18 @@
         },
         "neutralSurfaces": {
           "const": "semantic-neutral-surface-and-text-parity"
+        },
+        "floatingTabBarClearance": {
+          "const": "dynamic-safe-area-aware-compact-final-clearance"
+        },
+        "pinnedHeaders": {
+          "const": "eligible-context-only-no-content-occlusion"
+        },
+        "generatedAssistance": {
+          "const": "verified-grounded-safe-fallback-transparent-feedback"
+        },
+        "authoritativeData": {
+          "const": "single-source-traceable-temporal-no-parallel-model"
         }
       }
     },
