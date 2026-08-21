@@ -1,8 +1,8 @@
 # IbaJuraj Design Tokens
 
-**Verzia:** 1.6.2  
+**Verzia:** 1.6.3  
 **Stav:** autoritatívny spoločný register  
-**Platnosť od:** 20. augusta 2026
+**Platnosť od:** 21. augusta 2026
 
 Tento register definuje spoločné počiatočné hodnoty. Aplikácia ich MUST používať prostredníctvom centrálneho theme alebo foundation rozhrania, nie opakovanými číslami v jednotlivých obrazovkách.
 
@@ -165,9 +165,15 @@ Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný varian
 | `navigation.surface` | sémantický `background` alebo `elevatedSurface` | `semantic` |
 | `navigation.internalIndicator` | `chevron.right` | `exact` |
 | `navigation.externalIndicator` | `arrow.up.right.square` | `exact` |
+| `navigation.floatingTabBar.contentClearancePreferred` | 20 pt | `preferred` |
+| `navigation.floatingTabBar.contentClearanceRange` | 16–24 pt | `range` |
+| `navigation.floatingTabBar.dynamicInset` | reálna výška tab baru + safe area + content clearance | `semantic` |
+| `sectionHeader.pinnedEligibility` | iba pri reálnej strate kontextu v dlhom katalógu | `semantic` |
 
 - `navigation.surface` MUST zachovať čitateľnosť inline titulku počas posúvania a MUST zabrániť presvitaniu konkurenčného textu pod titulkom.
 - Interný push cieľ MUST používať `navigation.internalIndicator`; externá URL MUST používať `navigation.externalIndicator` alebo rovnocenný systémový symbol.
+- Floating tab bar clearance sa počíta dynamicky od reálnej navigačnej geometrie; 16–24 pt je vizuálna rezerva nad hornou hranou baru, nie celý bottom inset.
+- `sectionHeader.pinnedEligibility` nie je povinnosť pripnúť každú sekciu; pinned variant sa používa iba tam, kde pri scrollovaní zachováva užitočný katalógový kontext.
 
 ## Kontakt
 
