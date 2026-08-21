@@ -1,0 +1,84 @@
+diff --git a/REFERENCE_PATTERNS.md b/REFERENCE_PATTERNS.md
+index 9970d4e..ff185bf 100644
+--- a/REFERENCE_PATTERNS.md
++++ b/REFERENCE_PATTERNS.md
+@@ -1,4 +1,4 @@
+-# IbaJuraj Standard 1.6.2 – referenčné vzory
++# IbaJuraj Standard 1.6.3 – referenčné vzory
+ 
+ Referenčné vzory vysvetľujú spoločnú informačnú hierarchiu. Nie sú pixelovým screenshot testom a nemenia produktovú identitu aplikácie.
+ 
+@@ -183,16 +183,20 @@ Light a Dark variant tej istej obrazovky musia meniť iba appearance mapovanie s
+ 
+ ## Dlhý katalóg so sekčným kontextom
+ 
++Pinned header je vhodný iba vtedy, keď používateľ pri dlhom scrollovaní reálne stráca informáciu o aktuálnej skupine. Featured/úvodná sekcia zostáva bežne nepripnutá.
++
+ ```text
+ [collapsing title / kompaktný navigation title]
+-[sticky názov aktuálnej skupiny]
++[voliteľný pinned názov aktuálnej katalógovej skupiny]
+ [položka]
+ [položka]
+ [položka]
+---- ďalšia skupina prirodzene nahradí sticky header ---
++--- ďalšia skupina prirodzene nahradí pinned header ---
+ ```
+ 
+-- Pinned header zostáva pod safe area/navigation surface a neprekrýva obsah.
++- Pinned header zostáva pod safe area/navigation surface, má vlastný semantic background a neprekrýva obsah.
++- Prvý riadok skupiny nesmie byť odrezaný pod pinned headerom.
++- Pinned header nesúperí s navigation title/header family.
+ - Rovnaký detail otvorený z katalógu, vyhľadávania alebo quick linku používa rovnaký Back + swipe-back kontrakt.
+ ## Header family alignment
+ 
+@@ -207,4 +211,50 @@ Použite jeden spoločný header pattern pre obrazovky, ktoré majú rovnakú vi
+ - Back akcia obsadí leading slot; nesmie posúvať title ani trailing action smerom nadol.
+ - Nepoužívajte per-screen `padding(.top)` alebo `offset(y:)` na vizuálne dorovnávanie rovnakej header family.
+ - Runtime parity kontrola porovná referenčný root s aspoň jednou vnorenou obrazovkou rovnakej rodiny v Light/Dark a pri podporovanom Dynamic Type.
++## Floating bottom navigation clearance
++
++```text
++[posledný obsah]
++        ↕ 16–24 pt vizuálna rezerva
++┌──────────────────────────────────────┐
++│        floating bottom tab bar       │
++└──────────────────────────────────────┘
++[safe area]
++```
++
++- Celkový inset je dynamický: reálna výška tab baru + safe area + kompaktná content clearance.
++- Peer root taby používajú rovnaký clearance princíp; posledný obsah je celý viditeľný bez veľkej prázdnej plochy.
++
++## Rotating content pattern – MAY
++
++```text
++spustenie/relácia A → [téma 1] [téma 2] [téma 3] [téma 4]
++ďalší definovaný cyklus → [téma 5] [téma 6] [téma 1] [téma 7]
++```
++
++- Sada je počas relácie stabilná.
++- Bez duplicít v jednej sade.
++- Rotácia je deterministická alebo kontrolovaná.
++- Dôležité položky sa nestratia dlhodobo mimo zobrazovaných sád.
++
++## Verified AI / generated answer
++
++```text
++[otázka používateľa]
++        ↓
++[retrieval / resolver nad autoritatívnymi dátami]
++        ↓
++[overené podklady + identita/verzia]
++        ↓
++[AI zrozumiteľné vysvetlenie]
++        ↓
++[zdrojový detail / pokračovanie / feedback]
++
++Ak podklady nestačia:
++[doplňujúca otázka] alebo [bezpečný fallback] alebo [nahlásiť chýbajúcu odpoveď]
++```
++
++- AI vysvetlenie nenahrádza autoritatívny zdroj pravdy.
++- Pri nízkej istote sa nesmie zobraziť nesúvisiaci „najbližší“ výsledok ako definitívna odpoveď.
++- Feedback môže predvyplniť otázku a diagnostický kontext, ale používateľ musí obsah pred odoslaním vidieť a nič sa neodosiela automaticky.
