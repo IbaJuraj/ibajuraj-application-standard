@@ -47,3 +47,5 @@ jobs:
             --title 'IbaJuraj Application Standard 1.6.4' \
             --notes-file RELEASE_NOTES_1.6.4.md \
             --latest
+
+# publication trigger via GitHub contents API
