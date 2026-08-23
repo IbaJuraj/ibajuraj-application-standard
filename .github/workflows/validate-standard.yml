@@ -18,6 +18,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Update Standard 1.6.4 metadata schema
+        run: python3 .release-1.6.4/schema_patch.py
+
       - name: Prepare Standard 1.6.4 release tree
         run: python3 .release-1.6.4/upgrade.py
 
@@ -48,4 +51,4 @@ jobs:
             --notes-file RELEASE_NOTES_1.6.4.md \
             --latest
 
-# publication trigger via GitHub contents API
+# corrected 1.6.4 publication trigger
