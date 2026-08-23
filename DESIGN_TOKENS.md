@@ -1,8 +1,8 @@
 # IbaJuraj Design Tokens
 
-**Verzia:** 1.6.3  
-**Stav:** autoritatívny spoločný register  
-**Platnosť od:** 21. augusta 2026
+**Verzia:** 1.6.4
+**Stav:** autoritatívny spoločný register
+**Platnosť od:** 23. augusta 2026
 
 Tento register definuje spoločné počiatočné hodnoty. Aplikácia ich MUST používať prostredníctvom centrálneho theme alebo foundation rozhrania, nie opakovanými číslami v jednotlivých obrazovkách.
 
@@ -61,6 +61,30 @@ Ak tabuľka neuvádza inak, spacing a radius tokeny sú `exact`, minimálne rozm
 | `calculatorKey.standard` | podľa produktovej matice | 44 pt | Doménový variant; dotyková plocha nesmie byť menšia než minimum |
 
 Referenčná minimálna veľkosť MUST NOT byť použitá ako pevná maximálna veľkosť. Ak obsah potrebuje viac priestoru, komponent sa zväčší alebo sa mriežka zmení na menší počet stĺpcov.
+
+### Navigation tile & icon family geometry
+
+| Token | Hodnota | Typ |
+|---|---:|---|
+| `navigationTile.compact.minimumHeight` | 124 pt | `minimum` |
+| `navigationTile.compact.radius` | 22 pt | `exact` |
+| `navigationTile.compact.contentPadding` | 16 pt | `exact` |
+| `navigationTile.compact.contentGap` | 10 pt | `exact` |
+| `navigationTile.compact.iconContainer` | 44 × 44 pt | `exact` |
+| `navigationTile.compact.iconContainerRadius` | 12 pt | `exact` |
+| `navigationTile.compact.symbolOpticalSize` | 20 pt | `preferred` |
+| `navigationTile.compact.trailingIndicator` | `chevron.right` ak ide o push cieľ | `semantic` |
+| `navigationRow.standard.iconContainer` | 36 × 36 pt | `exact` |
+| `navigationRow.standard.iconContainerRadius` | 10 pt | `exact` |
+| `navigationRow.standard.symbolOpticalSize` | 17 pt | `preferred` |
+| `componentFamily.semanticException` | odlišná geometria iba pri odlišnej sémantickej roli alebo zdokumentovanej výnimke | `semantic` |
+| `componentFamily.localGeometryDrift` | zakázaný lokálny override bez pomenovaného variantu/výnimky | `semantic` |
+| `modeControl.textFit` | bez významového clippingu; adaptívne pre Dynamic Type a lokalizáciu | `semantic` |
+
+- `navigationTile.compact` používa jeden spoločný shape contract naprieč peer obrazovkami. Produktový obsah alebo farba MAY byť odlišná; geometry variant zostáva spoločný.
+- Ikonový kontajner rovnakej komponentovej rodiny MUST zachovať rovnaký shape a radius. Kruh nie je zameniteľný s rounded square iba podľa obrazovky.
+- Symbolová veľkosť je optická; konkrétny SF Symbol MAY vyžadovať malú centrálne definovanú korekciu, ale lokálne per-screen `font`/`scaleEffect` override SHOULD NOT vznikať.
+- Ak Dynamic Type alebo lokalizácia vyžaduje väčšiu výšku, komponent rastie smerom nahor od minima a peer komponenty v rovnakom layout kontexte SHOULD zachovať vizuálnu paritu.
 
 ## Typografia koreňovej obrazovky
 

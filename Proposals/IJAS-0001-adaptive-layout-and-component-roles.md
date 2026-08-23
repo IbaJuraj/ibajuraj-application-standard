@@ -1,9 +1,9 @@
 # IJAS-0001 – Adaptívne rozloženie a sémantické roly komponentov
 
-**Stav:** implemented  
-**Navrhovateľ:** IbaJuraj  
-**Dátum:** 2026-08-09  
-**Dotknuté aplikácie:** Strážca Termínov, Lex Drive, Peňaženka Kariet, Kalkulačka 2v1  
+**Stav:** implemented
+**Navrhovateľ:** IbaJuraj
+**Dátum:** 2026-08-09
+**Dotknuté aplikácie:** Strážca Termínov, Lex Drive, Peňaženka Kariet, Kalkulačka 2v1
 **Navrhovaná verzia štandardu:** 1.2.0
 
 ## Problém
@@ -38,7 +38,6 @@ Statická kontrola môže overovať používanie tokenov. Snapshot a runtime tes
 
 ## Rozhodnutie
 
-**Výsledok:** implemented  
-**Odôvodnenie:** Rovnaká potreba bola potvrdená vo viacerých nezávislých produktoch.  
+**Výsledok:** implemented
+**Odôvodnenie:** Rovnaká potreba bola potvrdená vo viacerých nezávislých produktoch.
 **Schválená verzia:** 1.2.0
-

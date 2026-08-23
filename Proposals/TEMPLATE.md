@@ -1,10 +1,10 @@
 # IJAS-0000 – Názov návrhu
 
-**Stav:** proposed  
-**Navrhovateľ:**  
-**Dátum:** YYYY-MM-DD  
-**Dotknuté aplikácie:**  
-**Navrhovaná verzia štandardu:**  
+**Stav:** proposed
+**Navrhovateľ:**
+**Dátum:** YYYY-MM-DD
+**Dotknuté aplikácie:**
+**Navrhovaná verzia štandardu:**
 
 ## Problém
 
@@ -40,6 +40,6 @@ Dá sa pravidlo kontrolovať testom, linterom alebo release skriptom?
 
 Vyplní sa po posúdení.
 
-**Výsledok:**  
-**Odôvodnenie:**  
-**Schválená verzia:**  
+**Výsledok:**
+**Odôvodnenie:**
+**Schválená verzia:**

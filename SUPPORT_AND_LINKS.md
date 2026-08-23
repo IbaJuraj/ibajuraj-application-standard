@@ -1,7 +1,7 @@
 # IbaJuraj – podpora a verejné odkazy
 
-**Stav:** autoritatívny register  
-**Verzia:** 1.6.3
+**Stav:** autoritatívny register
+**Verzia:** 1.6.4
 
 ## Verejné adresy
 

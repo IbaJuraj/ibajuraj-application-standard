@@ -1,12 +1,12 @@
 # STANDARD_EXCEPTION – Názov výnimky
 
-**Aplikácia:**  
-**Pravidlo:**  
-**Záväznosť pravidla:** MUST / MUST NOT / SHOULD / SHOULD NOT  
-**Stav:** active  
-**Schválil:**  
-**Dátum schválenia:** YYYY-MM-DD  
-**Dátum revízie:** YYYY-MM-DD  
+**Aplikácia:**
+**Pravidlo:**
+**Záväznosť pravidla:** MUST / MUST NOT / SHOULD / SHOULD NOT
+**Stav:** active
+**Schválil:**
+**Dátum schválenia:** YYYY-MM-DD
+**Dátum revízie:** YYYY-MM-DD
 
 ## Dôvod
 

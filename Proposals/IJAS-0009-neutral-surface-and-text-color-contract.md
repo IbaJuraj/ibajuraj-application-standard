@@ -1,7 +1,7 @@
 # IJAS-0009 – Neutral Surface & Text Color Contract
 
-**Status:** accepted  
-**Target:** Standard 1.5.1  
+**Status:** accepted
+**Target:** Standard 1.5.1
 **Date:** 2026-08-13
 
 ## Problém

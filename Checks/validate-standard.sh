@@ -49,6 +49,8 @@ required_files=(
   "Proposals/IJAS-0015-authoritative-data-traceability-and-safe-relevance.md"
   "Proposals/IJAS-0016-runtime-regression-and-debug-isolation.md"
   "AUDIT_1.6.2_TO_1.6.3.md"
+  "AUDIT_1.6.3_TO_1.6.4.md"
+  "Proposals/IJAS-0017-component-family-geometry-and-maturity-exposure.md"
 )
 
 for path in "${required_files[@]}"; do
@@ -204,6 +206,9 @@ contract_patterns = {
         r"Verified AI & Generated Assistance Contract",
         r"Authoritative Data Separation & Traceability Contract",
         r"najbližší.*výsledok.*MUST NOT",
+        r"Component Family Geometry & Icon Contract",
+        r"Feature Maturity & Development Controls Exposure Contract",
+        r"Whole-App Visual Consistency Gate",
     ],
     "DESIGN_TOKENS.md": [
         r"header\.action\.visualDiameter",
@@ -228,6 +233,10 @@ contract_patterns = {
         r"navigation\.floatingTabBar\.contentClearancePreferred",
         r"navigation\.floatingTabBar\.dynamicInset",
         r"sectionHeader\.pinnedEligibility",
+        r"navigationTile\.compact\.iconContainer",
+        r"navigationRow\.standard\.iconContainer",
+        r"componentFamily\.localGeometryDrift",
+        r"modeControl\.textFit",
     ],
     "SUPPORT_AND_LINKS.md": [
         r"\?app=<app-id>&type=<type>&subject=<subject>#support",

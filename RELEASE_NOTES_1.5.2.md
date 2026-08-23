@@ -1,6 +1,6 @@
 # IbaJuraj Application Standard 1.5.2
 
-**Dátum:** 14. august 2026  
+**Dátum:** 14. august 2026
 **Typ:** backward-compatible patch
 
 ## Prečo vzniká

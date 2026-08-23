@@ -1,6 +1,6 @@
 # Audit IbaJuraj Application Standard 1.6.2 → 1.6.3
 
-**Dátum:** 2026-08-21  
+**Dátum:** 2026-08-21
 **Výsledok:** základ 1.6.2 je architektonicky zdravý; 1.6.3 je vhodný ako spätne kompatibilný quality/safety hardening.
 
 ## Silné stránky 1.6.2

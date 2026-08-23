@@ -1,7 +1,7 @@
 # IbaJuraj Application Standard 1.6.3
 
-**Dátum vydania:** 21. august 2026  
-**Typ:** PATCH / backward-compatible quality & safety hardening  
+**Dátum vydania:** 21. august 2026
+**Typ:** PATCH / backward-compatible quality & safety hardening
 **Kompatibilita:** bez migrácie doménových používateľských dát
 
 ## Prečo táto verzia vznikla

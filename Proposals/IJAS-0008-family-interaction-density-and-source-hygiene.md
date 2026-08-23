@@ -1,7 +1,7 @@
 # IJAS-0008 – Family interaction, density and source hygiene
 
-**Status:** accepted  
-**Target:** IbaJuraj Application Standard 1.5.0  
+**Status:** accepted
+**Target:** IbaJuraj Application Standard 1.5.0
 **Date:** 2026-08-13
 
 ## Kontext

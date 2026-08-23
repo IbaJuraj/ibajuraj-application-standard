@@ -1,7 +1,7 @@
 # IJAS-0014 – Verified AI, Generated Assistance & Feedback
 
-**Status:** Implemented  
-**Target:** 1.6.3  
+**Status:** Implemented
+**Target:** 1.6.3
 **Date:** 2026-08-21
 
 ## Problem

@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.6.3 – referenčné vzory
+# IbaJuraj Standard 1.6.4 – referenčné vzory
 
 Referenčné vzory vysvetľujú spoločnú informačnú hierarchiu. Nie sú pixelovým screenshot testom a nemenia produktovú identitu aplikácie.
 
@@ -257,3 +257,37 @@ Ak podklady nestačia:
 - AI vysvetlenie nenahrádza autoritatívny zdroj pravdy.
 - Pri nízkej istote sa nesmie zobraziť nesúvisiaci „najbližší“ výsledok ako definitívna odpoveď.
 - Feedback môže predvyplniť otázku a diagnostický kontext, ale používateľ musí obsah pred odoslaním vidieť a nič sa neodosiela automaticky.
+
+
+## Component family geometry – 1.6.4
+
+```text
+[44×44 rounded-square icon]  Názov                  >
+                            Podnadpis
+
+rovnaká rola na inej obrazovke:
+[44×44 rounded-square icon]  Názov                  >
+                            Podnadpis
+```
+
+- Rovnaký component family variant zachováva icon container, radius, alignment, padding a content density.
+- Kruh namiesto rounded square je prípustný iba pre inú pomenovanú sémantickú rolu (napr. avatar/status) alebo zdokumentovanú výnimku.
+- Dlhší text alebo Dynamic Type môže komponent zväčšiť; nemá vytvoriť náhodný lokálny variant.
+
+## Mode control text fit – 1.6.4
+
+```text
+[ Praktické ] [ Právne ]
+```
+
+- Text je vertikálne centrovaný, neorezaný a čitateľný.
+- Pri dlhšej lokalizácii alebo Dynamic Type sa mení vhodný layout/variant, nie význam textu.
+
+## Feature maturity exposure – 1.6.4
+
+```text
+produkčný používateľ: [jedna podporovaná cesta]
+
+developer diagnostika: Auto | Classic | AI Test | score/routing
+                       ^ mimo bežného používateľského UI
+```

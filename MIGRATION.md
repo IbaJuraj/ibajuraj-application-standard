@@ -1,5 +1,18 @@
 # Migrácia IbaJuraj Application Standard
 
+## 1.6.3 → 1.6.4
+
+Verzia 1.6.4 je spätne kompatibilný UX/consistency PATCH bez migrácie doménových používateľských dát.
+
+1. Vykonajte whole-app audit všetkých porovnateľných navigačných dlaždíc, navigačných riadkov a ikonových kontajnerov.
+2. Zjednoťte peer komponenty na spoločný variant/token pre minimum height, radius, padding, icon container, symbol alignment a trailing geometriu.
+3. Odstráňte náhodné kruh/rounded-square rozdiely v rovnakej komponentovej rodine; zachovajte iba pomenované sémantické výnimky.
+4. Odstráňte lokálne geometry overrides, ak rovnakú rolu už pokrýva shared component/token.
+5. Stresovo otestujte segmented/mode controls a spoločné riadky v najdlhších podporovaných lokalizáciách a pri Dynamic Type.
+6. Nedokončené/experimentálne capability, debug routing a test prepínače odstráňte z bežného používateľského UI alebo ich explicitne diagnosticky izolujte.
+7. Porovnajte Light/Dark, selected/pressed/disabled/focus states a whole-app component-family konzistenciu.
+8. Nevyžaduje sa migrácia uložených používateľských dát iba kvôli adopcii 1.6.4.
+
 ## 1.6.2 → 1.6.3
 
 Verzia 1.6.3 je spätne kompatibilný PATCH/hardening release bez migrácie doménových používateľských dát. Auditujte iba funkcie, ktoré aplikácia používa.

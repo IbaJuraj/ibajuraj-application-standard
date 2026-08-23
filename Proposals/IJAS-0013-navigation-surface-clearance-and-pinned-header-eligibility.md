@@ -1,7 +1,7 @@
 # IJAS-0013 – Navigation Surface Clearance & Pinned Header Eligibility
 
-**Status:** Implemented  
-**Target:** 1.6.3  
+**Status:** Implemented
+**Target:** 1.6.3
 **Date:** 2026-08-21
 
 ## Problem

@@ -100,7 +100,10 @@
         "floatingTabBarClearance",
         "pinnedHeaders",
         "generatedAssistance",
-        "authoritativeData"
+        "authoritativeData",
+        "componentFamilyGeometry",
+        "featureMaturity",
+        "visualConsistency"
       ],
       "properties": {
         "settingsEntry": {
@@ -135,6 +138,15 @@
         },
         "authoritativeData": {
           "const": "single-source-traceable-temporal-no-parallel-model"
+        },
+        "componentFamilyGeometry": {
+          "const": "shared-role-shared-geometry-explicit-semantic-exceptions"
+        },
+        "featureMaturity": {
+          "const": "unfinished-experimental-capabilities-not-equal-user-facing-modes"
+        },
+        "visualConsistency": {
+          "const": "whole-app-component-family-localization-dynamic-type-audit"
         }
       }
     },

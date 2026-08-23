@@ -1,7 +1,7 @@
 # IJAS-0012 – Header Family Alignment Contract
 
-**Status:** Implemented  
-**Target:** 1.6.2  
+**Status:** Implemented
+**Target:** 1.6.2
 **Date:** 2026-08-20
 
 ## Problem

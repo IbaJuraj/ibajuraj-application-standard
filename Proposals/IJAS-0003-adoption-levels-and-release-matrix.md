@@ -1,9 +1,9 @@
 # IJAS-0003 – Úrovne adopcie a release testovacia matica
 
-**Stav:** implemented  
-**Navrhovateľ:** IbaJuraj  
-**Dátum:** 2026-08-09  
-**Dotknuté aplikácie:** všetky aplikácie IbaJuraj  
+**Stav:** implemented
+**Navrhovateľ:** IbaJuraj
+**Dátum:** 2026-08-09
+**Dotknuté aplikácie:** všetky aplikácie IbaJuraj
 **Navrhovaná verzia štandardu:** 1.2.0
 
 ## Problém
@@ -38,6 +38,6 @@ Validátor overí prítomnosť verzie, tagu a úrovne v adopčnej šablóne. Pro
 
 ## Rozhodnutie
 
-**Výsledok:** implemented  
-**Odôvodnenie:** Úrovne umožnia pravdivo odlíšiť deklaráciu, spoločné UX a plnú adopciu.  
+**Výsledok:** implemented
+**Odôvodnenie:** Úrovne umožnia pravdivo odlíšiť deklaráciu, spoločné UX a plnú adopciu.
 **Schválená verzia:** 1.2.0

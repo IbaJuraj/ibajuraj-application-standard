@@ -1,8 +1,8 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.6.3  
-**Stav:** autoritatívny spoločný štandard  
-**Platnosť od:** 21. augusta 2026  
+**Verzia:** 1.6.4
+**Stav:** autoritatívny spoločný štandard
+**Platnosť od:** 23. augusta 2026
 **Vlastník:** IbaJuraj
 
 ## 1. Účel
@@ -73,6 +73,45 @@ Spoločný štandard MUST zjednocovať **správanie, geometriu a sémantické ro
 - SHOULD obmedziť veľké monolitické view súbory a deliť ich podľa zodpovedností.
 - Bežný používateľský text MUST používať sémantické alebo relatívne Dynamic Type roly. Pevná bodová veľkosť SHOULD byť vyhradená pre zdokumentovanú špecifickú vizuálnu rolu a MUST mať overený accessibility variant.
 
+### 6.2.1 Component Family Geometry & Icon Contract
+
+- Komponenty s rovnakou sémantickou rolou MUST používať rovnakú komponentovú rodinu alebo spoločný geometry contract naprieč celou aplikáciou. Rozdielna obrazovka sama osebe MUST NOT byť dôvodom na inú výšku, radius, padding, icon container alebo trailing geometriu.
+- Porovnateľné navigačné dlaždice MUST používať rovnaký variant `navigationTile.*`: rovnakú referenčnú minimálnu výšku, radius, vnútorné odsadenie, title/subtitle typografiu, medzery a trailing správanie. Pri nedostatku priestoru sa komponent adaptuje podľa Dynamic Type a dostupnej šírky; MUST NOT sa lokálne zmenšovať text alebo meniť geometriu iba kvôli jednej obrazovke.
+- Ikonový kontajner rovnakej komponentovej rodiny MUST mať rovnakú veľkosť, shape, radius, alignment a optickú symbolovú veľkosť. Kruh, rounded square, kapsula alebo iný shape MAY byť použitý iba ako pomenovaná sémantická rola alebo zdokumentovaná produktová výnimka.
+- Rovnaká kategória alebo stav SHOULD používať rovnakú sémantickú farebnú logiku; farba MUST NOT byť náhodnou per-screen dekoráciou a MUST NOT byť jediným nositeľom významu.
+- Interaktívny riadok rovnakej rodiny MUST zachovať spoločnú leading icon baseline, title/subtitle alignment, trailing value/chevron alignment a minimálnu dotykovú plochu.
+- Shared Component First: pred vytvorením novej lokálnej implementácie MUST byť overené, či rovnaká komponentová rodina už existuje. Ak existuje, nová obrazovka ju SHOULD znovu použiť alebo rozšíriť cez pomenovaný variant.
+- No Local Geometry Drift: lokálne `frame`, `padding`, `cornerRadius`, symbol size alebo offset MUST NOT obchádzať autoritatívny token/shared component bez zdokumentovaného dôvodu.
+- Selected, pressed, disabled a focused state rovnakého komponentu MUST zostať konzistentný naprieč obrazovkami a rešpektovať Reduce Motion, Increase Contrast a prístupnosť.
+
+### 6.2.2 Text Fit, Localization & Mode-Control Readability Contract
+
+- Dôležitý používateľský názov ovládacieho prvku MUST zostať čitateľný vo všetkých podporovaných lokalizáciách a pri podporovanom Dynamic Type. `minimumScaleFactor` alebo orezanie významového textu MUST NOT byť náhradou za adaptívny layout.
+- Segmented/mode control MUST mať dostatočnú výšku, vnútorné odsadenie a baseline tak, aby text nebol vertikálne orezaný, prekrytý ani vizuálne posunutý.
+- Ak sa podporované názvy segmentov nezmestia pri väčšom texte alebo dlhšej lokalizácii, layout MUST adaptovať počet riadkov, šírku, variant alebo prezentáciu namiesto straty textu.
+- Release audit SHOULD obsahovať stresový test najdlhšej podporovanej lokalizácie minimálne na spoločných navigačných dlaždiciach, segmented controls, settings rows a hlavných akciách.
+
+### 6.2.3 Feature Maturity & Development Controls Exposure Contract
+
+- Nedokončená, experimentálna alebo interná capability MUST NOT byť prezentovaná bežnému používateľovi ako rovnocenný produkčný režim iba preto, že je technicky prítomná v kóde.
+- Prepínače typu `Auto`, `Classic`, `AI Test`, mock/stub routing, interné score, pipeline názvy a diagnostické režimy MUST NOT byť súčasťou bežného produkčného UI. Ak sú potrebné pre vývoj, MUST byť compile-time alebo explicitne diagnosticky izolované.
+- Produkt MAY používateľovi sprístupniť nový režim až po definovanom capability/release gate. Dovtedy MUST zostať používateľská cesta jednoduchá a založená na najzrelšej podporovanej capability.
+- Interná existencia budúcej capability MUST NOT meniť právnu, bezpečnostnú alebo dátovú autoritu existujúceho produkčného režimu.
+
+### 6.2.4 Whole-App Visual Consistency Gate
+
+Pred release, ktorý mení spoločné vizuálne komponenty, MUST whole-app audit skontrolovať všetky relevantné obrazovky, nie iba nahlásený screenshot. Minimálne sa overí:
+
+- navigačná tile/card geometry a content density,
+- icon container size/shape/radius a symbol alignment,
+- interactive row alignment, trailing values a chevrony,
+- segmented controls a text fit,
+- semantic color roles a Light/Dark parity,
+- Dynamic Type a najdlhšie podporované lokalizácie,
+- selected/pressed/disabled/focus states,
+- explicitné a zdokumentované sémantické výnimky.
+
+Náhodná vizuálna odchýlka medzi peer komponentmi je release defect. Zámerná odchýlka MAY zostať iba vtedy, keď má odlišnú sémantickú rolu alebo schválenú výnimku.
 
 ### 6.3 Spoločné systémové nastavenia
 

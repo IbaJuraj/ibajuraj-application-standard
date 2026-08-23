@@ -1,9 +1,9 @@
 # IJAS-0004 – Spoločný vstup a vizuálny systém Nastavení
 
-**Stav:** implemented  
-**Navrhovateľ:** IbaJuraj  
-**Dátum:** 2026-08-09  
-**Dotknuté aplikácie:** Strážca Termínov, Lex Drive, Peňaženka Kariet, Kalkulačka 2v1  
+**Stav:** implemented
+**Navrhovateľ:** IbaJuraj
+**Dátum:** 2026-08-09
+**Dotknuté aplikácie:** Strážca Termínov, Lex Drive, Peňaženka Kariet, Kalkulačka 2v1
 **Navrhovaná verzia štandardu:** 1.2.0
 
 ## Problém
@@ -41,6 +41,6 @@ Statická kontrola môže overiť symbol, absenciu settings tabu a používanie 
 
 ## Rozhodnutie
 
-**Výsledok:** implemented  
-**Odôvodnenie:** Rovnaký systémový problém a spoločné riešenie sa potvrdili vo všetkých aplikáciách IbaJuraj.  
+**Výsledok:** implemented
+**Odôvodnenie:** Rovnaký systémový problém a spoločné riešenie sa potvrdili vo všetkých aplikáciách IbaJuraj.
 **Schválená verzia:** 1.2.0

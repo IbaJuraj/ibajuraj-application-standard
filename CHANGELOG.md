@@ -1,5 +1,23 @@
 # Changelog – IbaJuraj Application Standard
 
+## 1.6.4 – 2026-08-23
+
+### Added
+- Component Family Geometry & Icon Contract pre porovnateľné navigačné dlaždice, riadky a ikonové kontajnery naprieč celou aplikáciou.
+- Shared Component First a No Local Geometry Drift pravidlá proti lokálnym per-screen odchýlkam rovnakého komponentu.
+- Text Fit, Localization & Mode-Control Readability Contract pre segmented controls a významové ovládacie texty.
+- Feature Maturity & Development Controls Exposure Contract: nedokončené/experimentálne capability a Auto/Classic/AI Test/debug routing sa nezobrazujú ako bežné používateľské režimy.
+- Whole-App Visual Consistency Gate vrátane Light/Dark, Dynamic Type, najdlhších lokalizácií, icon shape/size a interaction states.
+- explicitné navigation tile/icon family tokeny v `DESIGN_TOKENS.md`.
+
+### Changed
+- existujúca component-family zásada z 1.6.3 je teraz normatívne presná aj pre size, shape, radius, padding, alignment a symbol geometry.
+- vizuálna odchýlka medzi peer komponentmi musí mať sémantický dôvod alebo zdokumentovanú výnimku.
+
+### Compatibility
+- spätne kompatibilný PATCH bez migrácie doménových používateľských dát,
+- existujúce aplikácie auditujú iba spoločné vizuálne komponenty pri najbližšom plánovanom builde; produktovo odlišné komponenty nemusia byť násilne zjednotené.
+
 ## 1.6.3 – 2026-08-21
 
 ### Added

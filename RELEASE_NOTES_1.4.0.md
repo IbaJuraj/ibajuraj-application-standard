@@ -1,6 +1,6 @@
 # IbaJuraj Application Standard 1.4.0
 
-**Dátum:** 13. augusta 2026  
+**Dátum:** 13. augusta 2026
 **Typ:** MINOR – spätne kompatibilné spoločné UX pravidlá
 
 ## Prečo vznikla verzia 1.4.0

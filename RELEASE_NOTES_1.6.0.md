@@ -1,6 +1,6 @@
 # IbaJuraj Application Standard 1.6.0
 
-**Status:** Final  
+**Status:** Final
 **Date:** 2026-08-17
 
 ## Scope

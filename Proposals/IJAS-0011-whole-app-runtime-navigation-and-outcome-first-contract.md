@@ -1,6 +1,6 @@
 # IJAS-0011 – Whole-App Runtime Integrity, Navigation & Outcome-First Contract
 
-**Stav:** accepted in Standard 1.6.1  
+**Stav:** accepted in Standard 1.6.1
 **Dátum:** 19. august 2026
 
 ## Dôvod

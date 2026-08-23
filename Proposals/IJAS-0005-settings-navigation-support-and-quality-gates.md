@@ -1,9 +1,9 @@
 # IJAS-0005 – Navigácia Nastavení, podpora a quality gates 1.3
 
-**Stav:** implemented  
-**Navrhovateľ:** IbaJuraj  
-**Dátum:** 2026-08-10  
-**Dotknuté aplikácie:** Kalkulačka 2v1, Lex Drive, Strážca Termínov, Peňaženka Kariet  
+**Stav:** implemented
+**Navrhovateľ:** IbaJuraj
+**Dátum:** 2026-08-10
+**Dotknuté aplikácie:** Kalkulačka 2v1, Lex Drive, Strážca Termínov, Peňaženka Kariet
 **Navrhovaná verzia štandardu:** 1.3.0
 
 ## Problém
@@ -38,6 +38,6 @@ Kontrola overí metadata a presný enum adopcie, SHA-256 integritu, povinné dok
 
 ## Rozhodnutie
 
-**Výsledok:** implemented  
-**Odôvodnenie:** Potreba a spoločné riešenie boli potvrdené vo všetkých štyroch aplikáciách.  
+**Výsledok:** implemented
+**Odôvodnenie:** Potreba a spoločné riešenie boli potvrdené vo všetkých štyroch aplikáciách.
 **Schválená verzia:** 1.3.0

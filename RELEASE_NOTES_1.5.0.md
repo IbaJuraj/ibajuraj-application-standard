@@ -1,7 +1,7 @@
 # IbaJuraj Application Standard 1.5.0
 
-**Release date:** 13. 8. 2026  
-**Tag:** `standard-v1.5.0`  
+**Release date:** 13. 8. 2026
+**Tag:** `standard-v1.5.0`
 **Compatibility:** backward-compatible MINOR release
 
 ## Hlavná myšlienka

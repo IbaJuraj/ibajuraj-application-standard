@@ -1,4 +1,4 @@
-# IbaJuraj Standard 1.6.3 – testovacia matica
+# IbaJuraj Standard 1.6.4 – testovacia matica
 
 Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať rizikové kombinácie podľa svojich funkcií.
 
@@ -39,6 +39,18 @@ Táto matica je spoločný minimálny release dôkaz. Produkt MAY pridať riziko
 - [ ] Settings row má pri rovnakom obsahu rovnakú základnú výšku naprieč aplikáciami; používa 16/10 pt padding, 36 × 36 pt ikonovú dlaždicu a `minHeight` 56 pt.
 - [ ] Padding settings row sa aplikuje pred `frame(minHeight:)`; nevzniká dodatočná výška spôsobená opačným poradím modifierov.
 - [ ] Segmented **Vzhľad** má rovnakú výšku a odsadenie vo všetkých aplikáciách, ktoré ho používajú.
+
+## Component family geometry & maturity exposure – 1.6.4
+
+- [ ] Whole-app audit prešiel všetky peer navigačné dlaždice/riadky, nie iba nahlásenú obrazovku.
+- [ ] Rovnaký navigation tile variant používa rovnaké minimum height, radius, padding, title/subtitle spacing a trailing geometriu.
+- [ ] Rovnaký icon-container variant používa rovnakú size, shape, radius a symbol alignment; odlišný kruh/rounded square má explicitný sémantický dôvod.
+- [ ] Neexistuje nezdokumentovaný per-screen `frame`/`padding`/`cornerRadius`/symbol-size override, ktorý obchádza spoločný variant.
+- [ ] Segmented/mode controls neorezávajú text pri default, XXL ani accessibility XXXL.
+- [ ] Najdlhšia podporovaná lokalizácia nespôsobí významový clipping navigačných dlaždíc, settings rows ani hlavných mode controls.
+- [ ] Selected/pressed/disabled/focus state rovnakého komponentu je konzistentný v Light/Dark.
+- [ ] Nedokončený/experimentálny režim ani Auto/Classic/AI Test/debug routing nie je viditeľný v bežnom používateľskom UI.
+- [ ] Každá zámerná vizuálna výnimka je pomenovaná sémantickou rolou alebo zdokumentovaná.
 
 ## Kontakt a O aplikácii
 

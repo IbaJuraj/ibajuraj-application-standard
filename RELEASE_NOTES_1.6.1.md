@@ -1,7 +1,7 @@
 # IbaJuraj Application Standard 1.6.1
 
-**Dátum vydania:** 19. august 2026  
-**Typ:** PATCH  
+**Dátum vydania:** 19. august 2026
+**Typ:** PATCH
 **Kompatibilita:** spätne kompatibilná; bez migrácie doménových používateľských dát
 
 ## Prečo táto verzia vznikla

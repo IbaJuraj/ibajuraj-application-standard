@@ -1,7 +1,7 @@
 # IJAS-0016 – Runtime Regression & Debug Isolation
 
-**Status:** Implemented  
-**Target:** 1.6.3  
+**Status:** Implemented
+**Target:** 1.6.3
 **Date:** 2026-08-21
 
 ## Problem

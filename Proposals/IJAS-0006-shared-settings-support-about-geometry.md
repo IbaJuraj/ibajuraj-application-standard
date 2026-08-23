@@ -1,7 +1,7 @@
 # IJAS-0006 – Spoločná geometria Nastavení, Kontakt a O aplikácii
 
-**Stav:** Accepted  
-**Cieľová verzia:** 1.4.0  
+**Stav:** Accepted
+**Cieľová verzia:** 1.4.0
 **Dátum:** 13. augusta 2026
 
 ## Problém

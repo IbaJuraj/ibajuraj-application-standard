@@ -1,9 +1,9 @@
-# IbaJuraj Standard 1.6.3 – release checklist
+# IbaJuraj Standard 1.6.4 – release checklist
 
 ## Metadata a zdroj pravdy
 
 - [ ] `STANDARD_VERSION`, `standard.json`, dokumenty a adopčný súbor majú zhodnú verziu.
-- [ ] Tag má tvar `standard-v1.6.3` a existuje v autoritatívnom repozitári.
+- [ ] Tag má tvar `standard-v1.6.4` a existuje v autoritatívnom repozitári.
 - [ ] Marketingová verzia a build aplikácie sa načítavajú z build nastavení alebo `Bundle`.
 - [ ] Runtime verzia, tag a úroveň adopcie pochádzajú z jedného zdroja.
 - [ ] Nevydaná verzia nie je prezentovaná ako aktívne prijatá.
@@ -137,3 +137,12 @@
 - [ ] Autoritatívne dáta majú jeden zdroj pravdy; UI neobsahuje paralelnú hardcoded kópiu.
 - [ ] Časovo verziované dáta a zdrojová traceability boli overené pre reprezentatívny historický/aktuálny dátum, ak ich produkt používa.
 - [ ] Nové potvrdené runtime regresie boli pridané do regresného test setu alebo majú zdokumentovanú výnimku.
+
+## Standard 1.6.4 – component geometry & exposure gate
+
+- [ ] Whole-app component-family audit bol vykonaný na všetkých relevantných root/list/detail obrazovkách.
+- [ ] Navigation tiles a rows rovnakej rodiny používajú spoločné geometry tokeny/varianty.
+- [ ] Icon containers rovnakej rodiny používajú spoločný shape/size/radius; výnimky sú sémanticky zdôvodnené.
+- [ ] Segmented/mode controls a významové akčné texty prešli localization + Dynamic Type stress testom bez clippingu.
+- [ ] Nedokončené/experimentálne capability a development routing controls nie sú v bežnom používateľskom UI.
+- [ ] Light/Dark a selected/pressed/disabled/focus states peer komponentov sú konzistentné.

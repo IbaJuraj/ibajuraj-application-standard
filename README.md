@@ -2,9 +2,9 @@
 
 Autoritatívny spoločný štandard pre aplikácie IbaJuraj.
 
-Aktuálna verzia: **1.6.3**  
+Aktuálna verzia: **1.6.4**
 
-Najnovší patch 1.6.3 zjednocuje safe clearance pri floating navigácii, eligibility pinned headerov, kontrolovanú rotáciu obsahu a pridáva spoločné bezpečnostné pravidlá pre AI/generované odpovede, autoritatívne dáta, low-confidence fallback a regresné testovanie.
+Najnovší patch 1.6.4 spresňuje spoločnú geometriu navigačných dlaždíc a ikonových kontajnerov, zabraňuje lokálnemu geometry driftu, chráni čitateľnosť segmented/mode controls pri lokalizácii a Dynamic Type a zavádza whole-app visual consistency a feature-maturity exposure gate.
 
 Stav: **finálne vydanie**
 
@@ -45,6 +45,10 @@ Pre Level 3 a Level 4 musí aplikácia uložiť vyplnenú testovaciu maticu, rel
 
 Aplikácia nesmie automaticky prijať novú verziu iba preto, že bola publikovaná.
 
+### Nové v 1.6.4
+
+Verzia 1.6.4 je spätne kompatibilný UX/consistency PATCH. Zavádza Component Family Geometry & Icon Contract, Shared Component First / No Local Geometry Drift, Text Fit & Mode-Control Readability, Feature Maturity Exposure a Whole-App Visual Consistency Gate. Rovnako pomenované komponentové roly už nemajú mať náhodne rozdielny shape, výšku, icon container alebo padding medzi obrazovkami.
+
 ### Nové v 1.6.3
 
 Verzia 1.6.3 je spätne kompatibilný PATCH/hardening release. Dopĺňa Floating Tab Bar Content Clearance Contract, Pinned Header Eligibility, voliteľný Rotating Content Pattern, Verified AI & Generated Assistance Contract, Authoritative Data Separation & Traceability a povinné bezpečné správanie pri nízkej istote. Zároveň opravuje historické nekonzistencie testovacej matice a verzie 1.4.1 v release dokumentácii.
@@ -59,7 +63,7 @@ Verzia 1.6.0 zjednocuje používateľské metadata na obrazovke **O aplikácii**
 
 ## Verzie a tagy
 
-standard-v1.6.3
+standard-v1.6.4
 
 Používa sa sémantické verzionovanie:
 
@@ -70,13 +74,13 @@ Používa sa sémantické verzionovanie:
 Každá vydaná verzia má tag vo formáte:
 
 ```text
-standard-v1.6.3
+standard-v1.6.4
 ```
 
-Aktuálny release: **IbaJuraj Application Standard 1.6.3**.
+Aktuálny release: **IbaJuraj Application Standard 1.6.4**.
 
 ## Návrhy zmien
 
 Zmena začína návrhom podľa `Proposals/TEMPLATE.md`. Automatický nástroj môže vytvoriť návrh alebo report, ale nesmie bez schválenia zaviesť nové MUST pravidlo.
 
-Verzia 1.6.3 zachováva pravidlá 1.6.2 a rozširuje ich o navigation-surface, AI safety, authoritative-data a regression hardening bez migrácie doménových používateľských dát.
+Verzia 1.6.4 zachováva pravidlá 1.6.3 a spresňuje spoločnú komponentovú geometriu, text-fit/localization, maturity exposure a whole-app visual consistency bez migrácie doménových používateľských dát.

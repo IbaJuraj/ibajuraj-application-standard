@@ -1,7 +1,7 @@
 # IJAS-0010 – User-selected theme surface and accent contrast
 
-**Status:** implemented  
-**Target:** IbaJuraj Application Standard 1.5.2  
+**Status:** implemented
+**Target:** IbaJuraj Application Standard 1.5.2
 **Date:** 2026-08-14
 
 ## Problem
