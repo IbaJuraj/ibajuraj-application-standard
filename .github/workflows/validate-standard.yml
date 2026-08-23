@@ -43,7 +43,10 @@ jobs:
                   text = path.read_text(encoding='utf-8')
               except UnicodeDecodeError:
                   continue
-              cleaned = '\n'.join(line.rstrip() for line in text.splitlines()) + '\n'
+              lines = [line.rstrip() for line in text.splitlines()]
+              while lines and lines[-1] == '':
+                  lines.pop()
+              cleaned = '\n'.join(lines) + '\n'
               if cleaned != text:
                   path.write_text(cleaned, encoding='utf-8')
 
