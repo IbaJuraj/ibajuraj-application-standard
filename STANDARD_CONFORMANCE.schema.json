@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IbaJuraj app conformance manifest",
+  "type": "object",
+  "required": [
+    "standardVersion",
+    "app",
+    "capabilities",
+    "rules",
+    "exceptions"
+  ],
+  "properties": {
+    "standardVersion": {
+      "const": "1.7.0"
+    },
+    "app": {
+      "type": "object",
+      "required": [
+        "name",
+        "productId"
+      ]
+    },
+    "capabilities": {
+      "type": "object"
+    },
+    "supportedLocalizations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "localization": {
+      "type": "object"
+    },
+    "projectMetadata": {
+      "type": "object"
+    },
+    "rules": {
+      "type": "object"
+    },
+    "runtimeAcceptanceFile": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "exceptions": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

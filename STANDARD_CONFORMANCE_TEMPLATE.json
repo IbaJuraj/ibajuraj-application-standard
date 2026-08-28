@@ -1,0 +1,51 @@
+{
+  "$schema": "./STANDARD_CONFORMANCE.schema.json",
+  "standardVersion": "1.7.0",
+  "app": {
+    "name": "<App Name>",
+    "productId": "<product-id>"
+  },
+  "capabilities": {
+    "hasSettings": true,
+    "hasAppearance": true,
+    "hasCustomThemes": false,
+    "hasLocalization": true,
+    "hasBottomNavigation": false,
+    "bottomNavigationMode": "none",
+    "hasBottomPrimaryAction": false,
+    "supportsIPad": false,
+    "requiresIPadCompatibilityTest": false,
+    "supportsResizableWindow": false,
+    "hasCalculatorKeypad": false,
+    "hasForms": false,
+    "hasAdvancedFormFields": false,
+    "hasPersistedData": false,
+    "hasSyncOrBackup": false,
+    "hasAuthoritativeVersionedData": false,
+    "hasAppLock": false,
+    "hasGeneratedAssistance": false
+  },
+  "supportedLocalizations": [
+    "sk"
+  ],
+  "localization": {
+    "files": [],
+    "requiredKeys": []
+  },
+  "projectMetadata": {
+    "projectFile": null
+  },
+  "rules": {
+    "STD-CONF-001": {
+      "mode": "static",
+      "status": "implemented",
+      "evidence": {
+        "files": [
+          "STANDARD_CONFORMANCE.json"
+        ]
+      }
+    }
+  },
+  "runtimeAcceptanceFile": "RUNTIME_ACCEPTANCE.md",
+  "exceptions": {}
+}
