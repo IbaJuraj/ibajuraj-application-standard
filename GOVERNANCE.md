@@ -20,3 +20,6 @@ A MUST/MUST NOT exception requires:
 
 ## RC promotion
 RC may be used for implementation work but is not public authority. Promotion to active requires package validation and at least one real application adoption proving the new conformance machinery.
+
+## Release-candidate iteration
+A later RC supersedes an earlier RC for new adoption work without rewriting the historical RC tag/release. Semantic rule IDs already introduced SHOULD retain their meaning; newly discovered obligations receive new IDs. Promotion to active requires resolving all known RC ambiguities and completing the agreed cross-app adoption matrix.

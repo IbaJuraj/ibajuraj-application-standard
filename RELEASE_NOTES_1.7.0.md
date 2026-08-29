@@ -1,14 +1,21 @@
-# IbaJuraj Application Standard 1.7.0 RC1 – Release Notes
+# IbaJuraj Application Standard 1.7.0 – Release Candidate 2
 
-1.7.0 introduces three major shared capabilities:
+RC2 strengthens the 1.7.0 adaptive foundation after real cross-app comparison. It explicitly defines how apps should use the top, bottom and horizontal viewport, and makes whole-app screen-family coverage machine-verifiable.
 
-1. **Whole-App Adaptive Layout** – every user-facing screen adapts to real container size, safe area, Dynamic Type and localization. Adaptivity also means using beneficial free space without moving protected semantic anchors.
-2. **Bottom Navigation Variants** – official Native and Custom Floating variants with shared behavior and an adaptive geometry baseline.
-3. **Machine-Verifiable Conformance** – stable `STD-*` IDs, per-app manifest, shared validator and separate static/unit/UI/runtime evidence.
+Highlights:
+- whole-app container-driven adaptive layout,
+- root header anchored to live top safe area with minimal shared extra inset,
+- native vs custom bottom navigation,
+- custom bottom bar positioned as low as safely possible,
+- physical bar position separated from scroll content clearance,
+- horizontal max-width/density adaptation,
+- no unexplained fixed edge waste,
+- screen-family inventory and release gate,
+- state geometry stability,
+- keyboard + bottom chrome coordination,
+- layout performance smoke gate,
+- live theme-selection behavior,
+- standard About/version presentation,
+- stable `STD-*` rule IDs and shared conformance validator.
 
-Also added:
-- shared About/version display contract,
-- live custom-theme update requirement,
-- common accessibility/test identifiers for shared system UI.
-
-RC1 does not replace public authority 1.6.4 until promotion to active.
+RC2 is not yet the public authoritative release. The current public authority remains 1.6.4 until promotion and final tag `standard-v1.7.0`.

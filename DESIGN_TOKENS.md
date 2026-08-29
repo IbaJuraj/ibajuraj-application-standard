@@ -79,3 +79,24 @@ Shared semantic roles must preserve family parity in Light/Dark:
 - `danger`
 
 Product-selected theme MAY tint background/accent, but must preserve contrast and semantic meaning.
+
+## Viewport edge utilization
+
+| Token | Referencia |
+|---|---:|
+| `rootHeader.extraTopInset.reference` | **0–4 pt** |
+| `viewport.horizontalInset.compact` | **16–20 pt** podľa family |
+| `viewport.horizontalInset.regular` | **18–24 pt** podľa family |
+| `viewport.contentMaxWidth` | produktovo/family špecifický; MUST byť container-driven |
+| `bottomChrome.finalContentClearance` | **16–24 pt** vizuálnej rezervy po doscrollovaní |
+
+`rootHeader.extraTopInset.reference` sa aplikuje **po top safe area**, nie od fyzického okraja displeja. Väčší inset vyžaduje zdôvodnenie.
+
+Custom bottom surface MAY vstúpiť do bottom safe area; jeho interaktívny obsah však nesmie kolidovať s Home Indicatorom. `bottomChrome.finalContentClearance` je rezerva **obsahu nad chrome**, nie medzera pod chrome.
+
+## Shared viewport/test identifiers
+
+| Role | accessibility/test ID |
+|---|---|
+| Primary root title | `ij.root.title` |
+| Nested/system navigation header | `ij.navigation.header` |

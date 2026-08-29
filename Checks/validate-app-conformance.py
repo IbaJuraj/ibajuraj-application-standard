@@ -2,19 +2,39 @@
 from pathlib import Path
 import argparse, json, re, sys
 ALLOWED_MODES={'static','unit','ui','runtime','exception'}
+SCREEN_REQUIREMENTS={
+    'hasSettings':['SCREEN-SETTINGS','SCREEN-ABOUT'],
+    'hasSearch':['SCREEN-SEARCH'],
+    'hasDetails':['SCREEN-DETAIL'],
+    'hasForms':['SCREEN-FORM'],
+    'hasSheets':['SCREEN-SHEET'],
+    'hasFullscreen':['SCREEN-FULLSCREEN'],
+    'hasOnboarding':['SCREEN-ONBOARDING'],
+    'hasStateSurfaces':['SCREEN-STATES'],
+    'hasBottomNavigation':['SCREEN-BOTTOM-NAV'],
+}
 def load(path): return json.loads(Path(path).read_text(encoding='utf-8'))
-def applicable(rule,caps):
-    cond=rule.get('appliesWhen','always')
+def condition_applies(cond,caps):
     if cond=='always': return True
     if isinstance(cond,dict):
+        if 'anyOf' in cond: return any(condition_applies(x,caps) for x in cond['anyOf'])
+        if 'allOf' in cond: return all(condition_applies(x,caps) for x in cond['allOf'])
         if 'capability' in cond: return caps.get(cond['capability']) == cond.get('equals')
         if 'anyCapability' in cond: return any(bool(caps.get(k)) for k in cond['anyCapability'])
+        if 'allCapabilities' in cond: return all(bool(caps.get(k)) for k in cond['allCapabilities'])
         if 'bottomNavigationMode' in cond: return caps.get('bottomNavigationMode','none') == cond['bottomNavigationMode']
     return False
+def applicable(rule,caps):
+    return condition_applies(rule.get('appliesWhen','always'),caps)
 def read_text(p):
     try: return p.read_text(encoding='utf-8')
     except UnicodeDecodeError: return ''
 def parse_strings_keys(text): return set(re.findall(r'^\s*"((?:\\.|[^"\\])+)"\s*=',text,flags=re.M))
+def screen_requirements(caps):
+    req={'SCREEN-ROOT'}
+    for cap,fams in SCREEN_REQUIREMENTS.items():
+        if caps.get(cap): req.update(fams)
+    return sorted(req)
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--app-root',required=True); ap.add_argument('--standard-root',required=True); args=ap.parse_args()
     app=Path(args.app_root).resolve(); std=Path(args.standard_root).resolve(); errors=[]; warnings=[]
@@ -63,6 +83,28 @@ def main():
                 f=gate.split('#',1)[0]
                 if f and not (app/f).is_file(): errors.append(f'{rid} runtime gate file missing: {f}')
                 else: passed+=1
+    # Screen-family inventory and release state.
+    screen=m.get('screenAudit',{}).get('families',{})
+    required=screen_requirements(caps)
+    screen_pending=0
+    for fam in required:
+        entry=screen.get(fam)
+        if not isinstance(entry,dict): errors.append(f'STD-SCREEN-001 missing screen family {fam}'); continue
+        screens=entry.get('screens',[])
+        if not isinstance(screens,list) or not [x for x in screens if isinstance(x,str) and x.strip()]: errors.append(f'STD-SCREEN-001 {fam} has no concrete screens')
+        state=entry.get('status')
+        if state not in {'pass','pending','exception'}: errors.append(f'STD-SCREEN-002 {fam} invalid status {state}'); continue
+        if state=='pending': warnings.append(f'STD-SCREEN-002 {fam} pending'); screen_pending+=1
+        elif state=='exception':
+            adr=entry.get('adr')
+            if not adr or not (app/adr).is_file(): errors.append(f'STD-SCREEN-002 {fam} exception missing existing ADR')
+        elif state=='pass':
+            ev=entry.get('evidence',[])
+            if not ev: errors.append(f'STD-SCREEN-003 {fam} pass has no evidence')
+            else:
+                for item in ev:
+                    f=item.split('#',1)[0]
+                    if f and not (app/f).is_file(): errors.append(f'STD-SCREEN-003 {fam} evidence file missing: {f}')
     loc=m.get('localization',{}); lfiles=loc.get('files',[])
     if lfiles:
         ks=[]
@@ -72,23 +114,23 @@ def main():
             else: ks.append((rel,parse_strings_keys(read_text(p))))
         if ks:
             base=ks[0][1]
-            for rel,s in ks[1:]:
-                if s!=base: errors.append(f'STD-LOC-001 localization key mismatch: {rel}')
+            for rel,keys in ks[1:]:
+                if keys!=base: errors.append(f'STD-LOC-001 localization key mismatch: {rel}')
             for k in loc.get('requiredKeys',[]):
-                for rel,s in ks:
-                    if k not in s: errors.append(f'STD-LOC-001 required key {k} missing in {rel}')
+                for rel,keys in ks:
+                    if k not in keys: errors.append(f'STD-LOC-001 required key {k} missing in {rel}')
     for p in app.rglob('*'):
-        if p.name=='.DS_Store' or 'xcuserdata' in p.parts: errors.append(f'STD-RELEASE-001 hygiene violation: {p.relative_to(app)}')
+        if p.name=='.DS_Store' or 'xcuserdata' in p.parts or '__pycache__' in p.parts or p.suffix=='.pyc': errors.append(f'STD-RELEASE-001 hygiene violation: {p.relative_to(app)}')
     mode=caps.get('bottomNavigationMode','none')
     if caps.get('hasBottomNavigation') and mode not in {'native','custom'}: errors.append('STD-NAV-001 invalid bottomNavigationMode')
     if not caps.get('hasBottomNavigation') and mode!='none': errors.append('STD-NAV-001 bottomNavigationMode must be none')
     if errors:
-        print('FAIL – IbaJuraj Standard 1.7.0 app conformance')
+        print('FAIL – IbaJuraj Standard 1.7.0 RC2 app conformance')
         [print(' -',x) for x in errors]; [print(' !',x) for x in warnings]
-        print(f'applicable MUST: {len(ars)} / pass-like: {passed} / exceptions: {exc} / pending: {pending}'); return 1
-    print('PASS – IbaJuraj Standard 1.7.0 app conformance declaration/evidence')
+        print(f'applicable MUST: {len(ars)} / pass-like: {passed} / exceptions: {exc} / rule pending: {pending} / screen pending: {screen_pending}'); return 1
+    print('PASS – IbaJuraj Standard 1.7.0 RC2 app conformance declaration/evidence')
     [print(' !',x) for x in warnings]
-    print(f'applicable MUST: {len(ars)} / evidence PASS: {passed} / exceptions: {exc} / release-blocking pending: {pending}')
-    if pending: print('NOT RELEASE-READY – release-blocking gates pending'); return 2
+    print(f'applicable MUST: {len(ars)} / evidence PASS: {passed} / exceptions: {exc} / release-blocking rule pending: {pending} / screen pending: {screen_pending}')
+    if pending or screen_pending: print('NOT RELEASE-READY – release-blocking gates pending'); return 2
     return 0
 if __name__=='__main__': sys.exit(main())

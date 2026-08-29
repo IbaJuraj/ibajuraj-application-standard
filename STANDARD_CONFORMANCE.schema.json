@@ -6,6 +6,7 @@
     "standardVersion",
     "app",
     "capabilities",
+    "screenAudit",
     "rules",
     "exceptions"
   ],
@@ -46,6 +47,60 @@
     },
     "exceptions": {
       "type": "object"
+    },
+    "screenAudit": {
+      "type": "object",
+      "required": [
+        "families"
+      ],
+      "properties": {
+        "families": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "status",
+              "screens"
+            ],
+            "properties": {
+              "status": {
+                "enum": [
+                  "pass",
+                  "pending",
+                  "exception"
+                ]
+              },
+              "screens": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "adr": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "notes": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
     }
   },
   "additionalProperties": true

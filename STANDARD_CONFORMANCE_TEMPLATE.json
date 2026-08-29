@@ -23,7 +23,15 @@
     "hasSyncOrBackup": false,
     "hasAuthoritativeVersionedData": false,
     "hasAppLock": false,
-    "hasGeneratedAssistance": false
+    "hasGeneratedAssistance": false,
+    "hasFixedBottomControls": false,
+    "hasTranslucentSurfaces": false,
+    "hasSearch": false,
+    "hasDetails": false,
+    "hasSheets": false,
+    "hasFullscreen": false,
+    "hasOnboarding": false,
+    "hasStateSurfaces": false
   },
   "supportedLocalizations": [
     "sk"
@@ -47,5 +55,18 @@
     }
   },
   "runtimeAcceptanceFile": "RUNTIME_ACCEPTANCE.md",
-  "exceptions": {}
+  "exceptions": {},
+  "screenAudit": {
+    "families": {
+      "SCREEN-ROOT": {
+        "status": "pending",
+        "screens": [
+          "<primary root screen>"
+        ],
+        "evidence": [
+          "RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"
+        ]
+      }
+    }
+  }
 }

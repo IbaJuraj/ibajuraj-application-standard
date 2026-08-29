@@ -93,3 +93,45 @@ Manuálny runtime gate:
   "runtimeGate": "RUNTIME_ACCEPTANCE.md#STD-ADAPT-010"
 }
 ```
+
+## 8. Root top anchor
+
+```text
+topSafeArea.bottom
+  + shared root-header extra inset (0–4 pt baseline)
+  → root title/header
+```
+
+Nevkladaj per-screen `padding(.top, 14)` iba kvôli historickému vzhľadu. Peer root screens používajú spoločný token.
+
+## 9. Custom bottom chrome – position vs clearance
+
+```text
+viewport bottom / safe-area geometry
+  → lowest safe bar position
+
+bar overlap + final visual reserve
+  → scroll content bottom clearance
+```
+
+Tieto dve hodnoty sa počítajú oddelene. Zvýšenie scroll clearance nesmie posunúť bar vyššie.
+
+## 10. Screen-family inventory
+
+```json
+"screenAudit": {
+  "families": {
+    "SCREEN-ROOT": {
+      "status": "pass",
+      "screens": ["Home", "Cards"],
+      "evidence": ["RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"]
+    },
+    "SCREEN-SETTINGS": {
+      "status": "pending",
+      "screens": ["Settings"]
+    }
+  }
+}
+```
+
+Family `pass` bez evidence je invalidný. `pending` blokuje Level 4.

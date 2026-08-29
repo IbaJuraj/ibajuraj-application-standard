@@ -1,16 +1,11 @@
-# IbaJuraj Application Standard 1.7.0 RC1
+# IbaJuraj Application Standard 1.7.0 RC2
 
-This package is the release candidate for the next shared IbaJuraj app standard.
+This package is Release Candidate 2 for the next shared IbaJuraj app standard.
 
 Current published authority: **1.6.4**.  
-Candidate: **1.7.0 RC1**.
+Candidate: **1.7.0 RC2**.
 
-## New in 1.7.0
-- whole-app adaptive layout,
-- common bottom-navigation variants,
-- cross-app About/version parity,
-- live theme selection,
-- machine-verifiable conformance with stable rule IDs.
+RC2 supersedes RC1 for further app adoption. It keeps the RC1 adaptive/navigation/conformance foundation and adds explicit viewport-edge utilization, screen-family inventory/audit, keyboard/chrome coordination, state stability and layout-performance gates.
 
 ## Validate this package
 
@@ -28,7 +23,7 @@ python3 Checks/validate-app-conformance.py \
   --standard-root /path/to/standard
 ```
 
-The app must provide `STANDARD_CONFORMANCE.json`.
+The app must provide `STANDARD_CONFORMANCE.json` including `screenAudit.families`.
 
 ## Promotion
-After real app adoption validates the contracts, remove RC wording, set `standard.json.status` to `active`, set release date and publish tag `standard-v1.7.0`.
+After RC2 adoption validates the contracts, remove RC wording, set `standard.json.status` to `active`, clear the candidate marker, set release date and publish tag `standard-v1.7.0`.

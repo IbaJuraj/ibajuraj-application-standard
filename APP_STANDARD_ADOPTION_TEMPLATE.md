@@ -9,3 +9,8 @@
 
 ## Exceptions
 List ADR-backed exceptions by `STD-*` ID. Empty means none.
+
+## RC2 viewport/screen audit
+- `STANDARD_CONFORMANCE.json` includes capability-accurate `screenAudit.families`.
+- Primary root top anchors and fixed bottom chrome follow shared viewport contracts.
+- Level 4 requires zero pending screen families.

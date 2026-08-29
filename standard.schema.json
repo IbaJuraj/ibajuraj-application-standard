@@ -59,6 +59,12 @@
     },
     "source": {
       "type": "object"
+    },
+    "candidate": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
   },
   "additionalProperties": true

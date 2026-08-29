@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.7.0 RC2 – 2026-08-29
+
+### Added
+- Viewport Edge Utilization contract for top, bottom and horizontal bounds.
+- Shared root-header top-anchor baseline of safe area + 0–4 pt.
+- Explicit distinction between bottom chrome position and scroll content clearance.
+- Safe custom bottom-bar use of bottom safe-area region with Home Indicator protection.
+- Screen-family inventory and release-blocking family audit.
+- Adaptive density, state-geometry stability and layout-performance requirements.
+- Keyboard avoidance and bottom-chrome coordination requirements.
+- Reduce Transparency fallback contract for translucent/material surfaces.
+- `allCapabilities` condition support in the conformance engine.
+- Validator enforcement of required screen families.
+
+### Clarified
+- empty space caused by little content is not a defect; unexplained fixed edge waste is,
+- peer root screens align relative to safe area, not to screenshots or absolute device coordinates,
+- native tab bars remain platform-owned; custom bars may use safe-area penetration when safe,
+- whole-app audit applies to root, settings/about, detail, form, search, sheet, fullscreen and state families where applicable.
+
+
 ## 1.7.0 RC1 – 2026-08-28
 
 ### Added

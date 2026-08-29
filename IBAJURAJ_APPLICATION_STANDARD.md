@@ -1,426 +1,255 @@
 # IbaJuraj Application Standard
 
 **Verzia:** 1.7.0  
-**Stav:** Release Candidate 1 – pred publikovaním  
-**Dátum RC:** 28. augusta 2026  
+**Stav:** Release Candidate 2  
+**Dátum RC2:** 29. augusta 2026  
 **Vlastník:** IbaJuraj  
-**Predchádzajúca autoritatívna verzia:** 1.6.4 (`standard-v1.6.4`, commit `5e2901945287165a8902f28fb1d3b5a87b6eeb92`)
+**Aktuálna verejná autorita:** 1.6.4 (`standard-v1.6.4`, commit `5e2901945287165a8902f28fb1d3b5a87b6eeb92`)
 
-> Tento balík je kandidát na IbaJuraj Application Standard 1.7.0. Kým nebude po adopcii a audite publikovaný tag `standard-v1.7.0`, autoritatívnou verejnou verziou zostáva 1.6.4.
+> RC2 nahrádza RC1 pre ďalšiu adopciu. Kým nebude vydaný finálny tag `standard-v1.7.0`, stabilnou verejnou verziou zostáva 1.6.4.
 
-## 1. Účel
+## 1. Záväznosť
+`MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD`/`SHOULD NOT` vyžaduje zdôvodnenie. `MAY` je voliteľné. `CONFORMANCE_CATALOG.json` je normatívny machine-readable register aplikovateľnosti a minimálneho typu dôkazu.
 
-Tento štandard určuje spoločné produktové, UX, technické, obsahové, bezpečnostné, prístupnostné a release pravidlá pre aplikácie IbaJuraj. Nevynucuje identické obrazovky. Zjednocuje roly, geometriu spoločných komponentov, správanie, kvalitu a spôsob overovania.
+## 2. Piliere RC2
+1. Whole-App Adaptive Layout.
+2. Viewport Edge Utilization.
+3. Native/Custom Bottom Navigation Contract.
+4. Screen-Family Audit.
+5. Machine-Verifiable Cross-App Conformance.
 
-Verzia 1.7.0 zavádza tri nové nadradené piliere:
+## 3. Kľúčové spoločné kontrakty
 
-1. **Whole-App Adaptive Layout Contract** – adaptívna musí byť celá aplikácia, nie iba vybrané komponenty.
-2. **Bottom Navigation & Floating Tab Bar Contract** – spoločný základ spodnej navigácie s natívnym a custom variantom.
-3. **Machine-Verifiable Cross-App Conformance** – stabilné ID pravidiel, spoločný validator, UI-test identifikátory a povinný dôkaz implementácie.
+### O aplikácii
+- Settings: **O aplikácii** + **Verzia, súkromie a štandard** + runtime `<version> (<build>)`.
+- Version card: `<AppName> v<version> – Build <build>.` z autoritatívnych runtime metadata.
+- Standard card: iba `IbaJuraj Application Standard` + `Verzia <standardVersion>`; interný tag/SHA/adoption level sa používateľovi nezobrazujú.
+- Vývojár: `IbaJuraj Apps.`; web/privacy používajú spoločné odkazy.
 
-## 2. Normatívny základ a spätná kompatibilita
+### Appearance
+- Bezpečne aplikovateľná téma sa prejaví okamžite na aktuálnej obrazovke: checkmark, selected state a surface/background v tom istom render cykle.
+- Uložená hodnota a vykreslený stav musia zostať v parite po návrate/relaunchi.
 
-1.7.0 je **MINOR** release. Všetky požiadavky 1.6.4 zostávajú v platnosti, pokiaľ ich 1.7.0 výslovne nenahrádza alebo nespresňuje. Pri adopcii sa musí aplikácia posudzovať kumulatívne.
+### Adaptivita a viewport
+- Každá user-facing obrazovka je adaptive by default a primárne container-driven; device-name/`UIScreen.main.bounds` branching nie je layout foundation, ak existuje reálna container geometry.
+- Primary root header sa kotví čo najvyššie po top safe area; baseline extra inset je **0–4 pt**. Peer roots používajú rovnaký safe-area-relative anchor.
+- Fixed/custom bottom chrome ide na najnižšiu bezpečnú pozíciu; celý bottom safe-area inset sa automaticky nemení na prázdny pás.
+- **Bar position a scroll content clearance sú nezávislé.** Posledný obsah musí ísť celý nad chrome; typická koncová rezerva je 16–24 pt.
+- Horizontal space sa využíva adaptívne. Veľký displej nemá znamenať iba viac prázdna; malé množstvo obsahu však môže prirodzene nechať prázdnu plochu.
+- Adaptívny layout nesmie spôsobovať layout thrashing ani viditeľné lagovanie.
 
-Pre audit histórie je základ 1.6.4 identifikovaný tagom a commitom uvedeným vyššie. Súbor `AUDIT_1.6.4_TO_1.7.0.md` uvádza nové a sprísnené pravidlá.
+### Bottom navigation
+- Native variant necháva platforme výšku/safe area.
+- Custom floating baseline: približne 60–66 pt surface, min. 44×44 pt touch target, typický 50 pt primary action, radius približne 28 pt; hodnoty sú baseline, nie rigidný frame.
+- Centrálna akcia nesmie zbytočne nafúknuť celý bar. Custom bar môže bezpečne penetrovať bottom safe area pri ochrane Home Indicatora.
 
-## 3. Hierarchia pravidiel
+### Screen-family audit
+`STANDARD_CONFORMANCE.json` deklaruje konkrétne obrazovky v relevantných family: `SCREEN-ROOT`, `SCREEN-SETTINGS`, `SCREEN-ABOUT`, `SCREEN-DETAIL`, `SCREEN-FORM`, `SCREEN-SEARCH`, `SCREEN-SHEET`, `SCREEN-FULLSCREEN`, `SCREEN-ONBOARDING`, `SCREEN-STATES`, `SCREEN-BOTTOM-NAV`. Každá family má `pass/pending/exception`; `pass` potrebuje evidence, `exception` existujúci ADR a `pending` blokuje Level 4.
 
-1. **IbaJuraj Application Standard** – spoločné pravidlá pre všetky aplikácie.
-2. **Product Standard** – pravidlá konkrétnej aplikácie alebo domény.
-3. **ADR** – schválená technická alebo produktová výnimka.
-4. **Build Scope** – rozsah jedného buildu.
+### Conformance
+Static PASS nie je runtime PASS. Každé aplikovateľné MUST/MUST NOT potrebuje static/unit/UI/runtime evidence alebo platnú ADR exception. Level 4 vyžaduje nulové release-blocking pending pravidlá aj nulové pending screen families.
 
-Pri konflikte platí vyššia úroveň. Produktový štandard môže spoločné pravidlo rozšíriť, nie potichu obísť.
+## 4. Normatívny register pravidiel
+Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná aplikovateľnosť a verification mode sú v `CONFORMANCE_CATALOG.json`.
 
-## 4. Záväznosť
 
-- **MUST / MUST NOT** – povinné; porušenie blokuje release alebo vyžaduje platnú výnimku.
-- **SHOULD / SHOULD NOT** – odporúčané; odchýlka má byť zdôvodnená.
-- **MAY** – voliteľné.
+### STD-IDENTITY-001 — One runtime source for marketing version and build — MUST
 
-Každé nové alebo zmenené MUST/MUST NOT pravidlo od 1.7.0 má stabilné `STD-*` ID. ID sa používa v `CONFORMANCE_CATALOG.json`, testoch, audite a release reporte.
+### STD-IDENTITY-002 — IbaJuraj Apps identity and shared links — MUST
 
-## 5. Spoločná identita a runtime metadata
+### STD-IDENTITY-003 — App and Standard metadata are separate — MUST
 
-### STD-IDENTITY-001 — Jeden runtime zdroj verzie a buildu — MUST
-Marketingová verzia a build MUST pochádzať z autoritatívnych build nastavení alebo `Bundle`. Hodnoty MUST NOT byť samostatne hardcoded vo view, diagnostike, synchronizácii alebo kompatibilitných kontrolách.
+### STD-COMPONENT-001 — Shared role uses shared geometry — MUST
 
-### STD-IDENTITY-002 — Spoločná identita — MUST
-Používateľské systémové surface MUST používať značku **IbaJuraj Apps** a spoločné odkazy podľa `SUPPORT_AND_LINKS.md`.
+### STD-COMPONENT-002 — No unexplained local geometry drift — MUST NOT
 
-### STD-IDENTITY-003 — Produktové metadata sú oddelené od Standardu — MUST
-Verzia aplikácie/build a verzia IbaJuraj Application Standard sú dve rôzne identity a MUST byť prezentované oddelene.
+### STD-COMPONENT-003 — Semantic exceptions are documented — MUST
 
-## 6. Spoločné UX a component families
+### STD-COMPONENT-004 — Minimum 44x44 touch target — MUST
 
-### STD-COMPONENT-001 — Shared role, shared geometry — MUST
-Komponenty s rovnakou sémantickou rolou MUST používať spoločnú komponentovú rodinu alebo spoločný geometry contract. Rozdielna obrazovka sama osebe nie je dôvodom na inú výšku, radius, padding, icon container alebo trailing geometriu.
+### STD-COMPONENT-005 — Meaningful text fits without scale-factor rescue — MUST
 
-### STD-COMPONENT-002 — No local geometry drift — MUST NOT
-Lokálne `frame`, `padding`, `cornerRadius`, symbol size alebo offset MUST NOT obchádzať autoritatívny token/shared component bez zdokumentovaného dôvodu.
+### STD-SETTINGS-001 — Direct Settings entry on primary roots — MUST
 
-### STD-COMPONENT-003 — Semantic exceptions — MUST
-Zámerná odchýlka MAY existovať iba pre inú sémantickú rolu alebo schválenú produktovú výnimku. Vizuálna odchýlka bez významového dôvodu je defect.
+### STD-SETTINGS-002 — Shared appearance control meaning — MUST
 
-### STD-COMPONENT-004 — Minimum touch target — MUST
-Interaktívny prvok MUST mať efektívnu dotykovú plochu aspoň **44 × 44 pt**.
+### STD-APPEARANCE-001 — Theme applies immediately on same screen — MUST
 
-### STD-COMPONENT-005 — Text fit — MUST
-Dôležitý používateľský text MUST zostať čitateľný v podporovaných lokalizáciách a Dynamic Type. `minimumScaleFactor` MUST NOT byť primárnym riešením významového textu.
+### STD-APPEARANCE-002 — Checkmark/model/render state parity — MUST
 
-Preferované poradie adaptácie textu: **wrap → komponent rastie → HStack/VStack restack → zníženie počtu stĺpcov → scroll/fallback prezentácia**.
+### STD-APPEARANCE-003 — Theme selection persists — MUST
 
-## 7. Settings a spoločné systémové surface
+### STD-ABOUT-001 — Settings About row contract — MUST
 
-### STD-SETTINGS-001 — Priamy vstup do Nastavení — MUST
-Ak aplikácia má systémové Nastavenia a vlastný root header, Nastavenia MUST byť dostupné z každého primárneho rootu priamou systémovou akciou, typicky `gearshape.fill` vpravo hore. Samostatný Settings tab v hlavnej spodnej navigácii SHOULD NOT byť použitý iba kvôli dostupnosti Nastavení.
+### STD-ABOUT-002 — About version sentence contract — MUST
 
-### STD-SETTINGS-002 — Appearance contract — MUST, ak aplikácia podporuje appearance
-Základné `Automaticky / Svetlý / Tmavý` MUST používať spoločnú segmentovanú rolu alebo ekvivalentný priamy systémový výber. Ak produkt podporuje vlastné farebné témy, tie sú sekundárna produktová voľba.
+### STD-ABOUT-003 — Public Standard version only — MUST
 
-### STD-APPEARANCE-001 — Live application of selection — MUST
-Výber vzhľadu alebo farebnej témy, ktorého výsledok je možné bezpečne aplikovať bez restartu, MUST aktualizovať aktuálnu obrazovku okamžite. Používateľ MUST NOT potrebovať odísť o krok späť, aby sa presunul checkmark, zmenilo pozadie alebo aktualizoval selected state.
+### STD-ABOUT-004 — Developer card contract — MUST
 
-### STD-APPEARANCE-002 — Selection state parity — MUST
-Vizuálny selected state, uložená hodnota a reálne vykreslený vzhľad MUST reprezentovať tú istú hodnotu v tom istom render cykle.
+### STD-ABOUT-005 — Web and privacy links — MUST
 
-### STD-APPEARANCE-003 — Persisted selection — MUST
-Po okamžitej zmene MUST zvolená hodnota zostať zachovaná po návrate, relaunchi a pri podporovanom sync modeli.
+### STD-ABOUT-006 — Shared About test identifiers — MUST
 
-## 8. O aplikácii – cross-app contract
+### STD-ADAPT-001 — Whole app adaptive by default — MUST
 
-Táto sekcia definuje používateľský formát, aby spoločná systémová obrazovka nebola v každej aplikácii iná.
+### STD-ADAPT-002 — Container-driven layout foundation — MUST
 
-### STD-ABOUT-001 — Settings row — MUST
-V Nastaveniach musí existovať položka:
+### STD-ADAPT-003 — Safe-area-driven positioning — MUST
 
-- title: **`O aplikácii`** (lokalizovaný ekvivalent),
-- subtitle: **`Verzia, súkromie a štandard`** (lokalizovaný ekvivalent),
-- trailing value: **`<marketingVersion> (<build>)`**.
+### STD-ADAPT-004 — Use available space when beneficial — MUST
 
-Príklady:
-- `1.11 (53)`
-- `1.11.0 (195)`
+### STD-ADAPT-005 — Stable semantic content anchors — MUST
 
-Trailing value MUST pochádzať z runtime metadata.
+### STD-ADAPT-006 — Dynamic Type adaptive layout — MUST
 
-### STD-ABOUT-002 — Version card — MUST
-Po otvorení `O aplikácii` musí spoločná dlaždica **Verzia** zobrazovať jednu prirodzenú používateľskú vetu:
+### STD-ADAPT-007 — Longest-localization stress test — MUST
 
-`<AppName> v<marketingVersion> – Build <build>.`
+### STD-ADAPT-008 — Fixed tokens not fixed device layout — MUST
 
-Príklady:
-- `Kalkulačka 2v1 v1.11 – Build 53.`
-- `Lex Drive v1.11.0 – Build 195.`
-- `Strážca Termínov v1.56.0 – Build 105.`
+### STD-ADAPT-009 — Window/orientation adaptation — MUST
 
-Názov aplikácie, marketingVersion a build MUST byť generované z autoritatívnej identity/runtime metadata, nie duplikované v textoch.
+### STD-ADAPT-010 — iPad/compatibility runtime matrix — MUST
 
-### STD-ABOUT-003 — Standard card — MUST
-Dlaždica musí mať:
+### STD-ADAPT-011 — No device-name branching as layout foundation — MUST NOT
 
-- title: **`IbaJuraj Application Standard`**,
-- subtitle: **`Verzia <standardVersion>`**.
+### STD-ADAPT-012 — Adaptive calculator keypad — MUST
 
-Používateľovi sa MUST NOT zobrazovať interný tag (`standard-v...`), commit hash ani adoption level.
+### STD-NAV-001 — Bottom navigation mode declared — MUST
 
-### STD-ABOUT-004 — Developer card — MUST
-Spoločná rola:
-- title: **`Vývojár`**,
-- subtitle: **`IbaJuraj Apps.`**
+### STD-NAV-002 — Native tab variant — MUST
 
-### STD-ABOUT-005 — Web a privacy — MUST
-Obrazovka MUST poskytovať platný Web IbaJuraj Apps a Ochrana súkromia. Produkt MAY pridať doménové položky, napríklad právne upozornenie.
+### STD-NAV-003 — Custom baseline geometry — MUST
 
-### STD-ABOUT-006 — Shared test identifiers — MUST
-Ak platforma podporuje accessibility identifiers, spoločné surface MUST publikovať minimálne:
+### STD-NAV-004 — Primary action does not inflate bar — MUST
 
-- `ij.settings.about.row`
-- `ij.about.version.card`
-- `ij.about.standard.card`
-- `ij.about.developer.card`
-- `ij.about.web.row`
-- `ij.about.privacy.row`
+### STD-NAV-005 — Adaptive custom bar width — MUST
 
-Identifikátory sú určené pre UI testy a MUST NOT meniť používateľský text.
+### STD-NAV-006 — Custom bar safe area — MUST
 
-## 9. Whole-App Adaptive Layout Contract
+### STD-NAV-007 — Bottom content clearance — MUST
 
-### STD-ADAPT-001 — Whole-app adaptive by default — MUST
-Každá používateľská obrazovka MUST byť adaptívna. Platí pre rooty, detaily, formuláre, Settings, sheets, modaly, search, gridy, karty, tab bary, FAB, onboarding, empty/error states a klávesnice.
+### STD-NAV-008 — Custom bar Dynamic Type — MUST
 
-### STD-ADAPT-002 — Container-driven layout — MUST
-Layout MUST byť primárne odvodený od **aktuálne dostupného kontajnera**, safe area, Dynamic Type a obsahových potrieb. Konkrétny model zariadenia alebo `UIScreen.main.bounds` MUST NOT byť primárnym zdrojom layout rozhodnutí, ak je dostupná reálna container geometry.
+### STD-NAV-009 — Custom bar test identifiers — MUST
 
-### STD-ADAPT-003 — Safe-area driven positioning — MUST
-Horné a spodné systémové surface, klávesnica, floating prvky a obsah MUST používať aktuálne safe-area insets alebo layout guides. Pevné kompenzácie pre konkrétny model zariadenia sú neprípustné bez zdokumentovanej výnimky.
+### STD-NESTED-NAV-001 — Back and native swipe where applicable — MUST
 
-### STD-ADAPT-004 — Adaptive use of free space — MUST
-Adaptivita neznamená iba „nič sa neoreže“. Ak má komponent objektívne dostupný priestor a jeho zväčšenie zlepší použiteľnosť bez narušenia hierarchie, layout SHOULD tento priestor primerane využiť.
-
-Príklad: Calculator Key môže na väčšom kontajneri zväčšiť hit surface smerom do strán a nadol, ak horný anchor klávesnice zostane stabilný a výsledkový panel nie je vytlačený.
-
-### STD-ADAPT-005 — Stable content anchors — MUST
-Adaptívne zväčšovanie MUST zachovať významové anchory. Zväčšenie spodného ovládacieho regiónu MUST NOT posunúť jeho hornú hranicu do obsahu, ak produktový layout definuje túto hranicu ako ochrannú.
-
-### STD-ADAPT-006 — Dynamic Type — MUST
-Komponent sa pri väčšom texte musí prispôsobiť. Pri nedostatku miesta sa najprv mení layout, nie významový text. Surface MAY narásť, grid MAY prejsť na menej stĺpcov a row MAY prejsť na viac riadkov.
-
-### STD-ADAPT-007 — Localization stress — MUST
-Najdlhšia podporovaná lokalizácia MUST byť súčasťou release auditu pre spoločné navigačné dlaždice, segmenty, Settings rows, hlavné CTA a bottom navigation labels.
-
-### STD-ADAPT-008 — Fixed tokens are allowed — MUST
-Pevná hodnota je povolená pre design token alebo bezpečnostnú hranicu (napr. 44 pt touch minimum, radius, referenčná icon size). Pevná hodnota MUST NOT byť použitá ako náhrada reálnej dostupnej geometry tam, kde by spôsobila clipping, nadmernú prázdnu plochu alebo nevyužitý priestor.
-
-### STD-ADAPT-009 — Window/orientation adaptability — MUST, ak je podporované
-Ak aplikácia podporuje landscape, iPad multitasking alebo meniacu sa veľkosť okna, layout MUST reagovať na zmenu kontajnera bez relaunchu.
-
-### STD-ADAPT-010 — iPad support/compatibility — MUST
-Ak je iPad podporovaný ako target, musí prejsť portrait aj landscape runtime matrix. Ak iPhone-only aplikácia môže byť systémom spustená v iPad compatibility presentation, kritické pracovné obrazovky MUST zostať použiteľné a nesmú clipovať.
-
-### STD-ADAPT-011 — No device-name branching as foundation — MUST NOT
-Podmienky typu „iPhone X/14/Pro Max → layout“ MUST NOT byť základným layout systémom. Breakpoint MAY byť odvodený od dostupnej šírky/výšky, size class, Dynamic Type alebo explicitného capability contextu.
-
-### STD-ADAPT-012 — Shared adaptive calculator-key principle — MUST, ak existuje calculator keypad
-Calculator keys MUST používať dostupnú šírku aj výšku s minimom 44 pt a rozumným maximum clampom. Pri adaptívnom raste MUST byť testované, že výsledkový/percentuálny obsah zostáva nedotknutý.
-
-## 10. Bottom Navigation & Floating Tab Bar Contract
-
-Aplikácia môže používať **Native Tab Navigation** alebo **Custom Floating Navigation**. Produktový počet tabov, názvy a doménové ikony nie sú spoločným pravidlom.
-
-### STD-NAV-001 — Variant declaration — MUST
-Aplikácia s bottom navigation MUST v `STANDARD_CONFORMANCE.json` deklarovať `bottomNavigationMode`: `native`, `custom` alebo `none`.
-
-### STD-NAV-002 — Native variant — MUST, ak `native`
-Natívny variant SHOULD používať systémový `TabView`/platformový tab bar. Aplikácia MUST NOT ručne emulovať systémovú výšku alebo safe-area správanie, ak produktová potreba nevyžaduje custom surface.
-
-### STD-NAV-003 — Custom baseline geometry — MUST, ak `custom`
-Custom floating navigation používa spoločnú baseline geometriu:
-
-- tab content minimum: **48–52 pt** podľa compact/regular density,
-- outer internal padding: približne **4 pt**,
-- referenčná surface výška: približne **60–66 pt** pri štandardnom texte,
-- bar radius: referenčne **28 pt**,
-- selected item radius: referenčne približne **22 pt**,
-- icon-to-label spacing: približne **3 pt**,
-- label: typicky `caption2`, semibold alebo ekvivalentná sémantická rola,
-- každý tab: efektívny hit target aspoň **44 × 44 pt**.
-
-60–66 pt je **baseline interval, nie rigidný frame**. Dynamic Type alebo platformová zmena MAY surface zväčšiť.
-
-### STD-NAV-004 — Primary floating action — MUST, ak existuje
-Globálna primary action (napr. `+`) SHOULD mať referenčnú veľkosť okolo **50 pt** a MUST NOT svojou veľkosťou nútiť celý navigation surface do neprimerane väčšej výšky.
-
-Povolené riešenia:
-- samostatný floating action overlay,
-- centrálna integrovaná akcia, ak bar zachová spoločnú základnú geometriu.
-
-### STD-NAV-005 — Adaptive width — MUST
-Floating bar MUST reagovať na dostupnú šírku. Na úzkom kontajneri sa redukuje interný spacing/padding skôr než touch target alebo čitateľnosť. Na širokom kontajneri SHOULD mať rozumnú maximálnu šírku a nemá sa bezdôvodne natiahnuť cez celý displej.
-
-### STD-NAV-006 — Safe area — MUST
-Vertikálna poloha bottom navigation sa MUST odvodzovať od reálnej bottom safe area.
-
-### STD-NAV-007 — Content clearance — MUST
-Scrollovateľný obsah MUST používať bottom clearance podľa reálnej výšky navigation surface + safe area. Posledný interaktívny obsah musí byť možné vytiahnuť celý nad bar. Po úplnom doscrollovaní SHOULD zostať približne **16–24 pt** vizuálnej rezervy.
-
-### STD-NAV-008 — Dynamic Type — MUST
-Pri Accessibility Dynamic Type sa custom navigation MAY zväčšiť alebo zmeniť interné usporiadanie. Text MUST NOT byť zmenšovaný pod podporovanú sémantickú rolu iba na zachovanie pevnej výšky.
-
-### STD-NAV-009 — Shared test identifier — MUST, ak `custom`
-Custom bar MUST publikovať `ij.bottomnav.container`. Globálna primary action, ak existuje, MUST publikovať `ij.bottomnav.primaryAction`.
-
-## 11. Navigácia
-
-### STD-NESTED-NAV-001 — Back + native swipe — MUST
-Vnorená obrazovka MUST mať zrozumiteľnú cestu späť. Na iOS push navigácia MUST zachovať native edge-swipe back, ak technická výnimka nie je zdokumentovaná.
-
-### STD-NESTED-NAV-002 — No loops/dead ends — MUST
-Navigácia MUST NOT vytvárať slučku, ktorá používateľa vracia na rovnaký zoznam namiesto detailu, ani slepý koniec bez zmysluplného návratu.
-
-## 12. Lokalizácia a prístupnosť
+### STD-NESTED-NAV-002 — No navigation loops/dead ends — MUST
 
 ### STD-LOC-001 — Localization parity — MUST
-Každý nový alebo zmenený používateľský text MUST byť prítomný vo všetkých deklarovaných podporovaných lokalizáciách pred release.
 
-### STD-LOC-002 — No source-string drift — MUST
-Spoločný systémový význam (napr. `O aplikácii`, `Verzia, súkromie a štandard`) MUST používať jeden lokalizačný kľúč/autoritatívnu definíciu, nie viac paralelných textov.
+### STD-LOC-002 — Single shared localization meaning — MUST
 
-### STD-A11Y-001 — VoiceOver — MUST
-Interaktívne ovládanie MUST mať zrozumiteľný label/trait a nesmie byť zlúčené s informačným textom tak, že CTA stratí samostatnú akciu.
+### STD-A11Y-001 — VoiceOver semantics — MUST
 
-### STD-A11Y-002 — Contrast and non-color meaning — MUST
-Farba MUST NOT byť jediným nositeľom stavu. Selected/error/critical stav musí mať aj text, symbol alebo inú informáciu.
+### STD-A11Y-002 — No color-only meaning — MUST
 
-### STD-A11Y-003 — Reduce Motion / Increase Contrast — MUST
-Shared component families MUST zostať funkčné pri Reduce Motion a Increase Contrast.
+### STD-A11Y-003 — Reduce Motion/Increase Contrast — MUST
 
-## 13. Formuláre a editory
-
-### STD-FORM-001 — Required vs optional — MUST
-Povinné a voliteľné údaje musia byť rozlíšiteľné bez spoliehania iba na farbu.
+### STD-FORM-001 — Required/optional fields — MUST
 
 ### STD-FORM-002 — Validation timing — MUST
-Inline chyba SHOULD byť pri konkrétnom poli a SHOULD NOT byť zobrazovaná ako aktívna chyba predtým, než používateľ mal reálnu možnosť pole vyplniť, ak formulár nie je v stave pokusu o uloženie.
 
 ### STD-FORM-003 — Progressive disclosure — MUST
-Zriedkavé technické alebo advanced polia SHOULD byť schované pod `Ďalšie možnosti` alebo ekvivalent, ak ich permanentné zobrazenie znižuje použiteľnosť bežného flow.
 
 ### STD-FORM-004 — Keyboard dismissal — MUST
-Formulár MUST umožniť pohodlné skrytie klávesnice bez straty rozpracovaných údajov.
-
-## 14. Dáta, migrácie, sync a autoritatívnosť
 
 ### STD-DATA-001 — Single source of truth — MUST
-Pre každý autoritatívny údaj alebo pravidlo musí existovať jeden zdroj pravdy. View MUST NOT vytvoriť paralelný dátový model pre rovnaký význam.
 
-### STD-DATA-002 — Schema and migration — MUST
-Persistované používateľské dáta MUST mať kompatibilitný/migračný plán. Aktualizácia z verejne dostupnej verzie musí byť testovaná.
+### STD-DATA-002 — Schema/migration coverage — MUST
 
-### STD-DATA-003 — Sync vs backup vs export — MUST
-Synchronizácia, lokálne uloženie, záloha a export MUST byť používateľsky odlíšené a jedna funkcia sa nesmie vydávať za inú.
+### STD-DATA-003 — Sync/local/backup/export semantics — MUST
 
-### STD-DATA-004 — Traceability — MUST, ak doména používa autoritatívne/verziované dáta
-Výsledok SHOULD byť dohľadateľný k stabilnej identite záznamu, verzii/časovej platnosti a stavu overenia.
+### STD-DATA-004 — Traceability of authoritative data — MUST
 
-## 15. Privacy, security a vývojové režimy
+### STD-PRIVACY-001 — Privacy manifest coverage — MUST
 
-### STD-PRIVACY-001 — Privacy manifest — MUST
-Každý distribuovaný target musí mať alebo zdediť správny Privacy Manifest a deklarovať required-reason API podľa skutočného použitia.
+### STD-PRIVACY-002 — Privacy policy/App Store parity review — MUST
 
-### STD-PRIVACY-002 — Privacy policy parity — MUST
-Ak sa zmení spracovanie údajov, musí sa aktualizovať privacy manifest, používateľská zásada ochrany súkromia a App Store privacy odpoveď podľa potreby.
+### STD-SECURITY-001 — Security state machine — MUST
 
-### STD-SECURITY-001 — Security state machine — MUST, ak app lock existuje
-Biometria, PIN a autolock musia tvoriť konzistentný stavový model. Funkcia, ktorá bez aktívnej ochrany nemôže bezpečne fungovať, nesmie vyzerať aktívne.
+### STD-DEBUG-001 — Production isolation of debug/mock controls — MUST
 
-### STD-DEBUG-001 — Production isolation — MUST
-Mock, stub, AI Test, debug routing, interné score a diagnostické ovládanie MUST NOT byť dostupné v produkčnom používateľskom UI.
+### STD-DEBUG-002 — Runtime defect regression evidence — MUST
 
-### STD-DEBUG-002 — Regression hardening — MUST
-Potvrdená runtime chyba s rozumným rizikom opakovania MUST dostať regresný test alebo zdokumentovanú výnimku, ak automatizácia nie je primeraná.
+### STD-AI-001 — Grounded verified generated assistance — MUST
 
-## 16. Generated/AI assistance
+### STD-AI-002 — Safe low-confidence fallback — MUST
 
-Ak aplikácia používa generovanú pomoc:
-
-### STD-AI-001 — Grounded/verified input — MUST
-Autoritatívne fakty, právne závery, sankcie alebo časové pravidlá musia byť deterministicky overené pred generovaním používateľského textu, ak doména vyžaduje verifikovateľnosť.
-
-### STD-AI-002 — Safe fallback — MUST
-Pri nízkej dôvere alebo nedostatku overených dát sa systém musí bezpečne vrátiť na klasický/overený flow alebo priznať obmedzenie. Nesmie prezentovať najbližšiu nesúvisiacu odpoveď ako definitívnu.
-
-## 17. Machine-Verifiable Cross-App Conformance
-
-### STD-CONF-001 — Conformance manifest — MUST
-Každá aplikácia adoptujúca 1.7.0 musí mať `STANDARD_CONFORMANCE.json` podľa `STANDARD_CONFORMANCE_TEMPLATE.json`.
-
-Manifest deklaruje:
-- app/product identity,
-- pin Standardu,
-- capability flags,
-- podporované lokalizácie,
-- implementačné dôkazy,
-- testy a runtime gates,
-- výnimky s ADR.
+### STD-CONF-001 — STANDARD_CONFORMANCE.json exists — MUST
 
 ### STD-CONF-002 — Every applicable MUST has evidence — MUST
-Každé aplikovateľné MUST/MUST NOT pravidlo z `CONFORMANCE_CATALOG.json` musí mať jeden z výsledkov:
 
-- `static` – overené spoločným validatorom,
-- `unit` – overené XCTest/unit testom,
-- `ui` – overené UI testom,
-- `runtime` – explicitný manuálny runtime gate,
-- `exception` – schválená výnimka s existujúcim ADR.
+### STD-CONF-003 — Common validator passes — MUST
 
-Tichý `not implemented`, chýbajúci záznam alebo nezdôvodnené `not applicable` je FAIL.
+### STD-CONF-004 — Shared UI test identifiers — MUST
 
-### STD-CONF-003 — Common validator — MUST
-Pred release musí prejsť:
-
-`python3 Checks/validate-app-conformance.py --app-root <path> --standard-root <path>`
-
-Validator musí minimálne overiť:
-- pin Standardu,
-- úplnosť aplikovateľných MUST pravidiel,
-- existenciu deklarovaných evidence súborov/tokenov,
-- výnimky a ADR,
-- localization parity a povinné kľúče,
-- runtime metadata/build deklaráciu, ak je nakonfigurovaná,
-- runtime gate coverage pre pravidlá, ktoré nemožno overiť staticky.
-
-### STD-CONF-004 — Stable UI identifiers — MUST
-Spoločné systémové surface definované týmto Standardom musia používať spoločné accessibility/test IDs, ak ich platforma podporuje. UI testy potom nesmú byť závislé od prekladu používateľského textu.
-
-### STD-CONF-005 — Static test is not runtime proof — MUST
-Static PASS nesmie byť prezentovaný ako runtime PASS. Správanie typu live theme update, swipe-back, clipping, safe area, scroll clearance alebo Dynamic Type vyžaduje unit/UI/runtime dôkaz podľa katalógu.
+### STD-CONF-005 — Static PASS not substituted for runtime proof — MUST
 
 ### STD-CONF-006 — Release conformance report — MUST
-Release-ready build musí mať report vo forme:
-
-`applicable MUST: X / PASS X / exceptions Y / runtime pending Z`
-
-Ak `runtime pending > 0` pre release-blocking pravidlá, build nie je Level 4 Full Adoption.
-
-## 18. Adaptive Runtime Test Matrix
-
-Minimálna matica pre všetky iPhone aplikácie:
-
-1. **Small iPhone container** – najmenší podporovaný alebo ekvivalentný dostupný kontajner.
-2. **Regular iPhone** – bežný referenčný kontajner.
-3. **Large iPhone** – veľký/Pro Max kontajner.
-4. **Accessibility Dynamic Type** – minimálne jeden veľký accessibility size.
-5. **Light + Dark**.
-6. **Najdlhšia podporovaná lokalizácia** pre relevantné shared surfaces.
-7. **Keyboard/form state**, ak aplikácia obsahuje formuláre.
-
-Ak aplikácia podporuje iPad:
-- iPad portrait,
-- iPad landscape,
-- dostupné multitasking/window sizes podľa podporovaného deployment targetu.
-
-Ak iPhone-only aplikácia môže bežať v iPad compatibility presentation, kritické workflow musí prejsť compatibility testom.
-
-## 19. Release gate a adoption levels
-
-- **Level 0 – Declared:** Standard iba uvedený.
-- **Level 1 – Identity:** runtime identity, odkazy a verzovanie zjednotené.
-- **Level 2 – Shared UX:** spoločné Settings/About/component roles implementované.
-- **Level 3 – Quality Gates:** statické, unit/UI a runtime gate mechanizmy existujú a prešli pre aktuálny scope.
-- **Level 4 – Full Adoption:** všetky aplikovateľné MUST pravidlá majú PASS alebo schválenú výnimku; žiadny release-blocking runtime gate nie je pending.
-
-Aplikácia MUST NOT deklarovať Level 4 iba na základe statického validatora.
-
-## 20. Release hygiene
 
 ### STD-RELEASE-001 — Source hygiene — MUST
-Release package nesmie obsahovať `.DS_Store`, user-specific Xcode state, build artifacts, secrets ani reálne citlivé testovacie údaje.
 
 ### STD-RELEASE-002 — Localization gate — MUST
-Zmenený používateľský copy musí prejsť parity kontrolou vo všetkých podporovaných lokalizáciách.
 
-### STD-RELEASE-003 — Regression scope — MUST
-Build, ktorý mení shared component family alebo common Settings/About surface, musí auditovať všetky použitia danej rodiny v aplikácii, nie iba nahlásený screenshot.
+### STD-RELEASE-003 — Whole-family regression scope — MUST
 
-### STD-RELEASE-004 — Native build gate — MUST
-Static parser/validator nenahrádza Xcode build a fyzický/runtime test tam, kde je potrebný. Release report musí tieto stavy rozlišovať.
+### STD-RELEASE-004 — Native build/runtime gate distinction — MUST
 
-## 21. Migračné pravidlo 1.6.4 → 1.7.0
+### STD-ADAPT-013 — Adaptive density uses useful available space — MUST
 
-Aplikácie sa migrujú v samostatných buildoch. Odporúčaný postup:
+### STD-ADAPT-014 — System geometry remains stable across data states — MUST
 
-1. pridať/aktualizovať `APP_STANDARD_ADOPTION.md`,
-2. pridať `STANDARD_CONFORMANCE.json`,
-3. zapnúť common conformance validator,
-4. opraviť About/Settings contract,
-5. vykonať whole-app adaptive audit,
-6. deklarovať a overiť bottom-navigation variant,
-7. doplniť UI/runtime testy pre pravidlá, ktoré static validator nevie dokázať,
-8. až potom zvýšiť adoption level.
+### STD-ADAPT-015 — Adaptive layout avoids layout thrashing and unnecessary invalidation — MUST
 
-Product-specific obsah sa nemení iba kvôli 1.7.0, ak ho nový contract nezasahuje.
+### STD-VIEWPORT-001 — Primary root header starts at safe-area plus shared minimal inset — MUST
 
-## 22. Stav RC1
+### STD-VIEWPORT-002 — Root nested sheet and fullscreen header families are explicit — MUST
 
-RC1 sa má najprv aplikovať na dohodnuté aplikácie. Ak aplikácia odhalí chybu alebo nejednoznačnosť v contracte, opraví sa Standard pred publikovaním finálneho tagu. Po úspešnej adopcii sa RC status odstráni, `standard.json` sa prepne na `active` a vytvorí sa tag `standard-v1.7.0`.
+### STD-VIEWPORT-003 — Fixed/custom bottom chrome uses lowest safe viewport position — MUST
+
+### STD-VIEWPORT-004 — Bottom chrome position and content clearance are independent — MUST
+
+### STD-VIEWPORT-005 — Horizontal viewport is adaptively utilized — MUST
+
+### STD-VIEWPORT-006 — No unexplained fixed edge waste — MUST
+
+### STD-VIEWPORT-007 — Layout responds to live system safe-area changes — MUST
+
+### STD-VIEWPORT-008 — Peer primary roots share safe-area-relative top anchor — MUST
+
+### STD-SCREEN-001 — Screen-family inventory is declared — MUST
+
+### STD-SCREEN-002 — Every applicable screen family has completed audit state — MUST
+
+### STD-SCREEN-003 — Each screen family passes viewport audit dimensions — MUST
+
+### STD-SCREEN-004 — Shared screen chrome exposes stable test identifiers — MUST
+
+### STD-NAV-010 — Custom bar may safely penetrate bottom safe area instead of reserving blank band — MUST
+
+### STD-NAV-011 — Custom bar position and scroll clearance are independently calculated — MUST
+
+### STD-A11Y-004 — Reduce Transparency has readable fallback — MUST
+
+### STD-FORM-005 — Keyboard keeps active field and required action reachable — MUST
+
+### STD-FORM-006 — Keyboard and bottom chrome do not create overlap or double clearance — MUST
+
+
+## 5. RC2 semantic clarifications
+- **STD-ADAPT-004/013:** bezpečne využiteľný voľný priestor sa má primerane využiť bez narušenia hierarchie.
+- **STD-ADAPT-015:** zakázané je adaptívne riešenie, ktoré spôsobuje zbytočné opakované merania, invalidácie alebo lagovanie.
+- **STD-VIEWPORT-001/008:** root title/header sa viaže na aktuálnu top safe area + shared minimal inset, nie na absolútne Y zariadenia.
+- **STD-VIEWPORT-003/STD-NAV-010:** custom bottom chrome môže vstúpiť do bottom safe area, ak Home Indicator nekoliduje s obsahom ani 44×44 touch targetom.
+- **STD-VIEWPORT-004/STD-NAV-011:** fyzická poloha bottom chrome a scroll content clearance sa počítajú samostatne.
+- **STD-VIEWPORT-006:** nevysvetlený hardcoded edge padding/spacer, ktorý iba znižuje užitočný viewport, je defect.
+- **STD-FORM-006:** keyboard a fixed/custom bottom chrome nesmú vytvoriť overlap ani dvojitú rezervu.
+- **STD-CONF-005:** grep/parser/manifest dôkaz nenahrádza UI/runtime dôkaz behaviorálneho pravidla.
+
+## 6. Minimálna runtime matrix
+Small/regular/large iPhone container; Accessibility Dynamic Type; Light/Dark; najdlhšia podporovaná lokalizácia; keyboard/form state; scroll endpoint nad bottom chrome; iPad portrait/landscape/window sizes, ak je podporovaný; iPad compatibility pre kritický flow, ak relevantné.
+
+## 7. Adopcia
+RC2 nahrádza RC1 pre ďalšiu adopciu. Poradie je v `ADOPTION_PLAN_RC2.md`. Po úspešnom cross-app audite sa odstráni RC marker, `standard.json.status` sa nastaví na `active`, doplní sa release date a vydá sa tag `standard-v1.7.0`.

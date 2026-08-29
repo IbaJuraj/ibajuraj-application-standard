@@ -1,6 +1,8 @@
 import XCTest
 
 enum IJStandardUIID {
+    static let rootTitle = "ij.root.title"
+    static let navigationHeader = "ij.navigation.header"
     static let settingsAboutRow = "ij.settings.about.row"
     static let aboutVersionCard = "ij.about.version.card"
     static let aboutStandardCard = "ij.about.standard.card"
@@ -18,5 +20,9 @@ extension XCUIApplication {
         XCTAssertTrue(descendants(matching: .any)[IJStandardUIID.aboutVersionCard].exists, file: file, line: line)
         XCTAssertTrue(descendants(matching: .any)[IJStandardUIID.aboutStandardCard].exists, file: file, line: line)
         XCTAssertTrue(descendants(matching: .any)[IJStandardUIID.aboutDeveloperCard].exists, file: file, line: line)
+    }
+
+    func assertPrimaryRootTitleExists(file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertTrue(descendants(matching: .any)[IJStandardUIID.rootTitle].exists, file: file, line: line)
     }
 }

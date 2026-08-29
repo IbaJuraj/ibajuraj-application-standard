@@ -12,12 +12,21 @@ for r in cat.get('rules',[]):
     if rid in ids: errors.append(f'duplicate rule id: {rid}')
     ids.append(rid)
     if r.get('level') not in {'MUST','MUST NOT','SHOULD','SHOULD NOT','MAY'}: errors.append(f'{rid}: invalid level')
-    if r.get('defaultVerification') not in {'static','unit','ui','runtime','mixed'}: errors.append(f'{rid}: invalid verification')
+    if r.get('defaultVerification','static') not in {'static','unit','ui','runtime','mixed'}: errors.append(f'{rid}: invalid verification')
 text=(root/'IBAJURAJ_APPLICATION_STANDARD.md').read_text(encoding='utf-8')
 for rid in ids:
     if rid not in text: errors.append(f'{rid}: missing from main standard')
+heading_ids=set(re.findall(r'^### (STD-[A-Z0-9-]+)', text, flags=re.M))
+for rid in sorted(heading_ids-set(ids)):
+    errors.append(f'{rid}: rule heading missing from catalog')
+for r in cat.get('rules',[]):
+    cond=r.get('appliesWhen','always')
+    if isinstance(cond,dict):
+        allowed={'capability','anyCapability','allCapabilities','bottomNavigationMode','equals','anyOf','allOf'}
+        unknown=set(cond)-allowed
+        if unknown: errors.append(f"{r.get('id')}: unsupported appliesWhen keys {sorted(unknown)}")
 if errors:
     print('FAIL – conformance catalog')
     for e in errors: print(' -',e)
     sys.exit(1)
-print(f'PASS – conformance catalog ({len(ids)} rules)')
+print(f'PASS – conformance catalog RC2 ({len(ids)} rules)')
