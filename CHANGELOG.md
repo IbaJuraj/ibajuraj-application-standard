@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.7.0 RC3 – 2026-08-29
+
+### Added
+- Single Header Ownership Contract.
+- No Duplicate Heading Contract.
+- Coherent Sheet Header Contract.
+- System Chrome Ownership Contract.
+- Conformance catalog expanded from 92 to 96 stable `STD-*` rules.
+
+### Clarified
+- navigation titles and section headings must have distinct semantic roles,
+- a sheet must not reserve an empty system navigation band above a second custom title,
+- platform-owned chrome such as the Home Indicator must not be visually imitated by the app.
+
 ## 1.7.0 RC2 – 2026-08-29
 
 ### Added

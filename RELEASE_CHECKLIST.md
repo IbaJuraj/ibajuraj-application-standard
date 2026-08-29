@@ -1,11 +1,11 @@
-# IbaJuraj Application Standard 1.7.0 RC2 – Release Checklist
+# IbaJuraj Application Standard 1.7.0 RC3 – Release Checklist
 
 ## Standard package
 - [ ] `STANDARD_VERSION` = `1.7.0`
-- [ ] `standard.json` version = `1.7.0`, candidate = `RC2`
+- [ ] `standard.json` version = `1.7.0`, candidate = `RC3`
 - [ ] `CONFORMANCE_CATALOG.json` valid
 - [ ] all catalog rule IDs unique
-- [ ] every MUST/MUST NOT rule in RC2 delta has a catalog entry
+- [ ] every MUST/MUST NOT rule in RC3 delta has a catalog entry
 - [ ] validator supports `allCapabilities` and screen-family gate
 - [ ] validator unit tests PASS
 - [ ] `Checks/validate-standard.sh` PASS
@@ -36,9 +36,15 @@
 - [ ] physical/runtime acceptance PASS
 
 ## Promotion RC → active
-- [ ] all four target apps have completed RC2 adoption/audit or documented approved exceptions
+- [ ] all four target apps have completed RC3 adoption/audit or documented approved exceptions
 - [ ] remaining contract ambiguities resolved
 - [ ] `standard.json.status` changed to `active`
 - [ ] `candidate` removed/null
 - [ ] RC wording removed from main document/README
 - [ ] final tag prepared: `standard-v1.7.0`
+
+## RC3 header ownership gate
+- [ ] No screen has two parallel header owners for the same role.
+- [ ] No navigation title is repeated by an equivalent section/page heading.
+- [ ] Sheets use one coherent top hierarchy.
+- [ ] No platform-owned system chrome is visually imitated.

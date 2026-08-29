@@ -1,22 +1,23 @@
 # IbaJuraj Application Standard
 
 **Verzia:** 1.7.0  
-**Stav:** Release Candidate 2  
-**Dátum RC2:** 29. augusta 2026  
+**Stav:** Release Candidate 3  
+**Dátum RC3:** 29. augusta 2026  
 **Vlastník:** IbaJuraj  
 **Aktuálna verejná autorita:** 1.6.4 (`standard-v1.6.4`, commit `5e2901945287165a8902f28fb1d3b5a87b6eeb92`)
 
-> RC2 nahrádza RC1 pre ďalšiu adopciu. Kým nebude vydaný finálny tag `standard-v1.7.0`, stabilnou verejnou verziou zostáva 1.6.4.
+> RC3 nahrádza RC2 pre ďalšiu adopciu; RC1 a RC2 zostávajú historické pre-release snapshoty. Kým nebude vydaný finálny tag `standard-v1.7.0`, stabilnou verejnou verziou zostáva 1.6.4.
 
 ## 1. Záväznosť
 `MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD`/`SHOULD NOT` vyžaduje zdôvodnenie. `MAY` je voliteľné. `CONFORMANCE_CATALOG.json` je normatívny machine-readable register aplikovateľnosti a minimálneho typu dôkazu.
 
-## 2. Piliere RC2
+## 2. Piliere RC3
 1. Whole-App Adaptive Layout.
 2. Viewport Edge Utilization.
 3. Native/Custom Bottom Navigation Contract.
 4. Screen-Family Audit.
-5. Machine-Verifiable Cross-App Conformance.
+5. Header & System-Chrome Ownership.
+6. Machine-Verifiable Cross-App Conformance.
 
 ## 3. Kľúčové spoločné kontrakty
 
@@ -37,6 +38,12 @@
 - **Bar position a scroll content clearance sú nezávislé.** Posledný obsah musí ísť celý nad chrome; typická koncová rezerva je 16–24 pt.
 - Horizontal space sa využíva adaptívne. Veľký displej nemá znamenať iba viac prázdna; malé množstvo obsahu však môže prirodzene nechať prázdnu plochu.
 - Adaptívny layout nesmie spôsobovať layout thrashing ani viditeľné lagovanie.
+
+### Header a system chrome ownership
+- Každá obrazovka má jedného autoritatívneho vlastníka headeru. Systémový navigation title a druhý custom page title s rovnakou funkciou sa nekombinujú.
+- Navigation title sa neopakuje ekvivalentným page/section headingom (`Kontakt` + `KONTAKT`, `O aplikácii` + `O APLIKÁCII`). Section header musí pomenovať užšiu semantickú skupinu obsahu.
+- Sheet používa jednu koherentnú hierarchiu title/subtitle/dismissal action. Prázdny systémový navbar rezervovaný iba kvôli `X`/`Zrušiť` a druhý veľký custom title pod ním je defect.
+- Aplikácia nekreslí vizuálnu imitáciu platform-owned chrome (napr. vlastný Home Indicator), ak daný systémový prvok poskytuje iOS.
 
 ### Bottom navigation
 - Native variant necháva platforme výšku/safe area.
@@ -237,8 +244,16 @@ Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná apl
 
 ### STD-FORM-006 — Keyboard and bottom chrome do not create overlap or double clearance — MUST
 
+### STD-HEADER-001 — Each screen has one authoritative header owner — MUST
 
-## 5. RC2 semantic clarifications
+### STD-HEADER-002 — Navigation title is not duplicated by equivalent page or section heading — MUST NOT
+
+### STD-HEADER-003 — Sheet title subtitle and dismissal action form one coherent header hierarchy — MUST
+
+### STD-CHROME-001 — App does not imitate platform-owned system chrome — MUST NOT
+
+
+## 5. RC3 semantic clarifications
 - **STD-ADAPT-004/013:** bezpečne využiteľný voľný priestor sa má primerane využiť bez narušenia hierarchie.
 - **STD-ADAPT-015:** zakázané je adaptívne riešenie, ktoré spôsobuje zbytočné opakované merania, invalidácie alebo lagovanie.
 - **STD-VIEWPORT-001/008:** root title/header sa viaže na aktuálnu top safe area + shared minimal inset, nie na absolútne Y zariadenia.
@@ -248,8 +263,13 @@ Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná apl
 - **STD-FORM-006:** keyboard a fixed/custom bottom chrome nesmú vytvoriť overlap ani dvojitú rezervu.
 - **STD-CONF-005:** grep/parser/manifest dôkaz nenahrádza UI/runtime dôkaz behaviorálneho pravidla.
 
+- **STD-HEADER-001:** jedna screen family môže používať native alebo custom header, nie dve paralelné vrstvy s rovnakou rolou.
+- **STD-HEADER-002:** section heading je prípustný iba ak zužuje význam; opakovanie názvu obrazovky v inom case/icon štýle je defect.
+- **STD-HEADER-003:** sheet musí mať jeden vizuálny top anchor; dismissal action nesmie sama vytvoriť prázdny navigation band nad druhým title.
+- **STD-CHROME-001:** platform-owned affordance sa nesmie imitovať dekoratívnou kópiou; ak aplikácia potrebuje vlastný drag handle, musí mať vlastnú funkciu a nesmie predstierať Home Indicator.
+
 ## 6. Minimálna runtime matrix
 Small/regular/large iPhone container; Accessibility Dynamic Type; Light/Dark; najdlhšia podporovaná lokalizácia; keyboard/form state; scroll endpoint nad bottom chrome; iPad portrait/landscape/window sizes, ak je podporovaný; iPad compatibility pre kritický flow, ak relevantné.
 
 ## 7. Adopcia
-RC2 nahrádza RC1 pre ďalšiu adopciu. Poradie je v `ADOPTION_PLAN_RC2.md`. Po úspešnom cross-app audite sa odstráni RC marker, `standard.json.status` sa nastaví na `active`, doplní sa release date a vydá sa tag `standard-v1.7.0`.
+RC3 nahrádza RC2 pre ďalšiu adopciu. Poradie je v `ADOPTION_PLAN_RC3.md`. Po úspešnom cross-app audite sa odstráni RC marker, `standard.json.status` sa nastaví na `active`, doplní sa release date a vydá sa tag `standard-v1.7.0`.

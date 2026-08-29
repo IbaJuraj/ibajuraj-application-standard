@@ -1,8 +1,8 @@
-# Migration – IbaJuraj Application Standard 1.6.4 → 1.7.0 RC2
+# Migration – IbaJuraj Application Standard 1.6.4 → 1.7.0 RC3
 
 1. Keep all 1.6.4 requirements unless explicitly superseded.
-2. Update local Standard snapshot/pin to 1.7.0 RC2 during adoption work.
-3. Add/update `STANDARD_CONFORMANCE.json` from RC2 template.
+2. Update local Standard snapshot/pin to 1.7.0 RC3 during adoption work.
+3. Add/update `STANDARD_CONFORMANCE.json` from RC3 template.
 4. Declare capabilities including search/details/forms/sheets/fullscreen/onboarding/state surfaces and bottom-navigation mode.
 5. Add `screenAudit.families` with concrete screen names for every applicable family.
 6. Add evidence for every applicable MUST/MUST NOT rule.

@@ -60,7 +60,10 @@
     "viewportEdgeUtilization": "safe-area-relative-top-bottom-horizontal-efficient-no-unexplained-waste",
     "screenFamilyAudit": "capability-driven-inventory-runtime-audit-and-release-gate",
     "adaptiveDensity": "space-utilization-state-stability-and-layout-performance",
-    "keyboardCoordination": "active-field-visibility-and-no-double-bottom-clearance"
+    "keyboardCoordination": "active-field-visibility-and-no-double-bottom-clearance",
+    "headerOwnership": "single-owner-no-duplicate-page-heading-semantic-section-names",
+    "sheetHeader": "single-coherent-sheet-header-hierarchy",
+    "systemChromeOwnership": "platform-chrome-not-visually-imitated-by-app"
   },
   "documents": {
     "standard": "IBAJURAJ_APPLICATION_STANDARD.md",
@@ -76,8 +79,8 @@
     "repository": "https://github.com/IbaJuraj/ibajuraj-application-standard",
     "latestMetadata": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.json",
     "document": "IBAJURAJ_APPLICATION_STANDARD.md",
-    "candidateTag": "standard-v1.7.0-rc2",
+    "candidateTag": "standard-v1.7.0-rc3",
     "plannedFinalTag": "standard-v1.7.0"
   },
-  "candidate": "RC2"
+  "candidate": "RC3"
 }

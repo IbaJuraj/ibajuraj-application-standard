@@ -125,10 +125,10 @@ def main():
     if caps.get('hasBottomNavigation') and mode not in {'native','custom'}: errors.append('STD-NAV-001 invalid bottomNavigationMode')
     if not caps.get('hasBottomNavigation') and mode!='none': errors.append('STD-NAV-001 bottomNavigationMode must be none')
     if errors:
-        print('FAIL – IbaJuraj Standard 1.7.0 RC2 app conformance')
+        print('FAIL – IbaJuraj Standard 1.7.0 RC3 app conformance')
         [print(' -',x) for x in errors]; [print(' !',x) for x in warnings]
         print(f'applicable MUST: {len(ars)} / pass-like: {passed} / exceptions: {exc} / rule pending: {pending} / screen pending: {screen_pending}'); return 1
-    print('PASS – IbaJuraj Standard 1.7.0 RC2 app conformance declaration/evidence')
+    print('PASS – IbaJuraj Standard 1.7.0 RC3 app conformance declaration/evidence')
     [print(' !',x) for x in warnings]
     print(f'applicable MUST: {len(ars)} / evidence PASS: {passed} / exceptions: {exc} / release-blocking rule pending: {pending} / screen pending: {screen_pending}')
     if pending or screen_pending: print('NOT RELEASE-READY – release-blocking gates pending'); return 2

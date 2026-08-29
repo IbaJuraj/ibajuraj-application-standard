@@ -1,4 +1,4 @@
-# IbaJuraj Application Standard 1.7.0 RC2 – Test Matrix
+# IbaJuraj Application Standard 1.7.0 RC3 – Test Matrix
 
 ## Povinné vrstvy
 
@@ -97,3 +97,9 @@ Manifest musí obsahovať konkrétne obrazovky pre každú aplikovateľnú famil
 - [ ] app-native build PASS
 - [ ] tests PASS
 - [ ] runtime pending = 0 for release blockers
+
+## RC3 header/chrome matrix
+- Native title + content: no equivalent duplicate heading.
+- Custom header: native navigation reservation hidden/removed unless semantically required.
+- Sheet: one title/subtitle/dismissal hierarchy at small/regular/Accessibility Dynamic Type.
+- Fullscreen: no decorative fake Home Indicator or other platform-owned chrome imitation.

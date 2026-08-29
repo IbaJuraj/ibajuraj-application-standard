@@ -1,8 +1,12 @@
-# IbaJuraj Application Standard 1.7.0 – Release Candidate 2
+# IbaJuraj Application Standard 1.7.0 – Release Candidate 3
 
-RC2 strengthens the 1.7.0 adaptive foundation after real cross-app comparison. It explicitly defines how apps should use the top, bottom and horizontal viewport, and makes whole-app screen-family coverage machine-verifiable.
+RC3 hardens the 1.7.0 adaptive foundation after whole-app review of real app screens. It retains the RC2 viewport and screen-family contracts and adds explicit single-header ownership, duplicate-heading prevention, coherent sheet-header hierarchy, and platform system-chrome ownership.
 
 Highlights:
+- single authoritative header owner per screen,
+- no duplicate navigation/page/section heading for the same semantic role,
+- coherent sheet title/subtitle/dismissal hierarchy,
+- platform-owned system chrome is not visually imitated by the app,
 - whole-app container-driven adaptive layout,
 - root header anchored to live top safe area with minimal shared extra inset,
 - native vs custom bottom navigation,
@@ -18,4 +22,4 @@ Highlights:
 - standard About/version presentation,
 - stable `STD-*` rule IDs and shared conformance validator.
 
-RC2 is not yet the public authoritative release. The current public authority remains 1.6.4 until promotion and final tag `standard-v1.7.0`.
+RC3 is not yet the public authoritative release. The current public authority remains 1.6.4 until promotion and final tag `standard-v1.7.0`.
