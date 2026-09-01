@@ -1,4 +1,4 @@
-# Audit 1.6.4 → 1.7.0 RC2
+# Audit 1.6.4 → 1.7.0
 
 ## Change class
 **MINOR**, backward-compatible contract expansion.
@@ -10,6 +10,7 @@
 4. About Cross-App Contract (`STD-ABOUT-*`).
 5. Live Appearance Contract (`STD-APPEARANCE-*`).
 6. Machine-Verifiable Conformance (`STD-CONF-*`).
+7. Header & System Chrome Ownership (`STD-HEADER-*`, `STD-CHROME-*`).
 
 ## Why MINOR
 1.7.0 adds new mandatory common behavior and verification machinery but does not require product-domain data-model changes and does not remove supported 1.6.4 behavior.
@@ -24,10 +25,19 @@
 - custom bottom chrome kept entirely above the bottom safe area, creating avoidable empty space,
 - scroll content clearance coupled to physical bar position,
 - static build checks passing despite runtime UX defects,
-- whole-app conformance claims without an explicit inventory of screen families actually audited.
+- whole-app conformance claims without an explicit inventory of screen families actually audited,
+- duplicate navigation/page/section headings and parallel sheet-header ownership found during real-app review,
+- app-drawn imitations of platform-owned system chrome.
 
 ## RC evolution
-RC1 established adaptive layout, bottom-navigation variants and machine-verifiable conformance. RC2 keeps those semantics and closes gaps found during real app comparison by adding viewport-edge utilization, screen-family audit, keyboard/chrome coordination, state stability and layout-performance gates.
+- **RC1** established adaptive layout, bottom-navigation variants and machine-verifiable conformance.
+- **RC2** added viewport-edge utilization, screen-family audit, keyboard/chrome coordination, state stability and layout-performance gates.
+- **RC3** added single-header ownership, duplicate-heading prevention, coherent sheet headers and platform system-chrome ownership. The conformance catalog reached 96 stable `STD-*` rules.
+
+## Cross-app acceptance
+RC3 was applied/reviewed across the four target applications: Peňaženka Kariet, Strážca Termínov, Lex Drive and Kalkulačka 2v1. On 2 September 2026 the product owner reported no observed Standard-related malfunction or regression in any of the four applications during the final cross-app review.
+
+Application-level automated/Xcode/runtime evidence remains owned by each adopting app; static evidence is not treated as a substitute for runtime behavior.
 
 ## Release conclusion
-RC2 must be applied to real applications before promotion to active. The conformance system itself, including screen-family completeness, is part of the acceptance target.
+RC3 is accepted as the final normative basis for IbaJuraj Application Standard 1.7.0. No RC4 is required. The Standard is promoted to `active`, the candidate marker is cleared and the final release tag is `standard-v1.7.0`.
