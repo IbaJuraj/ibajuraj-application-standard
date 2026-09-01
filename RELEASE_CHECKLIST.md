@@ -1,50 +1,41 @@
-# IbaJuraj Application Standard 1.7.0 RC3 – Release Checklist
+# IbaJuraj Application Standard 1.7.0 – Final Release Checklist
 
 ## Standard package
-- [ ] `STANDARD_VERSION` = `1.7.0`
-- [ ] `standard.json` version = `1.7.0`, candidate = `RC3`
-- [ ] `CONFORMANCE_CATALOG.json` valid
-- [ ] all catalog rule IDs unique
-- [ ] every MUST/MUST NOT rule in RC3 delta has a catalog entry
-- [ ] validator supports `allCapabilities` and screen-family gate
-- [ ] validator unit tests PASS
-- [ ] `Checks/validate-standard.sh` PASS
-- [ ] `Checks/validate-conformance-catalog.py` PASS
-- [ ] ZIP integrity PASS
-- [ ] SHA-256 generated
+- [x] `STANDARD_VERSION` = `1.7.0`
+- [x] `standard.json` version = `1.7.0`
+- [x] `standard.json.status` = `active`
+- [x] release date = `2026-09-02`
+- [x] candidate marker cleared
+- [x] `CONFORMANCE_CATALOG.json` contains the final 96-rule set
+- [x] all catalog rule IDs unique
+- [x] validator supports `allCapabilities` and screen-family gate
+- [x] source hygiene gate retained
+- [x] final release notes and 1.6.4 → 1.7.0 audit present
 
-## App adoption
-- [ ] `APP_STANDARD_ADOPTION.md` updated
-- [ ] `STANDARD_CONFORMANCE.json` present
-- [ ] all capability flags accurate
-- [ ] `screenAudit.families` covers every applicable family
-- [ ] each family lists concrete screens
-- [ ] applicable MUST rules have evidence/test/runtime gate or ADR exception
-- [ ] localization parity PASS
-- [ ] About contract PASS
-- [ ] live appearance PASS if custom themes exist
-- [ ] whole-app adaptive + viewport matrix PASS
-- [ ] root-header top anchors use shared family token
-- [ ] no unexplained edge waste
-- [ ] bottom navigation contract PASS if applicable
-- [ ] custom bar position separate from content clearance
-- [ ] keyboard/bottom chrome coordination PASS if applicable
-- [ ] state geometry stability PASS
-- [ ] layout performance/lag smoke test PASS
-- [ ] privacy/debug/release hygiene PASS
-- [ ] native Xcode build/test PASS
-- [ ] physical/runtime acceptance PASS
+## Cross-app promotion gate
+- [x] Peňaženka Kariet reviewed against RC3 contracts
+- [x] Strážca Termínov reviewed against RC3 contracts
+- [x] Lex Drive reviewed against RC3 contracts
+- [x] Kalkulačka 2v1 reviewed against RC3 contracts
+- [x] final cross-app runtime review completed by the product owner
+- [x] no observed Standard-related malfunction/regression requiring RC4
+- [x] remaining contract ambiguities resolved for 1.7.0
+- [x] RC wording removed from the active main document and README
 
-## Promotion RC → active
-- [ ] all four target apps have completed RC3 adoption/audit or documented approved exceptions
-- [ ] remaining contract ambiguities resolved
-- [ ] `standard.json.status` changed to `active`
-- [ ] `candidate` removed/null
-- [ ] RC wording removed from main document/README
-- [ ] final tag prepared: `standard-v1.7.0`
+Application-specific `STANDARD_CONFORMANCE.json`, Xcode, runtime, localization, accessibility and screen-family evidence remain owned by each adopting app. A static Standard-repository PASS does not replace those app-level runtime gates.
 
-## RC3 header ownership gate
-- [ ] No screen has two parallel header owners for the same role.
-- [ ] No navigation title is repeated by an equivalent section/page heading.
-- [ ] Sheets use one coherent top hierarchy.
-- [ ] No platform-owned system chrome is visually imitated.
+## Final repository validation
+- [ ] `bash Checks/validate-standard.sh` PASS on the final promotion commit
+- [ ] `python3 -m unittest Checks/test_validate_app_conformance.py` PASS on the final promotion commit
+- [ ] GitHub Actions `Validate IbaJuraj Standard` PASS on the final promotion commit
+
+These three checks are completed immediately before merge and are recorded in `FINAL_RELEASE_AUDIT_1.7.0.md`.
+
+## Publication
+- [x] final tag name prepared: `standard-v1.7.0`
+- [ ] PR #6 merged into `main`
+- [ ] tag `standard-v1.7.0` created from final `main`
+- [ ] GitHub Release `IbaJuraj Application Standard 1.7.0` published
+- [ ] `/standard/` verified against the final release
+
+The merge is intentionally completed before tag publication. Tag/release publication is the next step after this checklist reaches the merged state.
