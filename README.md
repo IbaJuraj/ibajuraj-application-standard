@@ -1,11 +1,19 @@
-# IbaJuraj Application Standard 1.7.0 RC3
+# IbaJuraj Application Standard 1.7.0
 
-This package is Release Candidate 3 for the next shared IbaJuraj app standard.
+IbaJuraj Application Standard 1.7.0 is the active shared standard for IbaJuraj apps.
 
-Current published authority: **1.6.4**.  
-Candidate: **1.7.0 RC3**.
+It was promoted from RC3 after cross-app adoption and runtime review across Peňaženka Kariet, Strážca Termínov, Lex Drive and Kalkulačka 2v1. No new normative rules were added during final promotion; the final release preserves the validated RC3 rule set.
 
-RC3 supersedes RC2 for further app adoption. It keeps the RC1 adaptive/navigation/conformance foundation and the RC2 viewport/screen-family hardening, then adds explicit header ownership, duplicate-heading prevention, coherent sheet headers, and platform system-chrome ownership.
+## Main areas
+- whole-app container-driven adaptive layout,
+- safe-area-relative viewport utilization,
+- native/custom bottom-navigation contracts,
+- screen-family inventory and release gates,
+- shared Settings/About and live appearance behavior,
+- single header ownership and duplicate-heading prevention,
+- coherent sheet headers,
+- platform system-chrome ownership,
+- machine-verifiable `STD-*` conformance.
 
 ## Validate this package
 
@@ -25,5 +33,5 @@ python3 Checks/validate-app-conformance.py \
 
 The app must provide `STANDARD_CONFORMANCE.json` including `screenAudit.families`.
 
-## Promotion
-After RC3 adoption validates the contracts, remove RC wording, set `standard.json.status` to `active`, clear the candidate marker, set release date and publish tag `standard-v1.7.0`.
+## Release
+Final release tag: `standard-v1.7.0`.
