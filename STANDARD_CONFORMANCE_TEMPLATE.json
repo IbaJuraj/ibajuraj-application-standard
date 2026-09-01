@@ -1,0 +1,72 @@
+{
+  "$schema": "./STANDARD_CONFORMANCE.schema.json",
+  "standardVersion": "1.7.0",
+  "app": {
+    "name": "<App Name>",
+    "productId": "<product-id>"
+  },
+  "capabilities": {
+    "hasSettings": true,
+    "hasAppearance": true,
+    "hasCustomThemes": false,
+    "hasLocalization": true,
+    "hasBottomNavigation": false,
+    "bottomNavigationMode": "none",
+    "hasBottomPrimaryAction": false,
+    "supportsIPad": false,
+    "requiresIPadCompatibilityTest": false,
+    "supportsResizableWindow": false,
+    "hasCalculatorKeypad": false,
+    "hasForms": false,
+    "hasAdvancedFormFields": false,
+    "hasPersistedData": false,
+    "hasSyncOrBackup": false,
+    "hasAuthoritativeVersionedData": false,
+    "hasAppLock": false,
+    "hasGeneratedAssistance": false,
+    "hasFixedBottomControls": false,
+    "hasTranslucentSurfaces": false,
+    "hasSearch": false,
+    "hasDetails": false,
+    "hasSheets": false,
+    "hasFullscreen": false,
+    "hasOnboarding": false,
+    "hasStateSurfaces": false
+  },
+  "supportedLocalizations": [
+    "sk"
+  ],
+  "localization": {
+    "files": [],
+    "requiredKeys": []
+  },
+  "projectMetadata": {
+    "projectFile": null
+  },
+  "rules": {
+    "STD-CONF-001": {
+      "mode": "static",
+      "status": "implemented",
+      "evidence": {
+        "files": [
+          "STANDARD_CONFORMANCE.json"
+        ]
+      }
+    }
+  },
+  "runtimeAcceptanceFile": "RUNTIME_ACCEPTANCE.md",
+  "exceptions": {},
+  "screenAudit": {
+    "families": {
+      "SCREEN-ROOT": {
+        "status": "pending",
+        "screens": [
+          "<primary root screen>"
+        ],
+        "evidence": [
+          "RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"
+        ]
+      }
+    }
+  }
+}

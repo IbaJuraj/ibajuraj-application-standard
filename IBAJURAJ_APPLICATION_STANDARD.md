@@ -1,782 +1,272 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.6.4
-**Stav:** autoritatívny spoločný štandard
-**Platnosť od:** 23. augusta 2026
-**Vlastník:** IbaJuraj
+**Verzia:** 1.7.0  
+**Stav:** Active  
+**Dátum vydania:** 2. septembra 2026  
+**Vlastník:** IbaJuraj  
+**Aktuálna verejná autorita:** 1.7.0 (`standard-v1.7.0`)
 
-## 1. Účel
+> Verzia 1.7.0 bola povýšená z RC3 po cross-app adopcii a runtime kontrole štyroch cieľových aplikácií. Finálne vydanie nemení normatívnu sadu RC3; uzatvára ju ako aktívny Standard s 96 stabilnými `STD-*` pravidlami.
 
-Tento štandard určuje spoločné produktové, UX, technické, obsahové, bezpečnostné a release pravidlá pre aplikácie IbaJuraj. Nevynucuje identický vzhľad ani rovnakú informačnú architektúru. Zabezpečuje, aby aplikácie pôsobili ako jedna rodina, boli dôveryhodné, prístupné, udržateľné a mali jednotnú podporu.
+## 1. Záväznosť
+`MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD`/`SHOULD NOT` vyžaduje zdôvodnenie. `MAY` je voliteľné. `CONFORMANCE_CATALOG.json` je normatívny machine-readable register aplikovateľnosti a minimálneho typu dôkazu.
 
-## 2. Hierarchia pravidiel
+## 2. Piliere 1.7.0
+1. Whole-App Adaptive Layout.
+2. Viewport Edge Utilization.
+3. Native/Custom Bottom Navigation Contract.
+4. Screen-Family Audit.
+5. Header & System-Chrome Ownership.
+6. Machine-Verifiable Cross-App Conformance.
 
-1. **IbaJuraj Application Standard** – spoločné pravidlá pre všetky aplikácie.
-2. **Product Standard** – pravidlá konkrétnej aplikácie alebo domény.
-3. **Architecture Decision Record (ADR)** – zdôvodnená technická výnimka alebo rozhodnutie.
-4. **Build Scope** – konkrétny rozsah jedného buildu; MUST rešpektovať vyššie pravidlá, ak ich nemení schválený návrh.
+## 3. Kľúčové spoločné kontrakty
 
-Pri konflikte platí vyššia úroveň. Produktový štandard môže spoločné pravidlo rozšíriť, nie potichu obísť.
+### O aplikácii
+- Settings: **O aplikácii** + **Verzia, súkromie a štandard** + runtime `<version> (<build>)`.
+- Version card: `<AppName> v<version> – Build <build>.` z autoritatívnych runtime metadata.
+- Standard card: iba `IbaJuraj Application Standard` + `Verzia <standardVersion>`; interný tag/SHA/adoption level sa používateľovi nezobrazujú.
+- Vývojár: `IbaJuraj Apps.`; web/privacy používajú spoločné odkazy.
 
-## 3. Záväznosť
+### Appearance
+- Bezpečne aplikovateľná téma sa prejaví okamžite na aktuálnej obrazovke: checkmark, selected state a surface/background v tom istom render cykle.
+- Uložená hodnota a vykreslený stav musia zostať v parite po návrate/relaunchi.
 
-- **MUST** – povinné; porušenie blokuje release alebo vyžaduje schválenú výnimku.
-- **MUST NOT** – zakázané; porušenie blokuje release alebo vyžaduje schválenú výnimku.
-- **SHOULD** – odporúčané; odchýlka musí mať uvedený dôvod.
-- **SHOULD NOT** – neodporúčané; použitie musí mať uvedený dôvod.
-- **MAY** – voliteľné.
+### Adaptivita a viewport
+- Každá user-facing obrazovka je adaptive by default a primárne container-driven; device-name/`UIScreen.main.bounds` branching nie je layout foundation, ak existuje reálna container geometry.
+- Primary root header sa kotví čo najvyššie po top safe area; baseline extra inset je **0–4 pt**. Peer roots používajú rovnaký safe-area-relative anchor.
+- Fixed/custom bottom chrome ide na najnižšiu bezpečnú pozíciu; celý bottom safe-area inset sa automaticky nemení na prázdny pás.
+- **Bar position a scroll content clearance sú nezávislé.** Posledný obsah musí ísť celý nad chrome; typická koncová rezerva je 16–24 pt.
+- Horizontal space sa využíva adaptívne. Veľký displej nemá znamenať iba viac prázdna; malé množstvo obsahu však môže prirodzene nechať prázdnu plochu.
+- Adaptívny layout nesmie spôsobovať layout thrashing ani viditeľné lagovanie.
 
-Záväznosť pravidla určuje iba jedno z týchto veľkými písmenami zapísaných kľúčových slov. Slovenské modálne slovesá vo vysvetľujúcom texte nevytvárajú samostatnú úroveň záväznosti.
+### Header a system chrome ownership
+- Každá obrazovka má jedného autoritatívneho vlastníka headeru. Systémový navigation title a druhý custom page title s rovnakou funkciou sa nekombinujú.
+- Navigation title sa neopakuje ekvivalentným page/section headingom (`Kontakt` + `KONTAKT`, `O aplikácii` + `O APLIKÁCII`). Section header musí pomenovať užšiu semantickú skupinu obsahu.
+- Sheet používa jednu koherentnú hierarchiu title/subtitle/dismissal action. Prázdny systémový navbar rezervovaný iba kvôli `X`/`Zrušiť` a druhý veľký custom title pod ním je defect.
+- Aplikácia nekreslí vizuálnu imitáciu platform-owned chrome (napr. vlastný Home Indicator), ak daný systémový prvok poskytuje iOS.
 
-## 4. Spoločná identita
+### Bottom navigation
+- Native variant necháva platforme výšku/safe area.
+- Custom floating baseline: približne 60–66 pt surface, min. 44×44 pt touch target, typický 50 pt primary action, radius približne 28 pt; hodnoty sú baseline, nie rigidný frame.
+- Centrálna akcia nesmie zbytočne nafúknuť celý bar. Custom bar môže bezpečne penetrovať bottom safe area pri ochrane Home Indicatora.
 
-- MUST používať značku **IbaJuraj** ako spoločnú autorskú a produktovú identitu.
-- MUST načítavať marketingovú verziu a build z autoritatívnych build nastavení alebo `Bundle`; hodnoty MUST NOT byť ručne duplikované v používateľskom kóde.
-- Všetky runtime metadata, ktoré ovplyvňujú kompatibilitu, aktualizácie, diagnostiku, synchronizáciu alebo dôveryhodnosť dátového obsahu, MUST pochádzať z jedného autoritatívneho runtime zdroja. Verzia, build, kompatibilitný build, verzia schémy a obdobné hodnoty MUST NOT byť paralelne hardcoded v samostatných view, službách alebo validátoroch.
-- MUST používať jednotné verejné odkazy definované v `SUPPORT_AND_LINKS.md`.
-- SHOULD zobrazovať názov aplikácie, verziu, build, web, ochranu súkromia a podporu v časti O aplikácii.
+### Screen-family audit
+`STANDARD_CONFORMANCE.json` deklaruje konkrétne obrazovky v relevantných family: `SCREEN-ROOT`, `SCREEN-SETTINGS`, `SCREEN-ABOUT`, `SCREEN-DETAIL`, `SCREEN-FORM`, `SCREEN-SEARCH`, `SCREEN-SHEET`, `SCREEN-FULLSCREEN`, `SCREEN-ONBOARDING`, `SCREEN-STATES`, `SCREEN-BOTTOM-NAV`. Každá family má `pass/pending/exception`; `pass` potrebuje evidence, `exception` existujúci ADR a `pending` blokuje Level 4.
 
-## 5. Produktové princípy
+### Conformance
+Static PASS nie je runtime PASS. Každé aplikovateľné MUST/MUST NOT potrebuje static/unit/UI/runtime evidence alebo platnú ADR exception. Level 4 vyžaduje nulové release-blocking pending pravidlá aj nulové pending screen families.
 
-- MUST existovať jeden zdroj pravdy pre každý druh údajov.
-- MUST byť jasné vlastníctvo údajov a životný cyklus objektu.
-- MUST oddeliť identitu údajov od ich prezentácie.
-- MUST zabrániť vzniku paralelnej architektúry pre rovnakú funkciu.
-- SHOULD dodržiavať **Action over Information** – používateľ má dostať ďalší zmysluplný krok, nie iba pasívny údaj.
-- SHOULD dodržiavať **3-sekundové pravidlo** – hlavný stav a najdôležitejšia akcia majú byť pochopiteľné približne do troch sekúnd.
-- MUST predchádzať slepým koncom; prázdny alebo chybový stav má ponúknuť riešenie.
-- SHOULD uprednostniť kontextovú akciu pred zbytočným presúvaním používateľa medzi obrazovkami.
+## 4. Normatívny register pravidiel
+Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná aplikovateľnosť a verification mode sú v `CONFORMANCE_CATALOG.json`.
 
-## 6. Dizajn a UX
+### STD-IDENTITY-001 — One runtime source for marketing version and build — MUST
 
-### 6.1 Spoločné roly, nie identické obrazovky
+### STD-IDENTITY-002 — IbaJuraj Apps identity and shared links — MUST
 
-Aplikácie môžu mať rozdielny počet tabov, navigáciu, dashboard a doménové komponenty. Spoločné majú byť významy a kvalita základných prvkov:
+### STD-IDENTITY-003 — App and Standard metadata are separate — MUST
 
-- typografické roly,
-- rozostupy a dotykové plochy,
-- primárne a sekundárne akcie,
-- informačné, varovné a kritické stavy,
-- prázdne, chybové, načítavacie a offline stavy,
-- Nastavenia, Pomoc a O aplikácii.
+### STD-COMPONENT-001 — Shared role uses shared geometry — MUST
 
-Spoločný štandard MUST zjednocovať **správanie, geometriu a sémantické roly**, nie produktový obsah ani vizuálnu identitu. Lex Drive MAY zostať právne strohý, Strážca Termínov MAY používať bohatšiu stavovú signalizáciu a Peňaženka Kariet MAY používať vizuál značiek, ak rovnaké používateľské roly zostávajú ovládateľné rovnakým spôsobom.
+### STD-COMPONENT-002 — No unexplained local geometry drift — MUST NOT
 
-### 6.2 Povinné pravidlá
+### STD-COMPONENT-003 — Semantic exceptions are documented — MUST
 
-- MUST podporovať Dynamic Type bez straty obsahu alebo funkcie.
-- MUST mať minimálnu dotykovú plochu 44 × 44 bodov pre interaktívne prvky.
-- MUST nepoužívať farbu ako jediný nositeľ významu.
-- MUST používať konkrétne názvy akcií; neurčité „Pokračovať“ alebo „OK“ iba tam, kde je výsledok jednoznačný.
-- MUST pri deštruktívnej akcii pomenovať objekt a následok.
-- SHOULD používať systémové komponenty Apple, ak produktová potreba nevyžaduje vlastné riešenie.
-- SHOULD obmedziť veľké monolitické view súbory a deliť ich podľa zodpovedností.
-- Bežný používateľský text MUST používať sémantické alebo relatívne Dynamic Type roly. Pevná bodová veľkosť SHOULD byť vyhradená pre zdokumentovanú špecifickú vizuálnu rolu a MUST mať overený accessibility variant.
+### STD-COMPONENT-004 — Minimum 44x44 touch target — MUST
 
-### 6.2.1 Component Family Geometry & Icon Contract
+### STD-COMPONENT-005 — Meaningful text fits without scale-factor rescue — MUST
 
-- Komponenty s rovnakou sémantickou rolou MUST používať rovnakú komponentovú rodinu alebo spoločný geometry contract naprieč celou aplikáciou. Rozdielna obrazovka sama osebe MUST NOT byť dôvodom na inú výšku, radius, padding, icon container alebo trailing geometriu.
-- Porovnateľné navigačné dlaždice MUST používať rovnaký variant `navigationTile.*`: rovnakú referenčnú minimálnu výšku, radius, vnútorné odsadenie, title/subtitle typografiu, medzery a trailing správanie. Pri nedostatku priestoru sa komponent adaptuje podľa Dynamic Type a dostupnej šírky; MUST NOT sa lokálne zmenšovať text alebo meniť geometriu iba kvôli jednej obrazovke.
-- Ikonový kontajner rovnakej komponentovej rodiny MUST mať rovnakú veľkosť, shape, radius, alignment a optickú symbolovú veľkosť. Kruh, rounded square, kapsula alebo iný shape MAY byť použitý iba ako pomenovaná sémantická rola alebo zdokumentovaná produktová výnimka.
-- Rovnaká kategória alebo stav SHOULD používať rovnakú sémantickú farebnú logiku; farba MUST NOT byť náhodnou per-screen dekoráciou a MUST NOT byť jediným nositeľom významu.
-- Interaktívny riadok rovnakej rodiny MUST zachovať spoločnú leading icon baseline, title/subtitle alignment, trailing value/chevron alignment a minimálnu dotykovú plochu.
-- Shared Component First: pred vytvorením novej lokálnej implementácie MUST byť overené, či rovnaká komponentová rodina už existuje. Ak existuje, nová obrazovka ju SHOULD znovu použiť alebo rozšíriť cez pomenovaný variant.
-- No Local Geometry Drift: lokálne `frame`, `padding`, `cornerRadius`, symbol size alebo offset MUST NOT obchádzať autoritatívny token/shared component bez zdokumentovaného dôvodu.
-- Selected, pressed, disabled a focused state rovnakého komponentu MUST zostať konzistentný naprieč obrazovkami a rešpektovať Reduce Motion, Increase Contrast a prístupnosť.
+### STD-SETTINGS-001 — Direct Settings entry on primary roots — MUST
 
-### 6.2.2 Text Fit, Localization & Mode-Control Readability Contract
-
-- Dôležitý používateľský názov ovládacieho prvku MUST zostať čitateľný vo všetkých podporovaných lokalizáciách a pri podporovanom Dynamic Type. `minimumScaleFactor` alebo orezanie významového textu MUST NOT byť náhradou za adaptívny layout.
-- Segmented/mode control MUST mať dostatočnú výšku, vnútorné odsadenie a baseline tak, aby text nebol vertikálne orezaný, prekrytý ani vizuálne posunutý.
-- Ak sa podporované názvy segmentov nezmestia pri väčšom texte alebo dlhšej lokalizácii, layout MUST adaptovať počet riadkov, šírku, variant alebo prezentáciu namiesto straty textu.
-- Release audit SHOULD obsahovať stresový test najdlhšej podporovanej lokalizácie minimálne na spoločných navigačných dlaždiciach, segmented controls, settings rows a hlavných akciách.
-
-### 6.2.3 Feature Maturity & Development Controls Exposure Contract
+### STD-SETTINGS-002 — Shared appearance control meaning — MUST
 
-- Nedokončená, experimentálna alebo interná capability MUST NOT byť prezentovaná bežnému používateľovi ako rovnocenný produkčný režim iba preto, že je technicky prítomná v kóde.
-- Prepínače typu `Auto`, `Classic`, `AI Test`, mock/stub routing, interné score, pipeline názvy a diagnostické režimy MUST NOT byť súčasťou bežného produkčného UI. Ak sú potrebné pre vývoj, MUST byť compile-time alebo explicitne diagnosticky izolované.
-- Produkt MAY používateľovi sprístupniť nový režim až po definovanom capability/release gate. Dovtedy MUST zostať používateľská cesta jednoduchá a založená na najzrelšej podporovanej capability.
-- Interná existencia budúcej capability MUST NOT meniť právnu, bezpečnostnú alebo dátovú autoritu existujúceho produkčného režimu.
-
-### 6.2.4 Whole-App Visual Consistency Gate
-
-Pred release, ktorý mení spoločné vizuálne komponenty, MUST whole-app audit skontrolovať všetky relevantné obrazovky, nie iba nahlásený screenshot. Minimálne sa overí:
-
-- navigačná tile/card geometry a content density,
-- icon container size/shape/radius a symbol alignment,
-- interactive row alignment, trailing values a chevrony,
-- segmented controls a text fit,
-- semantic color roles a Light/Dark parity,
-- Dynamic Type a najdlhšie podporované lokalizácie,
-- selected/pressed/disabled/focus states,
-- explicitné a zdokumentované sémantické výnimky.
-
-Náhodná vizuálna odchýlka medzi peer komponentmi je release defect. Zámerná odchýlka MAY zostať iba vtedy, keď má odlišnú sémantickú rolu alebo schválenú výnimku.
-
-### 6.3 Spoločné systémové nastavenia
-
-Ak aplikácia obsahuje systémové Nastavenia, spoločné funkcie MUST používať rovnaký význam a predvolené pomenovanie naprieč rodinou aplikácií. Produkt môže sekcie vynechať, ak danú funkciu nemá; štandard neurčuje rovnaký počet položiek ani rovnaké poradie pre všetky produkty.
-
-#### 6.3.1 Spoločný vstup do Nastavení
-
-- Nastavenia MUST byť dostupné cez tlačidlo so symbolom `gearshape.fill` vpravo hore na každom primárnom roote produktu, ktorý má vlastnú root hlavičku.
-- Primárny root je hlavná pracovná obrazovka dostupná priamo zo spodnej alebo rovnocennej hlavnej navigácie. Používateľ MUST NOT byť nútený prepnúť na iný primárny root iba preto, aby otvoril systémové Nastavenia.
-- Ak konkrétny primárny root objektívne nemôže bezpečne niesť header action bez porušenia čitateľnosti alebo hlavnej úlohy, produkt MAY použiť zdokumentovanú výnimku a ekvivalentný priamy vstup; taká výnimka MUST zostať jednokroková a nesmie byť skrytá v sekundárnom obsahu.
-- Spodná navigácia MUST obsahovať iba hlavné pracovné časti produktu a MUST NOT obsahovať samostatný tab systémových Nastavení.
-- Produktová obrazovka typu **Moje** MAY zostať pre históriu, obľúbené položky, profil alebo doménový kontext, ale MUST NOT byť jediným kontajnerom systémových Nastavení.
-- Tlačidlo Nastavení MUST používať spoločný vizuálny rozsah, kruhový kontajner, odsadenie od safe area, pressed state a accessibility label podľa `DESIGN_TOKENS.md`.
-- Nastavenia MUST byť samostatnou plnohodnotnou obrazovkou otvorenou bežnou push navigáciou. MUST používať šípku späť a systémový swipe-back; MUST NOT byť bežným modálom s tlačidlom **Zavrieť** alebo **Hotovo**.
-
-#### 6.3.2 Spoločná hlavička a akcie
-
-- Akcia Nastavení MUST byť pravou krajnou systémovou akciou hlavičky každého primárneho rootu, na ktorom sa zobrazuje.
-- Jedna strana hlavičky SHOULD obsahovať najviac dve samostatné kruhové akcie; ďalšie sekundárne akcie SHOULD byť zlúčené do menu alebo presunuté do obsahu.
-- Vizuálny kruh a dotyková plocha MUST používať `header.action.*` tokeny. Vizuálny kruh MAY byť menší než dotyková plocha.
-- Názov obrazovky alebo aplikácie MUST zostať čitateľný a MUST sa neprekrývať s akciami ani pri dlhšej lokalizácii a Dynamic Type.
-- Hlavička MUST používať sémantický surface a dostatočný kontrast; produktový akcent MAY zvýrazniť stav, ale SHOULD NOT meniť systémovú akciu na dominantné CTA.
-- Animovaný pressed state MUST rešpektovať Reduce Motion.
-
-#### 6.3.3 Spoločný vizuálny systém Nastavení
-
-- Nastavenia MUST používať grouped-card rozloženie so spoločnými rozmermi, zaoblením, ikonovými dlaždicami, typografiou, section headers, chevronmi, stavovými hodnotami a hustotou podľa `DESIGN_TOKENS.md`.
-- Riadok s vnorenou obrazovkou MUST používať spoločný trailing chevron.
-- Krátka aktuálna hodnota SHOULD byť zobrazená vpravo, ak používateľovi pomáha pochopiť stav bez otvorenia detailu.
-- Jednoduchá voľba MUST NOT vytvárať zbytočnú medziobrazovku. Ak aplikácia ponúka vzhľad **Automaticky / Svetlý / Tmavý**, výber MUST byť priamo na hlavnej obrazovke Nastavení ako segmented control.
-- Zjednotenie vizuálu MUST NOT meniť produktový obsah Nastavení; aplikácia zobrazuje iba relevantné položky a sekcie.
-- Root Nastavení MUST používať systémový navigation title **Nastavenia**. MAY používať veľký titulok; vnorené obrazovky SHOULD používať inline titulok so systémovou šípkou späť.
-- Opakované neinteraktívne vysvetlenia s rovnakou vizuálnou rolou SHOULD byť zoskupené do jednej karty s vnútornými oddeľovačmi. Samostatné vysoké karty SHOULD zostať iba pre samostatnú akciu, stav alebo významovo dominantnú funkciu.
-- Spoločné Nastavenia rodiny aplikácií MUST používať rovnakú geometriu komponentov pre rovnakú sémantickú rolu. Riadok typu settings row, ikonová dlaždica, section spacing, group radius a divider inset MUST používať presné tokeny z `DESIGN_TOKENS.md`; produktový obsah MAY byť odlišný.
-- Implementácia `settings.row.minimumHeight` MUST aplikovať vnútorný padding pred minimálnym `frame(minHeight:)`, aby sa padding nepripočítal nad spoločnú minimálnu výšku a nevznikali rozdielne hustoty medzi aplikáciami.
-- Dve aplikácie MAY mať rozdielny počet položiek alebo dlhší text, ale rovnaký komponent pri rovnakom obsahu a Dynamic Type MUST mať rovnakú základnú výšku, odsadenie, ikonovú geometriu a radius.
-
-Ak sú príslušné funkcie dostupné, sekcie SHOULD používať toto poradie:
-
-- **Aplikácia** – vzhľad, jazyk, haptika a všeobecné správanie,
-- **Produktové nastavenia** – funkcie špecifické pre danú aplikáciu,
-- **Zdieľanie** – ľudia, roly, členstvo a pozvánky, ak ich produkt podporuje,
-- **Údaje a zabezpečenie** – zámok, synchronizácia, záloha, export a ochrana údajov,
-- **Pomoc a informácie** – kontakt, návod, súkromie a informácie o aplikácii; táto sekcia SHOULD byť posledná.
-
-Spoločné názvy a princípy:
-
-- **Vzhľad** – iba ak aplikácia ponúka voľbu Automaticky / Svetlý / Tmavý; výber MUST byť dostupný priamo ako segmented control bez medziobrazovky.
-- **Upozornenia** – stav a cesta k systémovým alebo produktovým nastaveniam upozornení.
-- **Zabezpečenie** – biometria, PIN aplikácie a automatické uzamknutie, ak ich produkt podporuje.
-- **Synchronizácia cez iCloud** – stav a ovládanie osobnej synchronizácie, ak ju produkt podporuje.
-- **Ľudia a zdieľanie** – iba ak produkt podporuje zdieľanie alebo členstvo.
-- **Zálohy** – vytvorenie, obnova a vysvetlenie rozsahu zálohy.
-- **Export údajov** – vytvorenie používateľskej prenosnej kópie, ak ju produkt podporuje.
-- **Ochrana súkromia** – priamy vstup do aktuálnych informácií o spracovaní údajov.
-- **Kontakt** – SHOULD viesť priamo do kontaktnej obrazovky a SHOULD NOT byť skrytý za zbytočnou medziobrazovkou.
-- **O aplikácii** – verzia, súkromie, štandard a právne/informačné údaje relevantné pre produkt.
-
-- Položky **Kontakt** a **O aplikácii** SHOULD byť v poslednej sekcii a SHOULD zachovať rovnaké relatívne umiestnenie naprieč aplikáciami.
-
-Krátka stavová hodnota napravo od riadku, napríklad **Automaticky**, **Aktívna**, **Povolené** alebo **Iba ja**, MUST zostať čitateľná pri podporovaných veľkostiach textu a MUST NOT sa lámať po jednotlivých písmenách.
-
-- Text riadku a trailing hodnota MUST NOT používať `minimumScaleFactor` ako náhradu adaptívneho rozloženia.
-- Ak sa trailing hodnota nezmestí vedľa názvu, MUST sa bezpečne zalomiť alebo presunúť pod názov bez straty významu.
-- Chevron MUST byť použitý iba na riadku, ktorý otvára ďalšiu obrazovku alebo systémový cieľ; switch MUST byť použitý iba pre okamžitú binárnu voľbu.
-- Deštruktívna farba MUST byť vyhradená pre akciu, ktorá skutočne odstraňuje údaje alebo má iný závažný následok.
-
-#### 6.3.4 Vzhľad
-
-- Ak aplikácia ponúka voľbu vzhľadu, root Nastavení MUST zobraziť segmented control **Automaticky / Svetlý / Tmavý** bez ďalšej medziobrazovky.
-- Zmena MUST byť aplikovaná okamžite bez reštartu aplikácie.
-- Režim **Automaticky** MUST sledovať aktuálny systémový vzhľad.
-- Produktová farebná téma MAY byť samostatnou voľbou, ale jej názov a popis MUST jasne odlíšiť farebnú tému od svetlého alebo tmavého vzhľadu.
-- Vybraný segment MUST mať nefarený nositeľ stavu a dostatočný kontrast vo všetkých podporovaných témach.
-- Karta **Vzhľad** MUST používať spoločnú geometriu `settings.appearance.*`: header s ikonou a názvom, systémový segmented control s minimálnou 44 pt dotykovou výškou, identické horizontálne odsadenie a identický horný/spodný padding naprieč aplikáciami.
-- Segmented control MUST NOT byť lokálne zväčšovaný alebo zmenšovaný produktovým paddingom, ak ide o rovnakú voľbu **Automaticky / Svetlý / Tmavý**.
-
-#### 6.3.5 Kontakt
-
-- Obrazovka Kontakt MUST byť bežnou push obrazovkou a MUST byť dostupná priamo z časti **Pomoc a informácie**.
-- MUST obsahovať krátke vysvetlenie a jasný odkaz na kontaktný formulár.
-- SHOULD obsahovať samostatnú sekundárnu možnosť **Telegram komunita**.
-- Hlavné kontaktné možnosti SHOULD byť najviac dve; ďalšie informácie SHOULD zostať sekundárne.
-- MUST obsahovať upozornenie, aby používateľ neposielal heslá, celé kópie dokladov ani iné citlivé údaje.
-- MAY obsahovať produktovo prispôsobenú sekciu **Čo môžete poslať**.
-- Odkaz na ochranu súkromia MAY byť kompaktný textový odkaz, ak je zásada dostupná aj vo formulári a v Nastaveniach.
-- Kontaktný odkaz SHOULD preniesť identifikátor aplikácie, verziu, build a typ podnetu podľa zmluvy v `SUPPORT_AND_LINKS.md`; technické údaje pridané k správe MUST byť používateľovi viditeľné.
-- Ak externý odkaz nemožno otvoriť, aplikácia MUST zobraziť zrozumiteľnú chybu a SHOULD ponúknuť alternatívny kontaktný kanál.
-- Hlavné kontaktné akcie MUST používať spoločnú geometriu `contact.action.*`: rovnakú ikonovú dlaždicu, vnútorný padding, radius a medzeru medzi kartami. Produktový text MAY meniť výslednú výšku iba vtedy, keď sa reálne zalomí na viac riadkov.
-- Úvodný blok a sekcia **Čo môžete poslať** SHOULD používať rovnakú informačnú hustotu a spacing ako ostatné IbaJuraj aplikácie; produktový obsah MAY byť odlišný.
-
-#### 6.3.6 O aplikácii
-
-- Obrazovka O aplikácii SHOULD obsahovať názov aplikácie, marketingovú verziu, build a prijatú verziu IbaJuraj Application Standardu.
-- Používateľsky zobrazená verzia aplikácie MUST obsahovať marketingovú verziu aj číslo buildu; odporúčaný tvar je samostatne `Verzia X.Y` a `Build N` alebo rovnocenné spoločné zobrazenie bez interných release názvov.
-- Položka **IbaJuraj Application Standard** MUST v bežnom používateľskom UI zobrazovať iba prijatú verziu vo forme `Verzia X.Y.Z`. Interný tag, adoption level, runtime gate, audit stav a ostatné implementačné metadata MUST zostať v `APP_STANDARD_ADOPTION.md`, diagnostike alebo auditných súboroch a MUST NOT byť súčasťou bežného About UI.
-- Marketingová verzia a build MUST byť načítané z autoritatívnych build nastavení alebo `Bundle`.
-- Verzia, tag a úroveň adopcie štandardu MUST pochádzať z jedného runtime zdroja metadát a MUST zodpovedať `APP_STANDARD_ADOPTION.md`; používateľské UI z tohto zdroja prezentuje iba údaje určené v predchádzajúcich bodoch.
-- Nevydaná alebo draft verzia MUST NOT byť prezentovaná ako aktívne prijatý štandard.
-- Obrazovka MAY ponúkať **Ohodnotiť aplikáciu** a **Zdieľať aplikáciu** a SHOULD poskytovať prístup k ochrane súkromia a relevantným právnym informáciám.
-- Rovnaké typy informačných a akčných riadkov na obrazovke **O aplikácii** MUST používať spoločnú geometriu `about.*`: rovnaký radius, padding, ikonový stĺpec a medzery medzi kartami.
-- Základný blok metadata SHOULD obsahovať minimálne **Verzia**, **IbaJuraj Application Standard** a **Vývojár**. Odkazy a produktové položky ako **Web IbaJuraj Apps**, **Ochrana súkromia**, **Novinky**, **Stav aplikácie**, **Právne upozornenie**, **Ohodnotiť aplikáciu** alebo **Zdieľať aplikáciu** MAY byť pridané podľa produktu, ale pri rovnakej sémantickej roli MUST používať rovnaký komponentový variant.
-
-### 6.4 Navigácia: push, modal a návrat
-
-- Bežná vnorená obrazovka v hierarchii MUST používať natívnu push navigáciu a systémovú šípku späť, nie tlačidlo `Hotovo`.
-- Na iOS MUST bežná push navigácia zachovať systémové gesto potiahnutia z ľavého okraja späť. Výnimka vyžaduje zdokumentovaný technický alebo bezpečnostný dôvod.
-- Šípka aj gesto MUST viesť na tú istú predchádzajúcu obrazovku a MUST zachovať jej platný stav a pozíciu posunu.
-- Ak návrat môže zahodiť neuložené zmeny, šípka aj gesto MUST vyvolať rovnaké uloženie alebo rovnaké potvrdenie následku.
-- Vlastná hlavička alebo vlastné tlačidlo späť MUST NOT neúmyselne deaktivovať systémové gesto.
-- `Zrušiť`, `Uložiť`, `Vytvoriť`, `Prijať` alebo obdobné akcie patria formulárom a skutočným modálnym workflow.
-- `Hotovo` MUST NOT byť použité ako náhrada navigácie späť.
-- Sheet alebo full-screen cover MUST byť použitý iba pre ohraničenú transakčnú úlohu, napríklad výber, editor, import, export alebo potvrdenie; MUST NOT nahrádzať bežný navigačný strom Nastavení.
-- Aplikácia SHOULD minimalizovať navigačnú hĺbku a SHOULD NOT vytvárať medziobrazovku, ktorá iba sprostredkuje jednu jednoduchú voľbu alebo jediný cieľ.
-- Interný cieľ otvorený push navigáciou MUST používať trailing `chevron.right`; ikona externého odkazu, napríklad `arrow.up.right.square`, MUST byť vyhradená pre URL alebo cieľ mimo aktuálneho navigačného stromu aplikácie.
-- Posúvateľný obsah MAY prechádzať pod navigačnú lištu iba vtedy, ak zostáva titulok aj obsah jednoznačne čitateľný. Navigačný surface MUST zabrániť tomu, aby sa text pod lištou vizuálne prekrýval alebo súťažil s navigation title.
-- Navigačná politika pre jednu rodinu detailov MUST byť implementovaná spoločným spôsobom, nie iba na vybraných routach. Detail otvorený z rôznych vstupov MUST zachovať rovnakú šípku späť, systémový swipe-back a návrat o jednu úroveň, pokiaľ nejde o zámerný modal flow.
-- Ak obrazovka používa veľký obsahový názov aj navigation title s rovnakým textom, SHOULD použiť collapsing large-title vzor alebo jednu z rolí skryť, aby nevznikala vizuálna duplicita.
-
-### 6.5 Adaptívne rozloženie
-
-- Rozloženie MUST reagovať na reálne dostupný priestor, safe area, orientáciu, veľkosť textu a lokalizovaný obsah; MUST NOT sa rozhodovať podľa názvu konkrétneho modelu zariadenia ani podľa globálnej hodnoty `UIScreen.main.bounds`.
-- Spoločné komponenty MUST používať minimálne rozmery a obsahovú výšku namiesto pevnej maximálnej výšky, ktorá môže orezať obsah.
-- Obsah MUST NOT byť zmenšený pod čitateľnú veľkosť iba preto, aby sa zachoval počet stĺpcov alebo pevný tvar obrazovky.
-- Viacstĺpcová mriežka MUST znížiť počet stĺpcov, ak dlaždice nedosiahnu minimálnu šírku alebo ak obsah pri Dynamic Type prestane byť čitateľný.
-- Dlaždice v jednom riadku MUST mať rovnakú šírku a spoločnú minimálnu výšku; jednotlivý riadok MAY zväčšiť výšku podľa najvyššieho obsahu.
-- Na veľkom displeji SHOULD obsah používať rozumnú maximálnu šírku alebo väčšie okraje namiesto nekontrolovaného rozťahovania.
-- Vlastná navigácia, plávajúca akcia, klávesnica ani safe area MUST NOT zakrývať posledný obsah alebo dôležitú akciu.
-- Dve rovnocenné súhrnné skratky MAY zostať vedľa seba, ak každá zachová minimálnu šírku 150 pt; pri nedostatku priestoru alebo accessibility texte MUST prejsť na vertikálne rozloženie.
-
-### 6.6 Sémantické varianty dlaždíc a kariet
-
-Spoločná rodina komponentov rozlišuje minimálne tieto roly:
-
-- **Navigation Tile** – vstup do kategórie, situácie alebo hlavnej akcie,
-- **Entity Card** – náhľad konkrétneho dokumentu, vozidla, poistenia alebo iného objektu,
-- **Wallet Card** – vizuálny náhľad vernostnej, členskej alebo obdobnej karty,
-- **Feature Card** – dominantná odporúčaná, kritická alebo produktová akcia,
-- **List Row** – opakovateľný výsledok alebo položka zoznamu.
-- **Summary Shortcut** – kompaktný vstup zobrazujúci názov a krátky počet alebo stav, typicky v rovnocennej dvojici,
-- **Calculator Key** – doménový ovládací prvok kalkulačky s vlastnou maticou rozloženia.
-
-- Komponenty s rovnakou sémantickou rolou SHOULD používať rovnaký veľkostný variant, odsadenie, zaoblenie, ikonový kontajner a typografickú hierarchiu.
-- Ak produkt používa tú istú komponentovú rodinu na viacerých obrazovkách, SHOULD určiť referenčný variant alebo spoločný foundation komponent. Peer obrazovky MUST zachovať rovnakú základnú geometriu pri rovnakom obsahu a prostredí; rozdielna obrazovka sama osebe nie je dôvodom na inú výšku, padding, radius alebo ikonovú geometriu.
-- Komponenty s rozdielnou rolou MUST NOT byť nútené do rovnakej výšky alebo pomeru strán iba kvôli vizuálnej uniformite.
-- Wallet Card MAY používať produktovo významný pomer strán, ale MUST používať spoločné pravidlá minimálnej čitateľnosti, dotykovej plochy, odsadenia a adaptácie.
-- Calculator Key MAY používať produktové rozmery a typografiu, ale MUST zachovať minimálnu dotykovú plochu, accessibility label a použiteľný adaptívny variant.
-- Rovnaký variant MUST zostať vizuálne konzistentný v rámci jednej mriežky alebo sekcie.
-- Presné spoločné hodnoty MUST byť čítané z `DESIGN_TOKENS.md` alebo zodpovedajúcej implementácie IbaJuraj Foundation, nie opakovane zapisované v jednotlivých obrazovkách.
-
-### 6.7 Hierarchia informácií a vizuálna hustota
-
-Karta alebo dlaždica SHOULD zobrazovať informácie v poradí:
-
-1. rozpoznateľná identita,
-2. hlavný názov alebo stav,
-3. najdôležitejší sekundárny kontext,
-4. stavová alebo ďalšia akcia, ak je potrebná.
-
-- Dôležitý názov, stav alebo akcia MUST NOT byť skrytá iba na zachovanie kompaktnej výšky.
-- Súhrnná sekcia typu **Na prvý pohľad**, **Prehľad** alebo ekvivalent SHOULD byť kompaktná a MUST NOT zaberať neprimeranú časť prvého viewportu iba kvôli 3–4 metrikám.
-- Ak sú zobrazené 3–4 krátke metriky, implementácia SHOULD preferovať nízky adaptívny grid alebo metric strip; veľké samostatné karty sú vhodné iba vtedy, ak nesú samostatný význam alebo interakciu.
-- Súhrn MUST NOT opakovať dlhé vysvetlenie, ktoré je už uvedené v hero/status bloku. Sekcia **Čo treba urobiť** alebo hlavná ďalšia akcia SHOULD byť na štandardnom iPhone dosiahnuteľná bez zbytočne dlhého posunu, ak tomu nebráni reálne množstvo dôležitého obsahu.
-- Technické identifikátory, úplné čísla, dlhé vysvetlenia a sekundárne metadata SHOULD zostať v detaile, ak nie sú potrebné na rozpoznanie položky.
-- Stav MUST NOT byť komunikovaný iba farbou.
-- Celá interaktívna dlaždica SHOULD byť jednou zrozumiteľnou dotykovou plochou; vnorené akcie musia mať samostatný význam a minimálnu dotykovú plochu.
-- Na vnorenej informačnej obrazovke s inline navigation title SHOULD prvý obsahový nadpis používať `.title2` alebo nižšiu hierarchiu, pokiaľ nejde o zámerný produktový hero. Obsahový nadpis MUST NOT vizuálne súperiť s navigation title.
-- Detail, v ktorom používateľ potrebuje rozhodnutie, následok alebo ďalší krok, SHOULD používať **outcome-first / practical-first** hierarchiu: najprv zrozumiteľný výsledok a praktický význam, potom sekundárne procesné, technické alebo právne podrobnosti.
-- Sémantická farba MUST zodpovedať významu stavu. `danger`/červená MUST NOT byť použitá iba preto, že číslo alebo sankcia je vysoká, ak produkt týmto surface inde označuje kritický, zakázaný alebo právne závažný stav.
-
-### 6.8 Hierarchia koreňovej pracovnej obrazovky
-
-- Primárny root SHOULD používateľovi do troch sekúnd vysvetliť, **kde je, čo je najdôležitejší stav a čo môže urobiť ďalej**.
-- Root SHOULD používať jednu dominantnú obsahovú prioritu. Viaceré rovnocenné hero bloky alebo CTA nad prvým scrollom SHOULD NOT súperiť o pozornosť.
-- Ak root používa veľký title/subtitle pár, MUST používať spoločné `appPage.*` tokeny. Settings gear zostáva pravou krajnou systémovou akciou podľa 6.3.1 a 6.3.2.
-- Všetky primárne rooty v rámci jednej aplikácie MUST ukotviť hlavný root nadpis na rovnakej vertikálnej baseline voči safe-area/root content anchoru. Root title a pravá systémová header akcia MUST používať spoločný top inset a rovnakú header geometriu; prepnutie medzi tabmi nesmie spôsobovať viditeľné vertikálne „skákanie“ nadpisu alebo Settings akcie.
-- Obrazovky, ktoré používajú rovnaký produktový header pattern, MUST používať spoločnú **header family geometriu** aj vtedy, keď jedna obrazovka je root a druhá je vnorená alebo obsahuje Back akciu. Prítomnosť leading Back akcie MUST NOT svojvoľne posunúť title/subtitle pár ani pravú systémovú akciu oproti referenčnej obrazovke rovnakej rodiny.
-- Header family SHOULD byť implementovaná jedným zdieľaným komponentom alebo jednou sadou tokenov; lokálne hardcoded `padding(.top)`, `offset(y:)`, vlastné safe-area kompenzácie alebo per-screen konštanty MUST NOT byť primárnym mechanizmom zarovnania, ak existuje spoločný header pattern.
-- Ak produkt určí referenčný root header (typicky Home), ostatné obrazovky rovnakej header family MUST pri rovnakom size class, Dynamic Type a orientation zachovať rovnaký top anchor, title baseline a trailing-action baseline, pokiaľ zdokumentovaná výnimka nevyžaduje odlišnú geometriu.
-- Pozdrav, informačný status, kritické upozornenie a CTA SHOULD NOT byť vrstvené do jedného komponentu, ak nesú odlišný význam.
-- Rovnaká kritická informácia SHOULD NOT byť súčasne opakovaná badgeom, nadpisom, stavovým textom a CTA textom bez ďalšej informačnej hodnoty.
-- Rovnaký doménový stav MUST používať konzistentnú používateľskú terminológiu naprieč rootom, zoznamom, detailom a súhrnnou kartou; technické reprezentácie ako záporný počet dní SHOULD byť preložené do prirodzeného používateľského významu, napríklad `7 dní po termíne`.
-- Ak kritická alebo prioritná karta jednoznačne identifikuje jeden konkrétny objekt, jej primárne CTA SHOULD viesť priamo na tento objekt namiesto všeobecného agregovaného zoznamu, pokiaľ taký priamy vstup nie je nebezpečný alebo významovo neúplný.
-
-### 6.9 Progressive disclosure a vizuálna hustota
-
-- MUST zobrazovať najčastejšie potrebnú informáciu skôr než zriedkavý detail.
-- Sekcia SHOULD mať jeden dominantný status a najviac jedno hlavné CTA; sekundárne akcie MAY byť v riadku, `...` menu alebo obrazovke Podrobnosti.
-- Podrobné právne, diagnostické, technické alebo administratívne údaje SHOULD byť dostupné bez ich povinného zobrazenia na každom roote.
-- Aplikácia MUST NOT skrývať kritickú informáciu iba kvôli vizuálnemu zjednodušeniu. Progressive disclosure znižuje šum, nie dostupnosť dôležitého obsahu.
-- Pinned/sticky section header SHOULD byť použitý iba vtedy, keď pri dlhom katalógu reálne pomáha zachovať orientáciu. Úvodné, featured alebo krátke sekcie SHOULD NOT byť pripínané automaticky.
-- Pinned header MUST zostať pod safe area/navigation surface, MUST mať vlastný sémantický background a správny z-index/layout inset a MUST NOT prekrývať alebo odrezávať prvý riadok obsahu. Aktuálny názov skupiny MAY zostať viditeľný, kým ho prirodzene nenahradí nasledujúca skupina.
-- Pinned header MUST NOT vizuálne súperiť s navigation title alebo header family a jeho použitie MUST byť overené runtime scroll testom.
-- Sekundárne procesné, diagnostické a úplné zdrojové údaje SHOULD byť rozbaliteľné alebo dostupné v detaile, ak ich okamžité zobrazenie vytláča používateľský výsledok z prvého viewportu.
-
-### 6.10 Search, filtre a segmented controls
-
-- Vyhľadávacie pole s rovnakou rolou MUST používať spoločnú výšku, radius, horizontálny padding, ikonovú rolu a focus/error stav podľa `DESIGN_TOKENS.md`.
-- Filtračné chips MUST mať rovnakú sémantiku aktívneho/neaktívneho stavu a minimálnu dotykovú plochu; horizontálny zoznam MAY scrollovať.
-- Segmented control SHOULD byť použitý pre malý počet navzájom sa vylučujúcich pohľadov alebo režimov, nie ako náhrada rozsiahleho filtrovacieho systému.
-- Filter MUST zachovať čitateľný názov aj pri lokalizácii; text MUST NOT byť zmenšovaný cez `minimumScaleFactor` ako primárne riešenie.
-
-### 6.11 Spodná navigácia a globálne akcie
-
-- Spodná navigácia MUST obsahovať iba hlavné pracovné oblasti produktu.
-- Aktívny tab MUST byť jednoznačný ikonou aj textom alebo inou než iba farebnou zmenou.
-- Centrálna dominantná akcia, napríklad `+`, MAY byť použitá iba ak je globálna, častá a významovo rovnaká z väčšiny hlavných tabov.
-- Produkt MUST NOT pridávať centrálne `+` iba kvôli vizuálnej konzistencii s inou aplikáciou.
-- Bottom bar MUST rešpektovať safe area, Dynamic Type a nesmie zakrývať poslednú interaktívnu položku obsahu.
-
-#### 6.11.1 Floating Tab Bar Content Clearance Contract
-
-Ak aplikácia používa plávajúci alebo obsah prekrývajúci spodný tab bar:
-
-- scrollovateľný obsah MUST používať spodný clearance odvodený od reálnej výšky navigačného surface a safe area; MUST NOT používať rozdielny hardcoded spacer pre jednotlivé peer root obrazovky, ak patria do rovnakého navigačného systému,
-- posledná karta, riadok, nadpis, formulárové pole ani CTA MUST byť možné vytiahnuť celé nad hornú hranu tab baru,
-- po úplnom doscrollovaní SHOULD zostať medzi posledným obsahom a hornou hranou tab baru kompaktná vizuálna rezerva približne **16–24 pt**, nie neprimerane veľká prázdna plocha,
-- spoločná navigačná rodina SHOULD používať jeden token, layout guide alebo komponent pre bottom clearance,
-- runtime audit MUST porovnať posledný obsah na všetkých peer root taboch pri rovnakom zariadení/orientácii.
-
-### 6.12 Primary CTA, empty state a context actions
-
-- Primárne CTA s rovnakou rolou MUST používať spoločný button variant, výšku, radius, disabled a loading stav podľa `DESIGN_TOKENS.md`.
-- Empty state SHOULD obsahovať ikonu, krátky názov, najviac jednu stručnú vysvetľujúcu vetu a najviac jedno hlavné CTA.
-- Kontextové menu SHOULD radiť akcie: hlavná úprava → stavová/obľúbená akcia → archivácia alebo presun → deštruktívna akcia. Produkt MAY poradie upraviť podľa doménovej priority.
-- Deštruktívna akcia MUST byť vizuálne oddelená a MUST používať deštruktívnu sémantiku.
-
-### 6.13 Badge, label, obľúbenosť a používateľské označenie
-
-- Badge MUST byť čitateľný na aktuálnom pozadí. Implementácia MUST zvoliť adaptívny foreground/background alebo kontrastný kontajner; pevná farba indikátora MUST NOT zaniknúť na produktovom pozadí.
-- Stavová hviezda, bodka alebo iná značka MUST NOT používať farbu ako jediný nositeľ významu.
-- Krátke trhové alebo systémové označenie, napríklad `SK`, `CZ`, MAY byť badge.
-- Ak používateľ môže mať viac objektov rovnakého typu, značky alebo trhu, produkt SHOULD ponúknuť voliteľné vlastné **Označenie** (napr. „Romanova“, „Firemná“, „Moja“).
-- Vlastné označenie MUST byť používateľský text, nie uzavretý zoznam predpokladaných rolí.
-- Ak označenie nie je vyplnené, komponent SHOULD uvoľniť jeho priestor namiesto zobrazovania prázdneho placeholdera.
-- Dočasné stavové označenie typu **NOVÉ** MUST mať explicitný životný cyklus, napríklad `introducedBuild` a `newUntilBuild`, dátum expirácie alebo rovnocenné centrálne pravidlo. MUST NOT zostať v UI natrvalo iba preto, že bolo raz pridané.
-
-### 6.13.1 Neutral Surface & Text Color Contract
-
-- Základné neutrálne plochy a textové roly MUST byť vizuálne zhodné naprieč aplikáciami rodiny IbaJuraj v rovnakom appearance režime.
-- Implementácia SHOULD používať sémantické systémové farby namiesto lokálnych hex hodnôt alebo voľných `.gray`, `.black.opacity(...)` a `.white.opacity(...)` pre štandardné neutrálne roly.
-- Primárne root surfaces rovnakej sémantickej role MUST používať spoločný `color.appBackground` alebo jeho centrálny theme alias. Lokálne približovanie neutrálneho root pozadia pomocou vlastnej `.opacity(...)`, custom gray alebo paralelného tokenu MUST NOT vytvárať odlišný odtieň medzi hlavnými obrazovkami.
-- Ak používateľ nezvolil vlastnú produktovú farebnú tému, `appBackground` MUST mapovať na `systemGroupedBackground` v Light Mode a `systemBackground` v Dark Mode. Referenčný výsledok je približne `#F2F2F7` / `#000000`.
-- Aplikácia MAY ponúknuť výslovne používateľom zvolenú **produktovú farebnú tému**, ktorá nahradí iba root/background surface. Táto voľba MUST byť vedomá, reverzibilná a MUST obsahovať možnosť **Predvolená** alebo ekvivalent, ktorá obnoví spoločný neutrálny `appBackground`.
-- Ak aplikácia ponúka súčasne **Vzhľad** (`Automaticky / Svetlý / Tmavý`) aj produktovú farebnú tému, tieto voľby MUST mať oddelený persistentný stav. Farebná téma MUST mať čitateľný Light aj Dark variant alebo MUST jasne obmedziť dostupnosť na kompatibilný appearance režim; prepnutie Vzhľadu MUST NOT poškodiť alebo nečitateľne skombinovať uloženú tému.
-- `cardSurface` / `tileSurface` MUST naďalej mapovať na `secondarySystemGroupedBackground`, pokiaľ nejde o explicitnú brand/product surface s vlastným kontrastným kontraktom. Referenčný výsledok je približne `#FFFFFF` / `#1C1C1E`.
-- `elevatedSurface` MAY používať ďalšiu systémovú elevated/secondary surface iba vtedy, keď ide o skutočne odlišnú vizuálnu vrstvu; MUST NOT nahrádzať základnú card/tile surface bez produktového dôvodu.
-- Primárny text MUST používať `label`/`primary`; sekundárny text MUST používať `secondaryLabel`/`secondary`; separátory MUST používať sémantický `separator`.
-- Produktový accent, success, warning, danger a information MAY zostať špecifické pre aplikáciu. Na plných accent tlačidlách alebo badgeoch MUST foreground adaptovať kontrast podľa zvoleného fillu; pevná biela MUST NOT byť použitá, ak nedosahuje dostatočný kontrast.
-- Brand surfaces v Peňaženke Kariet a obdobné produktové brand plochy MAY používať vlastné farby. Text, badge, favorite indikátor a ostatné affordances na nich MUST adaptovať kontrast podľa aktuálneho surface.
-- Light/Dark parity MUST byť súčasťou runtime adopčného gate: porovnávajú sa minimálne root background, card/tile surface, primary text, secondary text, separator a disabled state. Ak produkt podporuje používateľské farebné témy, runtime gate MUST navyše overiť Predvolenú tému a minimálne jednu svetlú a jednu tmavú produktovú tému.
-- Aplikácia MUST NOT byť označená ako plne adoptujúca aktuálny Standard, ak rovnaká neutrálna rola používa medzi aplikáciami odlišný odtieň bez zaznamenanej výnimky alebo ak používateľská téma zhorší čitateľnosť/kontrast.
-
-### 6.13.2 Rotating Content Pattern – MAY
-
-Aplikácia MAY kontrolovane rotovať odporúčané, najčastejšie alebo objavovacie témy, ak rotácia zlepšuje objaviteľnosť bez narušenia predvídateľnosti.
-
-- Rotovaná sada MUST zostať stabilná počas jednej používateľskej relácie alebo iného jasne definovaného cyklu; obsah MUST NOT chaoticky meniť poradie pri každom redraw/view update.
-- V jednej zobrazenej sade MUST NOT vzniknúť duplicity.
-- Rotácia SHOULD byť deterministická alebo inak kontrolovaná a SHOULD obmedziť zbytočne silné prekrývanie po sebe idúcich sád.
-- Dôležité položky z poolu SHOULD dostať primeranú príležitosť na zobrazenie a MUST NOT byť dlhodobo skryté iba náhodným výberom.
-- Technický mechanizmus rotácie SHOULD NOT byť používateľovi vysvetľovaný, ak nemá produktový význam.
-
-### 6.14 Responsive layout pre iPhone a iPad
-
-- Layout MUST vychádzať z dostupného kontajnerového priestoru, size classes a safe areas; MUST NOT byť vetvený podľa marketingového názvu zariadenia.
-- iPad layout SHOULD používať rozumný `maxWidth` alebo adaptívne stĺpce, aby sa iPhone obsah iba neroztiahol na celú šírku.
-- Grid MUST adaptovať počet stĺpcov podľa minimálnej šírky komponentu a Dynamic Type.
-- Podporovaný iPad MUST mať runtime audit aspoň v jednej portrait a jednej landscape konfigurácii.
-- Dlhý text, klávesnica, sheet a popover MUST zostať použiteľné pri Split View alebo inom zúženom kontajneri, ak ho platforma pre produkt podporuje.
-
-### 6.15 Motion a haptics
-
-- Animácia SHOULD vysvetľovať zmenu stavu alebo priestorový vzťah a SHOULD NOT byť dekoráciou, ktorá spomaľuje bežnú úlohu.
-- Bežná mikroanimácia SHOULD používať krátku dĺžku podľa `motion.*` tokenov.
-- Haptika SHOULD rozlišovať selection, success a warning/error iba tam, kde poskytuje spätnú väzbu; SHOULD NOT sa spúšťať pri každom scroll alebo pasívnom prechode.
-- Reduce Motion MUST byť rešpektovaný. Kritická funkcia MUST NOT závisieť od animácie.
-
-## 7. Obsah a texty
-
-- MUST používať zrozumiteľný jazyk a vysvetliť odborné pojmy.
-- MUST pri chybe uviesť, čo sa stalo a čo môže používateľ urobiť.
-- MUST lokalizovať všetky používateľské texty; právne citácie môžu mať osobitný režim.
-- MUST kontrolovať prirodzenosť prekladu, nielen doslovnú správnosť.
-- MUST formátovať čísla, meny, dátumy a jednotky podľa lokality.
-- Počty položiek MUST používať lokalizované plurálové pravidlá; pevné spojenie čísla s jediným tvarom podstatného mena nie je postačujúce.
-- SHOULD uprednostniť krátke, konkrétne nadpisy pred marketingovými formuláciami.
-- Lokalizované App Store texty a screenshoty MUST prejsť kontrolou prirodzeného znenia, gramatiky, terminológie a lokálneho formátovania; automatický alebo doslovný preklad nie je postačujúci release dôkaz.
-- Technické, auditné, implementačné a testovacie poznámky MUST NOT byť súčasťou používateľského produkčného UI, pokiaľ nejde o zámernú diagnostickú obrazovku.
-- Nadpisy a názvy položiek MUST byť jazykovo samostatné a zrozumiteľné v kontexte obrazovky; fragment, ktorý pôsobí ako nedokončená veta alebo interný názov, SHOULD byť preformulovaný do prirodzeného používateľského jazyka.
-
-## 8. Stavový model obrazoviek
-
-Každá dátová obrazovka MUST podľa potreby riešiť:
-
-1. načítavanie,
-2. obsah,
-3. prázdny stav,
-4. chybu,
-5. neúplné alebo obmedzené údaje,
-6. offline stav,
-7. čakajúcu synchronizáciu.
-
-Prázdna obrazovka bez vysvetlenia nie je platný stav.
-
-### 8.1 Spätná väzba, chyby a obnova
-
-- Po uložení, vymazaní, importe, exporte alebo inom významnom výsledku MUST aplikácia jednoznačne oznámiť, čo sa vykonalo.
-- Haptická odozva MAY dopĺňať vizuálne alebo hlasové potvrdenie, ale MUST NOT byť jediným nositeľom výsledku.
-- Používateľská chyba MUST vysvetliť, čo sa stalo, čo zostalo zachované a aký je ďalší krok; MUST NOT zobrazovať neupravený technický text frameworku alebo služby.
-- Opakovateľná operácia SHOULD ponúknuť akciu **Skúsiť znova**.
-- Zlyhanie jednej časti SHOULD NOT zablokovať použiteľný zvyšok aplikácie.
-- Ak je dostupný posledný overený bezpečný stav, aplikácia SHOULD umožniť jeho použitie namiesto prázdnej alebo nefunkčnej obrazovky.
-
-### 8.2 Async a spracovávajúce stavy
-
-- Asynchrónna operácia SHOULD mať explicitný stav `idle`, `processing` a výsledok `success`, `partial` alebo `failure` podľa významu funkcie.
-- Počas spracovania MUST byť zrejmé, že aplikácia pracuje; MUST NOT pôsobiť zamrznuto.
-- Ak opakované spustenie môže vytvoriť duplicitu alebo konflikt, príslušná akcia MUST byť počas spracovania zablokovaná alebo idempotentná.
-- Po chybe SHOULD byť dostupný konkrétny ďalší krok: skúsiť znova, upraviť údaje, otvoriť Nastavenia alebo pokračovať lokálne.
-
-
-### 8.3 Verified AI & Generated Assistance Contract
-
-Ak aplikácia používa AI alebo generatívny model na interpretáciu otázky, výber podkladov alebo formulovanie faktickej odpovede:
-
-- autoritatívny alebo rozhodovací fakt MUST pochádzať z dôveryhodného zdroja pravdy aplikácie, používateľom dodaných údajov alebo explicitne overeného externého zdroja; generatívny model MUST NOT byť jediným zdrojom faktu, ak produkt deklaruje overený výsledok,
-- ak existuje deterministický resolver, katalóg, register alebo overený dátový balík, AI SHOULD slúžiť na pochopenie prirodzeného jazyka, výber relevantných podkladov a zrozumiteľné vysvetlenie; MUST NOT potichu nahradiť autoritatívnu doménovú logiku vlastnou modelovou odpoveďou,
-- výsledok vytvorený z overených podkladov MUST zachovať väzbu na použité zdroje/verzie v rozsahu primeranom riziku domény,
-- ak sú podklady nedostatočné, konfliktné, neoverené alebo je relevance pod bezpečným prahom, aplikácia MUST NOT prezentovať najbližší nesúvisiaci výsledok ako spoľahlivú odpoveď. SHOULD vyžiadať konkrétne doplnenie, ukázať bezpečný fallback alebo oznámiť nedostatok podkladov,
-- ak je AI iba rozšírením existujúcej funkcie, nedostupnosť modelu MUST NOT zablokovať základný deterministický workflow; aplikácia MUST mať bezpečný fallback alebo jasne zdokumentovaný dôvod, prečo je AI samotnou podstatou funkcie,
-- používateľ SHOULD vedieť rozlíšiť generované vysvetlenie od autoritatívneho podkladu a SHOULD mať možnosť otvoriť zdrojový detail, ak doména vyžaduje overiteľnosť,
-- pri chýbajúcich podkladoch alebo nesprávnej odpovedi SHOULD aplikácia ponúknuť jednoduchú spätnú väzbu cez spoločný support/contact pattern. Diagnostický obsah, otázka alebo kontext MUST byť používateľovi zobrazený pred odoslaním a MUST NOT byť odoslaný automaticky,
-- interné režimy, mock odpovede, test fixtures, confidence diagnostika a DEBUG prepínače MUST NOT byť viditeľné ani aktívne v bežnom produkčnom UI, pokiaľ nejde o zámernú používateľskú diagnostickú funkciu.
-
-
-## 9. Formuláre
-
-### 9.0 Spoločný Form & Editor kontrakt
-
-- Formulár MUST jasne rozlíšiť povinné a voliteľné údaje bez spoliehania sa iba na farbu.
-- Ak je `Uložiť` deaktivované, obrazovka SHOULD používateľovi zrozumiteľne ukázať, ktorý povinný údaj chýba alebo je neplatný.
-- Inline validačná správa SHOULD byť pri poli alebo skupine, ktorej sa týka; všeobecný alert sa používa pre globálnu chybu.
-- Editor SHOULD používať stabilné poradie: náhľad alebo identita → základné údaje → vzhľad/zaradenie → doplnkové údaje → technické/rozšírené možnosti. Produkt MAY nepoužité sekcie vynechať.
-- Výber súvisiacej entity (vozidlo, osoba, účet, karta a pod.) SHOULD používať rovnaký picker/list pattern naprieč aplikáciou.
-- Bežný edit flow MUST smerovať priamo k editácii a SHOULD NOT vyžadovať zbytočné `Upraviť → detail → Upraviť`.
-
-- MUST jasne označiť povinné údaje a dôvod, prečo sú potrebné.
-- MUST zobrazovať validáciu pri konkrétnom poli.
-- MUST chrániť rozpracované údaje pred neúmyselnou stratou.
-- MUST používať vhodnú klávesnicu, výber dátumu a formát vstupu.
-- MUST po uložení jednoznačne potvrdiť výsledok.
-- SHOULD meniť polia podľa typu objektu namiesto jedného univerzálneho formulára s nerelevantnými položkami.
-
-- MUST umožniť pohodlné skrytie klávesnice bez nutnosti opustiť obrazovku.
-- IbaJuraj aplikácie SHOULD používať spoločný plávajúci ovládací prvok s ikonou klávesnice a šípkou nadol, ak je potrebné explicitné zatvorenie klávesnice; vlastné textové tlačidlo `Hotovo` nad klávesnicou SHOULD NOT byť zavedené bez produktového dôvodu.
-- Scrollovateľný obsah SHOULD podporovať prirodzené interaktívne schovanie klávesnice a ukončenie fokusu tam, kde je to bezpečné pre rozpracované údaje.
-
-### 9.1 Zachovanie rozpracovanej práce
-
-- Rozpracované údaje MUST NOT byť stratené náhodným gestom späť, zmenou tabu, krátkym prechodom do backgroundu alebo obnovením view.
-- Ak opustenie obrazovky zruší neuložené zmeny, aplikácia MUST používateľa upozorniť a pomenovať následok.
-- Zmena tabu SHOULD zachovať platný stav každej hlavnej sekcie, ak produktový workflow nevyžaduje reset.
-- Navigačný stav MAY byť obnovený po opätovnom spustení iba vtedy, keď cieľ stále existuje a jeho obnovenie je bezpečné.
-
-## 10. Dáta, migrácie a kompatibilita
-
-- MUST mať verziu dátovej schémy.
-- MUST testovať aktualizáciu z verejne dostupnej App Store verzie, nie iba čistú inštaláciu.
-- MUST mať migračný plán pre zmenu modelu.
-- MUST zakázať tiché odstránenie nerozpoznaných alebo starších údajov.
-- SHOULD poskytnúť obnovu alebo bezpečný fallback pri zlyhaní migrácie.
-- MUST pri importe validovať typ, veľkosť, schému a dôveryhodnosť súboru.
-
-### 10.1 Životný cyklus používateľských údajov
-
-Pre každý druh uložených údajov MUST byť určené:
-
-- kde sa ukladá,
-- či a ako sa synchronizuje,
-- či je súčasťou zálohy alebo exportu,
-- ako sa vymaže,
-- či vymazanie platí iba lokálne alebo na všetkých zariadeniach.
-
-- Synchronizácia, záloha a export MUST byť chápané ako rozdielne funkcie; jedna z nich MUST NOT byť bez vysvetlenia prezentovaná ako náhrada ostatných.
-- Deštruktívna operácia MUST pomenovať rozsah, dotknuté zariadenia a možnosť obnovy.
-- Obnova MUST validovať celý vstup pred zápisom a MUST NOT uložiť čiastočný neoverený stav.
-- Vypnutie synchronizácie alebo odhlásenie MUST používateľovi vysvetliť, ktoré údaje zostanú lokálne a ktoré prestanú byť dostupné.
-
-### 10.2 Dátum, čas a časové pásmo
-
-Ak aplikácia ukladá, zobrazuje alebo vypočítava doménové dátumy a časy:
-
-- Dátový model MUST rozlišovať kalendárny deň od presného časového okamihu.
-- Kalendárny termín MUST NOT zmeniť deň iba v dôsledku zmeny časového pásma.
-- Formát dátumu a času MUST rešpektovať lokalitu a používateľský kalendár, ak doména výslovne nevyžaduje inak.
-- Výpočty termínov MUST zohľadniť zmenu letného a zimného času, ak pracujú s presným časom.
-- Hranice stavov **dnes**, **zajtra**, **platné** a **po termíne** MUST byť definované jedným zdrojom pravdy a testované na prechode dňa.
-- Ak doménový výsledok závisí od časovej verzie pravidiel alebo dát, vstupný dátum MUST byť obmedzený na skutočne podporované časové pokrytie. Aplikácia MUST NOT ponúknuť dátum, pre ktorý nevie garantovať kompatibilný a overený výsledok, bez jasne označeného neovereného režimu.
-
-### 10.3 Vzdialený obsah a konfigurácia
-
-Ak aplikácia prijíma vzdialený obsahový alebo konfiguračný balík:
-
-- balík MUST mať stabilnú identitu, verziu schémy, verziu obsahu a údaj o kompatibilite,
-- integrita a podľa rizika autenticita balíka MUST byť overená pred použitím,
-- nový balík MUST byť aplikovaný atómovo a MUST NOT nahradiť platný stav čiastočným obsahom,
-- aplikácia SHOULD zachovať posledný overený kompatibilný balík pre offline alebo obnovovací stav,
-- nekompatibilný alebo poškodený balík MUST byť odmietnutý bez straty posledného platného stavu,
-- používateľ SHOULD vedieť rozlíšiť aktuálny, zastaraný a neoverený obsah, ak to ovplyvňuje dôveryhodnosť výsledku.
-- Kompatibilita vzdialeného balíka s aplikáciou MUST byť vyhodnotená voči skutočnému runtime buildu/verzii z autoritatívnych build metadát, nie voči ručne zapísanej hodnote v službe alebo view.
-- Dátum, verzia alebo identita overenia obsahu MUST pochádzať z konkrétneho zdroja alebo balíka, ktorého sa týka; všeobecná hardcoded fallback hodnota MUST NOT predstierať aktuálne overenie.
-
-
-### 10.4 Authoritative Data Separation & Traceability Contract
-
-- Autoritatívne doménové dáta MUST byť oddelené od ich prezentačnej vrstvy. View alebo UI komponent MUST NOT byť druhým nezávislým zdrojom pravdy pre pravidlo, sadzbu, limit, stav, verziu alebo iný autoritatívny údaj, ak existuje centrálny model/katalóg/resolver.
-- Nový subsystém MUST NOT vytvoriť paralelný dátový model pre rovnakú identitu alebo pravidlo bez explicitného migračného/kompatibilitného dôvodu. Derived/presentation model MAY existovať, ale MUST mať jednoznačný pôvod v autoritatívnom modeli.
-- Pri časovo verziovaných alebo autoritatívnych dátach SHOULD byť výsledok spätne dohľadateľný minimálne k stabilnej identite záznamu, verzii/časovej platnosti a stavu overenia, ak tieto informácie existujú.
-- Nová časová verzia MUST NOT prepisovať historický význam staršej verzie; resolver MUST vybrať verziu podľa relevantného dátumu alebo explicitne označiť nepodporovaný rozsah.
-- Ak dva interné zdroje tvrdia konfliktný autoritatívny výsledok, aplikácia MUST konflikt vyriešiť pred prezentovaním definitívneho výsledku alebo MUST výsledok označiť ako neoverený/obmedzený.
-
-
-## 11. Synchronizácia a zdieľanie
-
-Ak aplikácia synchronizuje alebo zdieľa údaje, MUST rozlišovať:
-
-- lokálny stav,
-- čakajúce zmeny,
-- synchronizované,
-- konflikt,
-- chybu,
-- offline stav.
-
-Používateľ SHOULD dostať zrozumiteľný stav, napríklad počet čakajúcich zmien alebo čas poslednej synchronizácie. Konflikty MUST NOT byť riešené tichou stratou údajov.
-
-### 11.1 Spoločné stavy synchronizácie
-
-Ak produkt zobrazuje používateľovi stav synchronizácie, SHOULD používať tieto významové stavy alebo ich produktovo zrozumiteľné ekvivalenty:
-
-- **Synchronizované** – lokálny a vzdialený stav sú potvrdene zhodné,
-- **Synchronizuje sa** – prebieha odosielanie alebo sťahovanie,
-- **Čaká na synchronizáciu** – lokálna zmena ešte nebola potvrdená vzdialeným úložiskom,
-- **Iba lokálne / Offline** – vzdialený zdroj nie je dostupný alebo nie je zapnutý,
-- **Konflikt** – existujú dve nezlučiteľné verzie,
-- **Chyba synchronizácie** – synchronizácia zlyhala a používateľ má dostať ďalší krok.
-
-- Stav **Synchronizované** MUST NOT byť zobrazený iba preto, že je účet dostupný; musí vychádzať z posledného potvrdeného sync výsledku.
-- Synchronizácia MUST zachovať lokálnu integritu pri zlyhaní siete.
-- Manuálne `Synchronizovať teraz` MAY dopĺňať automatickú synchronizáciu, ale MUST NOT byť jediným mechanizmom, ak produkt deklaruje automatickú synchronizáciu.
-
-## 12. Upozornenia a systémové oprávnenia
-
-### 12.1 Upozornenia
-
-- Pred systémovou žiadosťou o upozornenia SHOULD aplikácia vysvetliť konkrétny prínos.
-- Upozornenie SHOULD viesť priamo na platný súvisiaci obsah alebo zrozumiteľný náhradný stav.
-- Po zmene alebo vymazaní zdrojového objektu MUST aplikácia zrušiť alebo preplánovať neaktuálne upozornenia.
-- Aplikácia MUST zabrániť neúmyselným duplicitným upozorneniam na tú istú udalosť.
-- Citlivý obsah SHOULD NOT byť zobrazovaný v texte upozornenia bez vedomého používateľského nastavenia.
-- Ak upozornenie nemožno naplánovať, aplikácia SHOULD používateľovi vysvetliť dôvod a možný ďalší krok.
-
-### 12.2 Systémové oprávnenia
-
-- Oprávnenie MUST byť vyžiadané až v kontexte funkcie, ktorá ho potrebuje.
-- Pred prvou systémovou žiadosťou SHOULD aplikácia zrozumiteľne vysvetliť prínos a rozsah oprávnenia.
-- Odmietnutie MUST NOT vytvoriť slepú obrazovku; aplikácia SHOULD ponúknuť použiteľnú alternatívu alebo cestu do systémových Nastavení.
-- Aplikácia MUST NOT žiadať oprávnenie, ktoré aktuálny workflow nepotrebuje.
-
-## 13. Súkromie a bezpečnosť
-
-- MUST zdokumentovať, aké údaje nová funkcia spracúva, prečo, kde sa ukladajú a ako sa vymažú.
-- MUST aktualizovať Privacy Manifest a zásady ochrany súkromia, ak sa zmení spracovanie údajov.
-- Každý distribuovaný app, widget a extension target MUST obsahovať alebo zdediť správny Privacy Manifest a deklarovať iba required-reason API dôvody zodpovedajúce skutočnému používaniu.
-- Release kontrola MUST porovnať používané required-reason API s obsahom všetkých distribuovaných Privacy Manifestov; prázdny manifest bez potrebných deklarácií nie je splnením pravidla.
-- MUST neukladať tajné kľúče, tokeny ani osobné údaje do repozitára alebo logov.
-- MUST používať Keychain pre citlivé prihlasovacie údaje a tokeny.
-- MUST validovať a podľa potreby kryptograficky overovať vzdialené balíky.
-- MUST zobrazovať používateľovi diagnostické údaje pred ich odoslaním.
-- MUST zakázať zdieľanie citlivých údajov cez verejnú Telegram skupinu.
-
-- Ak aplikácia ponúka lokálny zámok, biometria, voliteľný PIN aplikácie a automatické uzamknutie SHOULD tvoriť jeden konzistentný bezpečnostný model.
-- Bezpečnostné nastavenia lokálneho zámku SHOULD zostať lokálne v zariadení a SHOULD NOT sa synchronizovať ani exportovať spolu s bežnými používateľskými dátami, ak na to nie je výslovný bezpečný návrh.
-- Interná navigácia, prepnutie tabu, otvorenie/zatvorenie interného sheetu ani návrat z vnoreného detailu MUST NOT samy osebe spustiť nové biometrické overenie.
-- Čas automatického uzamknutia SHOULD byť vyhodnocovaný podľa skutočného životného cyklu aplikácie a odchodu do neaktívneho/background stavu, nie podľa opakovaného `onAppear` jednotlivých obrazoviek.
-
-## 14. Prístupnosť
-
-Release kontrola MUST overiť:
-
-- VoiceOver názvy, hodnoty a poradie,
-- Dynamic Type,
-- kontrast,
-- Reduce Motion,
-- minimálne dotykové plochy,
-- význam nezávislý iba od farby,
-- ovládanie bez presných gest, ak existuje dostupnejšia alternatíva.
-
-### 14.1 Accessibility Quality Gate
-
-- Interaktívna ikonová akcia MUST mať zmysluplný accessibility label; dekoratívna ikona SHOULD byť skrytá pred VoiceOver.
-- VoiceOver poradie MUST sledovať vizuálnu a významovú hierarchiu obrazovky.
-- Kritický stav MUST byť zrozumiteľný aj bez farby a animácie.
-- Pri zväčšenom texte MUST zostať dostupná hlavná akcia a identita objektu; sekundárny layout MAY prejsť z horizontálneho na vertikálny.
-- Release audit Level 3+ MUST overiť aspoň jeden najväčší praktický Dynamic Type režim a základný VoiceOver pre primárne flow.
-
-## 15. Vyhľadávanie
-
-Ak aplikácia obsahuje vyhľadávanie:
-
-- MUST tolerovať diakritiku a bežné varianty zápisu, ak to doména umožňuje.
-- SHOULD podporovať dôvodné aliasy, skratky, synonymá a bežné používateľské formulácie.
-- Ak vyhľadávanie používa relevance scoring alebo významové mapovanie, MUST mať bezpečné správanie pri nízkej istote: nesúvisiaci „najbližší“ výsledok MUST NOT byť prezentovaný ako spoľahlivá zhoda iba preto, že žiadny lepší výsledok neexistuje.
-- Pri nejednoznačnom vstupe SHOULD systém vyžiadať konkrétnu doplňujúcu informáciu alebo zobraziť viac jasne odlíšených možností namiesto náhodného výberu jednej vetvy.
-- MUST mať užitočný prázdny výsledok s ďalším krokom.
-- SHOULD vysvetliť, prečo výsledok zodpovedá dotazu.
-- MUST testovať výkon nad realistickým objemom údajov.
-- Ak výsledok zodpovedá existujúcemu konkrétnemu detailu, kategórii alebo workflow, SHOULD ponúknuť jeden alebo viac kontextovo vhodných navigačných mostov. Textová odpoveď SHOULD NOT byť slepým koncom, ak aplikácia pozná použiteľný ďalší cieľ.
-
-## 16. Spoločné komponenty
-
-Komponent sa môže zaradiť do IbaJuraj Foundation, keď:
-
-1. používa sa najmenej v dvoch aplikáciách,
-2. má rovnaký účel,
-3. neobsahuje doménovú logiku,
-4. je stabilný aspoň počas dvoch buildov,
-5. zdieľanie zníži duplicitu bez obmedzenia produktu.
-
-Kandidáti: identita aplikácie, odkazy podpory, dizajnové tokeny, settings riadky, Navigation Tile, Entity Card, Feature Card, stavové bannery, prázdne a chybové stavy a version footer.
-
-Pre 1.3.0 sú odporúčanými kandidátmi `IJTopActionButton`, `IJTopActionCluster`, `IJSettingsSection`, `IJSettingsRow`, `IJAppearanceControl`, `IJSupportLinks`, `IJStandardMetadata` a helper adaptívnej mriežky. Produktové karty a doménové workflow MUST zostať mimo spoločného balíka, pokiaľ nespĺňajú všetkých päť podmienok.
-
-### 16.1 Source hygiene a veľkosť workflow súborov
-
-- Produkčný zdrojový súbor, ktorý už nemá referenciu alebo nie je súčasťou aktívneho targetu, SHOULD byť odstránený alebo explicitne archivovaný mimo produkčného stromu.
-- Workflow Swift súbor SHOULD zostať približne pod **430 riadkami**. Prekročenie nie je automatická chyba, ale SHOULD spustiť audit zodpovedností a možnosti rozdelenia. Počet riadkov je review trigger, nie cieľ ani automatický zákaz.
-- Súbor, ktorý mieša UI, orchestration/business logiku, sieťové spracovanie a autoritatívne doménové dáta, SHOULD byť architektonicky rozdelený aj vtedy, keď neprekročil line-count threshold. Jedna jasná zodpovednosť má prednosť pred mechanickým delením na malé súbory.
-- Root view SHOULD byť primárne composition/navigation vrstva a SHOULD NOT vlastniť rozsiahlu importnú, OCR, sync alebo doménovú logiku.
-- Veľký store/model controller SHOULD byť delený podľa zodpovednosti pomocou služieb alebo focused extensions bez obchádzania enkapsulácie.
-- Rozdelenie jedného typu do viacerých Swift súborov MUST rešpektovať Swift access control; stav alebo mutačné API potrebné cross-file extensionom MUST mať zámerne zvolenú internú úroveň, nie náhodne `private`.
-- Source-hygiene validator MUST kontrolovať aktuálne cesty a MUST NOT úspešne prejsť iba na základe historických názvov súborov.
-- Release balík SHOULD presunúť historické build audity a jednorazové validačné reporty do `Development/`, `ReleaseNotes/` alebo inej neprodukčnej histórie.
-
-## 17. Testovanie a definícia hotovej funkcie
-
-Funkcia je hotová až keď má:
-
-- správny používateľský tok,
-- prázdny, chybový a načítavací stav,
-- lokalizáciu,
-- prístupnosť,
-- automatické testy primerané riziku,
-- migračný test, ak mení dáta,
-- privacy kontrolu,
-- aktualizovanú dokumentáciu a changelog.
-
-Historické build testy SHOULD NOT byť trvalo naviazané na konkrétne číslo buildu, ak v skutočnosti testujú funkciu.
-
-- Ak aplikácia publikuje katalóg, register alebo inú konečnú množinu položiek, Level 3+ audit MUST automaticky overiť všetky publikované položky v rozsahu relevantných invariantov, nie iba kurátorovanú podmnožinu.
-- Regresný test kritickej navigácie alebo aplikačnej logiky SHOULD overovať výsledné správanie a cieľ, nie iba prítomnosť literálu, modifiera alebo názvu funkcie v zdrojovom kóde.
-- Potvrdená runtime alebo používateľská chyba s realistickým rizikom opakovania SHOULD po oprave dostať regresný test alebo explicitne zdokumentovaný dôvod, prečo automatický test nie je vhodný. Test SHOULD používať pôvodný vstup/scenár, ktorý chybu odhalil.
-
-### 17.1 Výkon a stabilita
-
-- Dlhá operácia MUST NOT blokovať hlavné používateľské rozhranie bez viditeľného stavu priebehu.
-- Scrollovanie realistického množstva údajov SHOULD zostať plynulé na najmenšom podporovanom zariadení.
-- Import, synchronizácia, spracovanie príloh a vzdialený obsah SHOULD byť vykonávané mimo hlavného vlákna, ak by mohli spôsobiť viditeľné blokovanie.
-- Zrušiteľná dlhá operácia SHOULD ponúknuť bezpečné zrušenie.
-- View lifecycle MUST NOT bez dôvodu opakovane spúšťať drahé načítanie, zápis alebo autentifikáciu.
-- Release audit MUST overiť pamäť a stabilitu pri realistických prílohách, obrázkoch alebo dátových balíkoch, ak ich produkt používa.
-
-## 18. Release
-
-Pred vydaním MUST byť overené:
-
-- zhoda verzie a buildu vo všetkých metadátach,
-- čistý build a testy,
-- migrácia z verejnej verzie,
-- odkazy podpory a súkromia,
-- lokalizácie a App Store texty,
-- prístupnosť,
-- Privacy Manifest,
-- šifrovanie a exportné nastavenia,
-- odstránenie `.DS_Store`, `__MACOSX`, tajomstiev a nepotrebných archívov z distribučného ZIP-u.
-
-- pri aplikáciách s vlastnou navigáciou kontrola šípky späť aj systémového swipe-back,
-- pri textových vstupoch kontrola schovania klávesnice vrátane podporovaných klávesníc tretích strán,
-- pri lokálnom zámku kontrola, že bežná interná navigácia nespúšťa opakovanú biometriu,
-- kontrola, že pravé stavové hodnoty v Nastaveniach nie sú orezané ani nevhodne zalomené.
-- kontrola kontaktného odkazu od aplikácie po predvyplnený webový formulár vrátane bezpečného fallbacku,
-- kontrola zhody runtime verzie štandardu, tagu a úrovne adopcie s `APP_STANDARD_ADOPTION.md`,
-- kontrola Privacy Manifestu pre každý distribuovaný app, widget a extension target,
-- kontrola, že bežné vnorené Nastavenia nepoužívajú sheet alebo full-screen cover namiesto push navigácie.
-- kontrola, že kompatibilitné a diagnostické runtime metadata pochádzajú zo skutočného buildu/verzie aplikácie a nie z hardcoded historickej hodnoty,
-- pri katalógoch kontrola completeness nad všetkými publikovanými položkami a funkčnosti navigačných mostov pre reprezentatívne výsledky,
-- pri dlhých katalógoch runtime kontrola sticky/pinned section headerov, collapsing titulkov a safe-area správania,
-- pri floating bottom navigation runtime kontrola úplného doscrollovania a kompaktného bottom clearance na všetkých peer root taboch,
-- pri AI/generovaných odpovediach kontrola grounded source path, safe fallbacku, low-confidence správania a neprítomnosti produkčných DEBUG/mock ovládacích prvkov,
-- pri autoritatívnych alebo časovo verziovaných dátach kontrola source/version/effective-date traceability primeranej riziku domény.
-
-### 18.1 Spoločná testovacia matica
-
-Každé vydanie MUST pokryť reprezentatívne kombinácie:
-
-- kompaktný iPhone, štandardný iPhone a veľký iPhone,
-- orientáciu na výšku a, ak ju aplikácia podporuje, orientáciu na šírku,
-- svetlý a tmavý vzhľad,
-- bežnú a accessibility veľkosť Dynamic Type,
-- všetky podporované lokalizácie so zameraním na najdlhšie texty,
-- online, offline, chybový a obnovovací stav, ak aplikácia používa sieť alebo synchronizáciu,
-- čistú inštaláciu a aktualizáciu z aktuálnej verejnej App Store verzie.
-
-Pre layout audit SHOULD matica pokryť dostupnú šírku približne 320, 375 a 430 bodov. Presný model zariadenia nie je normatívny; rozhodujúca je dostupná šírka kontajnera.
-
-Ak aplikácia deklaruje podporu iPadu, Macu alebo inej device family, release matica MUST pokryť aj jej reprezentatívnu veľkosť a vstupné metódy.
-
-Nie je potrebné fyzicky testovať každý model zariadenia, ale zvolená matica MUST pokryť hlavné veľkostné triedy a rizikové kombinácie. Výsledok manuálneho auditu MUST byť zaznamenaný v release dokumentácii.
-
-## 19. Model adopcie
-
-Každá aplikácia MUST evidovať jednu z úrovní:
-
-- **Level 0 – Declared:** existuje `APP_STANDARD_ADOPTION.md` a pripnutá verzia štandardu,
-- **Level 1 – Identity:** spoločná identita, runtime verzia, podpora a verejné odkazy,
-- **Level 2 – Shared UX:** spoločné Nastavenia, navigačné správanie, tokeny a nové alebo migrované komponenty,
-- **Level 3 – Quality Gates:** automatické kontroly metadát, lokalizácie, prístupnosti, integrity a release dokumentácie,
-- **Level 4 – Full Adoption:** v spoločnom rozsahu nezostáva nezdokumentovaná výnimka.
-
-Názov úrovne MUST používať presne jednu z uvedených hodnôt. Vlastné názvy, napríklad `Level 2 – Enforced`, MUST NOT byť použité ako stav adopcie.
-
-- Nová obrazovka MUST používať aktuálny prijatý štandard okamžite.
-- Existujúca obrazovka MAY byť migrovaná v plánovanom builde, ak je odchýlka evidovaná a neporušuje bezpečnosť alebo integritu údajov.
-- Aplikácia MUST v adopčnom súbore uviesť úroveň, posledný audit, aktívne výnimky a zdroj release dôkazov.
-- Level 3 a Level 4 MUST mať uložené automatické aj manuálne release dôkazy; samotné vyhľadanie textových literálov v zdrojovom kóde nie je dostatočný dôkaz.
-
-## 20. Živý štandard a návrhy zmien
-
-Štandard sa môže priebežne rozširovať, ale nie nekontrolovane.
-
-1. Audit nájde opakovaný vzor alebo nedostatok.
-2. Vytvorí sa návrh v `Proposals/`.
-3. Návrh uvedie dôvod, dotknuté aplikácie, migráciu a záväznosť.
-4. Po schválení sa aktualizuje štandard, changelog a podľa možnosti automatická kontrola.
-
-Automatický nástroj MUST NOT bez schválenia meniť povinné pravidlá.
-
-## 21. Výnimky
-
-Každá výnimka MUST uviesť:
-
-- pravidlo,
-- dotknutú aplikáciu,
-- dôvod,
-- rozsah,
-- podmienky bezpečného použitia,
-- dátum revízie alebo podmienku ukončenia.
-
-Výnimka sa eviduje v produktovom súbore `APP_STANDARD_ADOPTION.md` alebo ADR.
-
-## 22. Produktové doplnky
-
-- **Strážca Termínov:** Administrative Detail Framework, Agenda ako autoritatívny systém, Progressive Completion, Action over Information, No Dead Ends.
-- **Lex Drive:** Trust before Intelligence, Situation before Law, Answer before Citation, overiteľnosť právneho zdroja, účinnosť právneho stavu a auditovateľnosť.
-- **Kalkulačka 2v1:** kalkulačné workflow, hlasový vstup a doménové formátovanie výsledkov zostávajú produktovo špecifické.
-- **Peňaženka Kariet:** rýchly prístup ku kartám, pomer strán Wallet Card, prezentácia čiarových/2D kódov a zdieľané peňaženky zostávajú produktovo špecifické. Predvolený domovský variant MAY používať adaptívnu mriežku najviac štyroch pripnutých kariet; pripnuté karty SHOULD NOT byť duplicitne zobrazované medzi poslednými použitými.
-
-Tieto doplnky MUST zostať produktovo špecifické a MUST NOT byť mechanicky prenášané medzi aplikáciami. Spoločné systémové vzory MAY byť do tohto štandardu zaradené až po overení rovnakej potreby vo viacerých produktoch.
+### STD-APPEARANCE-001 — Theme applies immediately on same screen — MUST
+
+### STD-APPEARANCE-002 — Checkmark/model/render state parity — MUST
+
+### STD-APPEARANCE-003 — Theme selection persists — MUST
+
+### STD-ABOUT-001 — Settings About row contract — MUST
+
+### STD-ABOUT-002 — About version sentence contract — MUST
+
+### STD-ABOUT-003 — Public Standard version only — MUST
+
+### STD-ABOUT-004 — Developer card contract — MUST
+
+### STD-ABOUT-005 — Web and privacy links — MUST
+
+### STD-ABOUT-006 — Shared About test identifiers — MUST
+
+### STD-ADAPT-001 — Whole app adaptive by default — MUST
+
+### STD-ADAPT-002 — Container-driven layout foundation — MUST
+
+### STD-ADAPT-003 — Safe-area-driven positioning — MUST
+
+### STD-ADAPT-004 — Use available space when beneficial — MUST
+
+### STD-ADAPT-005 — Stable semantic content anchors — MUST
+
+### STD-ADAPT-006 — Dynamic Type adaptive layout — MUST
+
+### STD-ADAPT-007 — Longest-localization stress test — MUST
+
+### STD-ADAPT-008 — Fixed tokens not fixed device layout — MUST
+
+### STD-ADAPT-009 — Window/orientation adaptation — MUST
+
+### STD-ADAPT-010 — iPad/compatibility runtime matrix — MUST
+
+### STD-ADAPT-011 — No device-name branching as layout foundation — MUST NOT
+
+### STD-ADAPT-012 — Adaptive calculator keypad — MUST
+
+### STD-NAV-001 — Bottom navigation mode declared — MUST
+
+### STD-NAV-002 — Native tab variant — MUST
+
+### STD-NAV-003 — Custom baseline geometry — MUST
+
+### STD-NAV-004 — Primary action does not inflate bar — MUST
+
+### STD-NAV-005 — Adaptive custom bar width — MUST
+
+### STD-NAV-006 — Custom bar safe area — MUST
+
+### STD-NAV-007 — Bottom content clearance — MUST
+
+### STD-NAV-008 — Custom bar Dynamic Type — MUST
+
+### STD-NAV-009 — Custom bar test identifiers — MUST
+
+### STD-NESTED-NAV-001 — Back and native swipe where applicable — MUST
+
+### STD-NESTED-NAV-002 — No navigation loops/dead ends — MUST
+
+### STD-LOC-001 — Localization parity — MUST
+
+### STD-LOC-002 — Single shared localization meaning — MUST
+
+### STD-A11Y-001 — VoiceOver semantics — MUST
+
+### STD-A11Y-002 — No color-only meaning — MUST
+
+### STD-A11Y-003 — Reduce Motion/Increase Contrast — MUST
+
+### STD-FORM-001 — Required/optional fields — MUST
+
+### STD-FORM-002 — Validation timing — MUST
+
+### STD-FORM-003 — Progressive disclosure — MUST
+
+### STD-FORM-004 — Keyboard dismissal — MUST
+
+### STD-DATA-001 — Single source of truth — MUST
+
+### STD-DATA-002 — Schema/migration coverage — MUST
+
+### STD-DATA-003 — Sync/local/backup/export semantics — MUST
+
+### STD-DATA-004 — Traceability of authoritative data — MUST
+
+### STD-PRIVACY-001 — Privacy manifest coverage — MUST
+
+### STD-PRIVACY-002 — Privacy policy/App Store parity review — MUST
+
+### STD-SECURITY-001 — Security state machine — MUST
+
+### STD-DEBUG-001 — Production isolation of debug/mock controls — MUST
+
+### STD-DEBUG-002 — Runtime defect regression evidence — MUST
+
+### STD-AI-001 — Grounded verified generated assistance — MUST
+
+### STD-AI-002 — Safe low-confidence fallback — MUST
+
+### STD-CONF-001 — STANDARD_CONFORMANCE.json exists — MUST
+
+### STD-CONF-002 — Every applicable MUST has evidence — MUST
+
+### STD-CONF-003 — Common validator passes — MUST
+
+### STD-CONF-004 — Shared UI test identifiers — MUST
+
+### STD-CONF-005 — Static PASS not substituted for runtime proof — MUST
+
+### STD-CONF-006 — Release conformance report — MUST
+
+### STD-RELEASE-001 — Source hygiene — MUST
+
+### STD-RELEASE-002 — Localization gate — MUST
+
+### STD-RELEASE-003 — Whole-family regression scope — MUST
+
+### STD-RELEASE-004 — Native build/runtime gate distinction — MUST
+
+### STD-ADAPT-013 — Adaptive density uses useful available space — MUST
+
+### STD-ADAPT-014 — System geometry remains stable across data states — MUST
+
+### STD-ADAPT-015 — Adaptive layout avoids layout thrashing and unnecessary invalidation — MUST
+
+### STD-VIEWPORT-001 — Primary root header starts at safe-area plus shared minimal inset — MUST
+
+### STD-VIEWPORT-002 — Root nested sheet and fullscreen header families are explicit — MUST
+
+### STD-VIEWPORT-003 — Fixed/custom bottom chrome uses lowest safe viewport position — MUST
+
+### STD-VIEWPORT-004 — Bottom chrome position and content clearance are independent — MUST
+
+### STD-VIEWPORT-005 — Horizontal viewport is adaptively utilized — MUST
+
+### STD-VIEWPORT-006 — No unexplained fixed edge waste — MUST
+
+### STD-VIEWPORT-007 — Layout responds to live system safe-area changes — MUST
+
+### STD-VIEWPORT-008 — Peer primary roots share safe-area-relative top anchor — MUST
+
+### STD-SCREEN-001 — Screen-family inventory is declared — MUST
+
+### STD-SCREEN-002 — Every applicable screen family has completed audit state — MUST
+
+### STD-SCREEN-003 — Each screen family passes viewport audit dimensions — MUST
+
+### STD-SCREEN-004 — Shared screen chrome exposes stable test identifiers — MUST
+
+### STD-NAV-010 — Custom bar may safely penetrate bottom safe area instead of reserving blank band — MUST
+
+### STD-NAV-011 — Custom bar position and scroll clearance are independently calculated — MUST
+
+### STD-A11Y-004 — Reduce Transparency has readable fallback — MUST
+
+### STD-FORM-005 — Keyboard keeps active field and required action reachable — MUST
+
+### STD-FORM-006 — Keyboard and bottom chrome do not create overlap or double clearance — MUST
+
+### STD-HEADER-001 — Each screen has one authoritative header owner — MUST
+
+### STD-HEADER-002 — Navigation title is not duplicated by equivalent page or section heading — MUST NOT
+
+### STD-HEADER-003 — Sheet title subtitle and dismissal action form one coherent header hierarchy — MUST
+
+### STD-CHROME-001 — App does not imitate platform-owned system chrome — MUST NOT
+
+## 5. 1.7.0 semantic clarifications
+- **STD-ADAPT-004/013:** bezpečne využiteľný voľný priestor sa má primerane využiť bez narušenia hierarchie.
+- **STD-ADAPT-015:** zakázané je adaptívne riešenie, ktoré spôsobuje zbytočné opakované merania, invalidácie alebo lagovanie.
+- **STD-VIEWPORT-001/008:** root title/header sa viaže na aktuálnu top safe area + shared minimal inset, nie na absolútne Y zariadenia.
+- **STD-VIEWPORT-003/STD-NAV-010:** custom bottom chrome môže vstúpiť do bottom safe area, ak Home Indicator nekoliduje s obsahom ani 44×44 touch targetom.
+- **STD-VIEWPORT-004/STD-NAV-011:** fyzická poloha bottom chrome a scroll content clearance sa počítajú samostatne.
+- **STD-VIEWPORT-006:** nevysvetlený hardcoded edge padding/spacer, ktorý iba znižuje užitočný viewport, je defect.
+- **STD-FORM-006:** keyboard a fixed/custom bottom chrome nesmú vytvoriť overlap ani dvojitú rezervu.
+- **STD-CONF-005:** grep/parser/manifest dôkaz nenahrádza UI/runtime dôkaz behaviorálneho pravidla.
+- **STD-HEADER-001:** jedna screen family môže používať native alebo custom header, nie dve paralelné vrstvy s rovnakou rolou.
+- **STD-HEADER-002:** section heading je prípustný iba ak zužuje význam; opakovanie názvu obrazovky v inom case/icon štýle je defect.
+- **STD-HEADER-003:** sheet musí mať jeden vizuálny top anchor; dismissal action nesmie sama vytvoriť prázdny navigation band nad druhým title.
+- **STD-CHROME-001:** platform-owned affordance sa nesmie imitovať dekoratívnou kópiou; ak aplikácia potrebuje vlastný drag handle, musí mať vlastnú funkciu a nesmie predstierať Home Indicator.
+
+## 6. Minimálna runtime matrix
+Small/regular/large iPhone container; Accessibility Dynamic Type; Light/Dark; najdlhšia podporovaná lokalizácia; keyboard/form state; scroll endpoint nad bottom chrome; iPad portrait/landscape/window sizes, ak je podporovaný; iPad compatibility pre kritický flow, ak relevantné.
+
+## 7. Adopcia a release
+Verzia 1.7.0 bola finalizovaná z RC3 po úspešnom cross-app audite. Každá aplikácia naďalej vlastní svoj `STANDARD_CONFORMANCE.json`, runtime/Xcode dôkazy a prípadné ADR výnimky. Finálny release tag Standardu je `standard-v1.7.0`.

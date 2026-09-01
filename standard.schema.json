@@ -1,26 +1,18 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.schema.json",
+  "$id": "https://ibajuraj.github.io/standard/standard.schema.json",
   "title": "IbaJuraj Application Standard metadata",
   "type": "object",
-  "additionalProperties": false,
   "required": [
     "name",
     "version",
     "status",
-    "releasedAt",
-    "minimumSupportedVersion",
     "breakingChange",
-    "normativeKeywords",
-    "adoptionLevels",
     "contracts",
     "documents",
     "source"
   ],
   "properties": {
-    "$schema": {
-      "type": "string"
-    },
     "name": {
       "const": "IbaJuraj Application Standard"
     },
@@ -30,184 +22,50 @@
     },
     "status": {
       "enum": [
-        "draft",
         "active",
+        "release-candidate",
         "deprecated"
       ]
     },
     "releasedAt": {
-      "type": "string",
-      "format": "date"
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rcDate": {
+      "type": "string"
     },
     "minimumSupportedVersion": {
-      "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      "type": "string"
     },
     "breakingChange": {
       "type": "boolean"
     },
+    "inherits": {
+      "type": "object"
+    },
     "normativeKeywords": {
-      "type": "array",
-      "minItems": 5,
-      "uniqueItems": true,
-      "items": {
-        "enum": [
-          "MUST",
-          "MUST NOT",
-          "SHOULD",
-          "SHOULD NOT",
-          "MAY"
-        ]
-      }
+      "type": "array"
     },
     "adoptionLevels": {
-      "type": "array",
-      "minItems": 5,
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "level",
-          "id",
-          "name"
-        ],
-        "properties": {
-          "level": {
-            "type": "integer"
-          },
-          "id": {
-            "type": "string",
-            "pattern": "^[a-z0-9-]+$"
-          },
-          "name": {
-            "type": "string",
-            "pattern": "^Level [0-4] – .+$"
-          }
-        }
-      }
+      "type": "array"
     },
     "contracts": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "settingsEntry",
-        "appearance",
-        "nestedNavigation",
-        "contact",
-        "layout",
-        "privacy",
-        "neutralSurfaces",
-        "floatingTabBarClearance",
-        "pinnedHeaders",
-        "generatedAssistance",
-        "authoritativeData",
-        "componentFamilyGeometry",
-        "featureMaturity",
-        "visualConsistency"
-      ],
-      "properties": {
-        "settingsEntry": {
-          "const": "primary-root-top-trailing"
-        },
-        "appearance": {
-          "const": "root-segmented-system-light-dark"
-        },
-        "nestedNavigation": {
-          "const": "native-push-back-button-edge-swipe-and-semantic-affordance"
-        },
-        "contact": {
-          "const": "form-and-telegram"
-        },
-        "layout": {
-          "const": "available-container-space-safe-navigation-surfaces-and-adaptive-density"
-        },
-        "privacy": {
-          "const": "manifest-per-distributed-target"
-        },
-        "neutralSurfaces": {
-          "const": "semantic-neutral-surface-and-text-parity"
-        },
-        "floatingTabBarClearance": {
-          "const": "dynamic-safe-area-aware-compact-final-clearance"
-        },
-        "pinnedHeaders": {
-          "const": "eligible-context-only-no-content-occlusion"
-        },
-        "generatedAssistance": {
-          "const": "verified-grounded-safe-fallback-transparent-feedback"
-        },
-        "authoritativeData": {
-          "const": "single-source-traceable-temporal-no-parallel-model"
-        },
-        "componentFamilyGeometry": {
-          "const": "shared-role-shared-geometry-explicit-semantic-exceptions"
-        },
-        "featureMaturity": {
-          "const": "unfinished-experimental-capabilities-not-equal-user-facing-modes"
-        },
-        "visualConsistency": {
-          "const": "whole-app-component-family-localization-dynamic-type-audit"
-        }
-      }
+      "type": "object"
     },
     "documents": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "standard",
-        "tokens",
-        "migration",
-        "testMatrix",
-        "releaseChecklist",
-        "referencePatterns"
-      ],
-      "properties": {
-        "standard": {
-          "const": "IBAJURAJ_APPLICATION_STANDARD.md"
-        },
-        "tokens": {
-          "const": "DESIGN_TOKENS.md"
-        },
-        "migration": {
-          "const": "MIGRATION.md"
-        },
-        "testMatrix": {
-          "const": "TEST_MATRIX.md"
-        },
-        "releaseChecklist": {
-          "const": "RELEASE_CHECKLIST.md"
-        },
-        "referencePatterns": {
-          "const": "REFERENCE_PATTERNS.md"
-        }
-      }
+      "type": "object"
     },
     "source": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "repository",
-        "latestMetadata",
-        "tag",
-        "document"
-      ],
-      "properties": {
-        "repository": {
-          "type": "string",
-          "format": "uri"
-        },
-        "latestMetadata": {
-          "type": "string",
-          "format": "uri"
-        },
-        "tag": {
-          "type": "string",
-          "pattern": "^standard-v\\d+\\.\\d+\\.\\d+$"
-        },
-        "document": {
-          "const": "IBAJURAJ_APPLICATION_STANDARD.md"
-        }
-      }
+      "type": "object"
+    },
+    "candidate": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
-  }
+  },
+  "additionalProperties": true
 }

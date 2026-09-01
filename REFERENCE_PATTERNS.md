@@ -1,293 +1,140 @@
-# IbaJuraj Standard 1.6.4 – referenčné vzory
+# IbaJuraj Application Standard 1.7.0 – Reference Patterns
 
-Referenčné vzory vysvetľujú spoločnú informačnú hierarchiu. Nie sú pixelovým screenshot testom a nemenia produktovú identitu aplikácie.
-
-## Hlavná obrazovka
+## 1. Settings → O aplikácii
 
 ```text
-┌──────────────────────────────────────┐
-│ Názov alebo logo       [akcia] [⚙︎] │
-│ Krátky produktový popis              │
-│                                      │
-│ Primárny produktový obsah            │
-└──────────────────────────────────────┘
+O aplikácii                         1.11 (53)
+Verzia, súkromie a štandard
 ```
 
-- Hlavný názov používa `appPage.title` = `.largeTitle.weight(.bold)`.
-- Priamy podnadpis používa `appPage.subtitle` = `.subheadline` so sekundárnou farbou; medzera medzi nimi je 6 pt.
-- Gear je vpravo hore a je pravou krajnou akciou.
-- Vedľa gearu je najviac jedna samostatná sekundárna akcia.
-- Produkt MAY používať ľavý alebo stredový názov, ak zostane chránený pred kolíziou.
+Hodnota sa skladá z runtime `marketingVersion` a `build`.
 
-## Root Nastavení
+## 2. About – Version card
 
 ```text
-‹  Nastavenia
-
-APLIKÁCIA
-┌──────────────────────────────────────┐
-│ Vzhľad                               │
-│ [Automaticky] [Svetlý] [Tmavý]       │
-├──────────────────────────────────────┤
-│ Produktové nastavenie       hodnota ›│
-└──────────────────────────────────────┘
-
-ÚDAJE A ZABEZPEČENIE
-┌──────────────────────────────────────┐
-│ Záloha                             › │
-│ Export údajov                      › │
-└──────────────────────────────────────┘
-
-POMOC A INFORMÁCIE
-┌──────────────────────────────────────┐
-│ Kontakt                            › │
-│ O aplikácii              1.0 (1)   › │
-└──────────────────────────────────────┘
+Verzia
+Kalkulačka 2v1 v1.11 – Build 53.
 ```
 
-- Root MAY použiť veľký titulok; vnorené stránky SHOULD používať inline titulok.
-- Hodnota sa pri nedostatku priestoru presunie pod názov.
-- Settings row používa 16 pt horizontálny + 10 pt vertikálny padding, 36 × 36 pt ikonovú dlaždicu a minimálnu výslednú výšku 56 pt; padding sa aplikuje pred `minHeight`.
-- Karta Vzhľad používa 16 pt horizontálny padding, 10 pt horný/spodný padding okolo header/segmentu a segmented control s minimálnou 44 pt dotykovou výškou.
-- Rovnaký komponent MUST mať v rôznych IbaJuraj aplikáciách rovnakú základnú geometriu; rozdielny obsah smie výšku zväčšiť iba prirodzeným zalomením.
-
-## Kontakt
+Generický pattern:
 
 ```text
-‹  Kontakt
-
-Ako vám môžeme pomôcť?
-Krátke vysvetlenie podľa aplikácie.
-
-┌──────────────────────────────────────┐
-│ Otvoriť kontaktný formulár          ↗│
-└──────────────────────────────────────┘
-┌──────────────────────────────────────┐
-│ Telegram komunita                   ↗│
-└──────────────────────────────────────┘
-
-ČO MÔŽETE POSLAŤ
-• otázku alebo návrh,
-• technický problém,
-• produktovo relevantnú nepresnosť.
-
-Neposielajte heslá, doklady ani citlivé údaje.
+<AppName> v<marketingVersion> – Build <build>.
 ```
 
-- Akčné karty používajú 16 pt vnútorný padding, 42 × 42 pt ikonový box s radiusom 12 pt, card radius 20 pt a 12 pt medzeru medzi hlavnými akciami.
-- Celý obsah používa 16 pt page inset a 18 pt vertikálnu hustotu medzi hlavnými blokmi.
-
-## O aplikácii
+## 3. About – Standard card
 
 ```text
-‹  O aplikácii
-
-┌──────────────────────────────────────┐
-│ Verzia                       1.0 (1) │
-│ IbaJuraj Application Standard  1.4.0 │
-└──────────────────────────────────────┘
-┌──────────────────────────────────────┐
-│ Ohodnotiť aplikáciu                  │
-│ Zdieľať aplikáciu                    │
-└──────────────────────────────────────┘
+IbaJuraj Application Standard
+Verzia 1.7.0
 ```
 
-Hodnoty sú runtime metadata, nie ručne duplikované reťazce.
+Používateľské UI neukazuje tag, commit ani adoption level.
 
-- Metadata a akčné karty používajú 18 pt radius a 16 pt padding; ikonový stĺpec má 24 pt.
-- Medzera medzi samostatnými About akciami je 12 pt, hlavný screen spacing 18 pt a page inset 20 pt.
-- Produkt MAY pridať vlastné About položky, ale nesmie meniť geometriu spoločného variantu.
-
-## Súhrnné skratky
+## 4. Live theme selection
 
 ```text
-┌──────────────────┐ ┌──────────────────┐
-│ História         │ │ Obľúbené         │
-│ 30 položiek      │ │ 1 položka        │
-└──────────────────┘ └──────────────────┘
+Tap theme option
+  → update selected model
+  → persist value
+  → invalidate/render current screen
+  → checkmark and background change immediately
 ```
 
-- Dve rovnocenné skratky SHOULD zostať vedľa seba, ak má každá aspoň minimálnu šírku.
-- Pri väčšom texte alebo nedostatku priestoru sa MUST adaptívne zložiť pod seba.
-- Počet MUST používať lokalizované plurálové pravidlá.
+Návrat späť nie je triggerom aplikácie témy.
 
-## Informačná skupina a odkazy
+## 5. Container-driven adaptive keypad
 
 ```text
-┌──────────────────────────────────────┐
-│ Informácia A                         │
-├──────────────────────────────────────┤
-│ Informácia B                         │
-├──────────────────────────────────────┤
-│ Interný detail                     › │
-│ Externý zdroj                      ↗ │
-└──────────────────────────────────────┘
+availableWidth  → widthLimit
+availableHeight → heightLimit
+keySize = clamp(min(widthLimit, heightLimit), minKey, maxKey)
 ```
 
-- Tri a viac rovnocenných vysvetľujúcich riadkov SHOULD tvoriť jednu grouped kartu.
-- Interný push prechod používa chevron; externý odkaz používa `arrow.up.right.square`.
-- Navigačný surface MUST zabrániť presvitaniu posúvaného obsahu cez inline titulok.
+Horná hranica keypadu môže byť produktový anchor. Rast smerom nadol/bočne nesmie vytlačiť obsah nad anchorom.
 
+## 6. Bottom navigation variants
 
-## 1.5.0 – Root / Search / Empty / Editor / Badge patterns
+### Native
+Použi systémový `TabView`, ak netreba vlastnú globálnu akciu alebo inú oprávnenú geometriu.
 
-### Root
-1. app title + krátky subtitle + systémová akcia,
-2. jedna dominantná úloha alebo stav,
-3. sekundárne skratky/sekcie,
-4. detail cez push alebo context action.
+### Custom floating
+Použi shared baseline z `DESIGN_TOKENS.md`; safe area a content clearance sa počítajú dynamicky. Primary action nesmie nafúknuť celý bar len kvôli svojmu priemeru.
 
-### Search + filtre
-1. jeden search field,
-2. segmented view switch iba pre malé množstvo režimov,
-3. horizontálne chips pre kategórie/stavy,
-4. výsledky s jasným count/statusom iba ak pomáha rozhodnutiu.
+## 7. Conformance evidence
 
-### Empty state
-Ikona → krátky title → jedna veta → jedno CTA.
+```json
+"STD-ABOUT-002": {
+  "mode": "static",
+  "status": "implemented",
+  "evidence": {
+    "files": ["App/AboutView.swift"],
+    "containsAll": ["CFBundleShortVersionString", "CFBundleVersion"]
+  }
+}
+```
 
-### Editor
-Náhľad/identita → základné údaje → zaradenie/vzhľad → voliteľné údaje → technické možnosti. Disabled Save má mať vysvetliteľnú príčinu.
+Behaviorálne pravidlo:
 
-### Badge / user label
-Market badge (`SK`, `CZ`) môže dopĺňať identitu, ale nenahrádza používateľské Označenie (`Romanova`, `Firemná`, `Moja`). Badge aj favorite indicator musia adaptovať kontrast na surface.
-## 1.5.1 – Neutral surface pattern
+```json
+"STD-APPEARANCE-001": {
+  "mode": "ui",
+  "status": "implemented",
+  "test": "AppearanceLiveUpdateUITests/testThemeAppliesWithoutBackNavigation"
+}
+```
 
-Referenčná hierarchia neutrálnej obrazovky:
+Manuálny runtime gate:
 
-1. root background = `color.appBackground`,
-2. grouped card/tile = `color.cardSurface`,
-3. hlavný text = `color.textPrimary`,
-4. pomocný text = `color.textSecondary`,
-5. divider = `color.separator`,
-6. product accent iba pre význam/akciu, nie ako náhrada neutrálnej vrstvy.
+```json
+"STD-ADAPT-010": {
+  "mode": "runtime",
+  "status": "implemented",
+  "runtimeGate": "RUNTIME_ACCEPTANCE.md#STD-ADAPT-010"
+}
+```
 
-Light a Dark variant tej istej obrazovky musia meniť iba appearance mapovanie sémantických rolí, nie lokálnu logiku farieb.
-
-
-
-## Outcome-first / practical-first detail
+## 8. Root top anchor
 
 ```text
-[Názov výsledku]
-[hlavný stav / následok]
-[čo to znamená pre používateľa]
-[čo treba urobiť alebo čo nasleduje]
-
-[Právny/technický základ ▾]
-[Proces a zdroje ▾]
+topSafeArea.bottom
+  + shared root-header extra inset (0–4 pt baseline)
+  → root title/header
 ```
 
-- Používateľský výsledok a praktický význam sú pred sekundárnym právnym, diagnostickým alebo procesným detailom.
-- `danger`, `warning`, `success` a `information` vyjadrujú význam, nie iba veľkosť čísla.
+Nevkladaj per-screen `padding(.top, 14)` iba kvôli historickému vzhľadu. Peer root screens používajú spoločný token.
 
-## Dlhý katalóg so sekčným kontextom
-
-Pinned header je vhodný iba vtedy, keď používateľ pri dlhom scrollovaní reálne stráca informáciu o aktuálnej skupine. Featured/úvodná sekcia zostáva bežne nepripnutá.
+## 9. Custom bottom chrome – position vs clearance
 
 ```text
-[collapsing title / kompaktný navigation title]
-[voliteľný pinned názov aktuálnej katalógovej skupiny]
-[položka]
-[položka]
-[položka]
---- ďalšia skupina prirodzene nahradí pinned header ---
+viewport bottom / safe-area geometry
+  → lowest safe bar position
+
+bar overlap + final visual reserve
+  → scroll content bottom clearance
 ```
 
-- Pinned header zostáva pod safe area/navigation surface, má vlastný semantic background a neprekrýva obsah.
-- Prvý riadok skupiny nesmie byť odrezaný pod pinned headerom.
-- Pinned header nesúperí s navigation title/header family.
-- Rovnaký detail otvorený z katalógu, vyhľadávania alebo quick linku používa rovnaký Back + swipe-back kontrakt.
-## Header family alignment
+Tieto dve hodnoty sa počítajú oddelene. Zvýšenie scroll clearance nesmie posunúť bar vyššie.
 
-Použite jeden spoločný header pattern pre obrazovky, ktoré majú rovnakú vizuálnu identitu, aj keď niektoré obsahujú Back akciu.
+## 10. Screen-family inventory
 
-```text
-[leading slot / Back]   [title + subtitle anchor]   [trailing Settings/action]
-                         ↑ rovnaká baseline          ↑ rovnaká centerline
+```json
+"screenAudit": {
+  "families": {
+    "SCREEN-ROOT": {
+      "status": "pass",
+      "screens": ["Home", "Cards"],
+      "evidence": ["RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"]
+    },
+    "SCREEN-SETTINGS": {
+      "status": "pending",
+      "screens": ["Settings"]
+    }
+  }
+}
 ```
 
-- Home alebo iný určený root môže byť referenčnou geometriou.
-- Back akcia obsadí leading slot; nesmie posúvať title ani trailing action smerom nadol.
-- Nepoužívajte per-screen `padding(.top)` alebo `offset(y:)` na vizuálne dorovnávanie rovnakej header family.
-- Runtime parity kontrola porovná referenčný root s aspoň jednou vnorenou obrazovkou rovnakej rodiny v Light/Dark a pri podporovanom Dynamic Type.
-## Floating bottom navigation clearance
+Family `pass` bez evidence je invalidný. `pending` blokuje Level 4.
 
-```text
-[posledný obsah]
-        ↕ 16–24 pt vizuálna rezerva
-┌──────────────────────────────────────┐
-│        floating bottom tab bar       │
-└──────────────────────────────────────┘
-[safe area]
-```
-
-- Celkový inset je dynamický: reálna výška tab baru + safe area + kompaktná content clearance.
-- Peer root taby používajú rovnaký clearance princíp; posledný obsah je celý viditeľný bez veľkej prázdnej plochy.
-
-## Rotating content pattern – MAY
-
-```text
-spustenie/relácia A → [téma 1] [téma 2] [téma 3] [téma 4]
-ďalší definovaný cyklus → [téma 5] [téma 6] [téma 1] [téma 7]
-```
-
-- Sada je počas relácie stabilná.
-- Bez duplicít v jednej sade.
-- Rotácia je deterministická alebo kontrolovaná.
-- Dôležité položky sa nestratia dlhodobo mimo zobrazovaných sád.
-
-## Verified AI / generated answer
-
-```text
-[otázka používateľa]
-        ↓
-[retrieval / resolver nad autoritatívnymi dátami]
-        ↓
-[overené podklady + identita/verzia]
-        ↓
-[AI zrozumiteľné vysvetlenie]
-        ↓
-[zdrojový detail / pokračovanie / feedback]
-
-Ak podklady nestačia:
-[doplňujúca otázka] alebo [bezpečný fallback] alebo [nahlásiť chýbajúcu odpoveď]
-```
-
-- AI vysvetlenie nenahrádza autoritatívny zdroj pravdy.
-- Pri nízkej istote sa nesmie zobraziť nesúvisiaci „najbližší“ výsledok ako definitívna odpoveď.
-- Feedback môže predvyplniť otázku a diagnostický kontext, ale používateľ musí obsah pred odoslaním vidieť a nič sa neodosiela automaticky.
-
-
-## Component family geometry – 1.6.4
-
-```text
-[44×44 rounded-square icon]  Názov                  >
-                            Podnadpis
-
-rovnaká rola na inej obrazovke:
-[44×44 rounded-square icon]  Názov                  >
-                            Podnadpis
-```
-
-- Rovnaký component family variant zachováva icon container, radius, alignment, padding a content density.
-- Kruh namiesto rounded square je prípustný iba pre inú pomenovanú sémantickú rolu (napr. avatar/status) alebo zdokumentovanú výnimku.
-- Dlhší text alebo Dynamic Type môže komponent zväčšiť; nemá vytvoriť náhodný lokálny variant.
-
-## Mode control text fit – 1.6.4
-
-```text
-[ Praktické ] [ Právne ]
-```
-
-- Text je vertikálne centrovaný, neorezaný a čitateľný.
-- Pri dlhšej lokalizácii alebo Dynamic Type sa mení vhodný layout/variant, nie význam textu.
-
-## Feature maturity exposure – 1.6.4
-
-```text
-produkčný používateľ: [jedna podporovaná cesta]
-
-developer diagnostika: Auto | Classic | AI Test | score/routing
-                       ^ mimo bežného používateľského UI
-```
+## 11. Header ownership pattern
+Prefer either native `navigationTitle` **or** a custom page/sheet header for the authoritative page title. A section heading must narrow the content meaning. Do not reserve an empty navigation band only for close/back control above a second title.

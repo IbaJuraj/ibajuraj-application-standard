@@ -1,30 +1,25 @@
-# Správa IbaJuraj Application Standard
+# Governance – IbaJuraj Application Standard 1.7.0
 
-## Zdroj pravdy
+## Change classes
+- PATCH: clarification/hardening without new contract family.
+- MINOR: new compatible contract family, test system or shared UX behavior.
+- MAJOR: incompatible product/release contract.
 
-Autoritatívna verzia je verzia publikovaná v spoločnom GitHub repozitári IbaJuraj. Kópie vložené do aplikácií slúžia na audit konkrétneho buildu a musia uvádzať verziu štandardu.
+## Stable rule IDs
+Once a `STD-*` ID is published, its semantic meaning SHOULD NOT be silently repurposed. Breaking semantic change receives a new ID.
 
-## Verzionovanie
+## Exceptions
+A MUST/MUST NOT exception requires:
+- reason,
+- affected rule ID,
+- scope,
+- risk,
+- compensating control,
+- review/removal condition,
+- ADR path.
 
-Používa sa sémantické verzionovanie:
+## RC promotion
+RC may be used for implementation work but is not public authority. Promotion to active requires package validation and at least one real application adoption proving the new conformance machinery.
 
-- PATCH – spätne kompatibilné spresnenie, oprava alebo quality/safety hardening existujúceho spoločného kontraktu; MAY pridať podmienené pravidlo pre funkciu, ktorú nie všetky aplikácie používajú, ak nevyžaduje migráciu nedotknutých produktov,
-- MINOR – nový spoločný capability/contract, ktorý rozširuje povinný rozsah adopcie relevantných aplikácií alebo vyžaduje plánovaný širší adopčný krok,
-- MAJOR – zmena, ktorá vyžaduje migráciu aplikácií alebo mení záväzné správanie.
-
-## Proces zmeny
-
-1. návrh,
-2. posúdenie dopadu na všetky aplikácie,
-3. rozhodnutie MUST / MUST NOT / SHOULD / SHOULD NOT / MAY,
-4. schválenie,
-5. aktualizácia štandardu a changelogu,
-6. audit a postupná adopcia aplikáciami.
-
-Pri MINOR alebo MAJOR vydaní SHOULD byť pred finálnym tagom vytvorený release candidate. Kandidát sa overí najmenej na všetkých aktívnych aplikáciách, ktorých sa nové spoločné pravidlo týka. Finálny tag MUST byť vytvorený až po úspešnej validácii release obsahu a zaznamenaní známych výnimiek.
-
-Nový numerický token v MINOR verzii MUST byť aditívny, `preferred`, `minimum` alebo spätne kompatibilný `range`. Nekompatibilná náhrada existujúceho povinného `exact` tokenu vyžaduje MAJOR verziu alebo zachovanie starého variantu počas migračného obdobia.
-
-## Automatizácia
-
-Audit môže automaticky vytvoriť návrh, upozornenie alebo report. Nemôže bez schválenia zaviesť nové MUST pravidlo, zrušiť výnimku ani zmeniť produktovú architektúru.
+## Release-candidate iteration
+A later RC supersedes an earlier RC for new adoption work without rewriting the historical RC tag/release. Semantic rule IDs already introduced SHOULD retain their meaning; newly discovered obligations receive new IDs. Promotion to active requires resolving all known RC ambiguities and completing the agreed cross-app adoption matrix.

@@ -1,21 +1,11 @@
-name: Validate IbaJuraj Application Standard
-
+name: Validate IbaJuraj Standard
 on:
   push:
-    branches:
-      - main
   pull_request:
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Validate standard
-        run: bash Checks/validate-standard.sh
+      - uses: actions/checkout@v4
+      - run: bash Checks/validate-standard.sh
+      - run: python3 -m unittest Checks/test_validate_app_conformance.py

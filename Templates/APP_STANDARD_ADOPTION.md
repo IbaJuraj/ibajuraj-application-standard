@@ -3,8 +3,8 @@
 **Application:**
 **Application version:**
 **Build:**
-**Adopted standard:** 1.6.4
-**Standard tag:** standard-v1.6.4
+**Adopted standard:** 1.7.0
+**Standard tag:** standard-v1.7.0
 **Adoption status:** active
 **Adoption level:** Level 0 – Declared
 **Foundation version:** not adopted
@@ -14,7 +14,7 @@
 ## Autoritatívny zdroj
 
 - Repository: https://github.com/IbaJuraj/ibajuraj-application-standard
-- Adopted tag: standard-v1.6.4
+- Adopted tag: standard-v1.7.0
 
 ## Stav adopcie
 

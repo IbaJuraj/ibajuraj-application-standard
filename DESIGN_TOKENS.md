@@ -1,338 +1,102 @@
-# IbaJuraj Design Tokens
+# IbaJuraj Application Standard 1.7.0 – Design Tokens
 
-**Verzia:** 1.6.4
-**Stav:** autoritatívny spoločný register
-**Platnosť od:** 23. augusta 2026
+Tento dokument definuje spoločné referenčné tokeny. Token je baseline, nie náhrada adaptívneho layoutu.
 
-Tento register definuje spoločné počiatočné hodnoty. Aplikácia ich MUST používať prostredníctvom centrálneho theme alebo foundation rozhrania, nie opakovanými číslami v jednotlivých obrazovkách.
+## Spacing
 
-## Typ záväznosti tokenu
+| Token | Hodnota | Poznámka |
+|---|---:|---|
+| `space.xs` | 4 pt | jemné interné medzery |
+| `space.sm` | 8 pt | kompaktný spacing |
+| `space.md` | 12 pt | štandardný interný spacing |
+| `space.lg` | 16 pt | sekčný/obsahový spacing |
+| `space.xl` | 20–24 pt | väčší oddych medzi blokmi |
 
-| Typ | Význam |
+## Touch
+
+- `touch.minimum`: **44 × 44 pt**
+- Hit-area MAY byť väčšia než vizuálny symbol.
+
+## Shared navigation tile
+
+Peer tiles musia používať rovnaký variant a adaptovať sa cez obsah/container, nie per-screen offsetmi.
+
+## Custom floating bottom navigation
+
+Referenčná baseline pre `bottomNav.custom`:
+
+| Token | Referencia |
+|---|---:|
+| `bottomNav.tabContentMin.compact` | 48 pt |
+| `bottomNav.tabContentMin.regular` | 52 pt |
+| `bottomNav.outerPadding` | 4 pt |
+| `bottomNav.surfaceHeight.reference` | 60–66 pt |
+| `bottomNav.radius` | 28 pt |
+| `bottomNav.selectedRadius` | ~22 pt |
+| `bottomNav.iconLabelSpacing` | 3 pt |
+| `bottomNav.primaryAction.reference` | ~50 pt |
+| `bottomNav.contentClearanceExtra` | 16–24 pt |
+
+`surfaceHeight.reference` nie je rigidný frame. Pri Dynamic Type alebo inom kontejnery MAY výška rásť.
+
+## Calculator Key adaptive family
+
+- minimum hit target: 44 pt,
+- final key size sa SHOULD odvodzovať z dostupnej šírky aj výšky,
+- key size SHOULD mať min/max clamp,
+- growth na veľkom displeji SHOULD využiť voľný priestor,
+- ochranný top anchor MUST zostať stabilný, ak oddeľuje keypad od výsledkového obsahu,
+- spacing MAY mierne rásť po vyčerpaní vhodného key-size rastu.
+
+## About / Settings shared identifiers
+
+| Role | accessibility/test ID |
 |---|---|
-| `exact` | spoločný komponent používa presnú hodnotu |
-| `minimum` | hodnota je dolná hranica a komponent MAY rásť |
-| `maximum` | hodnota je horná hranica |
-| `preferred` | odporúčaná predvolená hodnota v povolenom rozsahu |
-| `range` | povolený interval spätne kompatibilných hodnôt |
-| `semantic` | pravidlo správania bez jednej numerickej hodnoty |
+| Settings About row | `ij.settings.about.row` |
+| About Version card | `ij.about.version.card` |
+| About Standard card | `ij.about.standard.card` |
+| About Developer card | `ij.about.developer.card` |
+| About Web row | `ij.about.web.row` |
+| About Privacy row | `ij.about.privacy.row` |
+| Custom bottom nav | `ij.bottomnav.container` |
+| Bottom nav primary action | `ij.bottomnav.primaryAction` |
+| Appearance mode control | `ij.appearance.mode.control` |
+| Theme selection container | `ij.appearance.theme.list` |
 
-Ak tabuľka neuvádza inak, spacing a radius tokeny sú `exact`, minimálne rozmery sú `minimum` a obsahová výška je `semantic`. Produktový token MAY centrálny register rozšíriť, ale MUST NOT prepísať spoločný token pod rovnakým názvom.
+## Semantic surfaces
 
-## Rozostupy
+Shared semantic roles must preserve family parity in Light/Dark:
+- `background`
+- `surface`
+- `elevatedSurface`
+- `primaryText`
+- `secondaryText`
+- `separator`
+- `disabled`
+- `accent`
+- `success`
+- `warning`
+- `danger`
 
-| Token | Hodnota |
+Product-selected theme MAY tint background/accent, but must preserve contrast and semantic meaning.
+
+## Viewport edge utilization
+
+| Token | Referencia |
 |---|---:|
-| `space.xs` | 4 pt |
-| `space.sm` | 8 pt |
-| `space.md` | 12 pt |
-| `space.lg` | 16 pt |
-| `space.xl` | 24 pt |
-| `space.xxl` | 32 pt |
-| `layout.pageInsetCompact` | 16 pt |
-| `layout.pageInsetRegular` | 20 pt |
-| `layout.gridGap` | 12 pt |
-| `layout.maximumReadableWidth` | 720 pt |
+| `rootHeader.extraTopInset.reference` | **0–4 pt** |
+| `viewport.horizontalInset.compact` | **16–20 pt** podľa family |
+| `viewport.horizontalInset.regular` | **18–24 pt** podľa family |
+| `viewport.contentMaxWidth` | produktovo/family špecifický; MUST byť container-driven |
+| `bottomChrome.finalContentClearance` | **16–24 pt** vizuálnej rezervy po doscrollovaní |
 
-## Zaoblenie a dotyk
+`rootHeader.extraTopInset.reference` sa aplikuje **po top safe area**, nie od fyzického okraja displeja. Väčší inset vyžaduje zdôvodnenie.
 
-| Token | Hodnota |
-|---|---:|
-| `radius.small` | 12 pt |
-| `radius.medium` | 16 pt |
-| `radius.large` | 22 pt |
-| `radius.feature` | 28 pt |
-| `touch.minimum` | 44 × 44 pt |
-| `iconContainer.compact` | 36 × 36 pt |
-| `iconContainer.standard` | 44 × 44 pt |
-| `iconContainer.feature` | 52 × 52 pt |
+Custom bottom surface MAY vstúpiť do bottom safe area; jeho interaktívny obsah však nesmie kolidovať s Home Indicatorom. `bottomChrome.finalContentClearance` je rezerva **obsahu nad chrome**, nie medzera pod chrome.
 
-## Komponentové varianty
+## Shared viewport/test identifiers
 
-| Variant | Referenčná minimálna šírka | Referenčná minimálna výška | Poznámka |
-|---|---:|---:|---|
-| `navigationTile.compact` | 150 pt | 124 pt | Dvojstĺpcová kategória alebo rýchla akcia |
-| `summaryShortcut.compact` | 150 pt | 112 pt | Krátky názov a počet alebo stav; adaptívna dvojica |
-| `entityCard.standard` | podľa kontajnera | 96 pt | Výška rastie podľa stavu a kontextu |
-| `walletCard.compact` | 150 pt | podľa pomeru strán | Predvolene pomer približne 1,586 : 1 |
-| `featureCard` | podľa kontajnera | 144 pt | Obsahová výška, nie pevné maximum |
-| `listRow.standard` | podľa kontajnera | 64 pt | Výška rastie podľa obsahu a Dynamic Type |
-| `searchField.standard` | podľa kontajnera | 52 pt | Zachová minimálnu dotykovú plochu |
-| `calculatorKey.standard` | podľa produktovej matice | 44 pt | Doménový variant; dotyková plocha nesmie byť menšia než minimum |
-
-Referenčná minimálna veľkosť MUST NOT byť použitá ako pevná maximálna veľkosť. Ak obsah potrebuje viac priestoru, komponent sa zväčší alebo sa mriežka zmení na menší počet stĺpcov.
-
-### Navigation tile & icon family geometry
-
-| Token | Hodnota | Typ |
-|---|---:|---|
-| `navigationTile.compact.minimumHeight` | 124 pt | `minimum` |
-| `navigationTile.compact.radius` | 22 pt | `exact` |
-| `navigationTile.compact.contentPadding` | 16 pt | `exact` |
-| `navigationTile.compact.contentGap` | 10 pt | `exact` |
-| `navigationTile.compact.iconContainer` | 44 × 44 pt | `exact` |
-| `navigationTile.compact.iconContainerRadius` | 12 pt | `exact` |
-| `navigationTile.compact.symbolOpticalSize` | 20 pt | `preferred` |
-| `navigationTile.compact.trailingIndicator` | `chevron.right` ak ide o push cieľ | `semantic` |
-| `navigationRow.standard.iconContainer` | 36 × 36 pt | `exact` |
-| `navigationRow.standard.iconContainerRadius` | 10 pt | `exact` |
-| `navigationRow.standard.symbolOpticalSize` | 17 pt | `preferred` |
-| `componentFamily.semanticException` | odlišná geometria iba pri odlišnej sémantickej roli alebo zdokumentovanej výnimke | `semantic` |
-| `componentFamily.localGeometryDrift` | zakázaný lokálny override bez pomenovaného variantu/výnimky | `semantic` |
-| `modeControl.textFit` | bez významového clippingu; adaptívne pre Dynamic Type a lokalizáciu | `semantic` |
-
-- `navigationTile.compact` používa jeden spoločný shape contract naprieč peer obrazovkami. Produktový obsah alebo farba MAY byť odlišná; geometry variant zostáva spoločný.
-- Ikonový kontajner rovnakej komponentovej rodiny MUST zachovať rovnaký shape a radius. Kruh nie je zameniteľný s rounded square iba podľa obrazovky.
-- Symbolová veľkosť je optická; konkrétny SF Symbol MAY vyžadovať malú centrálne definovanú korekciu, ale lokálne per-screen `font`/`scaleEffect` override SHOULD NOT vznikať.
-- Ak Dynamic Type alebo lokalizácia vyžaduje väčšiu výšku, komponent rastie smerom nahor od minima a peer komponenty v rovnakom layout kontexte SHOULD zachovať vizuálnu paritu.
-
-## Typografia koreňovej obrazovky
-
-| Token | Hodnota | Typ |
-|---|---|---|
-| `appPage.title` | `.largeTitle.weight(.bold)` | `exact` |
-| `appPage.subtitle` | `.subheadline` + sekundárna farba | `exact` |
-| `appPage.titleSubtitleGap` | 6 pt | `exact` |
-| `appPage.rootTitleTopInset` | 0 pt od spoločného root content/safe-area anchoru | `exact` |
-| `appPage.rootHeaderBaseline` | rovnaká vertikálna baseline na všetkých primárnych rootoch produktu | `semantic` |
-| `appPage.headerFamilyTopAnchor` | spoločný safe-area/root content anchor pre obrazovky rovnakej header family | `semantic` |
-| `appPage.headerFamilyTitleBaseline` | rovnaká title baseline v rámci header family pri rovnakom prostredí | `semantic` |
-| `appPage.headerFamilyTrailingBaseline` | rovnaká baseline/centerline trailing systémovej akcie v rámci header family | `semantic` |
-| `appPage.headerLeadingSlotMinimum` | 44 pt | `minimum` |
-| `appPage.titleLineBehavior` | Dynamic Type; bez lokálneho bodového override a bez `minimumScaleFactor` | `semantic` |
-| `appPage.subtitleLineBehavior` | prirodzené viacriadkové zalomenie | `semantic` |
-
-- Tokeny `appPage.*` sa používajú na hlavnom pracovnom root headri aplikácie alebo hlavného produktového tabu.
-- Rovnaká rola MUST vyzerať typograficky rovnako naprieč aplikáciami, aj keď sa text a dĺžka podnadpisu líšia.
-- Vnorené navigačné titulky, produktové hero nadpisy a transakčné sheet headre používajú svoje sémantické systémové roly a nie sú `appPage.title`.
-
-## Hlavička a vstup do Nastavení
-
-| Token | Hodnota | Typ |
-|---|---:|---|
-| `header.action.visualDiameter` | 42 pt | `preferred` |
-| `header.action.visualDiameterRange` | 42–48 pt | `range` |
-| `header.action.hitArea` | 44 × 44 pt | `minimum` |
-| `header.action.settingsSymbol` | 18 pt | `preferred` |
-| `header.action.secondarySymbol` | 17 pt | `preferred` |
-| `header.action.clusterGap` | 6 pt | `exact` |
-| `header.action.maximumPerSide` | 2 | `maximum` |
-| `header.action.pressedScale` | 0.97 | `preferred` |
-| `header.action.pressedOpacity` | 0.82 | `preferred` |
-
-- Akcia Nastavení MUST používať `gearshape.fill`, kruhový vizuálny kontajner a accessibility label **Nastavenia**.
-- Nastavenia MUST byť pravou krajnou akciou hlavnej obrazovky.
-- Hit area MAY presahovať vizuálny kruh a MUST zostať minimálne 44 × 44 pt.
-- Odsadenie sa počíta od aktuálnej safe area, nie od fyzického okraja zariadenia.
-- Surface, pressed state a animácia MUST používať sémantické farby a rešpektovať Reduce Motion.
-
-## Nastavenia
-
-### Vstupné tlačidlo
-
-Nasledujúce tokeny z 1.2.0 zostávajú platné ako spätne kompatibilný variant do odstránenia v budúcej major verzii. Nové implementácie SHOULD používať `header.action.*`.
-
-| Token | Hodnota | Stav |
-|---|---:|---|
-| `settings.entry.container` | 48 × 48 pt | deprecated alias/variant |
-| `settings.entry.symbol` | 20 pt | deprecated alias/variant |
-| `settings.entry.radius` | 24 pt | deprecated alias/variant |
-| `settings.entry.trailingInset` | 16 pt compact / 20 pt regular | active |
-| `settings.entry.pressedScale` | 0.97 | alias `header.action.pressedScale` |
-| `settings.entry.pressedOpacity` | 0.82 | alias `header.action.pressedOpacity` |
-
-- Symbol MUST byť `gearshape.fill`.
-- Kontajner MUST byť kruhový a používať sémantický surface alebo jemne tónovaný accent surface s dostatočným kontrastom.
-- Odsadenie sa počíta od aktuálnej safe area, nie od fyzického okraja zariadenia.
-- Stlačený stav MUST byť viditeľný a SHOULD rešpektovať Reduce Motion.
-
-### Grouped-card rozloženie
-
-| Token | Hodnota |
-|---|---:|
-| `settings.group.radius` | 22 pt |
-| `settings.group.horizontalPadding` | 16 pt |
-| `settings.sectionSpacing` | 24 pt |
-| `settings.row.minimumHeight` | 56 pt |
-| `settings.row.horizontalPadding` | 16 pt |
-| `settings.row.verticalPadding` | 10 pt |
-| `settings.iconTile.size` | 36 × 36 pt |
-| `settings.iconTile.radius` | 10 pt |
-| `settings.chevron.symbol` | `chevron.right` |
-| `settings.segmented.minimumHitHeight` | 44 pt |
-| `settings.appearance.headerHorizontalPadding` | 16 pt |
-| `settings.appearance.headerTopPadding` | 10 pt |
-| `settings.appearance.segmentHorizontalPadding` | 16 pt |
-| `settings.appearance.segmentBottomPadding` | 10 pt |
-| `settings.divider.leadingInset` | 64 pt |
-| `information.group.radius` | 20 pt |
-| `information.row.horizontalPadding` | 16 pt |
-| `information.row.verticalPadding` | 16 pt |
-| `information.row.dividerLeadingInset` | 64 pt |
-
-- Section header SHOULD používať lokalizovaný uppercase štýl `.footnote` so semibold váhou a sekundárnou farbou.
-- Názov riadku MUST používať Dynamic Type; predvolená rola je `.body` alebo `.headline` podľa hierarchie.
-- Krátka stavová hodnota vpravo SHOULD používať `.subheadline` a sekundárnu farbu; MUST sa bezpečne presunúť pod názov, ak sa vedľa neho nezmestí.
-- Názov ani trailing hodnota MUST NOT používať `minimumScaleFactor` ako náhradu responzívneho rozloženia.
-- Ikonová dlaždica MAY používať produktový alebo sémantický tint, ale MUST zachovať spoločný rozmer, radius a kontrast.
-- Systémový segmented control SHOULD byť použitý pre priamu voľbu **Automaticky / Svetlý / Tmavý**; MUST NOT byť zmenšený pod použiteľnú dotykovú plochu.
-- Tri alebo viac neinteraktívnych vysvetľujúcich riadkov rovnakej roly SHOULD používať jeden `information.group` kontajner a vnútorné oddeľovače namiesto série samostatných vysokých kariet.
-
-- Pre rovnaký settings row je poradie modifierov súčasťou geometrického kontraktu: obsah → `.padding(.horizontal, 16)` → `.padding(.vertical, 10)` → `.frame(minHeight: 56)`. `frame(minHeight:)` pred paddingom MUST NOT byť použitý, pretože vytvorí vyšší výsledný komponent.
-- Karta **Vzhľad** používa header s `settings.iconTile.size`, horizontálnym paddingom 16 pt a horným paddingom 10 pt; segmented control používa minimálnu hit výšku 44 pt, horizontálny padding 16 pt a spodný padding 10 pt.
-- Divider medzi settings riadkami SHOULD začínať na 64 pt od leading hrany spoločnej karty, ak produktový variant nemá zdokumentovaný dôvod na iný inset.
-
-## Navigačný surface a odkazy
-
-| Token | Hodnota | Typ |
-|---|---|---|
-| `navigation.surface` | sémantický `background` alebo `elevatedSurface` | `semantic` |
-| `navigation.internalIndicator` | `chevron.right` | `exact` |
-| `navigation.externalIndicator` | `arrow.up.right.square` | `exact` |
-| `navigation.floatingTabBar.contentClearancePreferred` | 20 pt | `preferred` |
-| `navigation.floatingTabBar.contentClearanceRange` | 16–24 pt | `range` |
-| `navigation.floatingTabBar.dynamicInset` | reálna výška tab baru + safe area + content clearance | `semantic` |
-| `sectionHeader.pinnedEligibility` | iba pri reálnej strate kontextu v dlhom katalógu | `semantic` |
-
-- `navigation.surface` MUST zachovať čitateľnosť inline titulku počas posúvania a MUST zabrániť presvitaniu konkurenčného textu pod titulkom.
-- Interný push cieľ MUST používať `navigation.internalIndicator`; externá URL MUST používať `navigation.externalIndicator` alebo rovnocenný systémový symbol.
-- Floating tab bar clearance sa počíta dynamicky od reálnej navigačnej geometrie; 16–24 pt je vizuálna rezerva nad hornou hranou baru, nie celý bottom inset.
-- `sectionHeader.pinnedEligibility` nie je povinnosť pripnúť každú sekciu; pinned variant sa používa iba tam, kde pri scrollovaní zachováva užitočný katalógový kontext.
-
-## Kontakt
-
-| Token | Hodnota | Typ |
-|---|---:|---|
-| `contact.primaryAction.minimumHeight` | 64 pt | `minimum` |
-| `contact.action.horizontalPadding` | 16 pt | `exact` |
-| `contact.action.verticalPadding` | 16 pt | `exact` |
-| `contact.action.iconSize` | 42 × 42 pt | `exact` |
-| `contact.action.iconRadius` | 12 pt | `exact` |
-| `contact.action.contentGap` | 13 pt | `exact` |
-| `contact.action.radius` | 20 pt | `exact` |
-| `contact.actionGap` | 12 pt | `exact` |
-| `contact.screen.contentSpacing` | 18 pt | `exact` |
-| `contact.screen.pageInset` | 16 pt | `exact` |
-| `contact.maximumPrimaryActions` | 2 | `maximum` |
-
-- Kontaktná obrazovka SHOULD používať krátky úvod, samostatnú akciu formulára, samostatnú akciu Telegramu a kompaktné upozornenie na citlivé údaje.
-- Produktová sekcia **Čo môžete poslať** používa obsahovú výšku a MUST NOT byť uzamknutá na pevné maximum.
-- Ak text hlavnej akcie zaberá rovnaký počet riadkov, výsledná geometria akčnej karty MUST byť rovnaká naprieč aplikáciami.
-
-## O aplikácii
-
-| Token | Hodnota | Typ |
-|---|---:|---|
-| `about.screen.contentSpacing` | 18 pt | `exact` |
-| `about.screen.pageInset` | 20 pt | `exact` |
-| `about.metadata.radius` | 18 pt | `exact` |
-| `about.metadata.padding` | 16 pt | `exact` |
-| `about.metadata.iconColumnWidth` | 24 pt | `exact` |
-| `about.action.radius` | 18 pt | `exact` |
-| `about.action.padding` | 16 pt | `exact` |
-| `about.action.iconColumnWidth` | 24 pt | `exact` |
-| `about.actionGap` | 12 pt | `exact` |
-
-- Metadata **Verzia**, **IbaJuraj Application Standard** a **Vývojár** používajú rovnaký metadata variant; produktový text MAY zväčšiť výšku pri reálnom zalomení.
-- Akčné riadky Web, súkromie, novinky, stav aplikácie, právne upozornenie, hodnotenie alebo zdieľanie používajú rovnaký `about.action` variant podľa sémantiky interného alebo externého odkazu.
-
-## Adaptívna mriežka
-
-- Dva stĺpce sa MAY použiť iba vtedy, keď po odpočítaní okrajov a medzery zostáva každému prvku minimálne 150 bodov a obsah je čitateľný.
-- Pri menšej dostupnej šírke alebo accessibility texte MUST mriežka prejsť na jeden stĺpec.
-- Na veľkom displeji SHOULD dlaždica zachovať rozumnú maximálnu šírku a mriežka SHOULD pracovať s okrajmi alebo ďalším stĺpcom podľa produktového významu.
-- Karty v jednom riadku MUST používať rovnakú výslednú výšku; ďalší riadok MAY mať inú obsahovú výšku.
-- Dvojica `summaryShortcut.compact` MAY zostať v dvoch stĺpcoch; pri šírke pod minimum alebo pri accessibility texte MUST použiť jeden stĺpec.
-
-## Typografia a farby
-
-- Text MUST používať Dynamic Type štýly.
-- Sémantické farby MUST rozlišovať minimálne `accent`, `success`, `warning`, `danger`, `information`, `background`, `surface` a `elevatedSurface`.
-- Stav MUST mať aj textový, ikonový alebo iný nefarený nositeľ významu.
-- Produktový akcent MAY byť odlišný, ak zostáva konzistentný a spĺňa kontrast.
-
-
-## 1.5.2 – Neutral Surface, User Theme & Text Contrast Contract
-
-| Token | Light | Dark | Preferovaná systémová mapa | Záväznosť |
-|---|---|---|---|---|
-| `color.appBackground` | približne `#F2F2F7` | `#000000` | `systemGroupedBackground` / `systemBackground` | `MUST` pre Predvolenú tému |
-| `color.cardSurface` | `#FFFFFF` | približne `#1C1C1E` | `secondarySystemGroupedBackground` | `MUST` |
-| `color.elevatedSurface` | systémová secondary/elevated surface | systémová secondary/elevated surface | platform semantic color | `MAY` podľa role |
-| `color.textPrimary` | `#000000` | `#FFFFFF` | `label` / `primary` | `MUST` |
-| `color.textSecondary` | približne `#8E8E93` | približne `#8E8E93` | `secondaryLabel` / `secondary` | `MUST` |
-| `color.separator` | platform separator | platform separator | `separator` | `MUST` |
-| `color.disabled` | platform semantic disabled | platform semantic disabled | semantic disabled/tertiary | `MUST` |
-
-- Hex hodnoty sú referenčný vizuálny cieľ, nie dôvod obísť sémantické systémové farby.
-- Bežný neutrál text SHOULD NOT používať lokálne `.gray`, `.white.opacity(...)` ani `.black.opacity(...)`, ak existuje zodpovedajúca sémantická rola.
-- Brand surface MAY obísť `color.cardSurface`, ale MUST zachovať kontrast textu a indikátorov.
-- `color.userThemeBackground` MAY nahradiť iba root/background surface po výslovnom výbere používateľa; Predvolená téma MUST vrátiť `color.appBackground`.
-- Ak existuje Vzhľad aj farebná téma, persistence MUST byť oddelená (`appearanceMode` a `productTheme` alebo ekvivalent) a theme variant MUST zostať čitateľný v podporovanom appearance režime.
-- `color.accentForeground` MUST byť zvolený podľa kontrastu voči plnému accent fillu; pre svetlé akcenty MAY byť čierny, pre tmavé MAY byť biely.
-- Rovnaký neutrálny token MUST mať rovnaký vizuálny výsledok v každej aplikácii rodiny IbaJuraj; explicitná používateľská theme surface je samostatná produktová rola.
-
-## 1.5.0 – spoločné interaction a content-density tokeny
-
-### Search
-
-| Token | Hodnota | Poznámka |
-|---|---:|---|
-| `search.field.minimumHeight` | 52 pt | minimum; väčší obsah MAY zväčšiť výšku |
-| `search.field.radius` | 18–22 pt | range podľa surface variantu |
-| `search.field.horizontalPadding` | 16 pt | preferred |
-| `search.field.iconSize` | 20–22 pt | range |
-| `search.filter.minimumHitArea` | 44 pt | minimum |
-| `search.filter.spacing` | 8 pt | preferred |
-
-### Primary CTA a empty state
-
-| Token | Hodnota | Poznámka |
-|---|---:|---|
-| `button.primary.minimumHeight` | 52 pt | minimum |
-| `button.primary.radius` | 18–26 pt | range podľa šírky/role |
-| `button.primary.horizontalPadding` | 18 pt | preferred |
-| `emptyState.contentSpacing` | 8–12 pt | range |
-| `emptyState.maximumPrimaryActions` | 1 | exact |
-
-### Badge / label
-
-| Token | Hodnota | Poznámka |
-|---|---:|---|
-| `badge.minimumHeight` | 22 pt | minimum |
-| `badge.horizontalPadding` | 8 pt | preferred |
-| `badge.radius` | 11 pt alebo capsule | semantic variant |
-| `badge.minimumContrastRatio` | 4.5:1 text | cieľ pre bežný text |
-| `badge.iconMinimumContrastRatio` | 3:1 | cieľ pre významovú grafiku |
-
-Badge na produktovej farbe MUST adaptovať foreground/background. Pevný „favorite yellow“ nie je spoločný token; obľúbenosť je sémantická rola a musí zostať čitateľná aj na žltom, zelenom alebo inom brand surface.
-
-### User label / market badge
-
-- `card.userLabel.fontRole`: `caption` alebo ekvivalent sekundárnej role.
-- `card.userLabel.lineLimit`: 1 preferred; MAY prejsť na 2 pri širšom detaile.
-- `card.marketBadge.maximumCharacters`: krátke systémové/trhové označenie, typicky 2–4 znaky.
-- Prázdny `userLabel` MUST NOT rezervovať samostatný riadok.
-
-### Responsive content
-
-| Token | Hodnota | Poznámka |
-|---|---:|---|
-| `content.phone.horizontalMargin` | 16–20 pt | range |
-| `content.pad.maximumReadableWidth` | 760–980 pt | range podľa typu obrazovky |
-| `grid.minimumCardWidth` | 150 pt | minimum pre dvojstĺpcové produktové karty |
-| `grid.spacing` | 12–16 pt | range |
-
-### Motion
-
-| Token | Hodnota | Poznámka |
-|---|---:|---|
-| `motion.micro.preferredDuration` | 0.18–0.25 s | range |
-| `motion.state.preferredDuration` | 0.20–0.35 s | range |
-| `motion.reduceMotionFallback` | no-essential-motion | exact semantic rule |
-
-### Source hygiene quality thresholds
-
-- `source.workflowFile.reviewThresholdLines`: **430** (SHOULD audit, nie hard compile limit).
-- `source.rootView.role`: composition/navigation preferred.
-- `source.unusedProductionFiles`: 0 preferred; každá výnimka má byť zdokumentovaná.
+| Role | accessibility/test ID |
+|---|---|
+| Primary root title | `ij.root.title` |
+| Nested/system navigation header | `ij.navigation.header` |

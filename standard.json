@@ -1,11 +1,17 @@
 {
   "$schema": "./standard.schema.json",
   "name": "IbaJuraj Application Standard",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "status": "active",
-  "releasedAt": "2026-08-23",
+  "releasedAt": "2026-09-02",
+  "rcDate": "2026-08-29",
   "minimumSupportedVersion": "1.0.0",
   "breakingChange": false,
+  "inherits": {
+    "version": "1.6.4",
+    "tag": "standard-v1.6.4",
+    "commit": "5e2901945287165a8902f28fb1d3b5a87b6eeb92"
+  },
   "normativeKeywords": [
     "MUST",
     "MUST NOT",
@@ -41,20 +47,23 @@
     }
   ],
   "contracts": {
-    "settingsEntry": "primary-root-top-trailing",
-    "appearance": "root-segmented-system-light-dark",
-    "nestedNavigation": "native-push-back-button-edge-swipe-and-semantic-affordance",
-    "contact": "form-and-telegram",
-    "layout": "available-container-space-safe-navigation-surfaces-and-adaptive-density",
-    "privacy": "manifest-per-distributed-target",
-    "neutralSurfaces": "semantic-neutral-surface-and-text-parity",
-    "floatingTabBarClearance": "dynamic-safe-area-aware-compact-final-clearance",
-    "pinnedHeaders": "eligible-context-only-no-content-occlusion",
-    "generatedAssistance": "verified-grounded-safe-fallback-transparent-feedback",
-    "authoritativeData": "single-source-traceable-temporal-no-parallel-model",
+    "wholeAppAdaptiveLayout": "container-driven-safe-area-dynamic-type-localization-and-space-utilization",
+    "bottomNavigation": "native-or-custom-adaptive-shared-baseline",
+    "about": "runtime-version-build-public-standard-cross-app-parity",
+    "appearance": "live-selection-state-and-render-parity",
+    "conformance": "stable-rule-ids-static-unit-ui-runtime-evidence",
     "componentFamilyGeometry": "shared-role-shared-geometry-explicit-semantic-exceptions",
-    "featureMaturity": "unfinished-experimental-capabilities-not-equal-user-facing-modes",
-    "visualConsistency": "whole-app-component-family-localization-dynamic-type-audit"
+    "settingsEntry": "primary-root-direct-system-entry",
+    "localization": "all-user-facing-changes-parity",
+    "privacy": "manifest-per-distributed-target",
+    "debugIsolation": "development-controls-not-production-ui",
+    "viewportEdgeUtilization": "safe-area-relative-top-bottom-horizontal-efficient-no-unexplained-waste",
+    "screenFamilyAudit": "capability-driven-inventory-runtime-audit-and-release-gate",
+    "adaptiveDensity": "space-utilization-state-stability-and-layout-performance",
+    "keyboardCoordination": "active-field-visibility-and-no-double-bottom-clearance",
+    "headerOwnership": "single-owner-no-duplicate-page-heading-semantic-section-names",
+    "sheetHeader": "single-coherent-sheet-header-hierarchy",
+    "systemChromeOwnership": "platform-chrome-not-visually-imitated-by-app"
   },
   "documents": {
     "standard": "IBAJURAJ_APPLICATION_STANDARD.md",
@@ -62,12 +71,14 @@
     "migration": "MIGRATION.md",
     "testMatrix": "TEST_MATRIX.md",
     "releaseChecklist": "RELEASE_CHECKLIST.md",
-    "referencePatterns": "REFERENCE_PATTERNS.md"
+    "referencePatterns": "REFERENCE_PATTERNS.md",
+    "conformanceCatalog": "CONFORMANCE_CATALOG.json",
+    "screenAudit": "STANDARD_CONFORMANCE_TEMPLATE.json#screenAudit"
   },
   "source": {
     "repository": "https://github.com/IbaJuraj/ibajuraj-application-standard",
     "latestMetadata": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.json",
-    "tag": "standard-v1.6.4",
-    "document": "IBAJURAJ_APPLICATION_STANDARD.md"
+    "document": "IBAJURAJ_APPLICATION_STANDARD.md",
+    "releaseTag": "standard-v1.7.0"
   }
 }
