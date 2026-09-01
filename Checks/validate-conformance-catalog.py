@@ -5,7 +5,8 @@ root=Path(__file__).resolve().parents[1]
 cat=json.loads((root/'CONFORMANCE_CATALOG.json').read_text(encoding='utf-8'))
 errors=[]
 if cat.get('standardVersion')!='1.7.0': errors.append('catalog standardVersion must be 1.7.0')
-if cat.get('candidate')!='RC3': errors.append('catalog candidate must be RC3')
+if cat.get('status')!='active': errors.append('catalog status must be active')
+if cat.get('candidate') not in (None, ''): errors.append('catalog candidate marker must be cleared')
 ids=[]
 for r in cat.get('rules',[]):
     rid=r.get('id','')
@@ -30,4 +31,4 @@ if errors:
     print('FAIL – conformance catalog')
     for e in errors: print(' -',e)
     sys.exit(1)
-print(f'PASS – conformance catalog RC3 ({len(ids)} rules)')
+print(f'PASS – conformance catalog 1.7.0 ({len(ids)} rules)')
