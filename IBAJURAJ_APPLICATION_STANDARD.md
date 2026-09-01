@@ -1,17 +1,17 @@
 # IbaJuraj Application Standard
 
 **Verzia:** 1.7.0  
-**Stav:** Release Candidate 3  
-**Dátum RC3:** 29. augusta 2026  
+**Stav:** Active  
+**Dátum vydania:** 2. septembra 2026  
 **Vlastník:** IbaJuraj  
-**Aktuálna verejná autorita:** 1.6.4 (`standard-v1.6.4`, commit `5e2901945287165a8902f28fb1d3b5a87b6eeb92`)
+**Aktuálna verejná autorita:** 1.7.0 (`standard-v1.7.0`)
 
-> RC3 nahrádza RC2 pre ďalšiu adopciu; RC1 a RC2 zostávajú historické pre-release snapshoty. Kým nebude vydaný finálny tag `standard-v1.7.0`, stabilnou verejnou verziou zostáva 1.6.4.
+> Verzia 1.7.0 bola povýšená z RC3 po cross-app adopcii a runtime kontrole štyroch cieľových aplikácií. Finálne vydanie nemení normatívnu sadu RC3; uzatvára ju ako aktívny Standard s 96 stabilnými `STD-*` pravidlami.
 
 ## 1. Záväznosť
 `MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD`/`SHOULD NOT` vyžaduje zdôvodnenie. `MAY` je voliteľné. `CONFORMANCE_CATALOG.json` je normatívny machine-readable register aplikovateľnosti a minimálneho typu dôkazu.
 
-## 2. Piliere RC3
+## 2. Piliere 1.7.0
 1. Whole-App Adaptive Layout.
 2. Viewport Edge Utilization.
 3. Native/Custom Bottom Navigation Contract.
@@ -58,7 +58,6 @@ Static PASS nie je runtime PASS. Každé aplikovateľné MUST/MUST NOT potrebuje
 
 ## 4. Normatívny register pravidiel
 Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná aplikovateľnosť a verification mode sú v `CONFORMANCE_CATALOG.json`.
-
 
 ### STD-IDENTITY-001 — One runtime source for marketing version and build — MUST
 
@@ -252,8 +251,7 @@ Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná apl
 
 ### STD-CHROME-001 — App does not imitate platform-owned system chrome — MUST NOT
 
-
-## 5. RC3 semantic clarifications
+## 5. 1.7.0 semantic clarifications
 - **STD-ADAPT-004/013:** bezpečne využiteľný voľný priestor sa má primerane využiť bez narušenia hierarchie.
 - **STD-ADAPT-015:** zakázané je adaptívne riešenie, ktoré spôsobuje zbytočné opakované merania, invalidácie alebo lagovanie.
 - **STD-VIEWPORT-001/008:** root title/header sa viaže na aktuálnu top safe area + shared minimal inset, nie na absolútne Y zariadenia.
@@ -262,7 +260,6 @@ Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná apl
 - **STD-VIEWPORT-006:** nevysvetlený hardcoded edge padding/spacer, ktorý iba znižuje užitočný viewport, je defect.
 - **STD-FORM-006:** keyboard a fixed/custom bottom chrome nesmú vytvoriť overlap ani dvojitú rezervu.
 - **STD-CONF-005:** grep/parser/manifest dôkaz nenahrádza UI/runtime dôkaz behaviorálneho pravidla.
-
 - **STD-HEADER-001:** jedna screen family môže používať native alebo custom header, nie dve paralelné vrstvy s rovnakou rolou.
 - **STD-HEADER-002:** section heading je prípustný iba ak zužuje význam; opakovanie názvu obrazovky v inom case/icon štýle je defect.
 - **STD-HEADER-003:** sheet musí mať jeden vizuálny top anchor; dismissal action nesmie sama vytvoriť prázdny navigation band nad druhým title.
@@ -271,5 +268,5 @@ Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná apl
 ## 6. Minimálna runtime matrix
 Small/regular/large iPhone container; Accessibility Dynamic Type; Light/Dark; najdlhšia podporovaná lokalizácia; keyboard/form state; scroll endpoint nad bottom chrome; iPad portrait/landscape/window sizes, ak je podporovaný; iPad compatibility pre kritický flow, ak relevantné.
 
-## 7. Adopcia
-RC3 nahrádza RC2 pre ďalšiu adopciu. Poradie je v `ADOPTION_PLAN_RC3.md`. Po úspešnom cross-app audite sa odstráni RC marker, `standard.json.status` sa nastaví na `active`, doplní sa release date a vydá sa tag `standard-v1.7.0`.
+## 7. Adopcia a release
+Verzia 1.7.0 bola finalizovaná z RC3 po úspešnom cross-app audite. Každá aplikácia naďalej vlastní svoj `STANDARD_CONFORMANCE.json`, runtime/Xcode dôkazy a prípadné ADR výnimky. Finálny release tag Standardu je `standard-v1.7.0`.
