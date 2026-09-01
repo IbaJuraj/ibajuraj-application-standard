@@ -1,7 +1,8 @@
 # APP_STANDARD_ADOPTION
 
 - Standard: IbaJuraj Application Standard 1.7.0
-- Status: RC adoption until `standard-v1.7.0` is published
+- Standard tag: `standard-v1.7.0`
+- Adoption status: active
 - Adoption level: Level 0–4
 - Product: <app name>
 - Build: runtime
@@ -10,7 +11,8 @@
 ## Exceptions
 List ADR-backed exceptions by `STD-*` ID. Empty means none.
 
-## RC3 viewport/screen audit
+## 1.7.0 viewport/screen audit
 - `STANDARD_CONFORMANCE.json` includes capability-accurate `screenAudit.families`.
 - Primary root top anchors and fixed bottom chrome follow shared viewport contracts.
-- Level 4 requires zero pending screen families.
+- Header ownership, sheet hierarchy and system-chrome ownership are audited where applicable.
+- Level 4 requires zero pending release-blocking rules and zero pending screen families.
