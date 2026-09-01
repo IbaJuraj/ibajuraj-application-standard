@@ -3,6 +3,8 @@
 **Release date:** 2026-09-02  
 **Final candidate:** RC3  
 **RC3 base commit:** `dc21575620cec98d34fef555d26e1d0e4ca70ea3`  
+**Final promotion head:** `3078997e3aa590cf65a9deecd49de141ff00393c`  
+**Final merge commit:** `14c7bc08f5de17d3234f55201ad81021a1ca8fa4`  
 **Planned final tag:** `standard-v1.7.0`
 
 ## Decision
@@ -39,11 +41,14 @@ Promotion to 1.7.0 FINAL performs only release-state changes:
 - validators changed from RC3 metadata expectations to final active metadata expectations.
 
 ## Final CI gate
-Before merge, GitHub Actions must pass on the final promotion head, including:
-- `bash Checks/validate-standard.sh`,
-- `python3 -m unittest Checks/test_validate_app_conformance.py`.
+The final promotion head `3078997e3aa590cf65a9deecd49de141ff00393c` passed GitHub Actions before merge:
+- `bash Checks/validate-standard.sh` — PASS,
+- `python3 -m unittest Checks/test_validate_app_conformance.py` — PASS,
+- workflow run `33566068474` — SUCCESS.
 
-The PR is merged only after this gate is green.
+Final non-draft PR #7 was then merged into `main` as commit `14c7bc08f5de17d3234f55201ad81021a1ca8fa4`. The immediate post-merge workflow run `33566091242` also completed with SUCCESS.
+
+Draft PR #6 was closed without merge solely because the GitHub connector could not perform the Draft → Ready transition. PR #6 had no comments or reviews. PR #7 used the identical final promotion head and therefore preserved the validated release contents.
 
 ## Publication boundary
-This audit authorizes merge of PR #6 into `main`. Creation of tag `standard-v1.7.0` and the public GitHub Release occurs immediately after merge and is deliberately kept as the next publication step.
+The final Standard 1.7.0 contents are merged into `main`. Creation of tag `standard-v1.7.0` and publication of the GitHub Release remain the next publication step and are intentionally performed only after this final repository state is verified.
