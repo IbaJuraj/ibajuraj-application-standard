@@ -9,3 +9,13 @@ jobs:
       - uses: actions/checkout@v4
       - run: bash Checks/validate-standard.sh
       - run: python3 -m unittest Checks/test_validate_app_conformance.py
+      - name: Generate checksum snapshot
+        shell: bash
+        run: |
+          git ls-files -z | while IFS= read -r -d '' f; do
+            [ "$f" = "SHA256SUMS.txt" ] && continue
+            sha256sum "$f"
+          done | sort -k2 > /tmp/SHA256SUMS.generated.txt
+          echo "===BEGIN_SHA256SUMS==="
+          cat /tmp/SHA256SUMS.generated.txt
+          echo "===END_SHA256SUMS==="
