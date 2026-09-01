@@ -136,5 +136,5 @@ Tieto dve hodnoty sa počítajú oddelene. Zvýšenie scroll clearance nesmie po
 
 Family `pass` bez evidence je invalidný. `pending` blokuje Level 4.
 
-## RC3 header ownership pattern
+## 11. Header ownership pattern
 Prefer either native `navigationTitle` **or** a custom page/sheet header for the authoritative page title. A section heading must narrow the content meaning. Do not reserve an empty navigation band only for close/back control above a second title.
