@@ -29,22 +29,25 @@ Application-specific `STANDARD_CONFORMANCE.json`, Xcode, runtime, localization, 
 - [x] `python3 -m unittest Checks/test_validate_app_conformance.py` PASS on the final promotion head
 - [x] GitHub Actions `Validate IbaJuraj Standard` PASS on the final promotion head
 - [x] post-merge GitHub Actions validation PASS on final `main`
+- [x] checksum-refresh validation PASS
 
 Evidence:
 - final promotion head: `3078997e3aa590cf65a9deecd49de141ff00393c`
-- final PR validation: workflow run `33566068474` — SUCCESS
 - final merge commit: `14c7bc08f5de17d3234f55201ad81021a1ca8fa4`
+- final tagged publication commit: `109d824f564361af9b2204412ab3b6484843e055`
 - post-merge validation: workflow run `33566091242` — SUCCESS
+- checksum-refresh validation: workflow run `33566801800` — SUCCESS
 
 Detailed evidence is recorded in `FINAL_RELEASE_AUDIT_1.7.0.md`.
 
 ## Publication
 - [x] final tag name prepared: `standard-v1.7.0`
 - [x] final release PR #7 merged into `main`
-- [ ] tag `standard-v1.7.0` created from final `main`
-- [ ] GitHub Release `IbaJuraj Application Standard 1.7.0` published
-- [ ] `/standard/` verified against the final release
+- [x] tag `standard-v1.7.0` created from final publication commit `109d824f564361af9b2204412ab3b6484843e055`
+- [x] GitHub Release `IbaJuraj Application Standard 1.7.0` published as stable release
+- [x] GitHub `releases/latest` resolves to `standard-v1.7.0`
+- [x] `/standard/` redirect source verified to point to GitHub `releases/latest`
 
 Draft PR #6 was closed without merge after the GitHub connector could not perform the Draft → Ready transition. It had no comments or reviews. Final non-draft PR #7 used the identical validated head and was merged successfully.
 
-The merge is intentionally completed before tag publication. Tag/release publication is the next step.
+IbaJuraj Application Standard 1.7.0 is fully published and is the current authoritative stable Standard.
