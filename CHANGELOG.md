@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.7.0 – 2026-09-02
+
+### Released
+- Promoted RC3 to the active IbaJuraj Application Standard 1.7.0 after cross-app adoption and runtime review across Peňaženka Kariet, Strážca Termínov, Lex Drive and Kalkulačka 2v1.
+- Preserved the validated RC3 normative rule set without adding a new RC4 or changing rule semantics during final promotion.
+- Finalized active metadata, release documentation and validation expectations for tag `standard-v1.7.0`.
+
+### Included
+- Whole-App Adaptive Layout and Viewport Edge Utilization contracts.
+- Native/Custom Bottom Navigation and Screen-Family Audit contracts.
+- Shared About, Appearance and machine-verifiable conformance contracts.
+- Single Header Ownership, No Duplicate Heading, Coherent Sheet Header and System Chrome Ownership contracts.
+- Conformance catalog with 96 stable `STD-*` rules.
+
 ## 1.7.0 RC3 – 2026-08-29
 
 ### Added
@@ -33,7 +47,6 @@
 - peer root screens align relative to safe area, not to screenshots or absolute device coordinates,
 - native tab bars remain platform-owned; custom bars may use safe-area penetration when safe,
 - whole-app audit applies to root, settings/about, detail, form, search, sheet, fullscreen and state families where applicable.
-
 
 ## 1.7.0 RC1 – 2026-08-28
 
