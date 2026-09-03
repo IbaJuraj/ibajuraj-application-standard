@@ -38,3 +38,4 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0014-verified-ai-generated-assistance-and-feedback.md` – implemented in Standard 1.6.3.
 - `IJAS-0015-authoritative-data-traceability-and-safe-relevance.md` – implemented in Standard 1.6.3.
 - `IJAS-0016-runtime-regression-and-debug-isolation.md` – implemented in Standard 1.6.3.
+- `IJAS-0025-localization-first-architecture-and-territory-independence.md` – proposed for Standard 1.7.1; localization-ready architecture, semantic keys, locale-aware formatting/pluralization and separation of supported languages from App Store territories.
