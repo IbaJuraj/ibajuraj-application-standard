@@ -10,13 +10,15 @@
 
 Aplikácia môže začať iba v jednom jazyku a až neskôr dostať ďalšie lokalizácie. Ak sú používateľské texty, pluralizácia alebo locale formátovanie natvrdo zapísané v Swift kóde, druhý jazyk si vyžiada neúmerne veľký refaktor a môže spôsobiť miešanie jazykov, nesprávne pády/fallbacky alebo locale chyby.
 
-Samostatný problém je zamieňanie App Store distribučného územia s jazykom aplikácie. Aplikácia môže byť dostupná napríklad iba na Slovensku a v Česku a pritom podporovať slovenčinu, češtinu aj angličtinu pre používateľov, ktorí majú zariadenie alebo konkrétnu aplikáciu nastavenú na angličtinu.
+Samostatný problém je zamieňanie App Store distribučného územia s jazykom aplikácie. Rozsah distribúcie a množina podporovaných jazykov sú dve nezávislé produktové rozhodnutia. Aplikácia môže byť dostupná iba vo vybraných krajinách a podporovať viac jazykov, alebo môže byť distribuovaná celosvetovo a podporovať len konkrétnu sadu jazykov.
 
 ## Dôkazy a príklady
 
 Pri Peňaženke Kariet v1.5.2 sa pri príprave českej lokalizácie ukázalo, že nestačí pridať jeden `Localizable` súbor: časť používateľských textov, pluralizácie a locale správania bola naviazaná priamo na slovenčinu (`sk_SK`, slovenské tvary počtu kariet, hardcoded používateľské texty). To by pri budúcej angličtine opäť vyžadovalo ďalší refaktor.
 
-Požadovaný produktový model Peňaženky je zároveň: distribúcia iba Slovensko + Česko, ale podporované jazyky SK + CZ + neskôr EN. Jazyk aplikácie preto nesmie byť odvodený od storefront krajiny.
+Peňaženka Kariet môže byť produktovo distribuovaná iba na Slovensku a v Česku a pritom podporovať SK + CZ + neskôr EN, aby ju používateľ v týchto krajinách mohol používať aj v angličtine.
+
+Kalkulačka 2v1 je naopak distribuovaná celosvetovo a podporuje SK + CZ + HU + EN + PL. To potvrdzuje, že podporované jazyky aplikácie sa nesmú odvodzovať od rozsahu App Store distribúcie ani naopak.
 
 ## Navrhované pravidlo
 
@@ -26,7 +28,7 @@ Požadovaný produktový model Peňaženky je zároveň: distribúcia iba Sloven
 4. Primárny/fallback jazyk aplikácie MAY byť slovenčina alebo iný produktovo zvolený jazyk. Jazyk fallbacku je nezávislý od jazyka identifikátorov v kóde.
 5. Dátumy, čísla, meny, percentá a ďalšie locale-sensitive hodnoty MUST používať aktuálny/deklarovaný locale používateľa alebo explicitný doménový locale. Hardcoded `sk_SK` MUST NOT byť všeobecným UI formatterom.
 6. Pluralizácia MUST používať lokalizačný pluralization mechanizmus alebo locale-aware varianty; one-language helper typu `karta/karty/kariet` nesmie byť spoločným riešením po pridaní ďalšieho jazyka.
-7. App Store storefront/territory availability MUST byť oddelená od podporovaných jazykov aplikácie. Podpora `en` nesmie automaticky znamenať distribúciu v anglicky hovoriacich krajinách a obmedzenie distribúcie na SK/CZ nesmie blokovať angličtinu v aplikácii.
+7. App Store storefront/territory availability MUST byť oddelená od podporovaných jazykov aplikácie. Podpora konkrétneho jazyka nesmie automaticky rozširovať alebo obmedzovať distribučné územia a výber distribučných území nesmie automaticky určovať podporované jazyky aplikácie.
 8. Pri pridaní novej lokalizácie MUST release gate overiť parity používateľských textov, fallbacky, locale formátovanie, pluralizáciu a longest-localization layout stress test.
 9. Jazyk systému alebo per-app language nastavenie iOS SHOULD byť rešpektované bez vlastného paralelného jazykového prepínača, pokiaľ produkt nemá konkrétny dôvod na vlastný selector.
 
