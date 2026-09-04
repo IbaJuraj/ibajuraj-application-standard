@@ -39,3 +39,5 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0015-authoritative-data-traceability-and-safe-relevance.md` – implemented in Standard 1.6.3.
 - `IJAS-0016-runtime-regression-and-debug-isolation.md` – implemented in Standard 1.6.3.
 - `IJAS-0025-localization-first-architecture-and-territory-independence.md` – proposed for Standard 1.7.1; localization-ready architecture, semantic keys, locale-aware formatting/pluralization and separation of supported languages from App Store territories.
+- `IJAS-0026-release-package-root-hygiene-and-build-history-archive.md` – proposed for Standard 1.7.1; spoločný kontrakt čistoty release rootu a archivácie historických build/runtime dokumentov.
+- `IJAS-0027-single-device-development-release-data-continuity.md` – proposed for Standard 1.7.1; zachovanie stabilných lokálnych dát a oddelenie environment-specific cloudových väzieb pri striedaní Xcode ↔ App Store/TestFlight na jednom fyzickom zariadení.
