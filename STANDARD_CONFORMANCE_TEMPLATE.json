@@ -1,6 +1,6 @@
 {
   "$schema": "./STANDARD_CONFORMANCE.schema.json",
-  "standardVersion": "1.7.0",
+  "standardVersion": "1.8.0",
   "app": {
     "name": "<App Name>",
     "productId": "<product-id>"
@@ -10,6 +10,7 @@
     "hasAppearance": true,
     "hasCustomThemes": false,
     "hasLocalization": true,
+    "hasInAppLanguageSelector": false,
     "hasBottomNavigation": false,
     "bottomNavigationMode": "none",
     "hasBottomPrimaryAction": false,
@@ -21,6 +22,7 @@
     "hasAdvancedFormFields": false,
     "hasPersistedData": false,
     "hasSyncOrBackup": false,
+    "hasEnvironmentSpecificBackend": false,
     "hasAuthoritativeVersionedData": false,
     "hasAppLock": false,
     "hasGeneratedAssistance": false,
@@ -33,25 +35,37 @@
     "hasOnboarding": false,
     "hasStateSurfaces": false
   },
-  "supportedLocalizations": [
-    "sk"
-  ],
+  "supportedLocalizations": ["sk"],
   "localization": {
     "files": [],
-    "requiredKeys": []
+    "requiredKeys": [],
+    "fallbackLocale": "sk",
+    "inAppLanguageSelector": {
+      "enabled": false,
+      "automaticMode": true,
+      "persistenceKey": null
+    }
   },
-  "projectMetadata": {
-    "projectFile": null
+  "backend": {
+    "environmentSpecific": false,
+    "development": null,
+    "production": null,
+    "productionReadinessEvidence": []
   },
+  "dataContinuity": {
+    "stableLocalIdentity": false,
+    "singleDeviceRuntimeEvidence": []
+  },
+  "performance": {
+    "representativeDataset": null,
+    "runtimeEvidence": []
+  },
+  "projectMetadata": {"projectFile":null},
   "rules": {
     "STD-CONF-001": {
       "mode": "static",
       "status": "implemented",
-      "evidence": {
-        "files": [
-          "STANDARD_CONFORMANCE.json"
-        ]
-      }
+      "evidence": {"files":["STANDARD_CONFORMANCE.json"]}
     }
   },
   "runtimeAcceptanceFile": "RUNTIME_ACCEPTANCE.md",
@@ -60,12 +74,8 @@
     "families": {
       "SCREEN-ROOT": {
         "status": "pending",
-        "screens": [
-          "<primary root screen>"
-        ],
-        "evidence": [
-          "RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"
-        ]
+        "screens": ["<primary root screen>"],
+        "evidence": ["RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"]
       }
     }
   }
