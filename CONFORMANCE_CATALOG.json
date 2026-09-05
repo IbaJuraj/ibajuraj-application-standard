@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "standardVersion": "1.7.0",
-  "status": "active",
-  "candidate": null,
+  "standardVersion": "1.8.0",
+  "status": "release-candidate",
+  "candidate": "RC1",
   "rules": [
     {"id":"STD-IDENTITY-001","level":"MUST"},
     {"id":"STD-IDENTITY-002","level":"MUST"},
@@ -99,6 +99,19 @@
     {"id":"STD-HEADER-001","level":"MUST","appliesWhen":"always","defaultVerification":"static","title":"Each screen has one authoritative header owner","releaseBlocking":true},
     {"id":"STD-HEADER-002","level":"MUST NOT","appliesWhen":"always","defaultVerification":"ui","title":"Navigation title is not duplicated by equivalent page or section heading","releaseBlocking":true},
     {"id":"STD-HEADER-003","level":"MUST","appliesWhen":{"capability":"hasSheets","equals":true},"defaultVerification":"ui","title":"Sheet title subtitle and dismissal action form one coherent header hierarchy","releaseBlocking":true},
-    {"id":"STD-CHROME-001","level":"MUST NOT","appliesWhen":"always","defaultVerification":"static","title":"App does not imitate platform-owned system chrome","releaseBlocking":true}
+    {"id":"STD-CHROME-001","level":"MUST NOT","appliesWhen":"always","defaultVerification":"static","title":"App does not imitate platform-owned system chrome","releaseBlocking":true},
+
+    {"id":"STD-LOC-003","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"static","title":"Localization-ready architecture uses stable semantic localization keys","releaseBlocking":true},
+    {"id":"STD-LOC-004","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"unit","title":"Locale-aware formatting and pluralization follow the active locale","releaseBlocking":true},
+    {"id":"STD-LOC-005","level":"MUST","appliesWhen":{"capability":"hasInAppLanguageSelector","equals":true},"defaultVerification":"ui","title":"In-app language selector includes Automatic/System mode and all runtime-supported languages","releaseBlocking":true},
+    {"id":"STD-LOC-006","level":"MUST","appliesWhen":{"allCapabilities":["hasLocalization","hasPersistedData"]},"defaultVerification":"unit","title":"Persisted identifiers and transport keys remain locale-neutral","releaseBlocking":true},
+    {"id":"STD-LOC-007","level":"MUST","appliesWhen":{"allCapabilities":["hasLocalization","hasSearch"]},"defaultVerification":"mixed","title":"Localized search terms and aliases provide language parity","releaseBlocking":true},
+    {"id":"STD-LOC-008","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"static","title":"Runtime language support and App Store storefront availability are independent","releaseBlocking":true},
+    {"id":"STD-RELEASE-005","level":"MUST","defaultVerification":"static","title":"Current package root excludes superseded build-specific documentation","releaseBlocking":true},
+    {"id":"STD-RELEASE-006","level":"MUST","defaultVerification":"static","title":"Historical release and regression evidence is archived or consolidated, not silently deleted","releaseBlocking":true},
+    {"id":"STD-DATA-005","level":"MUST","appliesWhen":{"allCapabilities":["hasPersistedData","hasEnvironmentSpecificBackend"]},"defaultVerification":"mixed","title":"Stable local domain identity survives Development/Production environment changes","releaseBlocking":true},
+    {"id":"STD-BACKEND-001","level":"MUST","appliesWhen":{"capability":"hasEnvironmentSpecificBackend","equals":true},"defaultVerification":"runtime","title":"Production backend schema configuration and permissions are verified before distribution","releaseBlocking":true},
+    {"id":"STD-BACKEND-002","level":"MUST","appliesWhen":{"capability":"hasEnvironmentSpecificBackend","equals":true},"defaultVerification":"runtime","title":"Production/TestFlight smoke proves real backend paths and local-safe failure behavior","releaseBlocking":true},
+    {"id":"STD-PERF-001","level":"MUST","appliesWhen":{"capability":"hasPersistedData","equals":true},"defaultVerification":"runtime","title":"Runtime performance gate uses representative real-volume data","releaseBlocking":true}
   ]
 }
