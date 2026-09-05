@@ -16,8 +16,8 @@ def condition_applies(cond, caps):
         if 'allCapabilities' in cond: return all(bool(caps.get(k)) for k in cond['allCapabilities'])
         if 'bottomNavigationMode' in cond: return caps.get('bottomNavigationMode','none') == cond['bottomNavigationMode']
     return False
-def applies(rule, caps):
-    return condition_applies(rule.get('appliesWhen','always'), caps)
+
+def applies(rule, caps): return condition_applies(rule.get('appliesWhen','always'), caps)
 
 SCREEN_REQ={
     'hasSettings':['SCREEN-SETTINGS','SCREEN-ABOUT'], 'hasSearch':['SCREEN-SEARCH'],
@@ -29,16 +29,17 @@ SCREEN_REQ={
 class ValidatorTests(unittest.TestCase):
     def make_app(self, caps=None, omit=None, pending=None, localization=False, omit_screen=None, pending_screen=None):
         td=tempfile.TemporaryDirectory(); r=Path(td.name)
-        (r/'STANDARD_VERSION').write_text('1.7.0\n')
+        (r/'STANDARD_VERSION').write_text('1.8.0\n')
         (r/'evidence.txt').write_text('Bundle CFBundleShortVersionString CFBundleVersion IbaJuraj Apps ij.root.title ij.navigation.header ij.bottomnav.container')
         (r/'RUNTIME_ACCEPTANCE.md').write_text('# Runtime\n')
         base={'hasSettings':False,'hasAppearance':False,'hasCustomThemes':False,'hasLocalization':False,
-              'hasBottomNavigation':False,'bottomNavigationMode':'none','hasBottomPrimaryAction':False,'hasFixedBottomControls':False,
+              'hasInAppLanguageSelector':False,'hasBottomNavigation':False,'bottomNavigationMode':'none',
+              'hasBottomPrimaryAction':False,'hasFixedBottomControls':False,
               'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
               'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
-              'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAppLock':False,'hasGeneratedAssistance':False,
-              'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
-              'hasOnboarding':False,'hasStateSurfaces':False}
+              'hasSyncOrBackup':False,'hasEnvironmentSpecificBackend':False,'hasAuthoritativeVersionedData':False,
+              'hasAppLock':False,'hasGeneratedAssistance':False,'hasTranslucentSurfaces':False,'hasSearch':False,
+              'hasDetails':False,'hasSheets':False,'hasFullscreen':False,'hasOnboarding':False,'hasStateSurfaces':False}
         if caps: base.update(caps)
         rules={}
         for x in CAT['rules']:
@@ -56,7 +57,7 @@ class ValidatorTests(unittest.TestCase):
         families={f:{'status':'pass','screens':[f+' Fixture'],'evidence':['RUNTIME_ACCEPTANCE.md#'+f]} for f in sorted(req)}
         if omit_screen: families.pop(omit_screen,None)
         if pending_screen in families: families[pending_screen]['status']='pending'
-        manifest={'standardVersion':'1.7.0','app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
+        manifest={'standardVersion':'1.8.0','app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
                   'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
             (r/'sk.lproj').mkdir(); (r/'en.lproj').mkdir()
@@ -116,6 +117,24 @@ class ValidatorTests(unittest.TestCase):
     def test_localization_parity_passes(self):
         td,r=self.make_app({'hasLocalization':True},localization=True)
         try: self.assertEqual(self.runv(r).returncode,0)
+        finally: td.cleanup()
+
+    def test_language_selector_rule_is_conditional(self):
+        td,r=self.make_app({'hasLocalization':True,'hasInAppLanguageSelector':True},localization=True,omit='STD-LOC-005')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-LOC-005 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_backend_rules_are_conditional(self):
+        td,r=self.make_app({'hasPersistedData':True,'hasEnvironmentSpecificBackend':True},omit='STD-BACKEND-001')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-BACKEND-001 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_data_continuity_rule_requires_persistence_and_backend(self):
+        td,r=self.make_app({'hasPersistedData':True,'hasEnvironmentSpecificBackend':True},omit='STD-DATA-005')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-DATA-005 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
 if __name__=='__main__': unittest.main()
