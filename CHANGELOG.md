@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.8.0 RC1 – 2026-09-05
+
+### Added
+- Accepted IJAS-0025 localization-first architecture for the 1.8.0 candidate line.
+- Added in-app language selector contract: Automatic/System mode, all runtime-supported languages, persisted choice and data-neutral switching.
+- Added locale-neutral persistence contract for raw enum values, stable IDs, database/AppStorage keys, CloudKit identity and transport payloads.
+- Added localized search parity and explicit separation of runtime language support from App Store storefront availability.
+- Accepted IJAS-0026 release-package root hygiene and build-history archive contract.
+- Accepted IJAS-0027 single-device Xcode ↔ TestFlight/App Store data-continuity contract.
+- Added IJAS-0028 Production Backend Environment Readiness based on the Peňaženka Kariet CloudKit Development → Production schema finding.
+- Added representative real-volume performance gate for persistent-data apps.
+- Expanded conformance catalog from 96 to **108 stable `STD-*` rules**.
+- Added capability flags `hasInAppLanguageSelector` and `hasEnvironmentSpecificBackend`.
+
+### Promotion policy
+- 1.7.0 remains the active public authority while 1.8.0 RC1 is adopted.
+- Primary RC1 adoption: Peňaženka Kariet, then Strážca Termínov, followed by representative applicability audit in Lex Drive and Kalkulačka 2v1.
+- Final `standard-v1.8.0` is created only after the RC promotion gate.
+
 ## 1.7.0 – 2026-09-02
 
 ### Released
