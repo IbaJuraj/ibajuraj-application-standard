@@ -1,78 +1,60 @@
 # IJAS-0025 – Localization-First Architecture and Storefront Independence
 
-**Stav:** proposed
-**Navrhovateľ:** IbaJuraj
-**Dátum:** 2026-09-03
-**Dotknuté aplikácie:** všetky nové IbaJuraj aplikácie; existujúce aplikácie pri pridaní ďalšieho jazyka
-**Navrhovaná verzia štandardu:** 1.7.1
+**Stav:** accepted  
+**Navrhovateľ:** IbaJuraj  
+**Dátum:** 2026-09-03  
+**Rozšírené:** 2026-09-05  
+**Dotknuté aplikácie:** všetky nové IbaJuraj aplikácie; existujúce aplikácie pri pridaní ďalšieho jazyka  
+**Schválená candidate verzia štandardu:** 1.8.0 RC1
 
 ## Problém
+Aplikácia môže začať iba v jednom jazyku a až neskôr dostať ďalšie lokalizácie. Ak sú používateľské texty, pluralizácia alebo locale formátovanie natvrdo zapísané v Swift kóde, druhý jazyk si vyžiada neúmerný refaktor a môže spôsobiť miešanie jazykov, nesprávne fallbacky alebo locale chyby.
 
-Aplikácia môže začať iba v jednom jazyku a až neskôr dostať ďalšie lokalizácie. Ak sú používateľské texty, pluralizácia alebo locale formátovanie natvrdo zapísané v Swift kóde, druhý jazyk si vyžiada neúmerne veľký refaktor a môže spôsobiť miešanie jazykov, nesprávne pády/fallbacky alebo locale chyby.
+Samostatný problém je zamieňanie App Store distribučného územia s jazykom aplikácie. Rozsah distribúcie a množina podporovaných runtime jazykov sú nezávislé produktové rozhodnutia.
 
-Samostatný problém je zamieňanie App Store distribučného územia s jazykom aplikácie. Rozsah distribúcie a množina podporovaných jazykov sú dve nezávislé produktové rozhodnutia. Aplikácia môže byť dostupná iba vo vybraných krajinách a podporovať viac jazykov, alebo môže byť distribuovaná celosvetovo a podporovať len konkrétnu sadu jazykov.
+Pri Peňaženke Kariet sa navyše ukázala praktická potreba vlastného in-app prepínača jazyka pre rýchle overovanie a vytváranie reálnych lokalizovaných screenshotov. Takýto selector však nesmie vytvoriť druhý nekompatibilný localization systém ani meniť dáta.
 
-## Dôkazy a príklady
-
-Pri Peňaženke Kariet v1.5.2 sa pri príprave českej lokalizácie ukázalo, že nestačí pridať jeden `Localizable` súbor: časť používateľských textov, pluralizácie a locale správania bola naviazaná priamo na slovenčinu (`sk_SK`, slovenské tvary počtu kariet, hardcoded používateľské texty). To by pri budúcej angličtine opäť vyžadovalo ďalší refaktor.
-
-Peňaženka Kariet môže byť produktovo distribuovaná iba na Slovensku a v Česku a pritom podporovať SK + CZ + neskôr EN, aby ju používateľ v týchto krajinách mohol používať aj v angličtine.
-
-Kalkulačka 2v1 je naopak distribuovaná celosvetovo a podporuje SK + CZ + HU + EN + PL. To potvrdzuje, že podporované jazyky aplikácie sa nesmú odvodzovať od rozsahu App Store distribúcie ani naopak.
-
-## Navrhované pravidlo
-
+## Schválený kontrakt
 1. Nová IbaJuraj aplikácia MUST byť localization-ready od prvého produkčného buildu, aj keď má pri štarte iba jeden jazyk.
-2. User-facing texty MUST byť získavané cez lokalizačné zdroje (`String Catalog`, `Localizable.strings` alebo ekvivalent) a nemajú byť natvrdo uložené v business/UI logike, okrem vedome zdokumentovaných technických alebo právne presných konštánt.
-3. Lokalizačné kľúče SHOULD byť jazykovo neutrálne a stabilné; preferovaný tvar je anglický/semantický identifikátor (napr. `shared_wallet.title`), nie používateľský slovenský text ako API kľúč.
+2. User-facing texty MUST byť získavané cez lokalizačné zdroje (`String Catalog`, `Localizable.strings` alebo ekvivalent) a nemajú byť natvrdo uložené v business/persistence logike, okrem vedome zdokumentovaných technických alebo právne presných konštánt.
+3. Lokalizačné kľúče SHOULD byť jazykovo neutrálne, stabilné a semantické.
 4. Primárny/fallback jazyk aplikácie MAY byť slovenčina alebo iný produktovo zvolený jazyk. Jazyk fallbacku je nezávislý od jazyka identifikátorov v kóde.
 5. Dátumy, čísla, meny, percentá a ďalšie locale-sensitive hodnoty MUST používať aktuálny/deklarovaný locale používateľa alebo explicitný doménový locale. Hardcoded `sk_SK` MUST NOT byť všeobecným UI formatterom.
-6. Pluralizácia MUST používať lokalizačný pluralization mechanizmus alebo locale-aware varianty; one-language helper typu `karta/karty/kariet` nesmie byť spoločným riešením po pridaní ďalšieho jazyka.
-7. App Store storefront/territory availability MUST byť oddelená od podporovaných jazykov aplikácie. Podpora konkrétneho jazyka nesmie automaticky rozširovať alebo obmedzovať distribučné územia a výber distribučných území nesmie automaticky určovať podporované jazyky aplikácie.
+6. Pluralizácia MUST používať lokalizačný pluralization mechanizmus alebo locale-aware varianty.
+7. App Store storefront/territory availability MUST byť oddelená od podporovaných runtime jazykov aplikácie.
 8. Pri pridaní novej lokalizácie MUST release gate overiť parity používateľských textov, fallbacky, locale formátovanie, pluralizáciu a longest-localization layout stress test.
-9. Jazyk systému alebo per-app language nastavenie iOS SHOULD byť rešpektované bez vlastného paralelného jazykového prepínača, pokiaľ produkt nemá konkrétny dôvod na vlastný selector.
-
-**Záväznosť:** MUST / MUST NOT podľa bodov vyššie; SHOULD pre naming kľúčov a preferenciu systémového language selection.
+9. Jazyk systému alebo per-app language nastavenie iOS SHOULD byť rešpektované. Vlastný paralelný selector je MAY a potrebuje konkrétny produktový/testovací dôvod.
+10. Ak vlastný in-app language selector existuje, MUST obsahovať **Automaticky / Podľa systému** a všetky runtime podporované jazyky.
+11. Výber vlastného jazyka MUST byť perzistentný; návrat na Automaticky MUST znovu rešpektovať iOS/per-app jazyk.
+12. Zmena jazyka MUST NOT meniť alebo migrovať doménové dáta, raw enum values, stabilné UUID, database/AppStorage keys, CloudKit record/share identity, transportné metadata, deep-link identity ani barcode/QR payload iba kvôli lokalizácii.
+13. Ak aplikácia nevie bezpečne prepnúť celý runtime okamžite, MUST mať deterministické relaunch správanie a zrozumiteľnú informáciu pre používateľa.
+14. Ak aplikácia obsahuje vyhľadávanie, nová runtime lokalizácia MUST pokrývať používateľské názvy a relevantné search aliases/synonymá tak, aby bolo vyhľadávanie v danom jazyku funkčné.
 
 ## Rozsah
-
-Do spoločného Standardu patrí localization-ready architektúra, oddelenie semantic key od user-facing textu, locale-aware formatovanie, pluralizácia, fallback politika, release parity a nezávislosť jazykov od App Store území.
+Do spoločného Standardu patrí localization-ready architektúra, semantic keys, locale-aware formátovanie/pluralizácia, fallback politika, voliteľný language selector contract, locale-neutral persistence identity, search parity a nezávislosť jazykov od App Store území.
 
 Produktové zostáva:
 - ktoré konkrétne jazyky aplikácia podporuje,
 - v ktorých krajinách je aplikácia distribuovaná,
 - názov aplikácie a App Store metadata pre jednotlivé lokalizácie,
+- či selector aplikuje jazyk okamžite alebo cez relaunch, ak je výsledok deterministický a bezpečný,
 - explicitné doménové výnimky, kde je pevný locale súčasťou dátovej/právnej definície.
 
 ## Migrácia
+Existujúca jednojazyčná aplikácia nemusí byť okamžite prepisovaná. Najneskôr pred pridaním druhého jazyka však musí inventarizovať user-facing stringy, zaviesť lokalizačné zdroje, odstrániť všeobecné hardcoded locale formattery, migrovať pluralizáciu a overiť fallback/layout.
 
-Existujúca jednojazyčná aplikácia nemusí byť okamžite prepisovaná len kvôli prijatiu pravidla. Najneskôr pred pridaním druhého jazyka však musí:
-- inventarizovať všetky user-facing stringy,
-- presunúť ich do lokalizačných zdrojov,
-- zaviesť stabilné semantic keys,
-- odstrániť všeobecné hardcoded locale formattery,
-- migrovať pluralizáciu na locale-aware mechanizmus,
-- overiť fallback a layout v každom podporovanom jazyku.
-
-Nové aplikácie majú túto architektúru zaviesť od začiatku, aby sa migrácia neskôr nevyžadovala.
-
-## Kompatibilita a riziká
-
-Pravidlo je spätne kompatibilné a nemení produktový obsah. Rizikom prijatia je mierne vyššia počiatočná disciplína pri tvorbe stringov. Rizikom odmietnutia je rastúci localization debt, miešanie jazykov, nesprávne pluralizácie/formátovanie a opakované refaktory pri každej novej lokalizácii.
+Aplikácia s vlastným language selectorom musí oddeliť display language selection od perzistentných doménových/raw identít.
 
 ## Automatická kontrola
-
-Čiastočne áno:
-- linter môže hľadať podozrivé hardcoded user-facing literály v `Text`, `Label`, alertoch a buttonoch,
-- statický audit môže blokovať všeobecné `Locale(identifier: "sk_SK")` mimo allowlistu,
-- release skript môže kontrolovať parity localization keys medzi podporovanými lokalizáciami,
-- testy môžu meniť `Locale`/jazyk a overovať pluralizáciu/formátovanie,
-- UI testy môžu spustiť longest-localization a fallback smoke test.
+- linter hardcoded user-facing literálov,
+- audit hardcoded `Locale(identifier:)` mimo allowlistu,
+- localization key parity,
+- test locale formatting/pluralization,
+- test raw-ID stability pri prepnutí jazyka,
+- search alias smoke per locale,
+- UI/runtime selector Automatic → supported locales → Automatic.
 
 ## Rozhodnutie
-
-Vyplní sa po posúdení.
-
-**Výsledok:**
-**Odôvodnenie:**
-**Schválená verzia:**
+**Výsledok:** accepted pre 1.8.0 RC1  
+**Odôvodnenie:** opakovaný cross-app localization debt a reálna potreba bezpečného prepínania jazyka bez zásahu do dát.  
+**Schválená verzia:** 1.8.0 RC1
