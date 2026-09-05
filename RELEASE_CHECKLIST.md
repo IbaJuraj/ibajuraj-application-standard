@@ -1,53 +1,70 @@
-# IbaJuraj Application Standard 1.7.0 – Final Release Checklist
+# IbaJuraj Application Standard 1.8.0 RC1 – Release Candidate Checklist
 
-## Standard package
-- [x] `STANDARD_VERSION` = `1.7.0`
-- [x] `standard.json` version = `1.7.0`
-- [x] `standard.json.status` = `active`
-- [x] release date = `2026-09-02`
-- [x] candidate marker cleared
-- [x] `CONFORMANCE_CATALOG.json` contains the final 96-rule set
-- [x] all catalog rule IDs unique
-- [x] validator supports `allCapabilities` and screen-family gate
-- [x] source hygiene gate retained
-- [x] final release notes and 1.6.4 → 1.7.0 audit present
+## Candidate package
+- [x] `STANDARD_VERSION` = `1.8.0`
+- [x] `standard.json.version` = `1.8.0`
+- [x] `standard.json.status` = `release-candidate`
+- [x] `candidate` = `RC1`
+- [x] `rcDate` = `2026-09-05`
+- [x] candidate tag target = `standard-v1.8.0-rc1`
+- [x] active public authority remains `standard-v1.7.0`
+- [x] `CONFORMANCE_CATALOG.json` contains 108 unique rules
+- [x] 96 rules from 1.7.0 preserved
+- [x] 12 new 1.8.0 RC1 rule IDs added
+- [x] 1.8.0 conformance schema/template updated
+- [x] RC1 migration/test/adoption/release documents added
 
-## Cross-app promotion gate
-- [x] Peňaženka Kariet reviewed against RC3 contracts
-- [x] Strážca Termínov reviewed against RC3 contracts
-- [x] Lex Drive reviewed against RC3 contracts
-- [x] Kalkulačka 2v1 reviewed against RC3 contracts
-- [x] final cross-app runtime review completed by the product owner
-- [x] no observed Standard-related malfunction/regression requiring RC4
-- [x] remaining contract ambiguities resolved for 1.7.0
-- [x] RC wording removed from the active main document and README
+## Accepted change families
+- [x] IJAS-0025 Localization-First Architecture and Storefront Independence
+- [x] in-app language selector behavior folded into IJAS-0025 normative adoption
+- [x] IJAS-0026 Release Package Root Hygiene and Build History Archive
+- [x] IJAS-0027 Single-Device Development/Release Data Continuity
+- [x] IJAS-0028 Production Backend Environment Readiness
+- [x] representative real-volume performance rule based on runtime evidence from Peňaženka Kariet
 
-Application-specific `STANDARD_CONFORMANCE.json`, Xcode, runtime, localization, accessibility and screen-family evidence remain owned by each adopting app. A static Standard-repository PASS does not replace those app-level runtime gates.
+## Static candidate validation
+- [ ] `bash Checks/validate-standard.sh` PASS on RC1 head
+- [ ] `python3 Checks/validate-conformance-catalog.py` PASS
+- [ ] `python3 -m unittest Checks/test_validate_app_conformance.py` PASS
+- [ ] GitHub Actions `Validate IbaJuraj Standard` PASS
+- [ ] no `.DS_Store`, `xcuserdata`, `__pycache__`, `.pyc` or release-package hygiene regressions
 
-## Final repository validation
-- [x] `bash Checks/validate-standard.sh` PASS on the final promotion head
-- [x] `python3 -m unittest Checks/test_validate_app_conformance.py` PASS on the final promotion head
-- [x] GitHub Actions `Validate IbaJuraj Standard` PASS on the final promotion head
-- [x] post-merge GitHub Actions validation PASS on final `main`
-- [x] checksum-refresh validation PASS
+## Primary adoption gate – Peňaženka Kariet
+- [ ] adopt 1.8.0 RC1 without losing existing 1.5.3 work
+- [ ] six runtime localizations PASS
+- [ ] in-app selector Automatic/System + SK/CS/EN/DE/PL/HU PASS if included
+- [ ] language switching/relaunch preserves all 32 cards and their raw data
+- [ ] localized search parity PASS
+- [ ] Production iCloud sync PASS
+- [ ] Production sharing/rebind PASS
+- [ ] Xcode ↔ TestFlight same-device continuity PASS
+- [ ] representative 32-card scroll/search performance PASS
+- [ ] release-root hygiene PASS
 
-Evidence:
-- final promotion head: `3078997e3aa590cf65a9deecd49de141ff00393c`
-- final merge commit: `14c7bc08f5de17d3234f55201ad81021a1ca8fa4`
-- final tagged publication commit: `109d824f564361af9b2204412ab3b6484843e055`
-- post-merge validation: workflow run `33566091242` — SUCCESS
-- checksum-refresh validation: workflow run `33566801800` — SUCCESS
+## Secondary adoption gate – Strážca Termínov
+- [ ] stable local Person/Vehicle/VehicleSet/Document/Deadline identity audit
+- [ ] Development/Production membership/share/invitation separation
+- [ ] Production CloudKit readiness smoke
+- [ ] same-device continuity without data loss/duplication
+- [ ] root-document history hygiene
+- [ ] localization/runtime closure
 
-Detailed evidence is recorded in `FINAL_RELEASE_AUDIT_1.7.0.md`.
+## Cross-app applicability audit
+- [ ] Lex Drive checked for newly applicable localization/release/performance rules
+- [ ] Kalkulačka 2v1 checked for language-selector/localization/release rules
+- [ ] no new cross-app ambiguity requiring RC2
 
-## Publication
-- [x] final tag name prepared: `standard-v1.7.0`
-- [x] final release PR #7 merged into `main`
-- [x] tag `standard-v1.7.0` created from final publication commit `109d824f564361af9b2204412ab3b6484843e055`
-- [x] GitHub Release `IbaJuraj Application Standard 1.7.0` published as stable release
-- [x] GitHub `releases/latest` resolves to `standard-v1.7.0`
-- [x] `/standard/` redirect source verified to point to GitHub `releases/latest`
+## Promotion to final 1.8.0
+Do **not** mark these complete at RC1 publication.
+- [ ] all known RC1 ambiguities resolved
+- [ ] at least one real app adoption proves new conformance machinery
+- [ ] agreed cross-app adoption matrix complete
+- [ ] `standard.json.status` changed to `active`
+- [ ] candidate marker cleared
+- [ ] final release date set
+- [ ] final tag changed to `standard-v1.8.0`
+- [ ] final release audit generated
+- [ ] final GitHub Actions validation PASS
+- [ ] stable GitHub Release published
 
-Draft PR #6 was closed without merge after the GitHub connector could not perform the Draft → Ready transition. It had no comments or reviews. Final non-draft PR #7 used the identical validated head and was merged successfully.
-
-IbaJuraj Application Standard 1.7.0 is fully published and is the current authoritative stable Standard.
+1.8.0 RC1 may be published as a **prerelease/release candidate**, but it is not yet the active public Standard.
