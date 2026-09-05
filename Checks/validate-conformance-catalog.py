@@ -4,9 +4,9 @@ import json, re, sys
 root=Path(__file__).resolve().parents[1]
 cat=json.loads((root/'CONFORMANCE_CATALOG.json').read_text(encoding='utf-8'))
 errors=[]
-if cat.get('standardVersion')!='1.7.0': errors.append('catalog standardVersion must be 1.7.0')
-if cat.get('status')!='active': errors.append('catalog status must be active')
-if cat.get('candidate') not in (None, ''): errors.append('catalog candidate marker must be cleared')
+if cat.get('standardVersion')!='1.8.0': errors.append('catalog standardVersion must be 1.8.0')
+if cat.get('status')!='release-candidate': errors.append('catalog status must be release-candidate')
+if cat.get('candidate')!='RC1': errors.append('catalog candidate must be RC1')
 ids=[]
 for r in cat.get('rules',[]):
     rid=r.get('id','')
@@ -27,8 +27,9 @@ for r in cat.get('rules',[]):
         allowed={'capability','anyCapability','allCapabilities','bottomNavigationMode','equals','anyOf','allOf'}
         unknown=set(cond)-allowed
         if unknown: errors.append(f"{r.get('id')}: unsupported appliesWhen keys {sorted(unknown)}")
+if len(ids)!=108: errors.append(f'expected 108 rules, found {len(ids)}')
 if errors:
     print('FAIL – conformance catalog')
     for e in errors: print(' -',e)
     sys.exit(1)
-print(f'PASS – conformance catalog 1.7.0 ({len(ids)} rules)')
+print(f'PASS – conformance catalog 1.8.0 RC1 ({len(ids)} rules)')
