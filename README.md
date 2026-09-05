@@ -1,21 +1,30 @@
-# IbaJuraj Application Standard 1.7.0
+# IbaJuraj Application Standard 1.8.0 RC1
 
-IbaJuraj Application Standard 1.7.0 is the active shared standard for IbaJuraj apps.
+IbaJuraj Application Standard **1.8.0 RC1** is the current release candidate for the next shared Standard.
 
-It was promoted from RC3 after cross-app adoption and runtime review across Peňaženka Kariet, Strážca Termínov, Lex Drive and Kalkulačka 2v1. No new normative rules were added during final promotion; the final release preserves the validated RC3 rule set.
+The active public authority remains **1.7.0** (`standard-v1.7.0`) until RC1 completes cross-app adoption and is promoted to final 1.8.0.
 
-## Main areas
-- whole-app container-driven adaptive layout,
-- safe-area-relative viewport utilization,
-- native/custom bottom-navigation contracts,
-- screen-family inventory and release gates,
-- shared Settings/About and live appearance behavior,
-- single header ownership and duplicate-heading prevention,
-- coherent sheet headers,
-- platform system-chrome ownership,
-- machine-verifiable `STD-*` conformance.
+## What 1.8.0 RC1 adds
+- localization-first architecture with stable semantic localization keys,
+- locale-aware formatting/pluralization and localized search parity,
+- optional in-app language selector contract with Automatic/System mode,
+- locale-neutral persisted identifiers and transport metadata,
+- independence of runtime languages from App Store storefront availability,
+- release-package root hygiene and build-history archiving,
+- single-device Xcode ↔ TestFlight/App Store data continuity,
+- Development/Production backend identity separation,
+- Production backend/schema/config readiness gate,
+- real TestFlight/Production backend smoke testing,
+- representative real-volume data performance gate.
 
-## Validate this package
+All **96 rules from 1.7.0 remain preserved**. RC1 adds **12 new stable rule IDs**, for a total of **108 rules**.
+
+## Primary RC1 adoption
+1. Peňaženka Kariet
+2. Strážca Termínov
+3. representative applicability audit in Lex Drive and Kalkulačka 2v1
+
+## Validate this candidate
 
 ```bash
 bash Checks/validate-standard.sh
@@ -31,7 +40,10 @@ python3 Checks/validate-app-conformance.py \
   --standard-root /path/to/standard
 ```
 
-The app must provide `STANDARD_CONFORMANCE.json` including `screenAudit.families`.
+The app must provide `STANDARD_CONFORMANCE.json` including capability flags, rule evidence and `screenAudit.families`.
 
-## Release
-Final release tag: `standard-v1.7.0`.
+## Release status
+- Active stable: `standard-v1.7.0`
+- RC candidate: `standard-v1.8.0-rc1`
+- Candidate branch: `standard-1.8.0-rc1`
+- Final `standard-v1.8.0` must not be created until the RC promotion gate is complete.
