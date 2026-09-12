@@ -1,50 +1,26 @@
 {
   "$schema": "./standard.schema.json",
   "name": "IbaJuraj Application Standard",
-  "version": "1.7.0",
-  "status": "active",
-  "releasedAt": "2026-09-02",
-  "rcDate": "2026-08-29",
+  "version": "1.8.0",
+  "status": "release-candidate",
+  "candidate": "RC2",
+  "candidateDate": "2026-09-12",
+  "stableAuthority": "1.7.0",
+  "releasedAt": null,
+  "rcDate": "2026-09-12",
   "minimumSupportedVersion": "1.0.0",
   "breakingChange": false,
   "inherits": {
-    "version": "1.6.4",
-    "tag": "standard-v1.6.4",
-    "commit": "5e2901945287165a8902f28fb1d3b5a87b6eeb92"
+    "version": "1.7.0",
+    "tag": "standard-v1.7.0"
   },
-  "normativeKeywords": [
-    "MUST",
-    "MUST NOT",
-    "SHOULD",
-    "SHOULD NOT",
-    "MAY"
-  ],
+  "normativeKeywords": ["MUST","MUST NOT","SHOULD","SHOULD NOT","MAY"],
   "adoptionLevels": [
-    {
-      "level": 0,
-      "id": "declared",
-      "name": "Level 0 – Declared"
-    },
-    {
-      "level": 1,
-      "id": "identity",
-      "name": "Level 1 – Identity"
-    },
-    {
-      "level": 2,
-      "id": "shared-ux",
-      "name": "Level 2 – Shared UX"
-    },
-    {
-      "level": 3,
-      "id": "quality-gates",
-      "name": "Level 3 – Quality Gates"
-    },
-    {
-      "level": 4,
-      "id": "full-adoption",
-      "name": "Level 4 – Full Adoption"
-    }
+    {"level":0,"id":"declared","name":"Level 0 – Declared"},
+    {"level":1,"id":"identity","name":"Level 1 – Identity"},
+    {"level":2,"id":"shared-ux","name":"Level 2 – Shared UX"},
+    {"level":3,"id":"quality-gates","name":"Level 3 – Quality Gates"},
+    {"level":4,"id":"full-adoption","name":"Level 4 – Full Adoption"}
   ],
   "contracts": {
     "wholeAppAdaptiveLayout": "container-driven-safe-area-dynamic-type-localization-and-space-utilization",
@@ -54,7 +30,7 @@
     "conformance": "stable-rule-ids-static-unit-ui-runtime-evidence",
     "componentFamilyGeometry": "shared-role-shared-geometry-explicit-semantic-exceptions",
     "settingsEntry": "primary-root-direct-system-entry",
-    "localization": "all-user-facing-changes-parity",
+    "localization": "localization-first-locale-aware-search-parity-storefront-independent",
     "privacy": "manifest-per-distributed-target",
     "debugIsolation": "development-controls-not-production-ui",
     "viewportEdgeUtilization": "safe-area-relative-top-bottom-horizontal-efficient-no-unexplained-waste",
@@ -63,22 +39,36 @@
     "keyboardCoordination": "active-field-visibility-and-no-double-bottom-clearance",
     "headerOwnership": "single-owner-no-duplicate-page-heading-semantic-section-names",
     "sheetHeader": "single-coherent-sheet-header-hierarchy",
-    "systemChromeOwnership": "platform-chrome-not-visually-imitated-by-app"
+    "systemChromeOwnership": "platform-chrome-not-visually-imitated-by-app",
+    "singleDeviceDataContinuity": "stable-local-domain-identity-independent-of-development-production-bindings",
+    "productionBackendReadiness": "schema-index-permission-config-plus-real-production-smoke",
+    "asyncDerivedStateIntegrity": "stale-completion-protection-and-authoritative-rebuild-ordering",
+    "cloudMutationTruth": "remote-confirmation-before-success-plus-durable-reconciliation",
+    "persistedDataRecovery": "safe-corruption-recovery-relationship-aware-deletion-upgrade-gate",
+    "deterministicRegression": "automated-regression-coverage-for-material-deterministic-engines",
+    "permissionParity": "disabled-feature-no-entry-no-permission-prompt",
+    "runtimeEvidence": "exact-build-scoped-and-regression-traceable",
+    "compactSurfaces": "content-priority-and-specific-destination-integrity"
   },
   "documents": {
     "standard": "IBAJURAJ_APPLICATION_STANDARD.md",
     "tokens": "DESIGN_TOKENS.md",
-    "migration": "MIGRATION.md",
+    "migration": "MIGRATION_1.8.0_RC1_TO_RC2.md",
     "testMatrix": "TEST_MATRIX.md",
     "releaseChecklist": "RELEASE_CHECKLIST.md",
     "referencePatterns": "REFERENCE_PATTERNS.md",
     "conformanceCatalog": "CONFORMANCE_CATALOG.json",
-    "screenAudit": "STANDARD_CONFORMANCE_TEMPLATE.json#screenAudit"
+    "screenAudit": "STANDARD_CONFORMANCE_TEMPLATE.json#screenAudit",
+    "releaseNotes": "RELEASE_NOTES_1.8.0_RC2.md",
+    "integrationGapAudit": "RC1_INTEGRATION_GAP_AUDIT.md"
   },
+  "ruleCount": 119,
+  "ruleOrigins": {"stable-1.7.0-exact":96,"formalized-RC1-scope":12,"RC2":11},
   "source": {
     "repository": "https://github.com/IbaJuraj/ibajuraj-application-standard",
     "latestMetadata": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.json",
     "document": "IBAJURAJ_APPLICATION_STANDARD.md",
-    "releaseTag": "standard-v1.7.0"
+    "releaseTag": "standard-v1.8.0-rc2",
+    "stableReleaseTag": "standard-v1.7.0"
   }
 }
