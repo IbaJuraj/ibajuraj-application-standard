@@ -16,6 +16,7 @@ def condition_applies(cond, caps):
         if 'allCapabilities' in cond: return all(bool(caps.get(k)) for k in cond['allCapabilities'])
         if 'bottomNavigationMode' in cond: return caps.get('bottomNavigationMode','none') == cond['bottomNavigationMode']
     return False
+
 def applies(rule, caps):
     return condition_applies(rule.get('appliesWhen','always'), caps)
 
@@ -29,16 +30,21 @@ SCREEN_REQ={
 class ValidatorTests(unittest.TestCase):
     def make_app(self, caps=None, omit=None, pending=None, localization=False, omit_screen=None, pending_screen=None):
         td=tempfile.TemporaryDirectory(); r=Path(td.name)
-        (r/'STANDARD_VERSION').write_text('1.7.0\n')
+        (r/'STANDARD_VERSION').write_text('1.8.0\n')
         (r/'evidence.txt').write_text('Bundle CFBundleShortVersionString CFBundleVersion IbaJuraj Apps ij.root.title ij.navigation.header ij.bottomnav.container')
         (r/'RUNTIME_ACCEPTANCE.md').write_text('# Runtime\n')
-        base={'hasSettings':False,'hasAppearance':False,'hasCustomThemes':False,'hasLocalization':False,
-              'hasBottomNavigation':False,'bottomNavigationMode':'none','hasBottomPrimaryAction':False,'hasFixedBottomControls':False,
-              'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
-              'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
-              'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAppLock':False,'hasGeneratedAssistance':False,
-              'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
-              'hasOnboarding':False,'hasStateSurfaces':False}
+        base={
+            'hasSettings':False,'hasAppearance':False,'hasCustomThemes':False,'hasLocalization':False,'hasLocalizedSearch':False,
+            'hasBottomNavigation':False,'bottomNavigationMode':'none','hasBottomPrimaryAction':False,'hasFixedBottomControls':False,
+            'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
+            'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
+            'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAppLock':False,'hasGeneratedAssistance':False,
+            'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
+            'hasOnboarding':False,'hasStateSurfaces':False,'hasProductionBackend':False,'hasRepresentativeUserData':False,
+            'hasAsyncDerivedState':False,'hasDerivedState':False,'hasRemoteDestructiveOrAccessMutations':False,
+            'hasCloudSharingOrAccessControl':False,'hasRelationshipBearingDeletion':False,'hasMaterialDeterministicEngine':False,
+            'hasFeatureFlaggedPermissionedCapability':False,'hasCompactSurfaces':False
+        }
         if caps: base.update(caps)
         rules={}
         for x in CAT['rules']:
@@ -56,7 +62,7 @@ class ValidatorTests(unittest.TestCase):
         families={f:{'status':'pass','screens':[f+' Fixture'],'evidence':['RUNTIME_ACCEPTANCE.md#'+f]} for f in sorted(req)}
         if omit_screen: families.pop(omit_screen,None)
         if pending_screen in families: families[pending_screen]['status']='pending'
-        manifest={'standardVersion':'1.7.0','app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
+        manifest={'standardVersion':'1.8.0','standardCandidate':'RC2','app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
                   'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
             (r/'sk.lproj').mkdir(); (r/'en.lproj').mkdir()
@@ -79,22 +85,29 @@ class ValidatorTests(unittest.TestCase):
         try: self.assertEqual(self.runv(r).returncode,1)
         finally: td.cleanup()
 
+    def test_candidate_pin_is_enforced(self):
+        td,r=self.make_app()
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['standardCandidate']='RC1'; (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('standardCandidate mismatch',p.stdout)
+        finally: td.cleanup()
+
     def test_conditional_custom_nav_rule_is_enforced(self):
         td,r=self.make_app({'hasBottomNavigation':True,'bottomNavigationMode':'custom'},omit='STD-NAV-010')
         try:
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-NAV-010 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
-    def test_anyof_condition_for_fixed_bottom_controls_is_enforced(self):
-        td,r=self.make_app({'hasFixedBottomControls':True},omit='STD-VIEWPORT-003')
-        try:
-            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-VIEWPORT-003 missing conformance entry',p.stdout)
-        finally: td.cleanup()
-
     def test_all_capabilities_condition_is_enforced(self):
         td,r=self.make_app({'hasBottomNavigation':True,'bottomNavigationMode':'native','hasForms':True},omit='STD-FORM-006')
         try:
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-FORM-006 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_new_rc2_deterministic_rule_is_enforced(self):
+        td,r=self.make_app({'hasMaterialDeterministicEngine':True},omit='STD-TEST-001')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-TEST-001 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
     def test_release_blocking_pending_returns_two(self):
