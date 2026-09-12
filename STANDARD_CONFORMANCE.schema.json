@@ -11,90 +11,30 @@
     "exceptions"
   ],
   "properties": {
-    "standardVersion": {
-      "const": "1.7.0"
-    },
-    "app": {
-      "type": "object",
-      "required": [
-        "name",
-        "productId"
-      ]
-    },
-    "capabilities": {
-      "type": "object"
-    },
-    "supportedLocalizations": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "localization": {
-      "type": "object"
-    },
-    "projectMetadata": {
-      "type": "object"
-    },
-    "rules": {
-      "type": "object"
-    },
-    "runtimeAcceptanceFile": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "exceptions": {
-      "type": "object"
-    },
+    "standardVersion": {"const": "1.8.0-rc2"},
+    "app": {"type": "object", "required": ["name", "productId"]},
+    "capabilities": {"type": "object"},
+    "supportedLocalizations": {"type": "array", "items": {"type": "string"}},
+    "localization": {"type": "object"},
+    "projectMetadata": {"type": "object"},
+    "rules": {"type": "object"},
+    "runtimeAcceptanceFile": {"type": ["string", "null"]},
+    "exceptions": {"type": "object"},
     "screenAudit": {
       "type": "object",
-      "required": [
-        "families"
-      ],
+      "required": ["families"],
       "properties": {
         "families": {
           "type": "object",
           "additionalProperties": {
             "type": "object",
-            "required": [
-              "status",
-              "screens"
-            ],
+            "required": ["status", "screens"],
             "properties": {
-              "status": {
-                "enum": [
-                  "pass",
-                  "pending",
-                  "exception"
-                ]
-              },
-              "screens": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "minItems": 1
-              },
-              "evidence": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "adr": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              },
-              "notes": {
-                "type": [
-                  "string",
-                  "null"
-                ]
-              }
+              "status": {"enum": ["pass", "pending", "exception"]},
+              "screens": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+              "evidence": {"type": "array", "items": {"type": "string"}},
+              "adr": {"type": ["string", "null"]},
+              "notes": {"type": ["string", "null"]}
             },
             "additionalProperties": true
           }
