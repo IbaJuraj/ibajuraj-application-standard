@@ -1,272 +1,167 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.7.0  
-**Stav:** Active  
-**Dátum vydania:** 2. septembra 2026  
+**Verzia:** 1.8.0 RC2  
+**Stav:** Release Candidate  
+**Dátum kandidáta:** 12. septembra 2026  
 **Vlastník:** IbaJuraj  
-**Aktuálna verejná autorita:** 1.7.0 (`standard-v1.7.0`)
+**Stable verejná autorita:** 1.7.0 (`standard-v1.7.0`)  
+**Navrhovaný candidate tag:** `standard-v1.8.0-rc2`
 
-> Verzia 1.7.0 bola povýšená z RC3 po cross-app adopcii a runtime kontrole štyroch cieľových aplikácií. Finálne vydanie nemení normatívnu sadu RC3; uzatvára ju ako aktívny Standard s 96 stabilnými `STD-*` pravidlami.
+> RC2 je technicky integrovaný kandidát. Stable autorita sa nemení, kým nebude ukončený cross-app promotion gate.
 
 ## 1. Záväznosť
-`MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD`/`SHOULD NOT` vyžaduje zdôvodnenie. `MAY` je voliteľné. `CONFORMANCE_CATALOG.json` je normatívny machine-readable register aplikovateľnosti a minimálneho typu dôkazu.
 
-## 2. Piliere 1.7.0
-1. Whole-App Adaptive Layout.
-2. Viewport Edge Utilization.
-3. Native/Custom Bottom Navigation Contract.
-4. Screen-Family Audit.
-5. Header & System-Chrome Ownership.
-6. Machine-Verifiable Cross-App Conformance.
-
-## 3. Kľúčové spoločné kontrakty
-
-### O aplikácii
-- Settings: **O aplikácii** + **Verzia, súkromie a štandard** + runtime `<version> (<build>)`.
-- Version card: `<AppName> v<version> – Build <build>.` z autoritatívnych runtime metadata.
-- Standard card: iba `IbaJuraj Application Standard` + `Verzia <standardVersion>`; interný tag/SHA/adoption level sa používateľovi nezobrazujú.
-- Vývojár: `IbaJuraj Apps.`; web/privacy používajú spoločné odkazy.
-
-### Appearance
-- Bezpečne aplikovateľná téma sa prejaví okamžite na aktuálnej obrazovke: checkmark, selected state a surface/background v tom istom render cykle.
-- Uložená hodnota a vykreslený stav musia zostať v parite po návrate/relaunchi.
-
-### Adaptivita a viewport
-- Každá user-facing obrazovka je adaptive by default a primárne container-driven; device-name/`UIScreen.main.bounds` branching nie je layout foundation, ak existuje reálna container geometry.
-- Primary root header sa kotví čo najvyššie po top safe area; baseline extra inset je **0–4 pt**. Peer roots používajú rovnaký safe-area-relative anchor.
-- Fixed/custom bottom chrome ide na najnižšiu bezpečnú pozíciu; celý bottom safe-area inset sa automaticky nemení na prázdny pás.
-- **Bar position a scroll content clearance sú nezávislé.** Posledný obsah musí ísť celý nad chrome; typická koncová rezerva je 16–24 pt.
-- Horizontal space sa využíva adaptívne. Veľký displej nemá znamenať iba viac prázdna; malé množstvo obsahu však môže prirodzene nechať prázdnu plochu.
-- Adaptívny layout nesmie spôsobovať layout thrashing ani viditeľné lagovanie.
-
-### Header a system chrome ownership
-- Každá obrazovka má jedného autoritatívneho vlastníka headeru. Systémový navigation title a druhý custom page title s rovnakou funkciou sa nekombinujú.
-- Navigation title sa neopakuje ekvivalentným page/section headingom (`Kontakt` + `KONTAKT`, `O aplikácii` + `O APLIKÁCII`). Section header musí pomenovať užšiu semantickú skupinu obsahu.
-- Sheet používa jednu koherentnú hierarchiu title/subtitle/dismissal action. Prázdny systémový navbar rezervovaný iba kvôli `X`/`Zrušiť` a druhý veľký custom title pod ním je defect.
-- Aplikácia nekreslí vizuálnu imitáciu platform-owned chrome (napr. vlastný Home Indicator), ak daný systémový prvok poskytuje iOS.
-
-### Bottom navigation
-- Native variant necháva platforme výšku/safe area.
-- Custom floating baseline: približne 60–66 pt surface, min. 44×44 pt touch target, typický 50 pt primary action, radius približne 28 pt; hodnoty sú baseline, nie rigidný frame.
-- Centrálna akcia nesmie zbytočne nafúknuť celý bar. Custom bar môže bezpečne penetrovať bottom safe area pri ochrane Home Indicatora.
-
-### Screen-family audit
-`STANDARD_CONFORMANCE.json` deklaruje konkrétne obrazovky v relevantných family: `SCREEN-ROOT`, `SCREEN-SETTINGS`, `SCREEN-ABOUT`, `SCREEN-DETAIL`, `SCREEN-FORM`, `SCREEN-SEARCH`, `SCREEN-SHEET`, `SCREEN-FULLSCREEN`, `SCREEN-ONBOARDING`, `SCREEN-STATES`, `SCREEN-BOTTOM-NAV`. Každá family má `pass/pending/exception`; `pass` potrebuje evidence, `exception` existujúci ADR a `pending` blokuje Level 4.
-
-### Conformance
-Static PASS nie je runtime PASS. Každé aplikovateľné MUST/MUST NOT potrebuje static/unit/UI/runtime evidence alebo platnú ADR exception. Level 4 vyžaduje nulové release-blocking pending pravidlá aj nulové pending screen families.
-
-## 4. Normatívny register pravidiel
-Každé ID nižšie je záväzné podľa úrovne uvedenej v nadpise; presná aplikovateľnosť a verification mode sú v `CONFORMANCE_CATALOG.json`.
-
-### STD-IDENTITY-001 — One runtime source for marketing version and build — MUST
-
-### STD-IDENTITY-002 — IbaJuraj Apps identity and shared links — MUST
-
-### STD-IDENTITY-003 — App and Standard metadata are separate — MUST
-
-### STD-COMPONENT-001 — Shared role uses shared geometry — MUST
-
-### STD-COMPONENT-002 — No unexplained local geometry drift — MUST NOT
-
-### STD-COMPONENT-003 — Semantic exceptions are documented — MUST
-
-### STD-COMPONENT-004 — Minimum 44x44 touch target — MUST
-
-### STD-COMPONENT-005 — Meaningful text fits without scale-factor rescue — MUST
-
-### STD-SETTINGS-001 — Direct Settings entry on primary roots — MUST
-
-### STD-SETTINGS-002 — Shared appearance control meaning — MUST
-
-### STD-APPEARANCE-001 — Theme applies immediately on same screen — MUST
-
-### STD-APPEARANCE-002 — Checkmark/model/render state parity — MUST
-
-### STD-APPEARANCE-003 — Theme selection persists — MUST
-
-### STD-ABOUT-001 — Settings About row contract — MUST
-
-### STD-ABOUT-002 — About version sentence contract — MUST
-
-### STD-ABOUT-003 — Public Standard version only — MUST
-
-### STD-ABOUT-004 — Developer card contract — MUST
-
-### STD-ABOUT-005 — Web and privacy links — MUST
-
-### STD-ABOUT-006 — Shared About test identifiers — MUST
-
-### STD-ADAPT-001 — Whole app adaptive by default — MUST
-
-### STD-ADAPT-002 — Container-driven layout foundation — MUST
-
-### STD-ADAPT-003 — Safe-area-driven positioning — MUST
-
-### STD-ADAPT-004 — Use available space when beneficial — MUST
-
-### STD-ADAPT-005 — Stable semantic content anchors — MUST
-
-### STD-ADAPT-006 — Dynamic Type adaptive layout — MUST
-
-### STD-ADAPT-007 — Longest-localization stress test — MUST
-
-### STD-ADAPT-008 — Fixed tokens not fixed device layout — MUST
-
-### STD-ADAPT-009 — Window/orientation adaptation — MUST
-
-### STD-ADAPT-010 — iPad/compatibility runtime matrix — MUST
-
-### STD-ADAPT-011 — No device-name branching as layout foundation — MUST NOT
-
-### STD-ADAPT-012 — Adaptive calculator keypad — MUST
-
-### STD-NAV-001 — Bottom navigation mode declared — MUST
-
-### STD-NAV-002 — Native tab variant — MUST
-
-### STD-NAV-003 — Custom baseline geometry — MUST
-
-### STD-NAV-004 — Primary action does not inflate bar — MUST
-
-### STD-NAV-005 — Adaptive custom bar width — MUST
-
-### STD-NAV-006 — Custom bar safe area — MUST
-
-### STD-NAV-007 — Bottom content clearance — MUST
-
-### STD-NAV-008 — Custom bar Dynamic Type — MUST
-
-### STD-NAV-009 — Custom bar test identifiers — MUST
-
-### STD-NESTED-NAV-001 — Back and native swipe where applicable — MUST
-
-### STD-NESTED-NAV-002 — No navigation loops/dead ends — MUST
-
-### STD-LOC-001 — Localization parity — MUST
-
-### STD-LOC-002 — Single shared localization meaning — MUST
-
-### STD-A11Y-001 — VoiceOver semantics — MUST
-
-### STD-A11Y-002 — No color-only meaning — MUST
-
-### STD-A11Y-003 — Reduce Motion/Increase Contrast — MUST
-
-### STD-FORM-001 — Required/optional fields — MUST
-
-### STD-FORM-002 — Validation timing — MUST
-
-### STD-FORM-003 — Progressive disclosure — MUST
-
-### STD-FORM-004 — Keyboard dismissal — MUST
-
-### STD-DATA-001 — Single source of truth — MUST
-
-### STD-DATA-002 — Schema/migration coverage — MUST
-
-### STD-DATA-003 — Sync/local/backup/export semantics — MUST
-
-### STD-DATA-004 — Traceability of authoritative data — MUST
-
-### STD-PRIVACY-001 — Privacy manifest coverage — MUST
-
-### STD-PRIVACY-002 — Privacy policy/App Store parity review — MUST
-
-### STD-SECURITY-001 — Security state machine — MUST
-
-### STD-DEBUG-001 — Production isolation of debug/mock controls — MUST
-
-### STD-DEBUG-002 — Runtime defect regression evidence — MUST
-
-### STD-AI-001 — Grounded verified generated assistance — MUST
-
-### STD-AI-002 — Safe low-confidence fallback — MUST
-
-### STD-CONF-001 — STANDARD_CONFORMANCE.json exists — MUST
-
-### STD-CONF-002 — Every applicable MUST has evidence — MUST
-
-### STD-CONF-003 — Common validator passes — MUST
-
-### STD-CONF-004 — Shared UI test identifiers — MUST
-
-### STD-CONF-005 — Static PASS not substituted for runtime proof — MUST
-
-### STD-CONF-006 — Release conformance report — MUST
-
-### STD-RELEASE-001 — Source hygiene — MUST
-
-### STD-RELEASE-002 — Localization gate — MUST
-
-### STD-RELEASE-003 — Whole-family regression scope — MUST
-
-### STD-RELEASE-004 — Native build/runtime gate distinction — MUST
-
-### STD-ADAPT-013 — Adaptive density uses useful available space — MUST
-
-### STD-ADAPT-014 — System geometry remains stable across data states — MUST
-
-### STD-ADAPT-015 — Adaptive layout avoids layout thrashing and unnecessary invalidation — MUST
-
-### STD-VIEWPORT-001 — Primary root header starts at safe-area plus shared minimal inset — MUST
-
-### STD-VIEWPORT-002 — Root nested sheet and fullscreen header families are explicit — MUST
-
-### STD-VIEWPORT-003 — Fixed/custom bottom chrome uses lowest safe viewport position — MUST
-
-### STD-VIEWPORT-004 — Bottom chrome position and content clearance are independent — MUST
-
-### STD-VIEWPORT-005 — Horizontal viewport is adaptively utilized — MUST
-
-### STD-VIEWPORT-006 — No unexplained fixed edge waste — MUST
-
-### STD-VIEWPORT-007 — Layout responds to live system safe-area changes — MUST
-
-### STD-VIEWPORT-008 — Peer primary roots share safe-area-relative top anchor — MUST
-
-### STD-SCREEN-001 — Screen-family inventory is declared — MUST
-
-### STD-SCREEN-002 — Every applicable screen family has completed audit state — MUST
-
-### STD-SCREEN-003 — Each screen family passes viewport audit dimensions — MUST
-
-### STD-SCREEN-004 — Shared screen chrome exposes stable test identifiers — MUST
-
-### STD-NAV-010 — Custom bar may safely penetrate bottom safe area instead of reserving blank band — MUST
-
-### STD-NAV-011 — Custom bar position and scroll clearance are independently calculated — MUST
-
-### STD-A11Y-004 — Reduce Transparency has readable fallback — MUST
-
-### STD-FORM-005 — Keyboard keeps active field and required action reachable — MUST
-
-### STD-FORM-006 — Keyboard and bottom chrome do not create overlap or double clearance — MUST
-
+`MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD` vyžaduje zdôvodnenie. Static PASS nenahrádza runtime PASS.
+
+## 2. Integrácia 1.8
+
+RC2 má **119 pravidiel**:
+- presne zachovaných 96 machine-readable pravidiel 1.7.0,
+- 12 pravidiel formalizujúcich publikovaný scope RC1,
+- 11 nových pravidiel RC2.
+
+Dôležité: publikovaný tag `standard-v1.8.0-rc1` deklaroval 108 pravidiel v release notes, ale jeho `STANDARD_VERSION` a `CONFORMANCE_CATALOG.json` zostali na 1.7.0 / 96 pravidlách. RC2 tento integračný rozdiel explicitne uzatvára namiesto toho, aby predstieral, že RC1 už mal plný 108-rule machine catalog.
+
+## 3. RC1 formalized scope
+
+Localization-first architektúra, locale-aware formátovanie/pluralizácia, Automatic/System selector contract, stable IDs pri language switch, localized search parity, storefront independence, release-root hygiene, single-device continuity, Production backend readiness/smoke, server-vs-binary fix distinction a representative-data performance.
+
+## 4. RC2 hardening
+
+Async stale-callback safety; authoritative mutation→derived rebuild; remote truth + durable reconciliation; corrupt-state recovery; relationship-aware deletion; upgrade-path gate; deterministic engine tests; disabled-feature/permission parity; build-scoped runtime evidence; compact-surface priority/deep-link integrity.
+
+## 5. Normatívny register
+
+### STD-IDENTITY-001 — MUST
+### STD-IDENTITY-002 — MUST
+### STD-IDENTITY-003 — MUST
+### STD-COMPONENT-001 — MUST
+### STD-COMPONENT-002 — MUST NOT
+### STD-COMPONENT-003 — MUST
+### STD-COMPONENT-004 — MUST
+### STD-COMPONENT-005 — MUST
+### STD-SETTINGS-001 — MUST
+### STD-SETTINGS-002 — MUST
+### STD-APPEARANCE-001 — MUST
+### STD-APPEARANCE-002 — MUST
+### STD-APPEARANCE-003 — MUST
+### STD-ABOUT-001 — MUST
+### STD-ABOUT-002 — MUST
+### STD-ABOUT-003 — MUST
+### STD-ABOUT-004 — MUST
+### STD-ABOUT-005 — MUST
+### STD-ABOUT-006 — MUST
+### STD-ADAPT-001 — MUST
+### STD-ADAPT-002 — MUST
+### STD-ADAPT-003 — MUST
+### STD-ADAPT-004 — MUST
+### STD-ADAPT-005 — MUST
+### STD-ADAPT-006 — MUST
+### STD-ADAPT-007 — MUST
+### STD-ADAPT-008 — MUST
+### STD-ADAPT-009 — MUST
+### STD-ADAPT-010 — MUST
+### STD-ADAPT-011 — MUST NOT
+### STD-ADAPT-012 — MUST
+### STD-NAV-001 — MUST
+### STD-NAV-002 — MUST
+### STD-NAV-003 — MUST
+### STD-NAV-004 — MUST
+### STD-NAV-005 — MUST
+### STD-NAV-006 — MUST
+### STD-NAV-007 — MUST
+### STD-NAV-008 — MUST
+### STD-NAV-009 — MUST
+### STD-NESTED-NAV-001 — MUST
+### STD-NESTED-NAV-002 — MUST
+### STD-LOC-001 — MUST
+### STD-LOC-002 — MUST
+### STD-A11Y-001 — MUST
+### STD-A11Y-002 — MUST
+### STD-A11Y-003 — MUST
+### STD-FORM-001 — MUST
+### STD-FORM-002 — MUST
+### STD-FORM-003 — MUST
+### STD-FORM-004 — MUST
+### STD-DATA-001 — MUST
+### STD-DATA-002 — MUST
+### STD-DATA-003 — MUST
+### STD-DATA-004 — MUST
+### STD-PRIVACY-001 — MUST
+### STD-PRIVACY-002 — MUST
+### STD-SECURITY-001 — MUST
+### STD-DEBUG-001 — MUST
+### STD-DEBUG-002 — MUST
+### STD-AI-001 — MUST
+### STD-AI-002 — MUST
+### STD-CONF-001 — MUST
+### STD-CONF-002 — MUST
+### STD-CONF-003 — MUST
+### STD-CONF-004 — MUST
+### STD-CONF-005 — MUST
+### STD-CONF-006 — MUST
+### STD-RELEASE-001 — MUST
+### STD-RELEASE-002 — MUST
+### STD-RELEASE-003 — MUST
+### STD-RELEASE-004 — MUST
+### STD-ADAPT-013 — MUST
+### STD-ADAPT-014 — MUST
+### STD-ADAPT-015 — MUST
+### STD-VIEWPORT-001 — MUST
+### STD-VIEWPORT-002 — MUST
+### STD-VIEWPORT-003 — MUST
+### STD-VIEWPORT-004 — MUST
+### STD-VIEWPORT-005 — MUST
+### STD-VIEWPORT-006 — MUST
+### STD-VIEWPORT-007 — MUST
+### STD-VIEWPORT-008 — MUST
+### STD-SCREEN-001 — MUST
+### STD-SCREEN-002 — MUST
+### STD-SCREEN-003 — MUST
+### STD-SCREEN-004 — MUST
+### STD-NAV-010 — MUST
+### STD-NAV-011 — MUST
+### STD-A11Y-004 — MUST
+### STD-FORM-005 — MUST
+### STD-FORM-006 — MUST
 ### STD-HEADER-001 — Each screen has one authoritative header owner — MUST
-
 ### STD-HEADER-002 — Navigation title is not duplicated by equivalent page or section heading — MUST NOT
-
 ### STD-HEADER-003 — Sheet title subtitle and dismissal action form one coherent header hierarchy — MUST
-
 ### STD-CHROME-001 — App does not imitate platform-owned system chrome — MUST NOT
+### STD-LOC-003 — Localization-ready architecture and stable semantic localization keys — MUST
+### STD-LOC-004 — Locale-aware formatting and pluralization — MUST
+### STD-LOC-005 — Optional in-app language selector supports Automatic/System mode — SHOULD
+### STD-LOC-006 — Language switching does not migrate domain data or change stable raw IDs — MUST
+### STD-LOC-007 — Localized search has feature parity across supported runtime languages — MUST
+### STD-LOC-008 — Runtime languages are independent from App Store territory availability — MUST
+### STD-RELEASE-005 — Current release root is clean and superseded build history is archived — MUST
+### STD-DATA-005 — Single-device Xcode ↔ TestFlight/App Store ↔ Xcode data continuity — MUST
+### STD-BACKEND-001 — Production backend schema/index/permission/config is explicitly ready — MUST
+### STD-BACKEND-002 — Real TestFlight/Production read/write/sync/share smoke follows app capabilities — MUST
+### STD-BACKEND-003 — Server-side fixes and binary fixes are explicitly distinguished — MUST
+### STD-PERF-001 — Runtime performance is tested with representative real-volume data — MUST
+### STD-ASYNC-001 — Stale async completion cannot overwrite newer state — MUST
+### STD-DERIVED-001 — Authoritative mutation precedes one coherent derived-state rebuild — MUST
+### STD-CLOUD-001 — Remote destructive/access success follows confirmed remote truth — MUST
+### STD-CLOUD-002 — Security/access mutations have durable retry or reconciliation — MUST
+### STD-DATA-006 — Corrupt persisted state fails safely without destructive empty overwrite — MUST
+### STD-DATA-007 — Destructive deletion is relationship-aware — MUST
+### STD-DATA-008 — Persisted-data app has production-to-candidate upgrade-path gate — MUST
+### STD-TEST-001 — Material deterministic engines require automated regression coverage — MUST
+### STD-PERM-001 — Disabled feature and permission exposure remain in parity — MUST
+### STD-EVIDENCE-001 — Runtime evidence is build-scoped and regressions remain traceable — MUST
+### STD-COMPACT-001 — Compact surfaces define content priority and destination integrity — SHOULD
 
-## 5. 1.7.0 semantic clarifications
-- **STD-ADAPT-004/013:** bezpečne využiteľný voľný priestor sa má primerane využiť bez narušenia hierarchie.
-- **STD-ADAPT-015:** zakázané je adaptívne riešenie, ktoré spôsobuje zbytočné opakované merania, invalidácie alebo lagovanie.
-- **STD-VIEWPORT-001/008:** root title/header sa viaže na aktuálnu top safe area + shared minimal inset, nie na absolútne Y zariadenia.
-- **STD-VIEWPORT-003/STD-NAV-010:** custom bottom chrome môže vstúpiť do bottom safe area, ak Home Indicator nekoliduje s obsahom ani 44×44 touch targetom.
-- **STD-VIEWPORT-004/STD-NAV-011:** fyzická poloha bottom chrome a scroll content clearance sa počítajú samostatne.
-- **STD-VIEWPORT-006:** nevysvetlený hardcoded edge padding/spacer, ktorý iba znižuje užitočný viewport, je defect.
-- **STD-FORM-006:** keyboard a fixed/custom bottom chrome nesmú vytvoriť overlap ani dvojitú rezervu.
-- **STD-CONF-005:** grep/parser/manifest dôkaz nenahrádza UI/runtime dôkaz behaviorálneho pravidla.
-- **STD-HEADER-001:** jedna screen family môže používať native alebo custom header, nie dve paralelné vrstvy s rovnakou rolou.
-- **STD-HEADER-002:** section heading je prípustný iba ak zužuje význam; opakovanie názvu obrazovky v inom case/icon štýle je defect.
-- **STD-HEADER-003:** sheet musí mať jeden vizuálny top anchor; dismissal action nesmie sama vytvoriť prázdny navigation band nad druhým title.
-- **STD-CHROME-001:** platform-owned affordance sa nesmie imitovať dekoratívnou kópiou; ak aplikácia potrebuje vlastný drag handle, musí mať vlastnú funkciu a nesmie predstierať Home Indicator.
+## 6. Inherited 1.7.0 semantics
 
-## 6. Minimálna runtime matrix
-Small/regular/large iPhone container; Accessibility Dynamic Type; Light/Dark; najdlhšia podporovaná lokalizácia; keyboard/form state; scroll endpoint nad bottom chrome; iPad portrait/landscape/window sizes, ak je podporovaný; iPad compatibility pre kritický flow, ak relevantné.
+Všetky normatívne významy, semantic clarifications, layout/header/chrome kontrakty a runtime matrix z finálneho 1.7.0 zostávajú zdedené, pokiaľ ich 1.8.0 RC2 výslovne nerozširuje. Machine-readable aplikovateľnosť prvých 96 pravidiel je zachovaná bez zjednodušenia v `CONFORMANCE_CATALOG.json`.
 
-## 7. Adopcia a release
-Verzia 1.7.0 bola finalizovaná z RC3 po úspešnom cross-app audite. Každá aplikácia naďalej vlastní svoj `STANDARD_CONFORMANCE.json`, runtime/Xcode dôkazy a prípadné ADR výnimky. Finálny release tag Standardu je `standard-v1.7.0`.
+## 7. Promotion gate
+
+Final `standard-v1.8.0` vyžaduje:
+1. package validators PASS,
+2. Strážca Termínov RC2 applicability/runtime closure,
+3. Kalkulačka 2v1 RC2 applicability/runtime closure,
+4. Peňaženka cloud/data/evidence re-audit,
+5. Lex Drive representative applicability audit,
+6. žiadne neobjasnené release-blocking MUST pravidlá.
