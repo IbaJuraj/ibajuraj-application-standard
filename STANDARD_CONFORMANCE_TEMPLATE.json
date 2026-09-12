@@ -1,6 +1,7 @@
 {
   "$schema": "./STANDARD_CONFORMANCE.schema.json",
-  "standardVersion": "1.8.0-rc2",
+  "standardVersion": "1.8.0",
+  "standardCandidate": "RC2",
   "app": {"name": "<App Name>", "productId": "<product-id>"},
   "capabilities": {
     "hasSettings": true,
