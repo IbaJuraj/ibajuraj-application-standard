@@ -16,9 +16,12 @@ if meta.get('candidate')!='RC2': errors.append('standard.json candidate != RC2')
 if meta.get('stableAuthority')!='1.7.0': errors.append('stableAuthority != 1.7.0')
 if meta.get('ruleCount')!=119: errors.append('ruleCount != 119')
 if meta.get('source',{}).get('releaseTag')!='standard-v1.8.0-rc2': errors.append('releaseTag != standard-v1.8.0-rc2')
-required=['IBAJURAJ_APPLICATION_STANDARD.md','DESIGN_TOKENS.md','REFERENCE_PATTERNS.md','TEST_MATRIX.md','RELEASE_CHECKLIST.md','MIGRATION_1.8.0_RC1_TO_RC2.md','CONFORMANCE_CATALOG.json','STANDARD_CONFORMANCE_TEMPLATE.json','STANDARD_CONFORMANCE.schema.json','RELEASE_NOTES_1.8.0_RC2.md','ADOPTION_PLAN_RC2.md','RC1_INTEGRATION_GAP_AUDIT.md','RC2_STATIC_AUDIT.md']
+required=['IBAJURAJ_APPLICATION_STANDARD.md','DESIGN_TOKENS.md','REFERENCE_PATTERNS.md','TEST_MATRIX_1.8.0_RC2.md','RELEASE_CHECKLIST_1.8.0_RC2.md','MIGRATION_1.8.0_RC1_TO_RC2.md','CONFORMANCE_CATALOG.json','STANDARD_CONFORMANCE_TEMPLATE.json','STANDARD_CONFORMANCE.schema.json','RELEASE_NOTES_1.8.0_RC2.md','ADOPTION_PLAN_RC2.md','RC1_INTEGRATION_GAP_AUDIT.md','RC2_STATIC_AUDIT.md']
 for f in required:
     if not (r/f).is_file(): errors.append(f'missing {f}')
+for k in ['testMatrix','releaseChecklist','migration','releaseNotes','integrationGapAudit']:
+    p=meta.get('documents',{}).get(k)
+    if not p or not (r/p).is_file(): errors.append(f'document pointer {k} invalid: {p}')
 for p in r.rglob('*'):
     if p.name=='.DS_Store' or 'xcuserdata' in p.parts or '__pycache__' in p.parts or p.suffix=='.pyc': errors.append(f'hygiene: {p}')
 if errors:
