@@ -5,9 +5,10 @@ root=Path(__file__).resolve().parents[1]
 cat=json.loads((root/'CONFORMANCE_CATALOG.json').read_text(encoding='utf-8'))
 errors=[]
 if cat.get('standardVersion')!='1.8.0': errors.append('catalog standardVersion must be 1.8.0')
-if cat.get('status')!='release-candidate': errors.append('catalog status must be release-candidate')
-if cat.get('candidate')!='RC2': errors.append('catalog candidate must be RC2')
-if cat.get('stableAuthority')!='1.7.0': errors.append('catalog stableAuthority must be 1.7.0')
+if cat.get('status')!='active': errors.append('catalog status must be active')
+if cat.get('candidate') is not None: errors.append('catalog candidate must be null')
+if cat.get('stableAuthority')!='1.8.0': errors.append('catalog stableAuthority must be 1.8.0')
+if cat.get('proposedTag')!='standard-v1.8.0': errors.append('catalog tag must be standard-v1.8.0')
 ids=[]
 for r in cat.get('rules',[]):
     rid=r.get('id','')
@@ -33,4 +34,4 @@ if errors:
     print('FAIL – conformance catalog')
     for e in errors: print(' -',e)
     sys.exit(1)
-print(f'PASS – conformance catalog 1.8.0 RC2 ({len(ids)} rules)')
+print(f'PASS – conformance catalog 1.8.0 stable ({len(ids)} rules)')
