@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.8.0 – 2026-09-15
+
+### Released
+- Promoted the validated 1.8.0 RC2 machine-readable rule set to stable authority.
+- Stable catalog remains **119 rules**: 96 inherited from 1.7.0, 12 formalized RC1 commitments and 11 RC2 hardening rules.
+- Finalized metadata, release documentation and stable tag target `standard-v1.8.0`.
+
+### Clarified
+- `STD-SECURITY-001`: biometrics are the primary local app-lock mechanism when enabled.
+- Biometric unavailability, lockout or failure must support fallback to system device authentication using the device passcode/password.
+- A separate app PIN must not be required merely to enable biometrics; it may remain optional where product-specific value exists.
+
+### Adoption
+- Existing 1.8.0 RC2 adopters do not gain a new rule ID; they must re-audit the clarified `STD-SECURITY-001` behavior.
+
 ## 1.8.0 RC2 – 2026-09-12
 
 ### Integrated
