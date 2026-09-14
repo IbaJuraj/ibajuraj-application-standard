@@ -4,14 +4,9 @@ import argparse, json, re, sys
 ALLOWED_MODES={'static','unit','ui','runtime','exception'}
 SCREEN_REQUIREMENTS={
     'hasSettings':['SCREEN-SETTINGS','SCREEN-ABOUT'],
-    'hasSearch':['SCREEN-SEARCH'],
-    'hasDetails':['SCREEN-DETAIL'],
-    'hasForms':['SCREEN-FORM'],
-    'hasSheets':['SCREEN-SHEET'],
-    'hasFullscreen':['SCREEN-FULLSCREEN'],
-    'hasOnboarding':['SCREEN-ONBOARDING'],
-    'hasStateSurfaces':['SCREEN-STATES'],
-    'hasBottomNavigation':['SCREEN-BOTTOM-NAV'],
+    'hasSearch':['SCREEN-SEARCH'], 'hasDetails':['SCREEN-DETAIL'], 'hasForms':['SCREEN-FORM'],
+    'hasSheets':['SCREEN-SHEET'], 'hasFullscreen':['SCREEN-FULLSCREEN'], 'hasOnboarding':['SCREEN-ONBOARDING'],
+    'hasStateSurfaces':['SCREEN-STATES'], 'hasBottomNavigation':['SCREEN-BOTTOM-NAV'],
 }
 def load(path): return json.loads(Path(path).read_text(encoding='utf-8'))
 def condition_applies(cond,caps):
@@ -24,8 +19,7 @@ def condition_applies(cond,caps):
         if 'allCapabilities' in cond: return all(bool(caps.get(k)) for k in cond['allCapabilities'])
         if 'bottomNavigationMode' in cond: return caps.get('bottomNavigationMode','none') == cond['bottomNavigationMode']
     return False
-def applicable(rule,caps):
-    return condition_applies(rule.get('appliesWhen','always'),caps)
+def applicable(rule,caps): return condition_applies(rule.get('appliesWhen','always'),caps)
 def read_text(p):
     try: return p.read_text(encoding='utf-8')
     except UnicodeDecodeError: return ''
@@ -42,6 +36,10 @@ def main():
     if not mp.is_file(): print('FAIL STD-CONF-001 – missing STANDARD_CONFORMANCE.json'); return 1
     m=load(mp); cat=load(std/'CONFORMANCE_CATALOG.json')
     if m.get('standardVersion')!=cat.get('standardVersion'): errors.append('STD-CONF-001 standardVersion mismatch')
+    if cat.get('candidate'):
+        if m.get('standardCandidate')!=cat.get('candidate'): errors.append('STD-CONF-001 standardCandidate mismatch')
+    elif m.get('standardCandidate') not in (None,''):
+        errors.append('STD-CONF-001 stable standard must not pin a release candidate')
     sv=app/'STANDARD_VERSION'
     if sv.exists() and sv.read_text().strip()!=cat.get('standardVersion'): errors.append('STD-CONF-001 STANDARD_VERSION pin mismatch')
     caps=m.get('capabilities',{}); entries=m.get('rules',{}); exceptions=m.get('exceptions',{})
@@ -83,10 +81,8 @@ def main():
                 f=gate.split('#',1)[0]
                 if f and not (app/f).is_file(): errors.append(f'{rid} runtime gate file missing: {f}')
                 else: passed+=1
-    # Screen-family inventory and release state.
     screen=m.get('screenAudit',{}).get('families',{})
-    required=screen_requirements(caps)
-    screen_pending=0
+    required=screen_requirements(caps); screen_pending=0
     for fam in required:
         entry=screen.get(fam)
         if not isinstance(entry,dict): errors.append(f'STD-SCREEN-001 missing screen family {fam}'); continue
@@ -124,12 +120,11 @@ def main():
     mode=caps.get('bottomNavigationMode','none')
     if caps.get('hasBottomNavigation') and mode not in {'native','custom'}: errors.append('STD-NAV-001 invalid bottomNavigationMode')
     if not caps.get('hasBottomNavigation') and mode!='none': errors.append('STD-NAV-001 bottomNavigationMode must be none')
+    label=f"IbaJuraj Standard {cat.get('standardVersion')} {cat.get('candidate') or ''}".strip()
     if errors:
-        print('FAIL – IbaJuraj Standard 1.7.0 RC3 app conformance')
-        [print(' -',x) for x in errors]; [print(' !',x) for x in warnings]
+        print(f'FAIL – {label} app conformance'); [print(' -',x) for x in errors]; [print(' !',x) for x in warnings]
         print(f'applicable MUST: {len(ars)} / pass-like: {passed} / exceptions: {exc} / rule pending: {pending} / screen pending: {screen_pending}'); return 1
-    print('PASS – IbaJuraj Standard 1.7.0 RC3 app conformance declaration/evidence')
-    [print(' !',x) for x in warnings]
+    print(f'PASS – {label} app conformance declaration/evidence'); [print(' !',x) for x in warnings]
     print(f'applicable MUST: {len(ars)} / evidence PASS: {passed} / exceptions: {exc} / release-blocking rule pending: {pending} / screen pending: {screen_pending}')
     if pending or screen_pending: print('NOT RELEASE-READY – release-blocking gates pending'); return 2
     return 0

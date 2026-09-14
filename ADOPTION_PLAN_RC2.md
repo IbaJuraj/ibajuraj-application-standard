@@ -1,13 +1,9 @@
-# IbaJuraj Application Standard 1.7.0 RC2 – Adoption Plan
+# Adoption Plan — IbaJuraj Application Standard 1.8.0 RC2
 
-RC2 supersedes RC1 for further adoption.
+1. **Strážca Termínov Build 116 R4** — audit async/derived-state integrity, cloud truth/reconciliation, corrupt-state recovery, relationship deletion, upgrade continuity and compact surfaces.
+2. **Kalkulačka 2v1 Build 59** — audit deterministic regression coverage, production→candidate upgrade path, temporarily disabled Voice/permission parity and exact-build runtime evidence.
+3. **Peňaženka Kariet** — re-audit cloud sharing/access mutation truth, durable reconciliation, single-device continuity and build-scoped evidence.
+4. **Lex Drive** — representative applicability audit for deterministic legal/search/ranking engines and authoritative versioned data.
+5. Final `standard-v1.8.0` only after cross-app runtime closure and no unresolved release-blocking MUST ambiguity.
 
-Order:
-1. Peňaženka Kariet – apply viewport/root/bottom-nav + screen-family RC2 rules.
-2. Strážca Termínov – whole-app RC2 audit including iPhone/iPad and custom chrome.
-3. Lex Drive – whole-app RC2 audit; native TabView remains platform-owned, root header anchors are audited.
-4. Kalkulačka 2v1 – follow-up RC2 viewport/screen-family audit in the next build line; do not disturb the submitted App Store build solely for RC2.
-5. Cross-app final audit.
-6. Promote Standard 1.7.0 to active only if no semantic contract redesign is required.
-
-For every app, complete `screenAudit.families`; Level 4 requires zero release-blocking rule pending and zero screen-family pending.
+RC2 supersedes RC1 for further 1.8 adoption. Stable public authority remains `standard-v1.7.0` until final promotion.
