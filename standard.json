@@ -63,8 +63,8 @@
     "releaseNotes": "RELEASE_NOTES_1.8.0.md",
     "integrationGapAudit": "RC1_INTEGRATION_GAP_AUDIT.md"
   },
-  "ruleCount": 120,
-  "ruleOrigins": {"stable-1.7.0-exact":96,"formalized-RC1-scope":12,"RC2":11,"final-1.8.0":1},
+  "ruleCount": 119,
+  "ruleOrigins": {"stable-1.7.0-exact":96,"formalized-RC1-scope":12,"RC2":11},
   "source": {
     "repository": "https://github.com/IbaJuraj/ibajuraj-application-standard",
     "latestMetadata": "https://raw.githubusercontent.com/IbaJuraj/ibajuraj-application-standard/main/standard.json",
