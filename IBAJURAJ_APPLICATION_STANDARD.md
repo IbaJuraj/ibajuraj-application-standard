@@ -1,13 +1,12 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.8.0 RC2  
-**Stav:** Release Candidate  
-**Dátum kandidáta:** 12. septembra 2026  
+**Verzia:** 1.8.0  
+**Stav:** Active / Stable  
+**Dátum vydania:** 15. septembra 2026  
 **Vlastník:** IbaJuraj  
-**Stable verejná autorita:** 1.7.0 (`standard-v1.7.0`)  
-**Navrhovaný candidate tag:** `standard-v1.8.0-rc2`
+**Stable verejná autorita:** 1.8.0 (`standard-v1.8.0`)
 
-> RC2 je technicky integrovaný kandidát. Stable autorita sa nemení, kým nebude ukončený cross-app promotion gate.
+> Verzia 1.8.0 je finálna stabilná autorita. Zachováva validovaný 119-rule machine-readable katalóg RC2 a finalizuje bezpečnostnú semantiku biometrického odomykania v rámci existujúceho pravidla `STD-SECURITY-001`.
 
 ## 1. Záväznosť
 
@@ -15,20 +14,32 @@
 
 ## 2. Integrácia 1.8
 
-RC2 má **119 pravidiel**:
+1.8.0 má **119 pravidiel**:
 - presne zachovaných 96 machine-readable pravidiel 1.7.0,
 - 12 pravidiel formalizujúcich publikovaný scope RC1,
-- 11 nových pravidiel RC2.
+- 11 pravidiel hardeningu RC2.
 
-Dôležité: publikovaný tag `standard-v1.8.0-rc1` deklaroval 108 pravidiel v release notes, ale jeho `STANDARD_VERSION` a `CONFORMANCE_CATALOG.json` zostali na 1.7.0 / 96 pravidlách. RC2 tento integračný rozdiel explicitne uzatvára namiesto toho, aby predstieral, že RC1 už mal plný 108-rule machine catalog.
+Finálna verzia nemení identitu pravidiel oproti RC2. Bezpečnostné zjednotenie biometrie je normatívne spresnenie existujúceho `STD-SECURITY-001`, nie nový rule ID.
 
 ## 3. RC1 formalized scope
 
 Localization-first architektúra, locale-aware formátovanie/pluralizácia, Automatic/System selector contract, stable IDs pri language switch, localized search parity, storefront independence, release-root hygiene, single-device continuity, Production backend readiness/smoke, server-vs-binary fix distinction a representative-data performance.
 
-## 4. RC2 hardening
+## 4. RC2 hardening + final security clarification
 
 Async stale-callback safety; authoritative mutation→derived rebuild; remote truth + durable reconciliation; corrupt-state recovery; relationship-aware deletion; upgrade-path gate; deterministic engine tests; disabled-feature/permission parity; build-scoped runtime evidence; compact-surface priority/deep-link integrity.
+
+### Biometrické odomykanie – záväzná semantika `STD-SECURITY-001`
+
+Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID alebo ekvivalent), platí jednotný model IbaJuraj Apps:
+
+- biometria je primárny spôsob odomknutia,
+- pri nedostupnosti, lockoute alebo zlyhaní biometrie MUSÍ byť dostupné systémové overenie vlastníka zariadenia pomocou kódu/hesla zariadenia,
+- samostatný PIN aplikácie NESMIE byť povinnou podmienkou zapnutia biometrie,
+- app PIN MÔŽE existovať iba ako voliteľná doplnková ochrana, ak má produktový význam,
+- PIN aplikácie, ak existuje, MUSÍ byť uložený bezpečne (Keychain alebo ekvivalent), nikdy v čitateľnom tvare,
+- zámok sa NESMIE znovu aktivovať pri bežnej internej navigácii; viaže sa na skutočný lifecycle prechod aplikácie,
+- opakované biometrické dialógy počas už prebiehajúcej autentifikácie sa MUSIA blokovať.
 
 ## 5. Normatívny register
 
@@ -89,7 +100,7 @@ Async stale-callback safety; authoritative mutation→derived rebuild; remote tr
 ### STD-DATA-004 — MUST
 ### STD-PRIVACY-001 — MUST
 ### STD-PRIVACY-002 — MUST
-### STD-SECURITY-001 — MUST
+### STD-SECURITY-001 — App lock uses biometrics with system device authentication fallback; app PIN is not a prerequisite — MUST
 ### STD-DEBUG-001 — MUST
 ### STD-DEBUG-002 — MUST
 ### STD-AI-001 — MUST
@@ -154,14 +165,8 @@ Async stale-callback safety; authoritative mutation→derived rebuild; remote tr
 
 ## 6. Inherited 1.7.0 semantics
 
-Všetky normatívne významy, semantic clarifications, layout/header/chrome kontrakty a runtime matrix z finálneho 1.7.0 zostávajú zdedené, pokiaľ ich 1.8.0 RC2 výslovne nerozširuje. Machine-readable aplikovateľnosť prvých 96 pravidiel je zachovaná bez zjednodušenia v `CONFORMANCE_CATALOG.json`.
+Všetky normatívne významy, semantic clarifications, layout/header/chrome kontrakty a runtime matrix z finálneho 1.7.0 zostávajú zdedené, pokiaľ ich 1.8.0 výslovne nerozširuje alebo nespresňuje. Machine-readable aplikovateľnosť všetkých 119 pravidiel je zachovaná v `CONFORMANCE_CATALOG.json`.
 
-## 7. Promotion gate
+## 7. Release stav
 
-Final `standard-v1.8.0` vyžaduje:
-1. package validators PASS,
-2. Strážca Termínov RC2 applicability/runtime closure,
-3. Kalkulačka 2v1 RC2 applicability/runtime closure,
-4. Peňaženka cloud/data/evidence re-audit,
-5. Lex Drive representative applicability audit,
-6. žiadne neobjasnené release-blocking MUST pravidlá.
+`standard-v1.8.0` je stabilná autorita. Aplikácie majú pri najbližšom plánovanom release vykonať applicability audit voči 1.8.0 a osobitne zosúladiť biometrický fallback s `STD-SECURITY-001`.
