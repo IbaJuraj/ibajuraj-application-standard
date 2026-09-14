@@ -62,7 +62,7 @@ class ValidatorTests(unittest.TestCase):
         families={f:{'status':'pass','screens':[f+' Fixture'],'evidence':['RUNTIME_ACCEPTANCE.md#'+f]} for f in sorted(req)}
         if omit_screen: families.pop(omit_screen,None)
         if pending_screen in families: families[pending_screen]['status']='pending'
-        manifest={'standardVersion':'1.8.0','standardCandidate':'RC2','app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
+        manifest={'standardVersion':'1.8.0','standardCandidate':None,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
                   'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
             (r/'sk.lproj').mkdir(); (r/'en.lproj').mkdir()
@@ -85,11 +85,11 @@ class ValidatorTests(unittest.TestCase):
         try: self.assertEqual(self.runv(r).returncode,1)
         finally: td.cleanup()
 
-    def test_candidate_pin_is_enforced(self):
+    def test_stable_standard_rejects_release_candidate_pin(self):
         td,r=self.make_app()
         try:
-            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['standardCandidate']='RC1'; (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
-            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('standardCandidate mismatch',p.stdout)
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['standardCandidate']='RC2'; (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('stable standard must not pin a release candidate',p.stdout)
         finally: td.cleanup()
 
     def test_conditional_custom_nav_rule_is_enforced(self):
