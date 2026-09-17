@@ -4,6 +4,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 VALIDATOR=ROOT/'Checks/validate-app-conformance.py'
 CAT=json.loads((ROOT/'CONFORMANCE_CATALOG.json').read_text(encoding='utf-8'))
+STANDARD_VERSION=CAT['standardVersion']
+STANDARD_CANDIDATE=CAT.get('candidate')
 
 
 def condition_applies(cond, caps):
@@ -30,7 +32,7 @@ SCREEN_REQ={
 class ValidatorTests(unittest.TestCase):
     def make_app(self, caps=None, omit=None, pending=None, localization=False, omit_screen=None, pending_screen=None):
         td=tempfile.TemporaryDirectory(); r=Path(td.name)
-        (r/'STANDARD_VERSION').write_text('1.8.0\n')
+        (r/'STANDARD_VERSION').write_text(STANDARD_VERSION+'\n')
         (r/'evidence.txt').write_text('Bundle CFBundleShortVersionString CFBundleVersion IbaJuraj Apps ij.root.title ij.navigation.header ij.bottomnav.container')
         (r/'RUNTIME_ACCEPTANCE.md').write_text('# Runtime\n')
         base={
@@ -38,11 +40,13 @@ class ValidatorTests(unittest.TestCase):
             'hasBottomNavigation':False,'bottomNavigationMode':'none','hasBottomPrimaryAction':False,'hasFixedBottomControls':False,
             'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
             'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
-            'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAppLock':False,'hasGeneratedAssistance':False,
+            'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAuthoritativeFunctionalSources':False,
+            'hasAppLock':False,'hasGeneratedAssistance':False,
             'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
             'hasOnboarding':False,'hasStateSurfaces':False,'hasProductionBackend':False,'hasRepresentativeUserData':False,
             'hasAsyncDerivedState':False,'hasDerivedState':False,'hasRemoteDestructiveOrAccessMutations':False,
-            'hasCloudSharingOrAccessControl':False,'hasRelationshipBearingDeletion':False,'hasMaterialDeterministicEngine':False,
+            'hasCloudSharingOrAccessControl':False,'hasRemoteInviteShareAccessFlow':False,
+            'hasRelationshipBearingDeletion':False,'hasMaterialDeterministicEngine':False,
             'hasFeatureFlaggedPermissionedCapability':False,'hasCompactSurfaces':False
         }
         if caps: base.update(caps)
@@ -62,7 +66,7 @@ class ValidatorTests(unittest.TestCase):
         families={f:{'status':'pass','screens':[f+' Fixture'],'evidence':['RUNTIME_ACCEPTANCE.md#'+f]} for f in sorted(req)}
         if omit_screen: families.pop(omit_screen,None)
         if pending_screen in families: families[pending_screen]['status']='pending'
-        manifest={'standardVersion':'1.8.0','standardCandidate':None,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
+        manifest={'standardVersion':STANDARD_VERSION,'standardCandidate':STANDARD_CANDIDATE,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
                   'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
             (r/'sk.lproj').mkdir(); (r/'en.lproj').mkdir()
@@ -85,11 +89,18 @@ class ValidatorTests(unittest.TestCase):
         try: self.assertEqual(self.runv(r).returncode,1)
         finally: td.cleanup()
 
-    def test_stable_standard_rejects_release_candidate_pin(self):
+    def test_candidate_pin_semantics(self):
         td,r=self.make_app()
         try:
-            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['standardCandidate']='RC2'; (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
-            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('stable standard must not pin a release candidate',p.stdout)
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            if STANDARD_CANDIDATE:
+                m['standardCandidate']='WRONG-CANDIDATE'
+                expected='standardCandidate mismatch'
+            else:
+                m['standardCandidate']='RC2'
+                expected='stable standard must not pin a release candidate'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn(expected,p.stdout)
         finally: td.cleanup()
 
     def test_conditional_custom_nav_rule_is_enforced(self):
@@ -104,10 +115,26 @@ class ValidatorTests(unittest.TestCase):
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-FORM-006 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
-    def test_new_rc2_deterministic_rule_is_enforced(self):
+    def test_deterministic_rule_is_enforced(self):
         td,r=self.make_app({'hasMaterialDeterministicEngine':True},omit='STD-TEST-001')
         try:
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-TEST-001 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_async_remote_invite_rule_is_enforced_when_present(self):
+        if not any(x.get('id')=='STD-ASYNC-002' for x in CAT['rules']):
+            self.skipTest('STD-ASYNC-002 is not present in this standard version')
+        td,r=self.make_app({'hasRemoteInviteShareAccessFlow':True},omit='STD-ASYNC-002')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-ASYNC-002 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_authoritative_source_rule_is_enforced_when_present(self):
+        if not any(x.get('id')=='STD-AUTH-SOURCE-001' for x in CAT['rules']):
+            self.skipTest('STD-AUTH-SOURCE-001 is not present in this standard version')
+        td,r=self.make_app({'hasAuthoritativeFunctionalSources':True},omit='STD-AUTH-SOURCE-001')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-AUTH-SOURCE-001 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
     def test_release_blocking_pending_returns_two(self):
