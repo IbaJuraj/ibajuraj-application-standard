@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.9.0 RC1 – accepted scope (unreleased) – 2026-09-17
+
+### Accepted
+- `STD-AUTH-SOURCE-001` via `IJAS-0033-authoritative-source-offline-citation-contract.md`.
+- Applications that use legal, regulatory, normative or other authoritative sources as part of a user-facing functional result must provide the used source locally/offline, preserve source identity and effective/version metadata, and keep a verification trace where verified content is used.
+- Legal or equivalently normative content must expose the exact citation or verbatim provision used by the result.
+- An external official website may remain available as a supplemental link, but must not be the only way to access the authoritative basis.
+
+### Compatibility
+- Classified as a MINOR compatible contract family under Governance.
+- Stable 1.8.0 authority and its 119-rule machine-readable catalog remain unchanged until 1.9.0 RC integration.
+
 ## 1.8.0 – 2026-09-15
 
 ### Released

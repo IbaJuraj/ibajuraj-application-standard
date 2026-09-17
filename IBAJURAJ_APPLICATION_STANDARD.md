@@ -170,3 +170,13 @@ Všetky normatívne významy, semantic clarifications, layout/header/chrome kont
 ## 7. Release stav
 
 `standard-v1.8.0` je stabilná autorita. Aplikácie majú pri najbližšom plánovanom release vykonať applicability audit voči 1.8.0 a osobitne zosúladiť biometrický fallback s `STD-SECURITY-001`.
+
+## 8. Accepted next-minor work — 1.9.0 RC1
+
+Táto sekcia je informatívna pre plánovaný next-minor scope a **nemení stabilnú autoritu 1.8.0 ani jej 119-rule katalóg**.
+
+### STD-AUTH-SOURCE-001 — Authoritative source is available offline and externally traceable — planned MUST
+
+Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku, použitý podklad musí byť dostupný aj bez internetového pripojenia, musí byť identifikovaný konkrétnou verziou/účinnosťou a musí byť spätne dohľadateľný na verifikačnú stopu. Pri právnom alebo obdobne normatívnom obsahu musí byť dostupná presná citácia alebo doslovné znenie použitého ustanovenia. Externý oficiálny web môže byť doplnkový odkaz, ale nesmie byť jediným spôsobom zobrazenia autoritatívneho podkladu.
+
+Schválený návrh: `Proposals/IJAS-0033-authoritative-source-offline-citation-contract.md`.
