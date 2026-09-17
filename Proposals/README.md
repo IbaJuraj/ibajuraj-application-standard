@@ -29,11 +29,10 @@ IJAS-0001-strucny-nazov.md
 5. Po schválení aktualizujte štandard a changelog.
 
 - `IJAS-0006-shared-settings-support-about-geometry.md` – Accepted; presná family-wide geometria Nastavení, Kontakt a O aplikácii pre 1.4.0.
-
 - `IJAS-0008-family-interaction-density-and-source-hygiene.md` – accepted for Standard 1.5.0.
 - `IJAS-0009-neutral-surface-and-text-color-contract.md` – accepted for Standard 1.5.1.
 - `IJAS-0010-user-selected-theme-surface-and-accent-contrast.md` – implemented in Standard 1.5.2.
-- `IJAS-0012-header-family-alignment-contract.md` – Header Family Alignment Contract (implemented in Standard 1.6.2)
+- `IJAS-0012-header-family-alignment-contract.md` – Header Family Alignment Contract (implemented in Standard 1.6.2); ID zostáva historicky rezervované pre tento návrh.
 - `IJAS-0013-navigation-surface-clearance-and-pinned-header-eligibility.md` – implemented in Standard 1.6.3.
 - `IJAS-0014-verified-ai-generated-assistance-and-feedback.md` – implemented in Standard 1.6.3.
 - `IJAS-0015-authoritative-data-traceability-and-safe-relevance.md` – implemented in Standard 1.6.3.
@@ -42,3 +41,4 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0026-release-package-root-hygiene-and-build-history-archive.md` – proposed for Standard 1.7.1; spoločný kontrakt čistoty release rootu a archivácie historických build/runtime dokumentov.
 - `IJAS-0027-single-device-development-release-data-continuity.md` – proposed for Standard 1.7.1; zachovanie stabilných lokálnych dát a oddelenie environment-specific cloudových väzieb pri striedaní Xcode ↔ App Store/TestFlight na jednom fyzickom zariadení.
 - `IJAS-0033-authoritative-source-offline-citation-contract.md` – accepted for Standard 1.9.0 RC1; autoritatívny právny/regulačný podklad musí byť dostupný lokálne/offline, verzovaný a spätne dohľadateľný; externý oficiálny web je iba doplnkový zdroj.
+- `IJAS-0034-async-remote-invite-responsiveness.md` – accepted for Standard 1.9.0 RC1; remote invite/share/access flow nesmie blokovať interaktívnu odozvu UI/MainActor. Tento návrh bol prečíslovaný z nepublikovaného kolidujúceho draft ID `IJAS-0012`.
