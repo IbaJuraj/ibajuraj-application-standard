@@ -1,33 +1,77 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.8.0  
-**Stav:** Active / Stable  
-**Dátum vydania:** 15. septembra 2026  
+**Verzia:** 1.9.0 RC1  
+**Stav:** Candidate / RC  
+**Dátum vydania:** 17. septembra 2026  
 **Vlastník:** IbaJuraj  
-**Stable verejná autorita:** 1.8.0 (`standard-v1.8.0`)
+**Stable verejná autorita:** 1.8.0 (`standard-v1.8.0`)  
+**Candidate vetva:** `standard-1.9.0-rc1`
 
-> Verzia 1.8.0 je finálna stabilná autorita. Zachováva validovaný 119-rule machine-readable katalóg RC2 a finalizuje bezpečnostnú semantiku biometrického odomykania v rámci existujúceho pravidla `STD-SECURITY-001`.
+> Verzia 1.9.0 RC1 je kandidát na ďalšiu minor verziu. Stabilnou autoritou zostáva 1.8.0. RC1 zachováva všetkých 119 pravidiel 1.8.0 a pridáva dva nové cross-app kontrakty: `STD-ASYNC-002` pre remote invite/share/access responsiveness a `STD-AUTH-SOURCE-001` pre offline dostupnosť a dohľadateľnosť autoritatívneho zdroja.
 
 ## 1. Záväznosť
 
 `MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD` vyžaduje zdôvodnenie. Static PASS nenahrádza runtime PASS.
 
-## 2. Integrácia 1.8
+Candidate pravidlá sa používajú na adopciu a validáciu, kým nie je príslušná minor verzia promovovaná na stable.
 
-1.8.0 má **119 pravidiel**:
-- presne zachovaných 96 machine-readable pravidiel 1.7.0,
-- 12 pravidiel formalizujúcich publikovaný scope RC1,
-- 11 pravidiel hardeningu RC2.
+## 2. Integrácia 1.9 RC1
 
-Finálna verzia nemení identitu pravidiel oproti RC2. Bezpečnostné zjednotenie biometrie je normatívne spresnenie existujúceho `STD-SECURITY-001`, nie nový rule ID.
+1.9.0 RC1 má **121 pravidiel**:
+- 119 pravidiel zdedených zo stabilnej 1.8.0 bez zmeny ich významu,
+- `STD-ASYNC-002` pre neblokujúce remote invite/share/access operácie,
+- `STD-AUTH-SOURCE-001` pre lokálne/offline autoritatívne podklady, presnú citáciu a verifikačnú stopu.
 
-## 3. RC1 formalized scope
+RC1 zároveň normatívne spresňuje existujúci root-title family contract: peer root obrazovky používajú spoločnú typografickú rodinu, ktorej výsledná veľkosť je odvodená od dostupnej šírky viewport-u/kontajnera. Toto spresnenie nepridáva nový `STD-*` rule ID.
 
-Localization-first architektúra, locale-aware formátovanie/pluralizácia, Automatic/System selector contract, stable IDs pri language switch, localized search parity, storefront independence, release-root hygiene, single-device continuity, Production backend readiness/smoke, server-vs-binary fix distinction a representative-data performance.
+## 3. Async remote contract
 
-## 4. RC2 hardening + final security clarification
+### STD-ASYNC-002 — Remote invite/share/access responsiveness — MUST
 
-Async stale-callback safety; authoritative mutation→derived rebuild; remote truth + durable reconciliation; corrupt-state recovery; relationship-aware deletion; upgrade-path gate; deterministic engine tests; disabled-feature/permission parity; build-scoped runtime evidence; compact-surface priority/deep-link integrity.
+Ak aplikácia vykonáva vzdialené invite/share/access operácie, ktoré môžu čakať na sieť alebo backend, tieto operácie NESMÚ blokovať interaktívnu odozvu UI/MainActor.
+
+Platí najmä:
+
+- remote orchestration má bežať na dedikovanom actor/executor alebo ekvivalentnej non-UI izolácii,
+- otvorenie invite/access obrazovky NESMIE čakať na dokončenie remote prípravy,
+- dlhšie operácie MUSIA mať viditeľný progress stav (`Pripravujem…`, `Ruším…` alebo ekvivalent),
+- zvyšok obrazovky má zostať interaktívny, pokiaľ tomu nebráni bezpečnostná alebo dátová konzistencia,
+- retry a reconciliation MUSIA prebiehať asynchrónne,
+- úspech remote destructive/access mutácie sa naďalej smie prezentovať až po potvrdenej remote truth podľa `STD-CLOUD-001`,
+- dočasné zlyhania musia zachovať retry/reconciliation podľa `STD-CLOUD-002`,
+- runtime audit musí zahŕňať create/publish, cancel/revoke a retry/reconcile flow, ak ich aplikácia podporuje.
+
+Referenčný dôvod zavedenia: runtime audit Strážca Termínov Build 120 Phase 14A R12, kde CloudKit invite/cancel flow vykazoval približne 10-sekundový UI lag pri orchestration izolovanej na `MainActor`.
+
+Schválený návrh: `Proposals/IJAS-0034-async-remote-invite-responsiveness.md`.
+
+## 4. Authoritative source contract
+
+### STD-AUTH-SOURCE-001 — Authoritative functional source is available offline and externally traceable — MUST
+
+Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku:
+
+- MUSÍ lokálne sprístupniť použitú reprezentáciu zdroja bez závislosti od internetového pripojenia,
+- MUSÍ jasne identifikovať zdroj a konkrétnu použitú časovú/verznú identitu,
+- MUSÍ pri právnom alebo obdobne normatívnom obsahu sprístupniť presnú citáciu alebo doslovné znenie ustanovenia, z ktorého výsledok vychádza,
+- MUSÍ uviesť účinnosť alebo verziu použitú pri výsledku, ak sa zdroj v čase mení,
+- MUSÍ uchovať alebo sprístupniť dátum/verifikačnú stopu overenia, ak aplikácia používa verifikovaný obsah,
+- externý oficiálny zdroj MÔŽE byť dostupný ako doplnkový odkaz, ale NESMIE byť jediným spôsobom zobrazenia autoritatívneho podkladu,
+- používateľský názov, skrátený opis alebo praktické vysvetlenie NESMIE nahradiť identifikáciu autoritatívneho podkladu.
+
+Konkrétna informačná hierarchia, názvy právnych rolí a vizuálna navigácia zostávajú produktové. Referenčným príkladom je Lex Drive Build 232, kde právny reťazec priestupku musí zostať dohľadateľný na presnú lokálnu/offline citáciu aj bez prístupu na Slov-Lex.
+
+Schválený návrh: `Proposals/IJAS-0033-authoritative-source-offline-citation-contract.md`.
+
+## 5. Root-title adaptive family clarification
+
+Peer root obrazovky používajú jednu spoločnú root-title family. Výsledná veľkosť title tokenu MUSÍ vychádzať z reálne dostupnej šírky viewport-u alebo kontajnera, nie z názvu konkrétneho zariadenia. Na tom istom viewport-e MUSIA peer root titles používať rovnaký výsledný size token. Adaptácia MÁ preferovať celý názov bez `…` pomocou breakpointov, clamped veľkosti, tightening alebo primeraného scale fallbacku.
+
+Nested/system navigation headers tvoria samostatnú family. Referenčné hodnoty 28 / 30 / 32 pt v `DESIGN_TOKENS.md` sú príklad implementácie, nie cross-app povinné čísla.
+
+## 6. Zdedené 1.8 kontrakty
+
+1.8.0 zostáva stabilnou autoritou pre localization-first architektúru, release-root hygiene, data continuity, Production backend readiness, runtime performance, async stale-callback safety, derived-state ordering, remote truth/reconciliation, corrupt-state recovery, relationship-aware deletion, upgrade-path gate, permission parity, runtime evidence, compact-surface integrity a biometrickú bezpečnostnú semantiku.
 
 ### Biometrické odomykanie – záväzná semantika `STD-SECURITY-001`
 
@@ -41,7 +85,7 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 - zámok sa NESMIE znovu aktivovať pri bežnej internej navigácii; viaže sa na skutočný lifecycle prechod aplikácie,
 - opakované biometrické dialógy počas už prebiehajúcej autentifikácie sa MUSIA blokovať.
 
-## 5. Normatívny register
+## 7. Normatívny register
 
 ### STD-IDENTITY-001 — MUST
 ### STD-IDENTITY-002 — MUST
@@ -98,6 +142,7 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-DATA-002 — MUST
 ### STD-DATA-003 — MUST
 ### STD-DATA-004 — MUST
+### STD-AUTH-SOURCE-001 — Authoritative functional source is available offline and externally traceable — MUST
 ### STD-PRIVACY-001 — MUST
 ### STD-PRIVACY-002 — MUST
 ### STD-SECURITY-001 — App lock uses biometrics with system device authentication fallback; app PIN is not a prerequisite — MUST
@@ -152,6 +197,7 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-BACKEND-003 — Server-side fixes and binary fixes are explicitly distinguished — MUST
 ### STD-PERF-001 — Runtime performance is tested with representative real-volume data — MUST
 ### STD-ASYNC-001 — Stale async completion cannot overwrite newer state — MUST
+### STD-ASYNC-002 — Remote invite/share/access operations do not block interactive UI/MainActor responsiveness — MUST
 ### STD-DERIVED-001 — Authoritative mutation precedes one coherent derived-state rebuild — MUST
 ### STD-CLOUD-001 — Remote destructive/access success follows confirmed remote truth — MUST
 ### STD-CLOUD-002 — Security/access mutations have durable retry or reconciliation — MUST
@@ -163,20 +209,17 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-EVIDENCE-001 — Runtime evidence is build-scoped and regressions remain traceable — MUST
 ### STD-COMPACT-001 — Compact surfaces define content priority and destination integrity — SHOULD
 
-## 6. Inherited 1.7.0 semantics
+## 8. Machine-readable applicability
 
-Všetky normatívne významy, semantic clarifications, layout/header/chrome kontrakty a runtime matrix z finálneho 1.7.0 zostávajú zdedené, pokiaľ ich 1.8.0 výslovne nerozširuje alebo nespresňuje. Machine-readable aplikovateľnosť všetkých 119 pravidiel je zachovaná v `CONFORMANCE_CATALOG.json`.
+Candidate 1.9.0 RC1 rozširuje `CONFORMANCE_CATALOG.json` na 121 pravidiel a pridáva dve capability väzby:
 
-## 7. Release stav
+- `hasRemoteInviteShareAccessFlow` → `STD-ASYNC-002`,
+- `hasAuthoritativeFunctionalSources` → `STD-AUTH-SOURCE-001`.
 
-`standard-v1.8.0` je stabilná autorita. Aplikácie majú pri najbližšom plánovanom release vykonať applicability audit voči 1.8.0 a osobitne zosúladiť biometrický fallback s `STD-SECURITY-001`.
+Apps bez príslušnej capability označia pravidlo ako neaplikovateľné cez capability model; nepotrebujú výnimku.
 
-## 8. Accepted next-minor work — 1.9.0 RC1
+## 9. Release stav
 
-Táto sekcia je informatívna pre plánovaný next-minor scope a **nemení stabilnú autoritu 1.8.0 ani jej 119-rule katalóg**.
+`standard-v1.8.0` zostáva stabilná verejná autorita.
 
-### STD-AUTH-SOURCE-001 — Authoritative source is available offline and externally traceable — planned MUST
-
-Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku, použitý podklad musí byť dostupný aj bez internetového pripojenia, musí byť identifikovaný konkrétnou verziou/účinnosťou a musí byť spätne dohľadateľný na verifikačnú stopu. Pri právnom alebo obdobne normatívnom obsahu musí byť dostupná presná citácia alebo doslovné znenie použitého ustanovenia. Externý oficiálny web môže byť doplnkový odkaz, ale nesmie byť jediným spôsobom zobrazenia autoritatívneho podkladu.
-
-Schválený návrh: `Proposals/IJAS-0033-authoritative-source-offline-citation-contract.md`.
+`standard-1.9.0-rc1` je candidate vetva na implementáciu, audit a cross-app validáciu. Promotion na stable 1.9.0 vyžaduje validný 121-rule katalóg, reference adoption pre nové pravidlá a preverenie ďalších aplikácií podľa applicability.
