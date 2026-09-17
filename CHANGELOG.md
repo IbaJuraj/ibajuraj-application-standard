@@ -1,16 +1,24 @@
 # Changelog
 
-## 1.9.0 RC1 – accepted scope (unreleased) – 2026-09-17
+## 1.9.0 RC1 – 2026-09-17
 
-### Accepted
-- `STD-AUTH-SOURCE-001` via `IJAS-0033-authoritative-source-offline-citation-contract.md`.
-- Applications that use legal, regulatory, normative or other authoritative sources as part of a user-facing functional result must provide the used source locally/offline, preserve source identity and effective/version metadata, and keep a verification trace where verified content is used.
-- Legal or equivalently normative content must expose the exact citation or verbatim provision used by the result.
-- An external official website may remain available as a supplemental link, but must not be the only way to access the authoritative basis.
+### Added
+- `STD-ASYNC-002` for remote invite/share/access responsiveness; network/backend orchestration must not block interactive UI/MainActor responsiveness and long-running work must expose a visible in-progress state.
+- `STD-AUTH-SOURCE-001` for authoritative functional sources; legal/regulatory/normative basis used by a user-facing result must be locally/offline available, version/effective-date identified, exactly citable and externally traceable.
+- 1.9.0 RC1 machine-readable catalog expanded from the stable 1.8.0 baseline of 119 rules to **121 unique rules**.
 
-### Compatibility
-- Classified as a MINOR compatible contract family under Governance.
-- Stable 1.8.0 authority and its 119-rule machine-readable catalog remain unchanged until 1.9.0 RC integration.
+### Clarified
+- Root-title adaptive family: peer root screens use one shared title family driven by available viewport/container width; full titles should be preferred over truncation. This clarification does not add a new `STD-*` rule ID.
+- `STD-AUTH-SOURCE-001` makes an official external website supplemental only; it must not be the sole access path to the authoritative basis.
+
+### Preserved
+- `STD-CLOUD-001` remains the authority for confirmed remote destructive/access success.
+- `STD-CLOUD-002` remains the authority for durable retry/reconciliation.
+- Stable public authority remains 1.8.0 until 1.9.0 is promoted.
+
+### Reference adoption
+- Strážca Termínov Build 120 Phase 14A R12 is the first implementation reference for `STD-ASYNC-002`.
+- Lex Drive Build 232 is the first implementation/reference case for `STD-AUTH-SOURCE-001` and offline legal citation behavior.
 
 ## 1.8.0 – 2026-09-15
 
@@ -54,7 +62,7 @@
 ## 1.8.0 RC1 – 2026-09-05
 
 ### Published scope
-- Localization-first architecture and stable semantic localization keys.
+- Localization-first architektúra a stable semantic localization keys.
 - Locale-aware formatting and pluralization.
 - Optional in-app language selector with Automatic/System mode.
 - No data migration/raw-ID change solely from language switching.
