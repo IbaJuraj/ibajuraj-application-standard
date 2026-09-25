@@ -1,8 +1,11 @@
 {
   "$schema": "./STANDARD_CONFORMANCE.schema.json",
-  "standardVersion": "1.8.0",
+  "standardVersion": "1.9.0",
   "standardCandidate": "RC2",
-  "app": {"name": "<App Name>", "productId": "<product-id>"},
+  "app": {
+    "name": "<App Name>",
+    "productId": "<product-id>"
+  },
   "capabilities": {
     "hasSettings": true,
     "hasAppearance": true,
@@ -40,14 +43,63 @@
     "hasRelationshipBearingDeletion": false,
     "hasMaterialDeterministicEngine": false,
     "hasFeatureFlaggedPermissionedCapability": false,
-    "hasCompactSurfaces": false
+    "hasCompactSurfaces": false,
+    "hasAIReleaseReview": false,
+    "hasPostReleaseMonitoring": false
   },
-  "supportedLocalizations": ["sk"],
-  "localization": {"files": [], "requiredKeys": []},
-  "projectMetadata": {"projectFile": null},
+  "supportedLocalizations": [
+    "sk"
+  ],
+  "localization": {
+    "files": [],
+    "requiredKeys": []
+  },
+  "projectMetadata": {
+    "projectFile": null
+  },
   "rules": {
-    "STD-CONF-001": {"mode": "static", "status": "implemented", "evidence": {"files": ["STANDARD_CONFORMANCE.json"]}},
-    "STD-EVIDENCE-001": {"mode": "static", "status": "pending", "evidence": {"notes": ["Record exact app version/build/device/OS/date for runtime evidence."]}}
+    "STD-CONF-001": {
+      "mode": "static",
+      "status": "implemented",
+      "evidence": {
+        "files": [
+          "STANDARD_CONFORMANCE.json"
+        ]
+      }
+    },
+    "STD-EVIDENCE-001": {
+      "mode": "static",
+      "status": "pending",
+      "evidence": {
+        "notes": [
+          "Record exact app version/build/device/OS/date for runtime evidence."
+        ]
+      }
+    },
+    "STD-RELEASE-006": {
+      "mode": "runtime",
+      "status": "pending",
+      "runtimeGate": "RUNTIME_ACCEPTANCE.md#release-candidate-quality-gate"
+    },
+    "STD-DIAG-001": {
+      "mode": "runtime",
+      "status": "pending",
+      "runtimeGate": "RUNTIME_ACCEPTANCE.md#full-app-check"
+    },
+    "STD-DIAG-002": {
+      "mode": "runtime",
+      "status": "pending",
+      "runtimeGate": "RUNTIME_ACCEPTANCE.md#diagnostic-findings"
+    },
+    "STD-EVIDENCE-002": {
+      "mode": "static",
+      "status": "pending",
+      "evidence": {
+        "files": [
+          "RELEASE_INSPECTOR_REPORT.md"
+        ]
+      }
+    }
   },
   "runtimeAcceptanceFile": "RUNTIME_ACCEPTANCE.md",
   "exceptions": {},
@@ -55,8 +107,12 @@
     "families": {
       "SCREEN-ROOT": {
         "status": "pending",
-        "screens": ["<primary root screen>"],
-        "evidence": ["RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"]
+        "screens": [
+          "<primary root screen>"
+        ],
+        "evidence": [
+          "RUNTIME_ACCEPTANCE.md#SCREEN-ROOT"
+        ]
       }
     }
   }

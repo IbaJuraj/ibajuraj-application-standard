@@ -41,7 +41,7 @@ class ValidatorTests(unittest.TestCase):
             'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
             'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
             'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAuthoritativeFunctionalSources':False,
-            'hasAppLock':False,'hasGeneratedAssistance':False,
+            'hasAppLock':False,'hasGeneratedAssistance':False,'hasAIReleaseReview':False,'hasPostReleaseMonitoring':False,
             'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
             'hasOnboarding':False,'hasStateSurfaces':False,'hasProductionBackend':False,'hasRepresentativeUserData':False,
             'hasAsyncDerivedState':False,'hasDerivedState':False,'hasRemoteDestructiveOrAccessMutations':False,
@@ -135,6 +135,22 @@ class ValidatorTests(unittest.TestCase):
         td,r=self.make_app({'hasAuthoritativeFunctionalSources':True},omit='STD-AUTH-SOURCE-001')
         try:
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-AUTH-SOURCE-001 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_release_review_rules_are_enforced_when_present(self):
+        if not any(x.get('id')=='STD-AI-003' for x in CAT['rules']):
+            self.skipTest('STD-AI-003 is not present in this standard version')
+        td,r=self.make_app({'hasAIReleaseReview':True},omit='STD-AI-003')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-AI-003 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_post_release_rule_is_enforced_when_capability_present(self):
+        if not any(x.get('id')=='STD-POSTRELEASE-001' for x in CAT['rules']):
+            self.skipTest('STD-POSTRELEASE-001 is not present in this standard version')
+        td,r=self.make_app({'hasPostReleaseMonitoring':True},omit='STD-POSTRELEASE-001')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-POSTRELEASE-001 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
     def test_release_blocking_pending_returns_two(self):
