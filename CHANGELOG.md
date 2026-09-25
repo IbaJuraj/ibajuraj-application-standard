@@ -20,6 +20,15 @@
 - Apple Foundation Models / Core AI are documented as reference on-device implementations, not mandatory technologies.
 - TradeBook is the first intended RC3 pilot for local/cloud AI review and controlled adaptation contracts.
 
+### Pilot clarifications
+- Distinguishes model/device support, runtime readiness and successful execution.
+- Allows a deterministic non-generative fallback while requiring it to be identified separately from model AI.
+- Adds machine-readable `runtimeKind` and `fallbackKind` metadata without adding a new rule ID.
+- Clarifies controlled-learning lifecycle: candidate → confirmed → active/usable → revoked/reset.
+- Requires freshness/provenance for time-sensitive news, price, on-chain and event inputs.
+- Clarifies that market/watch/buy candidates are advisory and do not authorize transactions.
+- Candidate catalog remains **134 unique rules**.
+
 ## 1.9.0 RC2 – 2026-09-25
 
 ### Added
