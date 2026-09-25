@@ -23,25 +23,25 @@ The AI family therefore contains seven coherent contracts.
 ## Consolidated contract model
 
 ### STD-AI-001 — Grounded & verified AI assistance
-Verified facts remain grounded in authoritative/deterministic sources. AI may interpret, select, summarize and explain, but does not silently replace authoritative logic. AI results are bound to source/version/snapshot identity and stale results are invalidated or marked stale.
+Verified facts remain grounded in authoritative/deterministic sources. AI may interpret, select, summarize and explain, but does not silently replace authoritative logic. AI results are bound to source/version/snapshot identity and stale results are invalidated or marked stale. Time-sensitive external data such as news, prices, on-chain events and event calendars preserve source identity, publication/event time when known, retrieval time, affected subject/asset and freshness/staleness; conflicting sources are not silently collapsed into one verified fact.
 
 ### STD-AI-002 — User transparency, fallback & feedback
 Users can distinguish generated assistance from authoritative basis where material. Supplemental AI failure does not break deterministic workflows. Feedback/context is not silently transmitted and developer/mock controls do not leak into normal production UI.
 
 ### STD-AI-003 — Advisory, explainable and read-only-by-default AI
-AI is read-only by default. Material findings explain their reason/context and uncertainty. Writes, destructive actions and other material actions require a separate authorized step. AI is never the sole Release Inspector PASS/FAIL authority.
+AI is read-only by default. Material findings explain their reason/context and uncertainty. Writes, destructive actions and other material actions require a separate authorized step. A market/watch/buy candidate or opportunity score is advisory and is not authorization to execute a transaction; execution belongs to an explicit action-capable flow. AI is never the sole Release Inspector PASS/FAIL authority.
 
 ### STD-AI-004 — Privacy, data minimization & secret handling
 Minimize and sanitize AI inputs. Secrets, credentials and tokens are not model inputs. Provider credentials use Keychain/equivalent secure storage and least-privilege scopes.
 
 ### STD-AI-005 — Provider, runtime & graceful fallback
-Model on-device/cloud/hybrid execution, capability detection, provider/model provenance, offline/timeout/rate-limit/quota/billing failure and safe fallback. On-device is preferred when it provides sufficient quality and meaningful privacy/availability/latency/cost benefit.
+Model on-device/cloud/hybrid execution, capability detection, provider/model provenance, offline/timeout/rate-limit/quota/billing failure and safe fallback. Runtime readiness is distinct from device/model support: a supported model may still be temporarily not ready or fail at execution time. Where appropriate, implementations use a lightweight probe/warm-up or safely handle the first execution failure. A fallback may be another model or a deterministic non-generative local mechanism, but the runtime kind must be transparent and a deterministic fallback must not be presented as generative AI. On-device is preferred when it provides sufficient quality and meaningful privacy/availability/latency/cost benefit.
 
 ### STD-AI-006 — Untrusted input/output, evaluation & rollback
 External/imported content is data, not authority over system instructions or tool policy. Structured output is schema/invariant validated. Tool calls use allowlists and least privilege. Material model/provider/prompt/tool-policy changes require regression and rollback capability.
 
 ### STD-AI-007 — Controlled adaptation, learning memory & human reset
-Adaptive/personalized learning is separated from authoritative source-of-truth data. Learning provenance is traceable; unconfirmed model guesses cannot become learned facts. Material candidate rules require validation/human confirmation. Adaptation is versioned, reversible and resettable.
+Adaptive/personalized learning is separated from authoritative source-of-truth data. Learning provenance is traceable; unconfirmed model guesses cannot become learned facts. Material candidate rules require validation/human confirmation. Learning uses an explicit lifecycle such as `candidate → confirmed → active/usable → revoked/reset`; saving a candidate is not activation and cannot by itself change authoritative data, release gates or safety rules. Adaptation is versioned, reversible and resettable.
 
 ## Machine-readable AI metadata
 
@@ -50,6 +50,8 @@ Each declared AI feature must carry:
 - stable feature ID,
 - `riskProfile`: `advisory`, `derived`, `action-capable` or `adaptive`,
 - `execution`: `on-device`, `cloud` or `hybrid`,
+- `runtimeKind`: `model` or `deterministic`,
+- `fallbackKind`: `none`, `model` or `deterministic`,
 - optional personalization/tool metadata.
 
 Capabilities remain the applicability mechanism; risk profiles refine test scope and evidence.
@@ -63,5 +65,7 @@ Apple Foundation Models / Core AI are reference on-device implementations. The S
 TradeBook is the first intended RC3 pilot:
 - deterministic Release Inspector remains authoritative,
 - local AI may provide advisory analysis,
-- cloud AI remains optional when supplemental,
-- future learning produces candidate patterns rather than silently changing financial or safety rules.
+- a deterministic local fallback may keep advisory analysis usable when the system model is not ready, but it is explicitly labeled non-generative,
+- cloud AI remains optional at Standard level even if a specific product disables it,
+- future learning produces candidate patterns rather than silently changing financial or safety rules,
+- Market Intelligence preserves freshness/provenance and separates advisory candidates from transaction authorization.
