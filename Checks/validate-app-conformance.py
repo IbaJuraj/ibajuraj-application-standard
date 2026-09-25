@@ -2,6 +2,11 @@
 from pathlib import Path
 import argparse, json, re, sys
 ALLOWED_MODES={'static','unit','ui','runtime','exception'}
+AI_PROFILES={'advisory','derived','action-capable','adaptive'}
+AI_EXECUTION={'on-device','cloud','hybrid'}
+AI_RUNTIME_KIND={'model','deterministic'}
+AI_FALLBACK_KIND={'none','model','deterministic'}
+AI_CAPS={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
 SCREEN_REQUIREMENTS={
     'hasSettings':['SCREEN-SETTINGS','SCREEN-ABOUT'],
     'hasSearch':['SCREEN-SEARCH'], 'hasDetails':['SCREEN-DETAIL'], 'hasForms':['SCREEN-FORM'],
@@ -43,6 +48,27 @@ def main():
     sv=app/'STANDARD_VERSION'
     if sv.exists() and sv.read_text().strip()!=cat.get('standardVersion'): errors.append('STD-CONF-001 STANDARD_VERSION pin mismatch')
     caps=m.get('capabilities',{}); entries=m.get('rules',{}); exceptions=m.get('exceptions',{})
+    ai=m.get('ai',{}); features=ai.get('features',[]) if isinstance(ai,dict) else []
+    ai_declared=any(bool(caps.get(k)) for k in AI_CAPS)
+    if ai_declared and not features: errors.append('STD-AI-002 AI capability declared but ai.features is empty or missing')
+    if features and not ai_declared: errors.append('STD-AI-002 ai.features declared without an AI capability flag')
+    ids=set()
+    for item in features:
+        if not isinstance(item,dict): errors.append('STD-AI-002 ai.features item must be an object'); continue
+        fid=item.get('id'); profile=item.get('riskProfile'); execution=item.get('execution')
+        runtime_kind=item.get('runtimeKind'); fallback_kind=item.get('fallbackKind')
+        if not isinstance(fid,str) or not fid.strip(): errors.append('STD-AI-002 AI feature missing stable id')
+        elif fid in ids: errors.append(f'STD-AI-002 duplicate AI feature id {fid}')
+        else: ids.add(fid)
+        if profile not in AI_PROFILES: errors.append(f'STD-AI-002 {fid or "<unknown>"} invalid AI riskProfile {profile}')
+        if execution not in AI_EXECUTION: errors.append(f'STD-AI-005 {fid or "<unknown>"} invalid AI execution {execution}')
+        if runtime_kind not in AI_RUNTIME_KIND: errors.append(f'STD-AI-005 {fid or "<unknown>"} invalid AI runtimeKind {runtime_kind}')
+        if fallback_kind not in AI_FALLBACK_KIND: errors.append(f'STD-AI-005 {fid or "<unknown>"} invalid AI fallbackKind {fallback_kind}')
+    if any(isinstance(x,dict) and x.get('execution') in {'on-device','hybrid'} for x in features) and not caps.get('hasOnDeviceAI'): errors.append('STD-AI-005 on-device/hybrid AI feature requires hasOnDeviceAI=true')
+    if any(isinstance(x,dict) and x.get('execution') in {'cloud','hybrid'} for x in features) and not caps.get('hasCloudAI'): errors.append('STD-AI-005 cloud/hybrid AI feature requires hasCloudAI=true')
+    if any(isinstance(x,dict) and x.get('riskProfile')=='action-capable' for x in features) and not caps.get('hasAITools'): errors.append('STD-AI-003 action-capable AI feature requires hasAITools=true')
+    if any(isinstance(x,dict) and x.get('riskProfile')=='adaptive' for x in features) and not caps.get('hasAdaptiveAI'): errors.append('STD-AI-007 adaptive AI feature requires hasAdaptiveAI=true')
+    if any(isinstance(x,dict) and x.get('personalization') is True for x in features) and not caps.get('hasAIPersonalization'): errors.append('STD-AI-007 personalized AI feature requires hasAIPersonalization=true')
     ars=[r for r in cat.get('rules',[]) if r.get('level') in ('MUST','MUST NOT') and applicable(r,caps)]
     passed=exc=pending=0
     for r in ars:

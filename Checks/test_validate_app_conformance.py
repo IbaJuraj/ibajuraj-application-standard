@@ -4,6 +4,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 VALIDATOR=ROOT/'Checks/validate-app-conformance.py'
 CAT=json.loads((ROOT/'CONFORMANCE_CATALOG.json').read_text(encoding='utf-8'))
+STANDARD_VERSION=CAT['standardVersion']
+STANDARD_CANDIDATE=CAT.get('candidate')
 
 
 def condition_applies(cond, caps):
@@ -30,7 +32,7 @@ SCREEN_REQ={
 class ValidatorTests(unittest.TestCase):
     def make_app(self, caps=None, omit=None, pending=None, localization=False, omit_screen=None, pending_screen=None):
         td=tempfile.TemporaryDirectory(); r=Path(td.name)
-        (r/'STANDARD_VERSION').write_text('1.8.0\n')
+        (r/'STANDARD_VERSION').write_text(STANDARD_VERSION+'\n')
         (r/'evidence.txt').write_text('Bundle CFBundleShortVersionString CFBundleVersion IbaJuraj Apps ij.root.title ij.navigation.header ij.bottomnav.container')
         (r/'RUNTIME_ACCEPTANCE.md').write_text('# Runtime\n')
         base={
@@ -38,14 +40,20 @@ class ValidatorTests(unittest.TestCase):
             'hasBottomNavigation':False,'bottomNavigationMode':'none','hasBottomPrimaryAction':False,'hasFixedBottomControls':False,
             'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
             'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
-            'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAppLock':False,'hasGeneratedAssistance':False,
+            'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAuthoritativeFunctionalSources':False,
+            'hasAppLock':False,'hasGeneratedAssistance':False,'hasAIReleaseReview':False,'hasOnDeviceAI':False,'hasCloudAI':False,
+            'hasAITools':False,'hasAdaptiveAI':False,'hasAIPersonalization':False,'hasPostReleaseMonitoring':False,
             'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
             'hasOnboarding':False,'hasStateSurfaces':False,'hasProductionBackend':False,'hasRepresentativeUserData':False,
             'hasAsyncDerivedState':False,'hasDerivedState':False,'hasRemoteDestructiveOrAccessMutations':False,
-            'hasCloudSharingOrAccessControl':False,'hasRelationshipBearingDeletion':False,'hasMaterialDeterministicEngine':False,
+            'hasCloudSharingOrAccessControl':False,'hasRemoteInviteShareAccessFlow':False,
+            'hasRelationshipBearingDeletion':False,'hasMaterialDeterministicEngine':False,
             'hasFeatureFlaggedPermissionedCapability':False,'hasCompactSurfaces':False
         }
         if caps: base.update(caps)
+        ai_caps={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
+        if any(bool(base.get(k)) for k in ai_caps) and not base.get('hasOnDeviceAI') and not base.get('hasCloudAI'):
+            base['hasOnDeviceAI']=True
         rules={}
         for x in CAT['rules']:
             if x['level'] not in ('MUST','MUST NOT') or not applies(x,base): continue
@@ -62,8 +70,14 @@ class ValidatorTests(unittest.TestCase):
         families={f:{'status':'pass','screens':[f+' Fixture'],'evidence':['RUNTIME_ACCEPTANCE.md#'+f]} for f in sorted(req)}
         if omit_screen: families.pop(omit_screen,None)
         if pending_screen in families: families[pending_screen]['status']='pending'
-        manifest={'standardVersion':'1.8.0','standardCandidate':None,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
-                  'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
+        ai_caps={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
+        features=[]
+        if any(bool(base.get(k)) for k in ai_caps):
+            profile='adaptive' if base.get('hasAdaptiveAI') else ('action-capable' if base.get('hasAITools') else 'advisory')
+            execution='hybrid' if base.get('hasOnDeviceAI') and base.get('hasCloudAI') else ('cloud' if base.get('hasCloudAI') else 'on-device')
+            features=[{'id':'fixture.ai','riskProfile':profile,'execution':execution,'runtimeKind':'model','fallbackKind':'none','personalization':bool(base.get('hasAIPersonalization'))}]
+        manifest={'standardVersion':STANDARD_VERSION,'standardCandidate':STANDARD_CANDIDATE,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
+                  'ai':{'features':features},'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
             (r/'sk.lproj').mkdir(); (r/'en.lproj').mkdir()
             (r/'sk.lproj/Localizable.strings').write_text('"about" = "O aplikácii";\n"version" = "Verzia";\n')
@@ -85,11 +99,18 @@ class ValidatorTests(unittest.TestCase):
         try: self.assertEqual(self.runv(r).returncode,1)
         finally: td.cleanup()
 
-    def test_stable_standard_rejects_release_candidate_pin(self):
+    def test_candidate_pin_semantics(self):
         td,r=self.make_app()
         try:
-            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['standardCandidate']='RC2'; (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
-            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('stable standard must not pin a release candidate',p.stdout)
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            if STANDARD_CANDIDATE:
+                m['standardCandidate']='WRONG-CANDIDATE'
+                expected='standardCandidate mismatch'
+            else:
+                m['standardCandidate']='RC2'
+                expected='stable standard must not pin a release candidate'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn(expected,p.stdout)
         finally: td.cleanup()
 
     def test_conditional_custom_nav_rule_is_enforced(self):
@@ -104,10 +125,89 @@ class ValidatorTests(unittest.TestCase):
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-FORM-006 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
-    def test_new_rc2_deterministic_rule_is_enforced(self):
+    def test_deterministic_rule_is_enforced(self):
         td,r=self.make_app({'hasMaterialDeterministicEngine':True},omit='STD-TEST-001')
         try:
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-TEST-001 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_async_remote_invite_rule_is_enforced_when_present(self):
+        if not any(x.get('id')=='STD-ASYNC-002' for x in CAT['rules']):
+            self.skipTest('STD-ASYNC-002 is not present in this standard version')
+        td,r=self.make_app({'hasRemoteInviteShareAccessFlow':True},omit='STD-ASYNC-002')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-ASYNC-002 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_authoritative_source_rule_is_enforced_when_present(self):
+        if not any(x.get('id')=='STD-AUTH-SOURCE-001' for x in CAT['rules']):
+            self.skipTest('STD-AUTH-SOURCE-001 is not present in this standard version')
+        td,r=self.make_app({'hasAuthoritativeFunctionalSources':True},omit='STD-AUTH-SOURCE-001')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-AUTH-SOURCE-001 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_release_review_rules_are_enforced_when_present(self):
+        if not any(x.get('id')=='STD-AI-003' for x in CAT['rules']):
+            self.skipTest('STD-AI-003 is not present in this standard version')
+        td,r=self.make_app({'hasAIReleaseReview':True},omit='STD-AI-003')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-AI-003 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_feature_metadata_is_required(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']={'features':[]}
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('ai.features is empty or missing',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_runtime_kind_is_required_and_valid(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0].pop('runtimeKind',None)
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('invalid AI runtimeKind None',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_fallback_kind_is_required_and_valid(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['fallbackKind']='future-kind'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('invalid AI fallbackKind future-kind',p.stdout)
+        finally: td.cleanup()
+
+    def test_deterministic_ai_fallback_metadata_is_accepted(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['fallbackKind']='deterministic'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,0)
+        finally: td.cleanup()
+
+    def test_action_capable_ai_requires_tool_capability(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['riskProfile']='action-capable'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('requires hasAITools=true',p.stdout)
+        finally: td.cleanup()
+
+    def test_adaptive_ai_requires_adaptive_capability(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['riskProfile']='adaptive'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('requires hasAdaptiveAI=true',p.stdout)
+        finally: td.cleanup()
+    def test_post_release_rule_is_enforced_when_capability_present(self):
+        if not any(x.get('id')=='STD-POSTRELEASE-001' for x in CAT['rules']):
+            self.skipTest('STD-POSTRELEASE-001 is not present in this standard version')
+        td,r=self.make_app({'hasPostReleaseMonitoring':True},omit='STD-POSTRELEASE-001')
+        try:
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-POSTRELEASE-001 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
     def test_release_blocking_pending_returns_two(self):

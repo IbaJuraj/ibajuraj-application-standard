@@ -138,3 +138,24 @@ Family `pass` bez evidence je invalidný. `pending` blokuje Level 4.
 
 ## 11. Header ownership pattern
 Prefer either native `navigationTitle` **or** a custom page/sheet header for the authoritative page title. A section heading must narrow the content meaning. Do not reserve an empty navigation band only for close/back control above a second title.
+
+## Release Inspector / Full App Check reference pattern
+
+Recommended flow for an App Store Release Candidate:
+
+```text
+Development builds
+  -> Build + Test + targeted regression
+
+Release Candidate
+  -> In-App Full App Check
+  -> Release Diff / Risk Map
+  -> Critical User Journeys + Failure Injection
+  -> UI / Runtime Matrix
+  -> Optional AI Review
+  -> Severity Review
+  -> Evidence Bundle
+  -> PASS / FAIL
+```
+
+The internal diagnostics surface should expose a single **Full App Check** action and a drill-down list of structured findings. Shared core checks may be reused across apps; product-specific checks live in app modules. AI findings show reason/evidence/confidence and never silently change production state.
