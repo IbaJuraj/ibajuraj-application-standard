@@ -51,6 +51,9 @@ class ValidatorTests(unittest.TestCase):
             'hasFeatureFlaggedPermissionedCapability':False,'hasCompactSurfaces':False
         }
         if caps: base.update(caps)
+        ai_caps={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
+        if any(bool(base.get(k)) for k in ai_caps) and not base.get('hasOnDeviceAI') and not base.get('hasCloudAI'):
+            base['hasOnDeviceAI']=True
         rules={}
         for x in CAT['rules']:
             if x['level'] not in ('MUST','MUST NOT') or not applies(x,base): continue
@@ -70,7 +73,6 @@ class ValidatorTests(unittest.TestCase):
         ai_caps={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
         features=[]
         if any(bool(base.get(k)) for k in ai_caps):
-            if not base.get('hasOnDeviceAI') and not base.get('hasCloudAI'): base['hasOnDeviceAI']=True
             profile='adaptive' if base.get('hasAdaptiveAI') else ('action-capable' if base.get('hasAITools') else 'advisory')
             execution='hybrid' if base.get('hasOnDeviceAI') and base.get('hasCloudAI') else ('cloud' if base.get('hasCloudAI') else 'on-device')
             features=[{'id':'fixture.ai','riskProfile':profile,'execution':execution,'personalization':bool(base.get('hasAIPersonalization'))}]
