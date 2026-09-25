@@ -141,7 +141,7 @@ Ak sa AI personalizuje, adaptuje alebo učí z používania:
 - AI NESMIE autonómne meniť deterministické pravidlá, bezpečnostné hranice ani oprávnenia.
 
 ### Machine-readable AI risk profile
-Každá deklarovaná AI funkcia MÁ mať v conformance manifeste stabilné feature ID a profil:
+Každá deklarovaná AI funkcia MUSÍ mať v conformance manifeste stabilné feature ID a profil:
 
 - `advisory` — vysvetľuje, sumarizuje alebo prioritizuje,
 - `derived` — vytvára odvodený výsledok používaný ďalšou logikou,
