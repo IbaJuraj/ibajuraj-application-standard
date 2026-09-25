@@ -81,6 +81,7 @@ Ak aplikácia používa AI alebo generatívny model na interpretáciu otázky, v
 - ak existuje deterministický resolver, katalóg, register, výpočet alebo overený dátový balík, AI MÁ slúžiť na pochopenie, výber relevantných podkladov, prioritizáciu alebo vysvetlenie; NESMIE potichu nahradiť autoritatívnu doménovú logiku,
 - výsledok odvodený z overených podkladov MUSÍ zachovať väzbu na použitý zdroj, verziu alebo dátový snapshot v rozsahu primeranom riziku domény,
 - ak sa zmení autoritatívny vstup, snapshot, baseline alebo verzia podkladu, cached AI výsledok NESMIE zostať prezentovaný ako aktuálny bez opätovného overenia alebo explicitného označenia zastaranosti,
+- pri časovo citlivých externých dátach (napr. správy, ceny, on-chain udalosti, listingy, token unlocky alebo makro udalosti) MUSÍ byť zachovaná primeraná provenance: identita zdroja, čas publikovania/udalosti ak je známy, čas získania, dotknutý subjekt alebo aktívum a stav freshness/staleness; konfliktné zdroje NESMÚ byť potichu zlúčené do jedného „overeného“ faktu bez pravidla, ktoré konflikt rieši,
 - ak sú podklady nedostatočné, konfliktné, neoverené alebo je relevance pod bezpečným prahom, aplikácia NESMIE prezentovať najbližší nesúvisiaci výsledok ako spoľahlivú odpoveď; MÁ vyžiadať doplnenie, použiť bezpečný fallback alebo oznámiť nedostatok podkladov.
 
 ### STD-AI-002 — User transparency, fallback & feedback — MUST
@@ -99,6 +100,7 @@ AI je predvolene **read-only poradná vrstva**.
 - AI MÔŽE vysvetľovať, prioritizovať, klasifikovať, navrhovať opravu alebo pripraviť kandidátsku akciu,
 - AI NESMIE potichu meniť produkčné dáta, obsah, kód, finančný ledger, bezpečnostné hranice ani deterministické pravidlá,
 - zápisová, deštruktívna, finančná, bezpečnostná alebo inak materiálna akcia vyžaduje samostatný autorizovaný krok podľa produktového rizika,
+- market/watch/buy candidate, sentiment, opportunity score alebo obdobný obchodný signál je poradný výstup a sám osebe NESMIE znamenať oprávnenie vykonať transakciu; vykonanie obchodu patrí do samostatnej `action-capable` cesty s explicitnou autorizáciou a príslušnými bezpečnostnými pravidlami,
 - AI NESMIE byť jediným základom finálneho Release Inspector PASS/FAIL; AI-only blocking finding vyžaduje deterministické potvrdenie alebo explicitné ľudské potvrdenie.
 
 ### STD-AI-004 — Privacy, data minimization & secret handling — MUST
@@ -115,10 +117,13 @@ Aplikácia s AI MUSÍ explicitne modelovať runtime provider a dostupnosť.
 
 - používateľ alebo diagnostika MUSÍ vedieť rozlíšiť, či funkcia beží on-device, v cloude alebo hybridne, a ktorý provider/modelový profil je použitý v rozsahu primeranom produktu,
 - on-device riešenie sa MÁ preferovať, ak poskytuje dostatočnú kvalitu a významne zlepšuje súkromie, dostupnosť, latenciu alebo náklady; cloud nie je zakázaný, ak je pre funkciu vhodnejší alebo je jej podstatou,
-- aplikácia MUSÍ pred použitím lokálneho modelu overiť jeho dostupnosť/capability a bezpečne zvládnuť nepodporované zariadenie alebo dočasne nedostupný model,
+- aplikácia MUSÍ pred použitím lokálneho modelu rozlišovať aspoň podporu/capability, runtime readiness a reálnu použiteľnosť pri požiadavke; stav typu „model podporovaný“ NESMIE byť prezentovaný ako „model pripravený“ a dočasné `notReady` NESMIE byť zamieňané za trvalú nepodporu,
+- ak provider/runtime deklaruje pripravenosť, ale úspešné vykonanie nie je garantované, implementácia MÁ podľa rizika použiť lightweight probe/warm-up alebo bezpečne zachytiť prvé execution zlyhanie bez poškodenia hlavného workflow,
+- retry/refresh ovládanie NESMIE používateľovi predstierať, že aplikácia vie vynútiť stiahnutie alebo aktiváciu systémového modelu, ak túto schopnosť platforma neposkytuje,
 - timeout, offline stav, rate limit, quota, billing, model-unavailable a provider failure NESMÚ rozbiť hlavný workflow; používateľ dostane zrozumiteľný lokalizovaný stav a bezpečný retry/fallback, ak existuje,
+- fallback MÔŽE byť iný model alebo lokálny deterministický mechanizmus; ne-generatívny/deterministický fallback MUSÍ byť v diagnostike alebo používateľskom vysvetlení rozlíšiteľný od modelovej AI a NESMIE byť prezentovaný ako generatívny model,
 - ak je cloudová AI iba doplnková, jej nepripojenie NESMIE blokovať základnú funkciu,
-- AI provenance MUSÍ vedieť zachytiť aspoň provider, model alebo modelový profil, on-device/cloud/hybrid režim, čas a verziu prompt/contract konfigurácie bez uloženia secretu.
+- AI provenance MUSÍ vedieť zachytiť aspoň provider, model alebo modelový profil, on-device/cloud/hybrid režim, `runtimeKind`, `fallbackKind`, čas a verziu prompt/contract konfigurácie bez uloženia secretu.
 
 ### STD-AI-006 — Untrusted input/output, evaluation & rollback — MUST
 AI vstup aj výstup sa považujú za nedôveryhodnú hranicu, kým neprejdú príslušnou validáciou.
@@ -136,6 +141,7 @@ Ak sa AI personalizuje, adaptuje alebo učí z používania:
 - learning/personalization pamäť MUSÍ byť oddelená od autoritatívneho source of truth a jej reset NESMIE meniť primárne používateľské dáta,
 - musí byť dohľadateľné, z akého potvrdeného alebo overeného signálu sa adaptácia odvodila; nepotvrdená domnienka modelu NESMIE sama nadobudnúť status naučeného faktu,
 - nový vzor alebo candidate rule, ktorý môže ovplyvniť finančný výpočet, bezpečnosť, právny/autoritatívny výsledok alebo Release Inspector, MUSÍ pred produkčnou aktiváciou prejsť validáciou a primeraným ľudským potvrdením,
+- learning lifecycle MUSÍ rozlišovať najmenej `candidate → confirmed → active/usable → revoked/reset` alebo ekvivalentné stavy; samotné uloženie kandidáta NIE JE aktivácia ani potvrdenie faktu a kandidát NESMIE meniť autoritatívny výsledok, ledger, release gate alebo bezpečnostné pravidlá,
 - adaptácia MUSÍ byť auditovateľná, verziovaná a reverzibilná,
 - používateľ MUSÍ mať možnosť AI personalizáciu/pamäť vypnúť alebo resetovať, ak ju produkt ukladá,
 - AI NESMIE autonómne meniť deterministické pravidlá, bezpečnostné hranice ani oprávnenia.
@@ -148,7 +154,13 @@ Každá deklarovaná AI funkcia MUSÍ mať v conformance manifeste stabilné fea
 - `action-capable` — môže pripraviť alebo vyžiadať tool/action flow,
 - `adaptive` — personalizuje sa alebo sa učí z potvrdených signálov.
 
-Profil je metadata pre test scope; nenahrádza konkrétne capability flagy. Odporúčané execution hodnoty sú `on-device`, `cloud` a `hybrid`.
+Profil je metadata pre test scope; nenahrádza konkrétne capability flagy. Execution hodnoty sú `on-device`, `cloud` a `hybrid`.
+
+Každá AI feature deklarácia MUSÍ zároveň uviesť:
+- `runtimeKind: model | deterministic` — či primárny runtime používa model alebo deterministický engine,
+- `fallbackKind: none | model | deterministic` — aký typ fallbacku sa použije pri nedostupnosti alebo zlyhaní primárneho runtime.
+
+Tieto polia nehovoria, že deterministický fallback je AI; práve naopak, umožňujú diagnostike a conformance vrstve explicitne odlíšiť modelovú AI od ne-generatívneho lokálneho fallbacku.
 ## 6. Release Candidate Quality Gate & Intelligent Self-Audit
 
 ### STD-RELEASE-006 — Release Candidate Quality Gate cadence — MUST
