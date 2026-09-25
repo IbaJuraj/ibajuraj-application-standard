@@ -41,7 +41,8 @@ class ValidatorTests(unittest.TestCase):
             'supportsIPad':False,'requiresIPadCompatibilityTest':False,'supportsResizableWindow':False,
             'hasCalculatorKeypad':False,'hasForms':False,'hasAdvancedFormFields':False,'hasPersistedData':False,
             'hasSyncOrBackup':False,'hasAuthoritativeVersionedData':False,'hasAuthoritativeFunctionalSources':False,
-            'hasAppLock':False,'hasGeneratedAssistance':False,'hasAIReleaseReview':False,'hasPostReleaseMonitoring':False,
+            'hasAppLock':False,'hasGeneratedAssistance':False,'hasAIReleaseReview':False,'hasOnDeviceAI':False,'hasCloudAI':False,
+            'hasAITools':False,'hasAdaptiveAI':False,'hasAIPersonalization':False,'hasPostReleaseMonitoring':False,
             'hasTranslucentSurfaces':False,'hasSearch':False,'hasDetails':False,'hasSheets':False,'hasFullscreen':False,
             'hasOnboarding':False,'hasStateSurfaces':False,'hasProductionBackend':False,'hasRepresentativeUserData':False,
             'hasAsyncDerivedState':False,'hasDerivedState':False,'hasRemoteDestructiveOrAccessMutations':False,
@@ -66,8 +67,15 @@ class ValidatorTests(unittest.TestCase):
         families={f:{'status':'pass','screens':[f+' Fixture'],'evidence':['RUNTIME_ACCEPTANCE.md#'+f]} for f in sorted(req)}
         if omit_screen: families.pop(omit_screen,None)
         if pending_screen in families: families[pending_screen]['status']='pending'
+        ai_caps={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
+        features=[]
+        if any(bool(base.get(k)) for k in ai_caps):
+            if not base.get('hasOnDeviceAI') and not base.get('hasCloudAI'): base['hasOnDeviceAI']=True
+            profile='adaptive' if base.get('hasAdaptiveAI') else ('action-capable' if base.get('hasAITools') else 'advisory')
+            execution='hybrid' if base.get('hasOnDeviceAI') and base.get('hasCloudAI') else ('cloud' if base.get('hasCloudAI') else 'on-device')
+            features=[{'id':'fixture.ai','riskProfile':profile,'execution':execution,'personalization':bool(base.get('hasAIPersonalization'))}]
         manifest={'standardVersion':STANDARD_VERSION,'standardCandidate':STANDARD_CANDIDATE,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
-                  'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
+                  'ai':{'features':features},'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
             (r/'sk.lproj').mkdir(); (r/'en.lproj').mkdir()
             (r/'sk.lproj/Localizable.strings').write_text('"about" = "O aplikácii";\n"version" = "Verzia";\n')
@@ -145,6 +153,29 @@ class ValidatorTests(unittest.TestCase):
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('STD-AI-003 missing conformance entry',p.stdout)
         finally: td.cleanup()
 
+    def test_ai_feature_metadata_is_required(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']={'features':[]}
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('ai.features is empty or missing',p.stdout)
+        finally: td.cleanup()
+
+    def test_action_capable_ai_requires_tool_capability(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['riskProfile']='action-capable'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('requires hasAITools=true',p.stdout)
+        finally: td.cleanup()
+
+    def test_adaptive_ai_requires_adaptive_capability(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['riskProfile']='adaptive'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('requires hasAdaptiveAI=true',p.stdout)
+        finally: td.cleanup()
     def test_post_release_rule_is_enforced_when_capability_present(self):
         if not any(x.get('id')=='STD-POSTRELEASE-001' for x in CAT['rules']):
             self.skipTest('STD-POSTRELEASE-001 is not present in this standard version')
