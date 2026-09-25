@@ -16,7 +16,7 @@
       "const": "1.9.0"
     },
     "standardCandidate": {
-      "const": "RC2"
+      "const": "RC3"
     },
     "app": {
       "type": "object",
@@ -92,6 +92,57 @@
                   "string",
                   "null"
                 ]
+              },
+              "notes": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "ai": {
+      "type": "object",
+      "properties": {
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "riskProfile",
+              "execution"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "riskProfile": {
+                "enum": [
+                  "advisory",
+                  "derived",
+                  "action-capable",
+                  "adaptive"
+                ]
+              },
+              "execution": {
+                "enum": [
+                  "on-device",
+                  "cloud",
+                  "hybrid"
+                ]
+              },
+              "personalization": {
+                "type": "boolean"
+              },
+              "tools": {
+                "type": "boolean"
               },
               "notes": {
                 "type": [
