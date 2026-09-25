@@ -1,7 +1,7 @@
 {
   "$schema": "./STANDARD_CONFORMANCE.schema.json",
   "standardVersion": "1.9.0",
-  "standardCandidate": "RC2",
+  "standardCandidate": "RC3",
   "app": {
     "name": "<App Name>",
     "productId": "<product-id>"
@@ -45,7 +45,12 @@
     "hasFeatureFlaggedPermissionedCapability": false,
     "hasCompactSurfaces": false,
     "hasAIReleaseReview": false,
-    "hasPostReleaseMonitoring": false
+    "hasPostReleaseMonitoring": false,
+    "hasOnDeviceAI": false,
+    "hasCloudAI": false,
+    "hasAITools": false,
+    "hasAdaptiveAI": false,
+    "hasAIPersonalization": false
   },
   "supportedLocalizations": [
     "sk"
@@ -115,5 +120,8 @@
         ]
       }
     }
+  },
+  "ai": {
+    "features": []
   }
 }
