@@ -440,8 +440,15 @@
       "id": "STD-AI-001",
       "level": "MUST",
       "appliesWhen": {
-        "capability": "hasGeneratedAssistance",
-        "equals": true
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
       },
       "defaultVerification": "unit",
       "title": "Grounded & verified AI assistance",
@@ -451,8 +458,15 @@
       "id": "STD-AI-002",
       "level": "MUST",
       "appliesWhen": {
-        "capability": "hasGeneratedAssistance",
-        "equals": true
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
       },
       "defaultVerification": "unit",
       "title": "User transparency, fallback & feedback",
