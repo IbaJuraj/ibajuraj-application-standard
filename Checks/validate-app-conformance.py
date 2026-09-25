@@ -4,6 +4,8 @@ import argparse, json, re, sys
 ALLOWED_MODES={'static','unit','ui','runtime','exception'}
 AI_PROFILES={'advisory','derived','action-capable','adaptive'}
 AI_EXECUTION={'on-device','cloud','hybrid'}
+AI_RUNTIME_KIND={'model','deterministic'}
+AI_FALLBACK_KIND={'none','model','deterministic'}
 AI_CAPS={'hasGeneratedAssistance','hasAIReleaseReview','hasOnDeviceAI','hasCloudAI','hasAITools','hasAdaptiveAI','hasAIPersonalization'}
 SCREEN_REQUIREMENTS={
     'hasSettings':['SCREEN-SETTINGS','SCREEN-ABOUT'],
@@ -54,11 +56,14 @@ def main():
     for item in features:
         if not isinstance(item,dict): errors.append('STD-AI-002 ai.features item must be an object'); continue
         fid=item.get('id'); profile=item.get('riskProfile'); execution=item.get('execution')
+        runtime_kind=item.get('runtimeKind'); fallback_kind=item.get('fallbackKind')
         if not isinstance(fid,str) or not fid.strip(): errors.append('STD-AI-002 AI feature missing stable id')
         elif fid in ids: errors.append(f'STD-AI-002 duplicate AI feature id {fid}')
         else: ids.add(fid)
         if profile not in AI_PROFILES: errors.append(f'STD-AI-002 {fid or "<unknown>"} invalid AI riskProfile {profile}')
         if execution not in AI_EXECUTION: errors.append(f'STD-AI-005 {fid or "<unknown>"} invalid AI execution {execution}')
+        if runtime_kind not in AI_RUNTIME_KIND: errors.append(f'STD-AI-005 {fid or "<unknown>"} invalid AI runtimeKind {runtime_kind}')
+        if fallback_kind not in AI_FALLBACK_KIND: errors.append(f'STD-AI-005 {fid or "<unknown>"} invalid AI fallbackKind {fallback_kind}')
     if any(isinstance(x,dict) and x.get('execution') in {'on-device','hybrid'} for x in features) and not caps.get('hasOnDeviceAI'): errors.append('STD-AI-005 on-device/hybrid AI feature requires hasOnDeviceAI=true')
     if any(isinstance(x,dict) and x.get('execution') in {'cloud','hybrid'} for x in features) and not caps.get('hasCloudAI'): errors.append('STD-AI-005 cloud/hybrid AI feature requires hasCloudAI=true')
     if any(isinstance(x,dict) and x.get('riskProfile')=='action-capable' for x in features) and not caps.get('hasAITools'): errors.append('STD-AI-003 action-capable AI feature requires hasAITools=true')
