@@ -75,7 +75,7 @@ class ValidatorTests(unittest.TestCase):
         if any(bool(base.get(k)) for k in ai_caps):
             profile='adaptive' if base.get('hasAdaptiveAI') else ('action-capable' if base.get('hasAITools') else 'advisory')
             execution='hybrid' if base.get('hasOnDeviceAI') and base.get('hasCloudAI') else ('cloud' if base.get('hasCloudAI') else 'on-device')
-            features=[{'id':'fixture.ai','riskProfile':profile,'execution':execution,'personalization':bool(base.get('hasAIPersonalization'))}]
+            features=[{'id':'fixture.ai','riskProfile':profile,'execution':execution,'runtimeKind':'model','fallbackKind':'none','personalization':bool(base.get('hasAIPersonalization'))}]
         manifest={'standardVersion':STANDARD_VERSION,'standardCandidate':STANDARD_CANDIDATE,'app':{'name':'Fixture','productId':'fixture'},'capabilities':base,
                   'ai':{'features':features},'screenAudit':{'families':families},'rules':rules,'exceptions':{}}
         if localization:
@@ -161,6 +161,30 @@ class ValidatorTests(unittest.TestCase):
             m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']={'features':[]}
             (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
             p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('ai.features is empty or missing',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_runtime_kind_is_required_and_valid(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0].pop('runtimeKind',None)
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('invalid AI runtimeKind None',p.stdout)
+        finally: td.cleanup()
+
+    def test_ai_fallback_kind_is_required_and_valid(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['fallbackKind']='future-kind'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,1); self.assertIn('invalid AI fallbackKind future-kind',p.stdout)
+        finally: td.cleanup()
+
+    def test_deterministic_ai_fallback_metadata_is_accepted(self):
+        td,r=self.make_app({'hasGeneratedAssistance':True,'hasOnDeviceAI':True})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text()); m['ai']['features'][0]['fallbackKind']='deterministic'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r); self.assertEqual(p.returncode,0)
         finally: td.cleanup()
 
     def test_action_capable_ai_requires_tool_capability(self):
