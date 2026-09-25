@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.9.0 RC3 – 2026-09-25
+
+### Added
+- `STD-AI-005` — provider/runtime, on-device/cloud transparency and graceful fallback.
+- `STD-AI-006` — untrusted input/output boundary, structured-output validation, AI eval/regression and rollback.
+- `STD-AI-007` — controlled adaptation/self-learning, separate learning memory, provenance, reversibility and human reset.
+- Machine-readable `ai.features[]` metadata with stable feature ID, risk profile and execution mode.
+- AI capability flags for on-device, cloud, tools, adaptive behavior and personalization.
+- Candidate catalog expanded from 131 to **134 unique rules**.
+
+### Consolidated
+- `STD-AI-001` and `STD-AI-002` retain their stable identities and are explicitly defined as grounded/verified assistance and user transparency/fallback/feedback contracts.
+- `STD-AI-003` is generalized from Release-Inspector-only wording to advisory, explainable and read-only-by-default AI.
+- `STD-AI-004` is generalized to privacy, data minimization, sanitization and secure secret handling for all AI use.
+- AI release review remains subordinate to deterministic Release Inspector PASS/FAIL.
+
+### Reference implementation
+- Apple Foundation Models / Core AI are documented as reference on-device implementations, not mandatory technologies.
+- TradeBook is the first intended RC3 pilot for local/cloud AI review and controlled adaptation contracts.
+
 ## 1.9.0 RC2 – 2026-09-25
 
 ### Added
