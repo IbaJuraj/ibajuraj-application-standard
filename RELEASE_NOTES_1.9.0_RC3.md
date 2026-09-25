@@ -32,6 +32,14 @@ Deterministic Release Inspector remains the authority for PASS/FAIL. AI may expl
 
 Adaptive AI may improve from confirmed signals, but learned memory is separate from authoritative data, changes are versioned/reversible and material learned rules require validation/human confirmation before activation.
 
-## Pilot
+## Pilot clarifications from TradeBook
 
-TradeBook is the first intended RC3 pilot.
+TradeBook is the first intended RC3 pilot. Runtime evidence from the pilot clarified the existing seven AI contracts without adding new rule IDs:
+
+- device/model support, runtime readiness and successful execution are distinct states,
+- a fallback may be deterministic and non-generative, but must be labeled separately from model AI,
+- adaptive learning uses an explicit candidate → confirmed → active/usable → revoked/reset lifecycle,
+- time-sensitive Market Intelligence inputs preserve source/freshness provenance and conflicting-source state,
+- a market/watch/buy candidate is advisory and never transaction authorization by itself.
+
+Machine-readable AI feature metadata now includes `runtimeKind` and `fallbackKind`. Candidate rule count remains **134**.
