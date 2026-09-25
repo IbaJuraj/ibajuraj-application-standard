@@ -116,7 +116,9 @@
             "required": [
               "id",
               "riskProfile",
-              "execution"
+              "execution",
+              "runtimeKind",
+              "fallbackKind"
             ],
             "properties": {
               "id": {
@@ -148,6 +150,19 @@
                 "type": [
                   "string",
                   "null"
+                ]
+              },
+              "runtimeKind": {
+                "enum": [
+                  "model",
+                  "deterministic"
+                ]
+              },
+              "fallbackKind": {
+                "enum": [
+                  "none",
+                  "model",
+                  "deterministic"
                 ]
               }
             },
