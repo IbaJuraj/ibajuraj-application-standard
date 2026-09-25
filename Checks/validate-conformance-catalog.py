@@ -65,6 +65,10 @@ for rule in cat.get('rules', []):
         if unknown:
             errors.append(f"{rule.get('id')}: unsupported appliesWhen keys {sorted(unknown)}")
 
+declared_rule_count = cat.get('ruleCount')
+if declared_rule_count is not None and declared_rule_count != len(ids):
+    errors.append(f'catalog ruleCount must equal actual rules: declared {declared_rule_count}, got {len(ids)}')
+
 if status == 'active' and isinstance(stable_rule_count, int) and len(ids) != stable_rule_count:
     errors.append(f'active catalog must contain {stable_rule_count} rules, got {len(ids)}')
 if status == 'candidate' and isinstance(stable_rule_count, int) and len(ids) < stable_rule_count:
