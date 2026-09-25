@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.9.0 RC2 – 2026-09-25
+
+### Added
+- RC-only full quality gate rather than a full audit after every small development build.
+- In-App Full App Check with structured severity findings.
+- Release diff/risk audit, critical journeys/failure injection and UI/runtime matrix.
+- Governed AI release review with explainability and privacy/data-minimization boundaries.
+- Exact-build RC Evidence Bundle and optional post-release feedback loop.
+- Candidate catalog expanded from 121 to **131 unique rules**.
+
+### Preserved
+- Stable authority remains 1.8.0.
+- RC1 async responsiveness and authoritative-source contracts remain unchanged.
+- Runtime evidence remains exact-build scoped.
+
+
 ## 1.9.0 RC1 – 2026-09-17
 
 ### Added

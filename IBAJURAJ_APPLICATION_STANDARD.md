@@ -1,13 +1,13 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.9.0 RC1  
+**Verzia:** 1.9.0 RC2  
 **Stav:** Candidate / RC  
-**Dátum vydania:** 17. septembra 2026  
+**Dátum vydania:** 25. septembra 2026  
 **Vlastník:** IbaJuraj  
 **Stable verejná autorita:** 1.8.0 (`standard-v1.8.0`)  
-**Candidate vetva:** `standard-1.9.0-rc1`
+**Candidate vetva:** `standard-1.9.0-rc2`
 
-> Verzia 1.9.0 RC1 je kandidát na ďalšiu minor verziu. Stabilnou autoritou zostáva 1.8.0. RC1 zachováva všetkých 119 pravidiel 1.8.0 a pridáva dva nové cross-app kontrakty: `STD-ASYNC-002` pre remote invite/share/access responsiveness a `STD-AUTH-SOURCE-001` pre offline dostupnosť a dohľadateľnosť autoritatívneho zdroja.
+> Verzia 1.9.0 RC2 je kandidát na ďalšiu minor verziu. Stabilnou autoritou zostáva 1.8.0. RC2 zachováva všetkých 121 pravidiel RC1 a pridáva Release Candidate Quality Gate, interný Full App Check, release-diff/risk audit, release visual matrix, riadenú AI review vrstvu, evidence bundle a post-release feedback loop. Kandidátsky katalóg má 131 pravidiel.
 
 ## 1. Záväznosť
 
@@ -15,14 +15,18 @@
 
 Candidate pravidlá sa používajú na adopciu a validáciu, kým nie je príslušná minor verzia promovovaná na stable.
 
-## 2. Integrácia 1.9 RC1
+## 2. Integrácia 1.9 RC2
 
-1.9.0 RC1 má **121 pravidiel**:
+1.9.0 RC2 má **131 pravidiel**:
 - 119 pravidiel zdedených zo stabilnej 1.8.0 bez zmeny ich významu,
-- `STD-ASYNC-002` pre neblokujúce remote invite/share/access operácie,
-- `STD-AUTH-SOURCE-001` pre lokálne/offline autoritatívne podklady, presnú citáciu a verifikačnú stopu.
+- 2 pravidlá pridané v RC1: `STD-ASYNC-002` a `STD-AUTH-SOURCE-001`,
+- 10 nových pravidiel RC2 pre Release Candidate Quality Gate a Intelligent Self-Audit.
 
-RC1 zároveň normatívne spresňuje existujúci root-title family contract: peer root obrazovky používajú spoločnú typografickú rodinu, ktorej výsledná veľkosť je odvodená od dostupnej šírky viewport-u/kontajnera. Toto spresnenie nepridáva nový `STD-*` rule ID.
+Plný whole-app audit sa **nevyžaduje po každom malom vývojovom builde**. Je povinný pri builde explicitne nominovanom ako Release Candidate pre App Store/store/produkčné nasadenie.
+
+Referenčná implementačná architektúra sa nazýva **IbaJuraj Release Inspector / Quality Engine**. Názov ani zdieľanie kódu nie sú normatívne; normatívne sú správanie, rozsah, dôkazy a release gate.
+
+RC2 zachováva root-title family clarification z RC1 bez nového rule ID.
 
 ## 3. Async remote contract
 
@@ -63,13 +67,55 @@ Konkrétna informačná hierarchia, názvy právnych rolí a vizuálna navigáci
 
 Schválený návrh: `Proposals/IJAS-0033-authoritative-source-offline-citation-contract.md`.
 
-## 5. Root-title adaptive family clarification
+## 5. Release Candidate Quality Gate & Intelligent Self-Audit
+
+### STD-RELEASE-006 — Release Candidate Quality Gate cadence — MUST
+Kompletný whole-app release audit MUSÍ prebehnúť na builde explicitne nominovanom na App Store/store/produkčné odoslanie. Bežné vývojové buildy nepotrebujú celý release audit; postačuje Build/Test a cielená regresia zmenených alebo rizikových oblastí. Materiálna zmena po uzavretí RC gate zneplatňuje release evidence predchádzajúceho buildu a nový RC MUSÍ gate zopakovať.
+
+### STD-DIAG-001 — Internal Full App Check — MUST
+Každá aplikácia MUSÍ mať interný/developer-only Full App Check spustiteľný na presnom RC builde. Kontrola MUSÍ byť nedestruktívna voči reálnym používateľským dátam a podľa applicability preveriť inicializáciu, persisted-data integrity, migrácie, navigation/destination registry, lokalizačnú integritu, výpočty/business rules, sync/API, deep links a cache/configuration. Write-path testy používajú izolované alebo syntetické fixtures, prípadne reverzibilný testovací kontext. Diagnostický vstup NESMIE byť bežnou produkčnou používateľskou funkciou, pokiaľ produkt výslovne neponúka bezpečnú diagnostiku.
+
+### STD-DIAG-002 — Structured diagnostic findings and severity — MUST
+Každý nález MUSÍ mať stabilné ID, dotknutý komponent, očakávaný a pozorovaný stav, dôkaz alebo reprodukčný kontext, vysvetlenie a severity: **BLOCKER / ERROR / WARNING / INFO**. BLOCKER a ERROR blokujú release bez platnej výnimky/ADR. WARNING vyžaduje review. INFO je neblokujúce. Known exceptions MUSIA zostať explicitné a dohľadateľné.
+
+### STD-RELEASE-007 — Release diff and risk-based coverage — MUST
+RC audit MUSÍ porovnať kandidáta s posledným reálne publikovaným produkčným/App Store baseline a identifikovať zmeny zdrojového kódu, dátového modelu/schémy, migrácií, konfigurácie, dependencies, UI, lokalizácií a feature flags podľa applicability. High-risk zmeny dostávajú rozšírené testovanie.
+
+### STD-TEST-002 — Critical user journeys and resilience scenarios — MUST
+RC gate MUSÍ preverovať reprezentatívne end-to-end používateľské scenáre, nie iba izolované obrazovky. Podľa capabilities zahŕňa reštart/persistenciu a relevantné failure scenáre: offline stav, timeout, zamietnuté oprávnenie, prerušený import/zápis, poškodený vstup, sync failure/conflict a upgrade zo staršieho persisted stavu.
+
+### STD-UI-001 — Release visual/runtime matrix — MUST
+Zmenené a high-risk používateľské surfaces MUSIA byť overené na reprezentatívnych device/viewport triedach a podľa applicability v Light/Dark, relevantnom Dynamic Type a podporovaných lokalizáciách. Screenshot/image-diff automatizácia MÔŽE pomáhať, ale nejednoznačný vizuálny nález vyžaduje ľudské review.
+
+### STD-AI-003 — AI release review is advisory, explainable and non-autonomous — MUST
+Ak RC audit používa AI, každý AI nález MUSÍ uviesť dôvod, podporný kontext/dôkaz a confidence. AI MÔŽE prioritizovať, vysvetľovať a navrhovať opravu, ale NESMIE potichu meniť produkčné dáta, obsah ani kód a NESMIE byť jediným základom finálneho release PASS/FAIL. AI-only blocking finding vyžaduje deterministické potvrdenie alebo explicitné ľudské potvrdenie.
+
+### STD-AI-004 — AI release review uses data minimization — MUST
+AI review MUSÍ používať syntetické, anonymizované alebo minimalizované dáta ako predvolený režim. Secrets, credentials, authentication tokens a ekvivalentný citlivý materiál sa AI NESMÚ odosielať. Logy, screenshoty a importované datasety sa pred AI analýzou MUSIA sanitizovať, ak môžu obsahovať súkromné používateľské údaje.
+
+### STD-EVIDENCE-002 — RC Evidence Bundle and release baseline — MUST
+Každý RC gate MUSÍ vytvoriť exportovateľný Evidence Bundle naviazaný na presnú app version/build a Standard candidate. Bundle obsahuje najmenej súhrn kontrol, findings, exceptions, release diff/risk scope, runtime/UI evidence a AI review summary, ak bola AI použitá. Build reálne publikovaný do produkcie/App Store sa stáva ďalším release baseline.
+
+### STD-POSTRELEASE-001 — Production feedback loop — MUST
+Ak aplikácia podporuje post-release monitoring, privacy-respecting crash/error/performance signály MUSIA byť po release vyhodnotené a významné regresie MUSIA vstúpiť do ďalšieho release baseline a test scope.
+
+### Release Inspector modes
+- **Development Check** — Build/Test + cielené kontroly; bez povinného celého auditu po každom malom builde.
+- **Full App Check** — interný in-app diagnostický sweep.
+- **Release Check** — plný RC gate: deterministic + app-specific + user journeys + visual/runtime + release diff + evidence + optional AI review.
+- **Post-Release Monitoring** — produkčný feedback loop tam, kde je podporovaný.
+
+Release Check môže byť PASS iba ak sú povinné deterministic/runtime gates PASS, nezostáva unresolved BLOCKER/ERROR bez platnej výnimky, WARNING findings sú reviewnuté, AI findings nie sú použité ako autonómny dôkaz a Evidence Bundle je kompletný.
+
+Schválený návrh: `Proposals/IJAS-0035-release-candidate-quality-gate-intelligent-self-audit.md`.
+
+## 6. Root-title adaptive family clarification
 
 Peer root obrazovky používajú jednu spoločnú root-title family. Výsledná veľkosť title tokenu MUSÍ vychádzať z reálne dostupnej šírky viewport-u alebo kontajnera, nie z názvu konkrétneho zariadenia. Na tom istom viewport-e MUSIA peer root titles používať rovnaký výsledný size token. Adaptácia MÁ preferovať celý názov bez `…` pomocou breakpointov, clamped veľkosti, tightening alebo primeraného scale fallbacku.
 
 Nested/system navigation headers tvoria samostatnú family. Referenčné hodnoty 28 / 30 / 32 pt v `DESIGN_TOKENS.md` sú príklad implementácie, nie cross-app povinné čísla.
 
-## 6. Zdedené 1.8 kontrakty
+## 7. Zdedené 1.8 kontrakty
 
 1.8.0 zostáva stabilnou autoritou pre localization-first architektúru, release-root hygiene, data continuity, Production backend readiness, runtime performance, async stale-callback safety, derived-state ordering, remote truth/reconciliation, corrupt-state recovery, relationship-aware deletion, upgrade-path gate, permission parity, runtime evidence, compact-surface integrity a biometrickú bezpečnostnú semantiku.
 
@@ -85,7 +131,7 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 - zámok sa NESMIE znovu aktivovať pri bežnej internej navigácii; viaže sa na skutočný lifecycle prechod aplikácie,
 - opakované biometrické dialógy počas už prebiehajúcej autentifikácie sa MUSIA blokovať.
 
-## 7. Normatívny register
+## 8. Normatívny register
 
 ### STD-IDENTITY-001 — MUST
 ### STD-IDENTITY-002 — MUST
@@ -150,6 +196,8 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-DEBUG-002 — MUST
 ### STD-AI-001 — MUST
 ### STD-AI-002 — MUST
+### STD-AI-003 — AI release review is advisory, explainable and non-autonomous — MUST
+### STD-AI-004 — AI release review uses data minimization — MUST
 ### STD-CONF-001 — MUST
 ### STD-CONF-002 — MUST
 ### STD-CONF-003 — MUST
@@ -191,6 +239,8 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-LOC-007 — Localized search has feature parity across supported runtime languages — MUST
 ### STD-LOC-008 — Runtime languages are independent from App Store territory availability — MUST
 ### STD-RELEASE-005 — Current release root is clean and superseded build history is archived — MUST
+### STD-RELEASE-006 — Release Candidate Quality Gate cadence — MUST
+### STD-RELEASE-007 — Release diff and risk-based coverage — MUST
 ### STD-DATA-005 — Single-device Xcode ↔ TestFlight/App Store ↔ Xcode data continuity — MUST
 ### STD-BACKEND-001 — Production backend schema/index/permission/config is explicitly ready — MUST
 ### STD-BACKEND-002 — Real TestFlight/Production read/write/sync/share smoke follows app capabilities — MUST
@@ -205,21 +255,28 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-DATA-007 — Destructive deletion is relationship-aware — MUST
 ### STD-DATA-008 — Persisted-data app has production-to-candidate upgrade-path gate — MUST
 ### STD-TEST-001 — Material deterministic engines require automated regression coverage — MUST
+### STD-TEST-002 — Critical user journeys and resilience scenarios — MUST
+### STD-UI-001 — Release visual/runtime matrix — MUST
+### STD-DIAG-001 — Internal Full App Check — MUST
+### STD-DIAG-002 — Structured diagnostic findings and severity — MUST
 ### STD-PERM-001 — Disabled feature and permission exposure remain in parity — MUST
 ### STD-EVIDENCE-001 — Runtime evidence is build-scoped and regressions remain traceable — MUST
+### STD-EVIDENCE-002 — RC Evidence Bundle and release baseline — MUST
+### STD-POSTRELEASE-001 — Production feedback loop — MUST
 ### STD-COMPACT-001 — Compact surfaces define content priority and destination integrity — SHOULD
 
-## 8. Machine-readable applicability
+## 9. Machine-readable applicability
 
-Candidate 1.9.0 RC1 rozširuje `CONFORMANCE_CATALOG.json` na 121 pravidiel a pridáva dve capability väzby:
+Candidate 1.9.0 RC2 rozširuje `CONFORMANCE_CATALOG.json` na **131 pravidiel**.
 
-- `hasRemoteInviteShareAccessFlow` → `STD-ASYNC-002`,
-- `hasAuthoritativeFunctionalSources` → `STD-AUTH-SOURCE-001`.
+Nové capability väzby:
+- `hasAIReleaseReview` → `STD-AI-003`, `STD-AI-004`,
+- `hasPostReleaseMonitoring` → `STD-POSTRELEASE-001`.
 
-Apps bez príslušnej capability označia pravidlo ako neaplikovateľné cez capability model; nepotrebujú výnimku.
+Ostatné nové RC2 pravidlá sú cross-app release-quality kontrakty. Konkrétny check set je capability-aware: aplikácia netestuje subsystém, ktorý nemá, ale MUSÍ mať RC evidence pre to, čo reálne podporuje.
 
-## 9. Release stav
+## 10. Release stav
 
 `standard-v1.8.0` zostáva stabilná verejná autorita.
 
-`standard-1.9.0-rc1` je candidate vetva na implementáciu, audit a cross-app validáciu. Promotion na stable 1.9.0 vyžaduje validný 121-rule katalóg, reference adoption pre nové pravidlá a preverenie ďalších aplikácií podľa applicability.
+`standard-1.9.0-rc2` je candidate vetva na implementáciu, audit a cross-app validáciu. Promotion na stable 1.9.0 vyžaduje validný 131-rule katalóg, pilotnú adopciu Release Inspector gate, review AI/privacy contractov a cross-app applicability/runtime evidence.

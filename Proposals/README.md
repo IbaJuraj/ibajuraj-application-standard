@@ -42,3 +42,5 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0027-single-device-development-release-data-continuity.md` – proposed for Standard 1.7.1; zachovanie stabilných lokálnych dát a oddelenie environment-specific cloudových väzieb pri striedaní Xcode ↔ App Store/TestFlight na jednom fyzickom zariadení.
 - `IJAS-0033-authoritative-source-offline-citation-contract.md` – accepted for Standard 1.9.0 RC1; autoritatívny právny/regulačný podklad musí byť dostupný lokálne/offline, verzovaný a spätne dohľadateľný; externý oficiálny web je iba doplnkový zdroj.
 - `IJAS-0034-async-remote-invite-responsiveness.md` – accepted for Standard 1.9.0 RC1; remote invite/share/access flow nesmie blokovať interaktívnu odozvu UI/MainActor. Tento návrh bol prečíslovaný z nepublikovaného kolidujúceho draft ID `IJAS-0012`.
+
+- `IJAS-0035-release-candidate-quality-gate-intelligent-self-audit.md` – accepted for Standard 1.9.0 RC2; RC-only full audit, In-App Full App Check, release diff/risk audit, resilience/UI matrix, AI governance, Evidence Bundle and post-release feedback loop.
