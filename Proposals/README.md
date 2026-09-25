@@ -44,3 +44,4 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0034-async-remote-invite-responsiveness.md` – accepted for Standard 1.9.0 RC1; remote invite/share/access flow nesmie blokovať interaktívnu odozvu UI/MainActor. Tento návrh bol prečíslovaný z nepublikovaného kolidujúceho draft ID `IJAS-0012`.
 
 - `IJAS-0035-release-candidate-quality-gate-intelligent-self-audit.md` – accepted for Standard 1.9.0 RC2; RC-only full audit, In-App Full App Check, release diff/risk audit, resilience/UI matrix, AI governance, Evidence Bundle and post-release feedback loop.
+- `IJAS-0036-ai-runtime-provider-safety-controlled-adaptation.md` – accepted for Standard 1.9.0 RC3; konsoliduje AI do siedmich kontraktov a pridáva provider/runtime fallback, input-output safety/regression a kontrolovanú adaptáciu/self-learning.
