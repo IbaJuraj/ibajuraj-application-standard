@@ -122,6 +122,25 @@
     }
   },
   "ai": {
-    "features": []
+    "features": [],
+    "featureContract": {
+      "required": [
+        "id",
+        "riskProfile",
+        "execution",
+        "runtimeKind",
+        "fallbackKind"
+      ],
+      "runtimeKind": [
+        "model",
+        "deterministic"
+      ],
+      "fallbackKind": [
+        "none",
+        "model",
+        "deterministic"
+      ],
+      "note": "runtimeKind/fallbackKind distinguish model AI from deterministic non-generative fallback; remove this documentation object in an app manifest if the app keeps only ai.features."
+    }
   }
 }
