@@ -45,7 +45,7 @@ Adaptive/personalized learning is separated from authoritative source-of-truth d
 
 ## Machine-readable AI metadata
 
-Each declared AI feature should carry:
+Each declared AI feature must carry:
 
 - stable feature ID,
 - `riskProfile`: `advisory`, `derived`, `action-capable` or `adaptive`,
