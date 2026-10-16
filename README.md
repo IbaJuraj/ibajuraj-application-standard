@@ -1,33 +1,30 @@
-# IbaJuraj Application Standard 1.9.0 RC3
+# IbaJuraj Application Standard 1.9.0 RC4
 
-This branch contains the **candidate IbaJuraj Application Standard 1.9.0 RC3**.
+This branch contains the **candidate IbaJuraj Application Standard 1.9.0 RC4**. Stable public authority remains **1.8.0** (`standard-v1.8.0`).
 
-Stable public authority remains **1.8.0** (`standard-v1.8.0`). RC3 preserves the 131-rule RC2 candidate, consolidates AI governance into seven coherent contracts and adds three new machine-readable AI rules for **134 candidate rules total**.
+RC4 is a non-breaking extension of RC3: **134 inherited candidate rules unchanged + four capability-scoped rules = 138 candidate rules**.
 
-## RC3 principle
-A complete whole-app audit is required when a build is nominated for App Store/store/production submission, not after every small development build.
+## New cross-app contracts
 
-Reference architecture: **IbaJuraj Release Inspector / Quality Engine**
-- internal In-App Full App Check,
-- deterministic and app-specific checks,
-- release diff + risk-based coverage,
-- critical user journeys + failure injection,
-- visual/runtime matrix,
-- optional governed AI review,
-- exact-build Evidence Bundle,
-- post-release feedback where supported.
+- `STD-BACKUP-001` — portable archives: complete scope/manifest, integrity, authenticated encryption where sensitive, safe handling of recovery keys and excluded secrets.
+- `STD-BACKUP-002` — restore preflight: compatible schema, read-only preview, atomic/transactional activation, rollback and **actual cross-device restore proof**.
+- `STD-SHARE-001` — recipient data parity: accepted invitation is not evidence that shared records arrived; no empty owner overwrite, edits/conflicts/revoke verified.
+- `STD-UPDATE-001` — accurate update provider/channel, last-success vs attempt retry, version-scoped snooze and non-blocking localized notice.
 
-AI is grounded, advisory, explainable and read-only by default. RC3 adds provider/runtime fallback, on-device/cloud transparency, untrusted-input/output validation, regression/rollback and controlled adaptation/self-learning. Apple Foundation Models/Core AI are reference on-device implementations, not mandatory technologies.
+Existing iPad/viewport rules, AI governance and Release Inspector cadence are preserved without redundant rule IDs. `IbaJuraj DataKit` and `App Update Kit` are optional patterns, not mandated dependencies.
 
 ## Validate
-```bash
+
+~~~bash
 bash Checks/validate-standard.sh
 python3 Checks/validate-conformance-catalog.py
 python3 -m unittest Checks/test_validate_app_conformance.py
-```
+~~~
 
-## Candidate
-Branch: `standard-1.9.0-rc3`  
-Proposed tag: `standard-v1.9.0-rc3`
+## Governance
 
-Do not promote to stable 1.9.0 until Release Inspector and consolidated AI contracts are validated in pilot apps with cross-app exact-build evidence.
+- Public stable: `main` / `standard-v1.8.0` (unmodified).
+- RC4 candidate: `standard-1.9.0-rc4-data-continuity-updates`.
+- Proposed tag: `standard-v1.9.0-rc4` — **not published**.
+- RC3 Draft PR #12 remains a predecessor, not a stable release.
+- Static PASS ≠ Build/Test PASS ≠ device-level data recovery/shared-content PASS. Promotion requires independent app evidence.

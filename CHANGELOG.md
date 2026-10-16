@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.9.0 RC4 – 2026-10-16 (candidate)
+
+### Added
+- Four capability-scoped cross-app rules: `STD-BACKUP-001/002`, `STD-SHARE-001` and `STD-UPDATE-001`; RC3 134 → RC4 **138 candidate rules**.
+- Portable backup scope, completeness, authenticated integrity/encryption and independent recovery material.
+- Restore preflight, checkpoint/rollback, fault injection and isolated-device full-state verification.
+- Two-account shared-content parity after invite and later edit/revoke, preventing empty first-sync overwrite.
+- App update notice policy: source/channel/storefront correctness, distinct successful-check time and retry, per-version snooze and non-blocking UI.
+- Strict Boolean capability switches and deterministic conformance regression coverage.
+
+### Preserved
+- Published 1.8.0 stable authority and 119 stable rules.
+- All original 134 RC3 rules and meanings, AI/Release Inspector governance and existing iPad/adaptive contracts.
+- No change to any app build, production data, CloudKit container or encryption key.
+
+### Pending
+- Exact-commit candidate CI and checksum manifest verification; cross-app runtime gates before any promotion. These requirements are not declared PASS just because code exists.
+
+
 ## 1.9.0 RC3 – 2026-09-25
 
 ### Added
