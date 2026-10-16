@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "standardVersion": "1.9.0",
   "status": "candidate",
-  "candidate": "RC3",
+  "candidate": "RC4",
   "stableAuthority": "1.8.0",
-  "proposedTag": "standard-v1.9.0-rc3",
-  "ruleCount": 134,
+  "proposedTag": "standard-v1.9.0-rc4",
+  "ruleCount": 138,
   "rules": [
     {
       "id": "STD-IDENTITY-001",
@@ -1092,6 +1092,50 @@
       "defaultVerification": "runtime",
       "title": "Production feedback loop",
       "releaseBlocking": false
+    },
+    {
+      "id": "STD-BACKUP-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPortableBackup",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Portable backup scope, integrity and secret safety",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-BACKUP-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasUserRestore",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Safe restore preflight, rollback and cross-device proof",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-SHARE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasCloudSharingOrAccessControl",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Recipient content parity and shared-lifecycle truth",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-UPDATE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAppUpdateNotice",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Non-blocking, channel-correct, version-scoped update notice",
+      "releaseBlocking": true
     }
   ]
 }

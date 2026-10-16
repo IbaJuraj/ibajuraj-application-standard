@@ -1,13 +1,13 @@
 # IbaJuraj Application Standard
 
-**Verzia:** 1.9.0 RC3  
+**Verzia:** 1.9.0 RC4  
 **Stav:** Candidate / RC  
-**Dátum vydania:** 25. septembra 2026  
+**Dátum kandidáta:** 16. októbra 2026  
 **Vlastník:** IbaJuraj  
 **Stable verejná autorita:** 1.8.0 (`standard-v1.8.0`)  
-**Candidate vetva:** `standard-1.9.0-rc3`
+**Candidate vetva:** `standard-1.9.0-rc4-data-continuity-updates`
 
-> Verzia 1.9.0 RC3 je kandidát na ďalšiu minor verziu. Stabilnou autoritou zostáva 1.8.0. RC3 zachováva všetkých 131 pravidiel RC2, konsoliduje AI pravidlá do siedmich jasných kontraktov a pridáva tri nové machine-readable pravidlá pre provider/runtime, input-output safety/regression a kontrolovanú adaptáciu. Kandidátsky katalóg má 134 pravidiel.
+> Verzia 1.9.0 RC4 je kompatibilný kandidát nad RC3. Stabilnou verejnou autoritou zostáva 1.8.0. Zachováva všetkých 134 pravidiel RC3 a pridáva štyri capability-aware kontrakty pre prenositeľné zálohy, bezpečnú obnovu, skutočný zdieľaný obsah a aktualizačné upozornenia. Kandidátsky katalóg má **138 pravidiel**; nejde o stable release.
 
 ## 1. Záväznosť
 
@@ -15,13 +15,14 @@
 
 Candidate pravidlá sa používajú na adopciu a validáciu, kým nie je príslušná minor verzia promovovaná na stable.
 
-## 2. Integrácia 1.9 RC3
+## 2. Integrácia 1.9 RC4
 
-1.9.0 RC3 má **134 pravidiel**:
+1.9.0 RC4 má **138 pravidiel**:
 - 119 pravidiel zdedených zo stabilnej 1.8.0 bez zmeny ich významu,
 - 2 pravidlá pridané v RC1: `STD-ASYNC-002` a `STD-AUTH-SOURCE-001`,
 - 10 pravidiel pridaných v RC2 pre Release Candidate Quality Gate a Intelligent Self-Audit,
-- 3 nové pravidlá RC3: `STD-AI-005`, `STD-AI-006` a `STD-AI-007`.
+- 3 pravidlá RC3: `STD-AI-005`, `STD-AI-006` a `STD-AI-007`,
+- 4 nové pravidlá RC4: `STD-BACKUP-001`, `STD-BACKUP-002`, `STD-SHARE-001`, `STD-UPDATE-001`.
 
 RC3 zároveň **nemení identitu existujúcich `STD-AI-001` až `STD-AI-004`**, ale spresňuje a konsoliduje ich význam tak, aby sa neprekrývali a aby pokrývali všeobecné AI použitie, nie iba Release Inspector.
 
@@ -200,13 +201,60 @@ Release Check môže byť PASS iba ak sú povinné deterministic/runtime gates P
 
 Schválený návrh: `Proposals/IJAS-0035-release-candidate-quality-gate-intelligent-self-audit.md`.
 
+## 7. Portable Backup, Safe Restore, Shared Content & Update Notice — RC4
+
+Tieto štyri kompatibilné kontrakty sa aplikujú **iba na deklarované schopnosti**. Existujúce `STD-DATA-*``, `STD-CLOUD-*``, `STD-BACKEND-*`` a Release Inspector pravidlá ostávajú platné. Spoločné knižnice IbaJuraj DataKit či App Update Kit sú možné referenčné implementácie, nie povinné závislosti.
+
+### STD-BACKUP-001 — Portable backup scope, integrity and secret safety — MUST
+
+Ak aplikácia umožňuje používateľovi exportovať prenositeľnú zálohu (`hasPortableBackup`):
+
+- MUSÍ určiť verziu formátu/schémy a rozsah exportu vrátane databázy, histórie, príloh, nastavení a ostatného relevantného persistovaného stavu; vynechané položky MUSIA byť označené.
+- MUSÍ zabezpečiť autentickosť a integritu celého archívu vrátane manifestu; poškodený, skrátený, nekompletný alebo nesprávne autentifikovaný export NESMIE prezentovať ako platný.
+- Ak archív obsahuje osobné, finančné alebo citlivé údaje, MUSÍ používať autentifikované šifrovanie, napríklad AES-GCM alebo ekvivalent. Nesenzitívny plaintext archív vyžaduje explicitné rizikové rozhodnutie a NESMIE predstierať šifrovanie.
+- Recovery heslo/kľúč MUSÍ byť spravovaný oddelene od exportovaného archívu. Seed frázy, API tokeny, heslá, prihlasovacie údaje, Keychain secrets a recovery kľúče sa NESMÚ neúmyselne dostať do zálohy, logov, diagnostiky ani screenshotov.
+- MUSÍ odlíšiť úspešný export a uloženie súboru od prakticky potvrdenej schopnosti obnovy.
+- MUSÍ mať relevantné jednotkové/integritné testy manifestu, chybného kľúča, úplnosti a konzistentného snapshotu. Konkrétna SQLite technológia NIE JE povinná pre iné databázy.
+
+### STD-BACKUP-002 — Safe restore preflight, rollback and cross-device proof — MUST
+
+Ak aplikácia umožňuje obnoviť používateľské dáta (`hasUserRestore`):
+
+- MUSÍ pred zásahom overiť kľúč, integritu, verziu/schémovú kompatibilitu, požadované sekcie, kapacitu a dôsledky nahradenia/zlúčenia. Nepodporovaná migrácia MUSÍ bezpečne zlyhať.
+- MUSÍ poskytnúť zrozumiteľný náhľad dopadov a explicitné potvrdenie deštruktívneho nahradenia. Merge sa smie ponúknuť iba s overenými doménovými identitami a konfliktovou politikou.
+- MUSÍ používať izolované staging a atomický/transakčný commit alebo ekvivalent; pri prerušení nesmie stratiť jedinú funkčnú kópiu dát. Checkpoint/rollback MUSÍ prežiť až do potvrdenia integrity obnovy.
+- MUSÍ identifikovať obnovovaný stav mimo databázy a úmyselne vylúčené Keychain/tajné údaje.
+- Pred tvrdením **full-state restore PASS** MUSÍ existovať praktický test na oddelenom zariadení alebo izolovanom runtime, ktorý porovná kritické identity, historické záznamy, relácie, finančné/iné invarianty a stav mimo databázy. Export PASS, import náhľad ani Xcode Unit Test samostatne tento dôkaz nenahrádzajú.
+- MUSÍ testovať chybný kľúč, corrupt/truncated archive, prerušenie obnovy, nekompletný snapshot, migráciu, opakovaný cold-start a rollback podľa použitého úložiska.
+
+### STD-SHARE-001 — Recipient content parity and shared-lifecycle truth — MUST
+
+Ak aplikácia používa cloudové zdieľanie alebo riadený prístup (`hasCloudSharingOrAccessControl`):
+
+- MUSÍ oddeliť dôkazy vytvorenia/prijatia pozvánky, členstva a roly, dostupnosti snapshotu a skutočnej **parity obsahu príjemcu**. Invitation PASS NESMIE byť hlásené ako full shared-content PASS.
+- Prázdny prvý stav príjemcu NESMIE prepísať dáta vlastníka pri oneskorenom membership/snapshote; treba download/read-first ochranu alebo ekvivalent.
+- MUSÍ pokryť následné editácie, konflikt/sync, zrušenie pozvánky/členstva, revoke oprávnení a zachovanie owner dát; potvrdená remote truth a retry podľa `STD-CLOUD-001/002` ostávajú záväzné.
+- Pred production shared-content PASS MUSÍ existovať reálny dvojúčtový/dvojzariadeniový test vrátane identít/počtov doručených položiek, následnej zmeny a revokácie.
+- Jednorazový prenos karty cez SMS/e-mail/odkaz nie je to isté ako trvalé CloudKit zdieľanie a NESMIE sa uvádzať ako jeho dôkaz.
+
+### STD-UPDATE-001 — Non-blocking, channel-correct, version-scoped update notice — MUST
+
+Ak aplikácia zobrazuje upozornenie na dostupnú aktualizáciu (`hasAppUpdateNotice`):
+
+- MUSÍ používať skutočný distribučný kanál, ID/URL a samostatný cache namespace príslušnej aplikácie (App Store, TestFlight alebo schválený súkromný provider). Súkromná aplikácia NESMIE predstierať App Store aktualizáciu.
+- MUSÍ korektne porovnať marketingové verzie a zobraziť release notes správnej aplikácie/lokality/storefrontu.
+- MUSÍ odlíšiť `lastAttempt` a `lastSuccessfulCheck`, používať úspešný TTL a primeraný kratší retry/backoff po offline/timeoute/HTTP/JSON chybe. Zlyhanie kontroly sa NESMIE zapisovať ako úspech.
+- MUSÍ perzistovať odloženie **konkrétnej verzie** a nevtieravú politiku opakovania. Nová verzia MÔŽE byť ponúknutá nezávisle; rovnaká odmietnutá verzia NESMIE vyrušovať pri každom štarte.
+- Kontrola ani upozornenie NESMÚ blokovať štart/odomknutie alebo kritický workflow. Manuálna kontrola v Nastaveniach MÁ ukázať výsledok. Bežná aktualizácia NESMIE aplikáciu zamknúť.
+- MUSÍ mať deterministické testy bez update, novej verzie, starého payloadu, sieťovej chyby, odloženia rovnakej/novej verzie a správnej URL. Kritické vynútenie aktualizácie vyžaduje nezávislý overený bezpečnostný mechanizmus.
+
 ## 7. Root-title adaptive family clarification
 
 Peer root obrazovky používajú jednu spoločnú root-title family. Výsledná veľkosť title tokenu MUSÍ vychádzať z reálne dostupnej šírky viewport-u alebo kontajnera, nie z názvu konkrétneho zariadenia. Na tom istom viewport-e MUSIA peer root titles používať rovnaký výsledný size token. Adaptácia MÁ preferovať celý názov bez `…` pomocou breakpointov, clamped veľkosti, tightening alebo primeraného scale fallbacku.
 
 Nested/system navigation headers tvoria samostatnú family. Referenčné hodnoty 28 / 30 / 32 pt v `DESIGN_TOKENS.md` sú príklad implementácie, nie cross-app povinné čísla.
 
-## 8. Zdedené 1.8 kontrakty
+## 9. Zdedené 1.8 kontrakty
 
 1.8.0 zostáva stabilnou autoritou pre localization-first architektúru, release-root hygiene, data continuity, Production backend readiness, runtime performance, async stale-callback safety, derived-state ordering, remote truth/reconciliation, corrupt-state recovery, relationship-aware deletion, upgrade-path gate, permission parity, runtime evidence, compact-surface integrity a biometrickú bezpečnostnú semantiku.
 
@@ -222,7 +270,7 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 - zámok sa NESMIE znovu aktivovať pri bežnej internej navigácii; viaže sa na skutočný lifecycle prechod aplikácie,
 - opakované biometrické dialógy počas už prebiehajúcej autentifikácie sa MUSIA blokovať.
 
-## 9. Normatívny register
+## 10. Normatívny register
 
 ### STD-IDENTITY-001 — MUST
 ### STD-IDENTITY-002 — MUST
@@ -335,6 +383,10 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-RELEASE-005 — Current release root is clean and superseded build history is archived — MUST
 ### STD-RELEASE-006 — Release Candidate Quality Gate cadence — MUST
 ### STD-RELEASE-007 — Release diff and risk-based coverage — MUST
+### STD-BACKUP-001 — Portable backup scope, integrity and secret safety — MUST
+### STD-BACKUP-002 — Safe restore preflight, rollback and cross-device proof — MUST
+### STD-SHARE-001 — Recipient content parity and shared-lifecycle truth — MUST
+### STD-UPDATE-001 — Non-blocking, channel-correct, version-scoped update notice — MUST
 ### STD-DATA-005 — Single-device Xcode ↔ TestFlight/App Store ↔ Xcode data continuity — MUST
 ### STD-BACKEND-001 — Production backend schema/index/permission/config is explicitly ready — MUST
 ### STD-BACKEND-002 — Real TestFlight/Production read/write/sync/share smoke follows app capabilities — MUST
@@ -359,9 +411,9 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-POSTRELEASE-001 — Production feedback loop — MUST
 ### STD-COMPACT-001 — Compact surfaces define content priority and destination integrity — SHOULD
 
-## 10. Machine-readable applicability
+## 11. Machine-readable applicability
 
-Candidate 1.9.0 RC3 rozširuje `CONFORMANCE_CATALOG.json` na **134 pravidiel**.
+Candidate 1.9.0 RC4 rozširuje `CONFORMANCE_CATALOG.json` na **138 pravidiel**.
 
 AI capability väzby:
 - `hasGeneratedAssistance` → základná AI rodina,
@@ -371,13 +423,19 @@ AI capability väzby:
 - `hasAdaptiveAI` / `hasAIPersonalization` → controlled adaptation scope,
 - machine-readable `ai.features[]` nesie feature ID, `riskProfile` a `execution` metadata.
 
-Ďalšia capability väzba:
-- `hasPostReleaseMonitoring` → `STD-POSTRELEASE-001`.
+Ďalšie capability väzby:
+- `hasPostReleaseMonitoring` → `STD-POSTRELEASE-001`,
+- `hasPortableBackup` → `STD-BACKUP-001`,
+- `hasUserRestore` → `STD-BACKUP-002`,
+- `hasCloudSharingOrAccessControl` → `STD-SHARE-001`,
+- `hasAppUpdateNotice` → `STD-UPDATE-001`.
+
+Nové capability flags sú booleany; neprítomná capability znamená N/A. Natívny iPad layout už pokrýva `STD-ADAPT-*` a viewport matica.
 
 Ostatné nové RC2 pravidlá sú cross-app release-quality kontrakty. Konkrétny check set je capability-aware: aplikácia netestuje subsystém, ktorý nemá, ale MUSÍ mať RC evidence pre to, čo reálne podporuje.
 
-## 11. Release stav
+## 12. Release stav
 
 `standard-v1.8.0` zostáva stabilná verejná autorita.
 
-`standard-1.9.0-rc3` je candidate vetva na implementáciu, audit a cross-app validáciu. Promotion na stable 1.9.0 vyžaduje validný 134-rule katalóg, pilotnú adopciu Release Inspector gate, praktickú validáciu konsolidovaných AI kontraktov vrátane on-device/cloud a controlled-adaptation scenárov a cross-app applicability/runtime evidence.
+`standard-1.9.0-rc4-data-continuity-updates` je kandidátska vetva nad RC3. Promotion na stable 1.9.0 vyžaduje validný **138-rule katalóg**, pilotné Release Inspector a AI dôkazy z RC3 aj nové cross-device backup/restore/share/update dôkazy z RC4. Stable 1.8.0 ostáva nezmenená.

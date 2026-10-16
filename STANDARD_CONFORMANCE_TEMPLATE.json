@@ -1,7 +1,7 @@
 {
   "$schema": "./STANDARD_CONFORMANCE.schema.json",
   "standardVersion": "1.9.0",
-  "standardCandidate": "RC3",
+  "standardCandidate": "RC4",
   "app": {
     "name": "<App Name>",
     "productId": "<product-id>"
@@ -50,7 +50,10 @@
     "hasCloudAI": false,
     "hasAITools": false,
     "hasAdaptiveAI": false,
-    "hasAIPersonalization": false
+    "hasAIPersonalization": false,
+    "hasPortableBackup": false,
+    "hasUserRestore": false,
+    "hasAppUpdateNotice": false
   },
   "supportedLocalizations": [
     "sk"
@@ -104,6 +107,26 @@
           "RELEASE_INSPECTOR_REPORT.md"
         ]
       }
+    },
+    "STD-BACKUP-001": {
+      "mode": "unit",
+      "status": "pending",
+      "test": "BackupContractTests/testPortableArchiveIntegrity"
+    },
+    "STD-BACKUP-002": {
+      "mode": "runtime",
+      "status": "pending",
+      "runtimeGate": "RUNTIME_ACCEPTANCE.md#restore-and-rollback"
+    },
+    "STD-SHARE-001": {
+      "mode": "runtime",
+      "status": "pending",
+      "runtimeGate": "RUNTIME_ACCEPTANCE.md#recipient-content-parity"
+    },
+    "STD-UPDATE-001": {
+      "mode": "unit",
+      "status": "pending",
+      "test": "AppUpdateServiceTests/testVersionSnoozeAndFailureRetry"
     }
   },
   "runtimeAcceptanceFile": "RUNTIME_ACCEPTANCE.md",

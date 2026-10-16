@@ -16,7 +16,7 @@
       "const": "1.9.0"
     },
     "standardCandidate": {
-      "const": "RC3"
+      "const": "RC4"
     },
     "app": {
       "type": "object",
@@ -26,7 +26,18 @@
       ]
     },
     "capabilities": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "hasPortableBackup": {
+          "type": "boolean"
+        },
+        "hasUserRestore": {
+          "type": "boolean"
+        },
+        "hasAppUpdateNotice": {
+          "type": "boolean"
+        }
+      }
     },
     "supportedLocalizations": {
       "type": "array",
