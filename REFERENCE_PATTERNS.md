@@ -159,3 +159,7 @@ Release Candidate
 ```
 
 The internal diagnostics surface should expose a single **Full App Check** action and a drill-down list of structured findings. Shared core checks may be reused across apps; product-specific checks live in app modules. AI findings show reason/evidence/confidence and never silently change production state.
+
+## 12. RC4 executed evidence — distinct from declarations
+
+Older examples above with `implemented` and `test`/`runtimeGate` are **only declarations** for 1.9.0 RC4, not standalone PASS evidence. Each implemented unit/UI/runtime rule and each passed screen family requires a matching `executionEvidence.file` record with exact build/source/phase, runner, timestamp, primary artifact and verified SHA256. See [EXECUTION_EVIDENCE_CONTRACT.md](EXECUTION_EVIDENCE_CONTRACT.md). Normal development checks use `--phase development`; a nominated production release must run `--phase release-candidate`.
