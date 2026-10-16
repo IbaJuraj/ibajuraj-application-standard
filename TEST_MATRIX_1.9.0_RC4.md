@@ -44,3 +44,16 @@ Existing RC3 Release Inspector and AI tests remain applicable. New obligations a
 - [ ] Compatibility mode app is not falsely labeled fully native.
 
 Evidence separation: Static PASS != Xcode Build/Test PASS != recovery/sharing runtime PASS. Whole-app audit only for nominated release candidates per `STD-RELEASE-006`.
+
+## Consolidated applicability and executed-evidence tests
+
+- [ ] All **138 rule IDs** remain unique; all have nonempty descriptive title and valid recursive capability/phase conditions.
+- [ ] `STD-LOC-005` N/A without in-app selector even if localized; `STD-SHARE-001` N/A with access-only CloudKit but mandatory for persistent recipient-shared content.
+- [ ] Persistent shared content requires `hasCloudSharingOrAccessControl=true`.
+- [ ] `STD-AUTH-SOURCE-001`: offline cited legal/normative data distinct from time-stamped live source/stale fallback.
+- [ ] `--phase development` excludes release-only checks, while `--phase release-candidate` requires them and `--phase post-release` checks monitoring when applicable.
+- [ ] An implemented rule with only a test name/link, no executed evidence = PENDING (exit 2 for release blockers), not PASS.
+- [ ] Explicit failing run, mismatched app version/build/sourceRevision/phase, missing runner/date/device, missing artifact, escaped path, or SHA256 mismatch = FAIL (exit 1).
+- [ ] Screen family pass requires an executed UI check result, otherwise PENDING; fixture outputs distinguish synthetic from true native runtime.
+- [ ] Final `SHA256SUMS.txt` covers every file except itself, and GitHub CI passes on the exact reviewed commit.
+See [EXECUTION_EVIDENCE_CONTRACT.md](EXECUTION_EVIDENCE_CONTRACT.md); a SHA256-matching self-asserted log alone does not prove physical runtime behavior.

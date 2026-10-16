@@ -9,3 +9,12 @@ Candidate status only; no automatic app code changes, data migrations, build inc
 5. **Kalkulačka 2v1:** update notice only if feature enabled; existing Voice permission/feature parity remains under stable `STD-PERM-001`.
 6. Cross-app security/dependency and exact-build conformance audit before extraction to an optional `IbaJuraj DataKit` or `App Update Kit`. Keep key material, CloudKit containers, sync identities, and domain-specific merge policies per app.
 7. Promote neither RC4 nor shared utilities to stable before nominated release-quality evidence. Minimize app build churn: fix via grouped logical builds/revisions.
+
+## Implementation sequence after Standard-only consolidation
+
+1. Finish candidate documentation, validation and exact-head GitHub CI **before** changing any application.
+2. Validate central Compliance Gate using Kalkulačka v1.15.0 Build 64 source as an adoption pilot; evidence still needs real executed native tests where applicable.
+3. Integrate pin/build/source/evidence reports in logically grouped tool updates for Lex Drive, Strážca Termínov, Peňaženka Kariet and TradeBook, preserving their existing baseline and production data.
+4. Keep backup restore on iPad and two-account cloud content parity as separate live runtime acceptance tasks, not as automatic results of Standard CI.
+5. Release audit applies to nominated app release candidates; avoid separate application builds for every small requirement.
+6. Stable Standard 1.8.0 remains current public authority until independent approval and promotion of 1.9.0.
