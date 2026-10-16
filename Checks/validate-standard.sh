@@ -60,3 +60,4 @@ else:
     print(f"PASS – Standard {meta.get('version')} stable metadata and required files")
 PY_INNER
 python3 Checks/validate-conformance-catalog.py
+python3 Checks/verify-checksums.py
