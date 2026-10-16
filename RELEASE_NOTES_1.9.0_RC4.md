@@ -21,3 +21,11 @@ Native iPad/adaptive layout was already specified; this candidate does not force
 ## Promotion prerequisites
 
 Candidate/static validation; independent app native/runtime proof; correct handling of financial/history/off-DB data, invite/content truth, and provider update failure/snooze. No stable tag, version or app build change is implied.
+
+## RC4 consolidation — scope refinement only
+
+All **138 rule IDs** remain stable; no arbitrary removals or new RC numbering. The refinements clarify seven ambiguous/overbroad areas: phase-specific Release Inspector, external-allowed developer diagnostics, optional own language selector, live-vs-normative authoritative sources, persistent content-vs-access sharing, non-blocking post-release feedback, and exact-build verified test evidence.
+
+Legacy catalog titles are now machine-readable summaries, **not a rewrite of inherited normative clauses**. The template exposes missing applicability flags. Central CI PASS is distinct from runtime adoption PASS in TradeBook, Lex Drive, Strážca, Peňaženka and Kalkulačka.
+
+Stable 1.8.0 and existing App Store binaries remain unchanged.

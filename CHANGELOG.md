@@ -2,6 +2,19 @@
 
 ## 1.9.0 RC4 – 2026-10-16 (candidate)
 
+### RC4 consolidation — 2026-10-16 (prior to app adoption)
+
+- **No rule IDs removed**, stable authority 1.8.0 unchanged, candidate count 138.
+- 90 inherited rules gained descriptive, non-normative human-readable titles.
+- Scoped seven Release Candidate gate rules to `release-candidate`, and `STD-POSTRELEASE-001` to `post-release`.
+- External developer/CI equivalent is acceptable under `STD-DIAG-001`, without a production diagnostic UI.
+- `STD-LOC-005` requires an actual own language selector, `STD-SHARE-001` persistent shared content.
+- `STD-AUTH-SOURCE-001` distinguishes offline norm/legal citations from live sourced data freshness/staleness.
+- Template corrected for previously missing `hasAuthoritativeFunctionalSources` and `hasRemoteInviteShareAccessFlow` and new feature flags.
+- Executed evidence contract separates real PASS from declared `test`/Markdown path; exact build/source/phase, runner/date and artifact hash verified. Missing = PENDING; mismatched/failed = FAIL.
+- Phase and evidence negative regression tests added. No app code, database, CloudKit container or user backup changed.
+
+
 ### Added
 - Four capability-scoped cross-app rules: `STD-BACKUP-001/002`, `STD-SHARE-001` and `STD-UPDATE-001`; RC3 134 → RC4 **138 candidate rules**.
 - Portable backup scope, completeness, authenticated integrity/encryption and independent recovery material.

@@ -16,3 +16,15 @@
 **Initial pilots:** TradeBook 269 R8 cross-device backup/restore on iPad (still runtime pending); Strážca 134 recipient content parity after accepted invite (still pending); Peňaženka 92 shared-wallet two-account lifecycle (still pending); store apps update service checks before later release builds.
 
 No RC4 rule or proposal is already a production feature merely because it is documented here.
+
+## Consolidation addendum — before adopting candidate
+
+1. **Do not silently repin existing apps.** Stable 1.8.0 and RC3 app evidence remain tied to their actual catalog. 1.9.0 RC4 is a separate candidate with 138 IDs preserved.
+2. Explicitly declare `hasInAppLanguageSelector` only for a custom in-app picker, `hasPersistentSharedContent` only for durable recipient-shared records, `hasAuthoritativeFunctionalSources` for functional normative references, and `hasRemoteInviteShareAccessFlow` for networked invitation flows. Persistent content requires cloud sharing/access control capability.
+3. Versioned legal/normative citations remain verifiable offline. Dynamic external/API data preserve identity, retrieval time, freshness/stale state; never claim stale cached data is live.
+4. A safe developer-only external CI Full App Check is an alternative to a diagnostic view embedded in the app (`STD-DIAG-001`).
+5. Run `--phase development` for ordinary work; **explicit `--phase release-candidate` is mandatory in nominated release workflows**; `--phase post-release` is for enabled production feedback.
+6. Add exact app `version`, `build`, 40-hex commit or 64-hex source-tree revision and `executionEvidence.file` in `STANDARD_CONFORMANCE.json`. Use real executed result metadata and hashed primary logs/artifacts per [EXECUTION_EVIDENCE_CONTRACT.md](EXECUTION_EVIDENCE_CONTRACT.md).
+7. Record missing execution as PENDING, failure/mismatched build or tampered file as FAIL. Manual device proof is still required for cross-device backup/CloudKit acceptance; no synthetic test fixture is a runtime PASS.
+8. Post-release monitoring MUST is not a pre-release blocker; it becomes applicable after release.
+9. No automatic user-data migration, app build increment, version switch or secret copying occurs from Standard candidate adoption.
