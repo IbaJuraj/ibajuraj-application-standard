@@ -47,6 +47,7 @@ class ValidatorTests(unittest.TestCase):
             'hasOnboarding':False,'hasStateSurfaces':False,'hasProductionBackend':False,'hasRepresentativeUserData':False,
             'hasAsyncDerivedState':False,'hasDerivedState':False,'hasRemoteDestructiveOrAccessMutations':False,
             'hasCloudSharingOrAccessControl':False,'hasRemoteInviteShareAccessFlow':False,
+            'hasPortableBackup':False,'hasUserRestore':False,'hasAppUpdateNotice':False,
             'hasRelationshipBearingDeletion':False,'hasMaterialDeterministicEngine':False,
             'hasFeatureFlaggedPermissionedCapability':False,'hasCompactSurfaces':False
         }
@@ -230,5 +231,52 @@ class ValidatorTests(unittest.TestCase):
         td,r=self.make_app({'hasLocalization':True},localization=True)
         try: self.assertEqual(self.runv(r).returncode,0)
         finally: td.cleanup()
+
+
+    def test_rc4_rules_are_non_applicable_when_capabilities_are_disabled(self):
+        td,r=self.make_app()
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            for rid in ('STD-BACKUP-001','STD-BACKUP-002','STD-SHARE-001','STD-UPDATE-001'):
+                self.assertNotIn(rid,m['rules'])
+            self.assertEqual(self.runv(r).returncode,0)
+        finally: td.cleanup()
+
+    def test_rc4_capabilities_require_their_specific_rule(self):
+        for flag,rid in (
+            ('hasPortableBackup','STD-BACKUP-001'),
+            ('hasUserRestore','STD-BACKUP-002'),
+            ('hasCloudSharingOrAccessControl','STD-SHARE-001'),
+            ('hasAppUpdateNotice','STD-UPDATE-001'),
+        ):
+            with self.subTest(capability=flag,rule=rid):
+                td,r=self.make_app({flag:True},omit=rid)
+                try:
+                    p=self.runv(r)
+                    self.assertEqual(p.returncode,1,p.stdout)
+                    self.assertIn(rid+' missing conformance entry',p.stdout)
+                finally: td.cleanup()
+
+    def test_rc4_restore_is_independent_of_export(self):
+        td,r=self.make_app({'hasUserRestore':True,'hasPortableBackup':False})
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            self.assertIn('STD-BACKUP-002',m['rules'])
+            self.assertNotIn('STD-BACKUP-001',m['rules'])
+            self.assertEqual(self.runv(r).returncode,0)
+        finally: td.cleanup()
+
+    def test_rc4_new_capability_flags_reject_non_boolean_values(self):
+        for flag in ('hasPortableBackup','hasUserRestore','hasAppUpdateNotice'):
+            with self.subTest(capability=flag):
+                td,r=self.make_app()
+                try:
+                    m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+                    m['capabilities'][flag]='false'
+                    (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+                    p=self.runv(r)
+                    self.assertEqual(p.returncode,1,p.stdout)
+                    self.assertIn(flag+' must be a boolean',p.stdout)
+                finally: td.cleanup()
 
 if __name__=='__main__': unittest.main()

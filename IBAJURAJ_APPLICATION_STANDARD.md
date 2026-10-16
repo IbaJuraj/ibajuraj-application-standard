@@ -248,7 +248,7 @@ Ak aplikácia zobrazuje upozornenie na dostupnú aktualizáciu (`hasAppUpdateNot
 - Kontrola ani upozornenie NESMÚ blokovať štart/odomknutie alebo kritický workflow. Manuálna kontrola v Nastaveniach MÁ ukázať výsledok. Bežná aktualizácia NESMIE aplikáciu zamknúť.
 - MUSÍ mať deterministické testy bez update, novej verzie, starého payloadu, sieťovej chyby, odloženia rovnakej/novej verzie a správnej URL. Kritické vynútenie aktualizácie vyžaduje nezávislý overený bezpečnostný mechanizmus.
 
-## 7. Root-title adaptive family clarification
+## 8. Root-title adaptive family clarification
 
 Peer root obrazovky používajú jednu spoločnú root-title family. Výsledná veľkosť title tokenu MUSÍ vychádzať z reálne dostupnej šírky viewport-u alebo kontajnera, nie z názvu konkrétneho zariadenia. Na tom istom viewport-e MUSIA peer root titles používať rovnaký výsledný size token. Adaptácia MÁ preferovať celý názov bez `…` pomocou breakpointov, clamped veľkosti, tightening alebo primeraného scale fallbacku.
 

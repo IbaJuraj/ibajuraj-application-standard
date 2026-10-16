@@ -48,6 +48,10 @@ def main():
     sv=app/'STANDARD_VERSION'
     if sv.exists() and sv.read_text().strip()!=cat.get('standardVersion'): errors.append('STD-CONF-001 STANDARD_VERSION pin mismatch')
     caps=m.get('capabilities',{}); entries=m.get('rules',{}); exceptions=m.get('exceptions',{})
+    # RC4 capability switches must be real booleans, never truthy strings.
+    for flag in ('hasPortableBackup','hasUserRestore','hasAppUpdateNotice'):
+        if flag in caps and type(caps[flag]) is not bool:
+            errors.append(f'STD-CONF-001 {flag} must be a boolean')
     ai=m.get('ai',{}); features=ai.get('features',[]) if isinstance(ai,dict) else []
     ai_declared=any(bool(caps.get(k)) for k in AI_CAPS)
     if ai_declared and not features: errors.append('STD-AI-002 AI capability declared but ai.features is empty or missing')
