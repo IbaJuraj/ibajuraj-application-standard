@@ -70,8 +70,7 @@
     "requiredKeys": []
   },
   "projectMetadata": {
-    "projectFile": null,
-    "releasePhase": "release-candidate"
+    "projectFile": null
   },
   "rules": {
     "STD-CONF-001": {

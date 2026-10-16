@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import argparse, json, re, sys
+from evidence_contract import load_execution_report, check_execution_result
 ALLOWED_MODES={'static','unit','ui','runtime','exception'}
 AI_PROFILES={'advisory','derived','action-capable','adaptive'}
 AI_EXECUTION={'on-device','cloud','hybrid'}
@@ -14,17 +15,18 @@ SCREEN_REQUIREMENTS={
     'hasStateSurfaces':['SCREEN-STATES'], 'hasBottomNavigation':['SCREEN-BOTTOM-NAV'],
 }
 def load(path): return json.loads(Path(path).read_text(encoding='utf-8'))
-def condition_applies(cond,caps):
+def condition_applies(cond,caps,phase):
     if cond=='always': return True
     if isinstance(cond,dict):
-        if 'anyOf' in cond: return any(condition_applies(x,caps) for x in cond['anyOf'])
-        if 'allOf' in cond: return all(condition_applies(x,caps) for x in cond['allOf'])
+        if 'anyOf' in cond: return any(condition_applies(x,caps,phase) for x in cond['anyOf'])
+        if 'allOf' in cond: return all(condition_applies(x,caps,phase) for x in cond['allOf'])
+        if 'phase' in cond: return phase == cond['phase']
         if 'capability' in cond: return caps.get(cond['capability']) == cond.get('equals')
         if 'anyCapability' in cond: return any(bool(caps.get(k)) for k in cond['anyCapability'])
         if 'allCapabilities' in cond: return all(bool(caps.get(k)) for k in cond['allCapabilities'])
         if 'bottomNavigationMode' in cond: return caps.get('bottomNavigationMode','none') == cond['bottomNavigationMode']
     return False
-def applicable(rule,caps): return condition_applies(rule.get('appliesWhen','always'),caps)
+def applicable(rule,caps,phase): return condition_applies(rule.get('appliesWhen','always'),caps,phase)
 def read_text(p):
     try: return p.read_text(encoding='utf-8')
     except UnicodeDecodeError: return ''
@@ -35,7 +37,7 @@ def screen_requirements(caps):
         if caps.get(cap): req.update(fams)
     return sorted(req)
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--app-root',required=True); ap.add_argument('--standard-root',required=True); args=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--app-root',required=True); ap.add_argument('--standard-root',required=True); ap.add_argument('--phase',choices=['development','release-candidate','post-release'],default='release-candidate'); args=ap.parse_args()
     app=Path(args.app_root).resolve(); std=Path(args.standard_root).resolve(); errors=[]; warnings=[]
     mp=app/'STANDARD_CONFORMANCE.json'
     if not mp.is_file(): print('FAIL STD-CONF-001 – missing STANDARD_CONFORMANCE.json'); return 1
@@ -48,10 +50,18 @@ def main():
     sv=app/'STANDARD_VERSION'
     if sv.exists() and sv.read_text().strip()!=cat.get('standardVersion'): errors.append('STD-CONF-001 STANDARD_VERSION pin mismatch')
     caps=m.get('capabilities',{}); entries=m.get('rules',{}); exceptions=m.get('exceptions',{})
-    # RC4 capability switches must be real booleans, never truthy strings.
-    for flag in ('hasPortableBackup','hasUserRestore','hasAppUpdateNotice'):
-        if flag in caps and type(caps[flag]) is not bool:
+    # All declared feature switches must be bools: string "false" is truthy.
+    known = set(json.loads((std/'STANDARD_CONFORMANCE_TEMPLATE.json').read_text(encoding='utf-8'))['capabilities'])
+    for flag, value in caps.items():
+        if flag not in known: warnings.append(f'STD-CONF-001 unknown capability {flag}')
+        elif flag == 'bottomNavigationMode':
+            if value not in ('native', 'custom', 'none'):
+                errors.append('STD-NAV-001 invalid bottomNavigationMode')
+        elif type(value) is not bool:
             errors.append(f'STD-CONF-001 {flag} must be a boolean')
+    if caps.get('hasPersistentSharedContent') and not caps.get('hasCloudSharingOrAccessControl'):
+        errors.append('STD-SHARE-001 hasPersistentSharedContent requires hasCloudSharingOrAccessControl=true')
+    execution_report = load_execution_report(app,m,cat,args.phase,errors)
     ai=m.get('ai',{}); features=ai.get('features',[]) if isinstance(ai,dict) else []
     ai_declared=any(bool(caps.get(k)) for k in AI_CAPS)
     if ai_declared and not features: errors.append('STD-AI-002 AI capability declared but ai.features is empty or missing')
@@ -73,7 +83,7 @@ def main():
     if any(isinstance(x,dict) and x.get('riskProfile')=='action-capable' for x in features) and not caps.get('hasAITools'): errors.append('STD-AI-003 action-capable AI feature requires hasAITools=true')
     if any(isinstance(x,dict) and x.get('riskProfile')=='adaptive' for x in features) and not caps.get('hasAdaptiveAI'): errors.append('STD-AI-007 adaptive AI feature requires hasAdaptiveAI=true')
     if any(isinstance(x,dict) and x.get('personalization') is True for x in features) and not caps.get('hasAIPersonalization'): errors.append('STD-AI-007 personalized AI feature requires hasAIPersonalization=true')
-    ars=[r for r in cat.get('rules',[]) if r.get('level') in ('MUST','MUST NOT') and applicable(r,caps)]
+    ars=[r for r in cat.get('rules',[]) if r.get('level') in ('MUST','MUST NOT') and applicable(r,caps,args.phase)]
     passed=exc=pending=0
     for r in ars:
         rid=r['id']; e=entries.get(rid)
@@ -86,7 +96,7 @@ def main():
             if not adr or not (app/adr).is_file(): errors.append(f'{rid} exception missing existing ADR')
             else: exc+=1
             continue
-        if status=='pending': warnings.append(f'{rid} pending'); pending += int(r.get('releaseBlocking',True)); continue
+        if status=='pending': warnings.append(f'{rid} pending'); pending += int(r.get('releaseBlocking',True) or args.phase=='post-release'); continue
         if mode=='static':
             ev=e.get('evidence',{}); files=ev.get('files',[])
             if not files: errors.append(f'{rid} static evidence has no files'); continue
@@ -101,16 +111,19 @@ def main():
             for t in ev.get('notContains',[]):
                 if t in joined: errors.append(f'{rid} forbidden token found: {t}'); ok=False
             if ok: passed+=1
-        elif mode in {'unit','ui'}:
-            if not e.get('test'): errors.append(f'{rid} {mode} evidence missing test')
-            else: passed+=1
-        elif mode=='runtime':
-            gate=e.get('runtimeGate')
-            if not gate: errors.append(f'{rid} runtime evidence missing runtimeGate')
-            else:
-                f=gate.split('#',1)[0]
-                if f and not (app/f).is_file(): errors.append(f'{rid} runtime gate file missing: {f}')
-                else: passed+=1
+        elif mode in {'unit','ui','runtime'}:
+            check = e.get('runtimeGate') if mode == 'runtime' else e.get('test')
+            if not isinstance(check, str) or not check.strip():
+                errors.append(f'{rid} {mode} evidence missing test/runtimeGate')
+                continue
+            if mode == 'runtime':
+                f = check.split('#',1)[0]
+                if f and not (app/f).is_file():
+                    errors.append(f'{rid} runtime gate file missing: {f}')
+                    continue
+            verified = check_execution_result(app,execution_report,rid,mode,check,errors,warnings)
+            if verified: passed += 1
+            else: pending += int(r.get('releaseBlocking',True) or args.phase=='post-release')
     screen=m.get('screenAudit',{}).get('families',{})
     required=screen_requirements(caps); screen_pending=0
     for fam in required:
@@ -126,11 +139,14 @@ def main():
             if not adr or not (app/adr).is_file(): errors.append(f'STD-SCREEN-002 {fam} exception missing existing ADR')
         elif state=='pass':
             ev=entry.get('evidence',[])
-            if not ev: errors.append(f'STD-SCREEN-003 {fam} pass has no evidence')
-            else:
-                for item in ev:
-                    f=item.split('#',1)[0]
-                    if f and not (app/f).is_file(): errors.append(f'STD-SCREEN-003 {fam} evidence file missing: {f}')
+            if not ev:
+                errors.append(f'STD-SCREEN-003 {fam} pass has no evidence')
+                continue
+            for item in ev:
+                f=item.split('#',1)[0]
+                if f and not (app/f).is_file(): errors.append(f'STD-SCREEN-003 {fam} evidence file missing: {f}')
+            if not check_execution_result(app,execution_report,fam,'ui',ev[0],errors,warnings):
+                screen_pending += 1
     loc=m.get('localization',{}); lfiles=loc.get('files',[])
     if lfiles:
         ks=[]
@@ -152,9 +168,9 @@ def main():
     if not caps.get('hasBottomNavigation') and mode!='none': errors.append('STD-NAV-001 bottomNavigationMode must be none')
     label=f"IbaJuraj Standard {cat.get('standardVersion')} {cat.get('candidate') or ''}".strip()
     if errors:
-        print(f'FAIL – {label} app conformance'); [print(' -',x) for x in errors]; [print(' !',x) for x in warnings]
+        print(f'FAIL – {label} phase={args.phase} app conformance'); [print(' -',x) for x in errors]; [print(' !',x) for x in warnings]
         print(f'applicable MUST: {len(ars)} / pass-like: {passed} / exceptions: {exc} / rule pending: {pending} / screen pending: {screen_pending}'); return 1
-    print(f'PASS – {label} app conformance declaration/evidence'); [print(' !',x) for x in warnings]
+    print(f'PASS – {label} phase={args.phase} app conformance declaration/evidence'); [print(' !',x) for x in warnings]
     print(f'applicable MUST: {len(ars)} / evidence PASS: {passed} / exceptions: {exc} / release-blocking rule pending: {pending} / screen pending: {screen_pending}')
     if pending or screen_pending: print('NOT RELEASE-READY – release-blocking gates pending'); return 2
     return 0

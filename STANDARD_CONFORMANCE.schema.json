@@ -35,7 +35,7 @@
         },
         "sourceRevision": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^([a-fA-F0-9]{40}|[a-fA-F0-9]{64})$"
         }
       }
     },
@@ -76,15 +76,7 @@
     },
     "projectMetadata": {
       "type": "object",
-      "properties": {
-        "releasePhase": {
-          "enum": [
-            "development",
-            "release-candidate",
-            "post-release"
-          ]
-        }
-      }
+      "properties": {}
     },
     "rules": {
       "type": "object"
