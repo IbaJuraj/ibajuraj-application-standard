@@ -11,7 +11,7 @@
 
 ## 1. Záväznosť
 
-`MUST`/`MUST NOT` blokuje release bez platnej ADR výnimky. `SHOULD` vyžaduje zdôvodnenie. Static PASS nenahrádza runtime PASS.
+Pravidlá `MUST`/`MUST NOT` sú povinné iba vtedy, keď sú **aplikovateľné na deklarované funkcie a fázu kontroly**. Neuzavretá release-blocking povinnosť blokuje príslušný Release Candidate bez platnej ADR výnimky. `SHOULD` vyžaduje zdôvodnenie, nie automatické blokovanie. Neaplikovateľné pravidlá sú N/A. Rozlišujú sa kontrolné fázy `development`, `release-candidate`, `post-release`; spätnokompatibilné CLI bez `--phase` volí konzervatívne `release-candidate`. Vydávací workflow MUSÍ spustiť `--phase release-candidate` explicitne, a nie vývojový režim. Žiadne označenie `implemented`, cesta k testu alebo existujúci textový súbor samy osebe nedokazujú test PASS.
 
 Candidate pravidlá sa používajú na adopciu a validáciu, kým nie je príslušná minor verzia promovovaná na stable.
 
@@ -55,16 +55,19 @@ Schválený návrh: `Proposals/IJAS-0034-async-remote-invite-responsiveness.md`.
 
 ## 4. Authoritative source contract
 
-### STD-AUTH-SOURCE-001 — Authoritative functional source is available offline and externally traceable — MUST
+### STD-AUTH-SOURCE-001 — Authoritative functional source is verifiable with appropriate offline/freshness contract — MUST
 
-Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku:
+Ak aplikácia používa právny, regulačný alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku, MUSÍ rozlíšiť dve triedy podkladov:
 
-- MUSÍ lokálne sprístupniť použitú reprezentáciu zdroja bez závislosti od internetového pripojenia,
+- **Verzované normatívne alebo referenčné podklady** (napr. použité ustanovenie zákona): použité znenie/citácia MUSÍ byť lokálne/offline dostupné spolu s verziou či časovou účinnosťou, aby výsledok zostal preskúmateľný bez internetu.
+- **Živé externé dáta** (napr. cena, online stav API, trhová správa): aktuálne dáta sa NEMUSIA deklarovať ako offline aktuálne. MUSÍ byť uvedený zdroj, čas získania, dostupná časová identita/freshness, prípadne uložený použitý snapshot; pri výpadku sa údaje označia ako nedostupné/zastarané a NESMÚ predstierať živý overený stav.
+
+Spoločné požiadavky pre obidve triedy:
 - MUSÍ jasne identifikovať zdroj a konkrétnu použitú časovú/verznú identitu,
 - MUSÍ pri právnom alebo obdobne normatívnom obsahu sprístupniť presnú citáciu alebo doslovné znenie ustanovenia, z ktorého výsledok vychádza,
 - MUSÍ uviesť účinnosť alebo verziu použitú pri výsledku, ak sa zdroj v čase mení,
 - MUSÍ uchovať alebo sprístupniť dátum/verifikačnú stopu overenia, ak aplikácia používa verifikovaný obsah,
-- externý oficiálny zdroj MÔŽE byť dostupný ako doplnkový odkaz, ale NESMIE byť jediným spôsobom zobrazenia autoritatívneho podkladu,
+- pri statickom/normatívnom podklade externý oficiálny odkaz MÔŽE byť doplnkový, ale NESMIE byť jediným spôsobom zobrazenia použitého ustanovenia; pri dynamickom externom podklade MUSÍ byť zachovaná identita zdroja a dostupná overiteľná stopa použitého vstupu,
 - používateľský názov, skrátený opis alebo praktické vysvetlenie NESMIE nahradiť identifikáciu autoritatívneho podkladu.
 
 Konkrétna informačná hierarchia, názvy právnych rolí a vizuálna navigácia zostávajú produktové. Referenčným príkladom je Lex Drive Build 232, kde právny reťazec priestupku musí zostať dohľadateľný na presnú lokálnu/offline citáciu aj bez prístupu na Slov-Lex.
@@ -167,8 +170,8 @@ Tieto polia nehovoria, že deterministický fallback je AI; práve naopak, umož
 ### STD-RELEASE-006 — Release Candidate Quality Gate cadence — MUST
 Kompletný whole-app release audit MUSÍ prebehnúť na builde explicitne nominovanom na App Store/store/produkčné odoslanie. Bežné vývojové buildy nepotrebujú celý release audit; postačuje Build/Test a cielená regresia zmenených alebo rizikových oblastí. Materiálna zmena po uzavretí RC gate zneplatňuje release evidence predchádzajúceho buildu a nový RC MUSÍ gate zopakovať.
 
-### STD-DIAG-001 — Internal Full App Check — MUST
-Každá aplikácia MUSÍ mať interný/developer-only Full App Check spustiteľný na presnom RC builde. Kontrola MUSÍ byť nedestruktívna voči reálnym používateľským dátam a podľa applicability preveriť inicializáciu, persisted-data integrity, migrácie, navigation/destination registry, lokalizačnú integritu, výpočty/business rules, sync/API, deep links a cache/configuration. Write-path testy používajú izolované alebo syntetické fixtures, prípadne reverzibilný testovací kontext. Diagnostický vstup NESMIE byť bežnou produkčnou používateľskou funkciou, pokiaľ produkt výslovne neponúka bezpečnú diagnostiku.
+### STD-DIAG-001 — Developer-only Full App Check or equivalent CI diagnostic — MUST
+Každá aplikácia MUSÍ mať pre presný RC build vykonateľný Full App Check, buď ako internú vývojársku diagnostiku, alebo ako ekvivalentný **externý/CI diagnostický proces** s rovnakou kontrolnou pokryvnosťou a dôkazmi. Samostatné diagnostické UI v produkčnej aplikácii NIE JE povinné. Kontrola MUSÍ byť nedestruktívna voči reálnym používateľským dátam a podľa applicability preveriť inicializáciu, persisted-data integrity, migrácie, navigation/destination registry, lokalizačnú integritu, výpočty/business rules, sync/API, deep links a cache/configuration. Write-path testy používajú izolované alebo syntetické fixtures, prípadne reverzibilný testovací kontext. Diagnostický vstup NESMIE byť bežnou produkčnou používateľskou funkciou, pokiaľ produkt výslovne neponúka bezpečnú diagnostiku.
 
 ### STD-DIAG-002 — Structured diagnostic findings and severity — MUST
 Každý nález MUSÍ mať stabilné ID, dotknutý komponent, očakávaný a pozorovaný stav, dôkaz alebo reprodukčný kontext, vysvetlenie a severity: **BLOCKER / ERROR / WARNING / INFO**. BLOCKER a ERROR blokujú release bez platnej výnimky/ADR. WARNING vyžaduje review. INFO je neblokujúce. Known exceptions MUSIA zostať explicitné a dohľadateľné.
@@ -188,8 +191,8 @@ Ak je v RC gate zapnuté `hasAIReleaseReview`, platia všeobecné AI kontrakty `
 ### STD-EVIDENCE-002 — RC Evidence Bundle and release baseline — MUST
 Každý RC gate MUSÍ vytvoriť exportovateľný Evidence Bundle naviazaný na presnú app version/build a Standard candidate. Bundle obsahuje najmenej súhrn kontrol, findings, exceptions, release diff/risk scope, runtime/UI evidence a AI review summary, ak bola AI použitá. Build reálne publikovaný do produkcie/App Store sa stáva ďalším release baseline.
 
-### STD-POSTRELEASE-001 — Production feedback loop — MUST
-Ak aplikácia podporuje post-release monitoring, privacy-respecting crash/error/performance signály MUSIA byť po release vyhodnotené a významné regresie MUSIA vstúpiť do ďalšieho release baseline a test scope.
+### STD-POSTRELEASE-001 — Production feedback loop — MUST (post-release, non-blocking pre-release)
+Ak aplikácia podporuje post-release monitoring, privacy-respecting crash/error/performance signály MUSIA byť **po produkčnom vydaní** vyhodnotené a významné regresie MUSIA vstúpiť do ďalšieho release baseline a test scope. Toto pravidlo je záväzné v režime `post-release`, no nie je blokujúcim predpokladom na vydanie budúceho RC. Nejde o výnimku z bezpečnosti ani o ospravedlnenie nevyšetrených produkčných regresií.
 
 ### Release Inspector modes
 - **Development Check** — Build/Test + cielené kontroly; bez povinného celého auditu po každom malom builde.
@@ -203,7 +206,7 @@ Schválený návrh: `Proposals/IJAS-0035-release-candidate-quality-gate-intellig
 
 ## 7. Portable Backup, Safe Restore, Shared Content & Update Notice — RC4
 
-Tieto štyri kompatibilné kontrakty sa aplikujú **iba na deklarované schopnosti**. Existujúce `STD-DATA-*``, `STD-CLOUD-*``, `STD-BACKEND-*`` a Release Inspector pravidlá ostávajú platné. Spoločné knižnice IbaJuraj DataKit či App Update Kit sú možné referenčné implementácie, nie povinné závislosti.
+Tieto štyri kompatibilné kontrakty sa aplikujú **iba na deklarované schopnosti**. Existujúce `STD-DATA-*`, `STD-CLOUD-*`, `STD-BACKEND-*` a Release Inspector pravidlá ostávajú platné. Spoločné knižnice IbaJuraj DataKit či App Update Kit sú možné referenčné implementácie, nie povinné závislosti.
 
 ### STD-BACKUP-001 — Portable backup scope, integrity and secret safety — MUST
 
@@ -229,7 +232,7 @@ Ak aplikácia umožňuje obnoviť používateľské dáta (`hasUserRestore`):
 
 ### STD-SHARE-001 — Recipient content parity and shared-lifecycle truth — MUST
 
-Ak aplikácia používa cloudové zdieľanie alebo riadený prístup (`hasCloudSharingOrAccessControl`):
+Ak aplikácia podporuje **trvalé zdieľanie obsahu** medzi účtami/zariadeniami (`hasPersistentSharedContent`), vrátane spoločnej skupiny, zdieľanej peňaženky alebo ekvivalentnej entity. Samotná správa prístupu bez zdieľaných záznamov sa naďalej riadi `STD-CLOUD-001/002`, ale **nie** týmto kontraktom:
 
 - MUSÍ oddeliť dôkazy vytvorenia/prijatia pozvánky, členstva a roly, dostupnosti snapshotu a skutočnej **parity obsahu príjemcu**. Invitation PASS NESMIE byť hlásené ako full shared-content PASS.
 - Prázdny prvý stav príjemcu NESMIE prepísať dáta vlastníka pri oneskorenom membership/snapshote; treba download/read-first ochranu alebo ekvivalent.
@@ -377,6 +380,7 @@ Ak aplikácia ponúka lokálny zámok a biometriu (Face ID, Touch ID, Optic ID a
 ### STD-LOC-003 — Localization-ready architecture and stable semantic localization keys — MUST
 ### STD-LOC-004 — Locale-aware formatting and pluralization — MUST
 ### STD-LOC-005 — Optional in-app language selector supports Automatic/System mode — SHOULD
+Ak aplikácia ponúka vlastný jazykový prepínač (`hasInAppLanguageSelector`), MALA BY obsahovať voľbu Automaticky/Podľa systému. Ak používa iba systémový výber jazyka, pravidlo je N/A a nevyžaduje zbytočné vlastné UI.
 ### STD-LOC-006 — Language switching does not migrate domain data or change stable raw IDs — MUST
 ### STD-LOC-007 — Localized search has feature parity across supported runtime languages — MUST
 ### STD-LOC-008 — Runtime languages are independent from App Store territory availability — MUST
@@ -427,12 +431,22 @@ AI capability väzby:
 - `hasPostReleaseMonitoring` → `STD-POSTRELEASE-001`,
 - `hasPortableBackup` → `STD-BACKUP-001`,
 - `hasUserRestore` → `STD-BACKUP-002`,
-- `hasCloudSharingOrAccessControl` → `STD-SHARE-001`,
+- `hasPersistentSharedContent` → `STD-SHARE-001` (trvalé zdieľané záznamy); `hasCloudSharingOrAccessControl` zostáva pre cloudové access/reconciliation pravidlá,
 - `hasAppUpdateNotice` → `STD-UPDATE-001`.
 
-Nové capability flags sú booleany; neprítomná capability znamená N/A. Natívny iPad layout už pokrýva `STD-ADAPT-*` a viewport matica.
+Nové capability flags sú booleany; neprítomná capability znamená N/A. `hasInAppLanguageSelector` aktivuje `STD-LOC-005` iba pri skutočne implementovanom prepínači. `hasAuthoritativeFunctionalSources` a `hasRemoteInviteShareAccessFlow` sú povinné deklarovateľné polia šablóny. Phase-scoped RC gate sa zapína pomocou `--phase release-candidate`, nie podľa zabudnutého dokumentačného odkazu. Natívny iPad layout už pokrýva `STD-ADAPT-*` a viewport matica.
 
 Ostatné nové RC2 pravidlá sú cross-app release-quality kontrakty. Konkrétny check set je capability-aware: aplikácia netestuje subsystém, ktorý nemá, ale MUSÍ mať RC evidence pre to, čo reálne podporuje.
+
+
+### RC4 konsolidácia — vykonateľné dôkazy a fázy konformity
+
+- `development`: rýchla statická + cielená kontrola; rozšírený Release Inspector sa nevyžaduje. `release-candidate`: povinný celý Release Candidate Quality Gate. `post-release`: aplikuje sa aj feedback loop pre aplikácie, ktoré ho majú.
+- `STD-RELEASE-006`, `STD-DIAG-001/002`, `STD-RELEASE-007`, `STD-TEST-002`, `STD-UI-001`, `STD-EVIDENCE-002` sa vyhodnocujú ako release-candidate pravidlá. Zachovávajú svoje ID a normatívny význam, mení sa len okamih kontroly.
+- Pri `unit`, `ui` alebo `runtime` pravidle je `implemented` iba deklarácia. Skutočný PASS vyžaduje zhodný záznam v `executionEvidence.file`, s identitou konkrétneho buildu, zdrojovým revision, výsledkom PASS, vykonávacím časom, runnerom a kontrolným súčtom primárneho výstupu (CI log/report alebo runtime acceptance príloha); pri UI/runtime aj kontext zariadenia/OS. Súbor s odkazom alebo syntetický fixture nie je dôkazom produkčnej zhody.
+- Bez reportu je výsledok `PENDING`; pri chybnom manifeste, neplatnom hashi, nesprávnom builde alebo zlyhanom teste je výsledok `FAIL`. `N/A` sa zapisuje iba pri neaplikovateľnom pravidle. ADR výnimka zostáva explicitná a samostatná.
+- Pri reálnej adopcii sú autoritatívne CI výsledky a dokumentovaný manuálny test na presnom builde; samotné hlásenie validátora `PASS` znamená formálne overenú stopu, nie nezávislé potvrdenie fyzického správania bez dôveryhodných vykonávacích dôkazov.
+- Stabilná autorita `1.8.0` ani počet `138` pravidiel sa touto konsolidáciou nemení.
 
 ## 12. Release stav
 

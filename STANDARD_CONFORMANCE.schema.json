@@ -23,7 +23,21 @@
       "required": [
         "name",
         "productId"
-      ]
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "build": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRevision": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     },
     "capabilities": {
       "type": "object",
@@ -35,6 +49,18 @@
           "type": "boolean"
         },
         "hasAppUpdateNotice": {
+          "type": "boolean"
+        },
+        "hasInAppLanguageSelector": {
+          "type": "boolean"
+        },
+        "hasPersistentSharedContent": {
+          "type": "boolean"
+        },
+        "hasAuthoritativeFunctionalSources": {
+          "type": "boolean"
+        },
+        "hasRemoteInviteShareAccessFlow": {
           "type": "boolean"
         }
       }
@@ -49,7 +75,16 @@
       "type": "object"
     },
     "projectMetadata": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "releasePhase": {
+          "enum": [
+            "development",
+            "release-candidate",
+            "post-release"
+          ]
+        }
+      }
     },
     "rules": {
       "type": "object"
@@ -182,6 +217,19 @@
         }
       },
       "additionalProperties": true
+    },
+    "executionEvidence": {
+      "type": "object",
+      "required": [
+        "file"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": true

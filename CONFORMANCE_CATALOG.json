@@ -407,7 +407,7 @@
         "equals": true
       },
       "defaultVerification": "runtime",
-      "title": "Authoritative functional source is available offline and externally traceable",
+      "title": "Versioned normative source offline; live authoritative source provenance",
       "releaseBlocking": true
     },
     {
@@ -718,11 +718,11 @@
       "id": "STD-LOC-005",
       "level": "SHOULD",
       "appliesWhen": {
-        "capability": "hasLocalization",
+        "capability": "hasInAppLanguageSelector",
         "equals": true
       },
       "defaultVerification": "runtime",
-      "title": "Optional in-app language selector supports Automatic/System mode",
+      "title": "Optional in-app language selector offers Automatic/System",
       "releaseBlocking": false
     },
     {
@@ -953,42 +953,60 @@
       "level": "MUST",
       "defaultVerification": "runtime",
       "title": "Release Candidate Quality Gate cadence",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-DIAG-001",
       "level": "MUST",
       "defaultVerification": "runtime",
-      "title": "Internal Full App Check",
-      "releaseBlocking": true
+      "title": "Developer-only Full App Check or equivalent CI diagnostic",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-DIAG-002",
       "level": "MUST",
       "defaultVerification": "runtime",
       "title": "Structured diagnostic findings and severity",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-RELEASE-007",
       "level": "MUST",
       "defaultVerification": "static",
       "title": "Release diff and risk-based coverage",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-TEST-002",
       "level": "MUST",
       "defaultVerification": "runtime",
       "title": "Critical user journeys and resilience scenarios",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-UI-001",
       "level": "MUST",
       "defaultVerification": "ui",
       "title": "Release visual/runtime matrix",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-AI-003",
@@ -1080,17 +1098,27 @@
       "level": "MUST",
       "defaultVerification": "static",
       "title": "RC Evidence Bundle and release baseline",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-POSTRELEASE-001",
       "level": "MUST",
       "appliesWhen": {
-        "capability": "hasPostReleaseMonitoring",
-        "equals": true
+        "allOf": [
+          {
+            "phase": "post-release"
+          },
+          {
+            "capability": "hasPostReleaseMonitoring",
+            "equals": true
+          }
+        ]
       },
       "defaultVerification": "runtime",
-      "title": "Production feedback loop",
+      "title": "Post-release production feedback loop (not pre-release gate)",
       "releaseBlocking": false
     },
     {
@@ -1119,11 +1147,11 @@
       "id": "STD-SHARE-001",
       "level": "MUST",
       "appliesWhen": {
-        "capability": "hasCloudSharingOrAccessControl",
+        "capability": "hasPersistentSharedContent",
         "equals": true
       },
       "defaultVerification": "runtime",
-      "title": "Recipient content parity and shared-lifecycle truth",
+      "title": "Persistent shared-content recipient parity and lifecycle",
       "releaseBlocking": true
     },
     {
@@ -1137,5 +1165,8 @@
       "title": "Non-blocking, channel-correct, version-scoped update notice",
       "releaseBlocking": true
     }
+  ],
+  "notes": [
+    "RC4 consolidation: existing IDs preserved; phase release-candidate vs development vs post-release; evidence result linkage required for unit/ui/runtime; persistent shared content, in-app language selector, authoritative source conditions refined."
   ]
 }
