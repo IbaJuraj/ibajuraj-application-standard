@@ -9,38 +9,46 @@
   "rules": [
     {
       "id": "STD-IDENTITY-001",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "App family identity and developer attribution"
     },
     {
       "id": "STD-IDENTITY-002",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Runtime marketing version and build identity"
     },
     {
       "id": "STD-IDENTITY-003",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Consistent bundle and product identity"
     },
     {
       "id": "STD-COMPONENT-001",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Reusable components preserve consistent interaction roles"
     },
     {
       "id": "STD-COMPONENT-002",
-      "level": "MUST NOT"
+      "level": "MUST NOT",
+      "title": "No arbitrary per-screen shared-component divergence"
     },
     {
       "id": "STD-COMPONENT-003",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Common semantic identifiers for shared components"
     },
     {
       "id": "STD-COMPONENT-004",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Shared component geometry across peer screens"
     },
     {
       "id": "STD-COMPONENT-005",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Interactive and visual state consistency in component family"
     },
     {
       "id": "STD-SETTINGS-001",
@@ -49,7 +57,8 @@
         "capability": "hasSettings",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Discoverable root-level Settings entry"
     },
     {
       "id": "STD-SETTINGS-002",
@@ -58,7 +67,8 @@
         "capability": "hasAppearance",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Appearance settings have reliable navigation"
     },
     {
       "id": "STD-APPEARANCE-001",
@@ -67,7 +77,8 @@
         "capability": "hasCustomThemes",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Live appearance choice reflects selected state"
     },
     {
       "id": "STD-APPEARANCE-002",
@@ -76,7 +87,8 @@
         "capability": "hasCustomThemes",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Selected custom theme persists and renders consistently"
     },
     {
       "id": "STD-APPEARANCE-003",
@@ -85,7 +97,8 @@
         "capability": "hasCustomThemes",
         "equals": true
       },
-      "defaultVerification": "unit"
+      "defaultVerification": "unit",
+      "title": "Theme state and tokens are regression tested"
     },
     {
       "id": "STD-ABOUT-001",
@@ -94,7 +107,8 @@
         "capability": "hasSettings",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "About screen exists in Settings"
     },
     {
       "id": "STD-ABOUT-002",
@@ -103,7 +117,8 @@
         "capability": "hasSettings",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "About shows actual marketing version and build"
     },
     {
       "id": "STD-ABOUT-003",
@@ -112,7 +127,8 @@
         "capability": "hasSettings",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "About attributes IbaJuraj developer identity"
     },
     {
       "id": "STD-ABOUT-004",
@@ -121,7 +137,8 @@
         "capability": "hasSettings",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "About links open intended resources"
     },
     {
       "id": "STD-ABOUT-005",
@@ -130,7 +147,8 @@
         "capability": "hasSettings",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "About screen presents privacy and support details"
     },
     {
       "id": "STD-ABOUT-006",
@@ -138,36 +156,43 @@
       "appliesWhen": {
         "capability": "hasSettings",
         "equals": true
-      }
+      },
+      "title": "About declares applied Standard version"
     },
     {
       "id": "STD-ADAPT-001",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Responsive whole-app layout"
     },
     {
       "id": "STD-ADAPT-002",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Layout uses semantic container metrics"
     },
     {
       "id": "STD-ADAPT-003",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Safe-area and device geometry remain responsive"
     },
     {
       "id": "STD-ADAPT-004",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Dynamic Type and content scaling"
     },
     {
       "id": "STD-ADAPT-005",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Presentation adapts across width classes"
     },
     {
       "id": "STD-ADAPT-006",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "No clipping or offscreen interactive content"
     },
     {
       "id": "STD-ADAPT-007",
@@ -176,11 +201,13 @@
         "capability": "hasLocalization",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Localization-aware adaptive layout"
     },
     {
       "id": "STD-ADAPT-008",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "No hardcoded device-name layout substitution"
     },
     {
       "id": "STD-ADAPT-009",
@@ -189,7 +216,8 @@
         "capability": "supportsResizableWindow",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Resizable window and multitasking adaptation"
     },
     {
       "id": "STD-ADAPT-010",
@@ -200,11 +228,13 @@
           "requiresIPadCompatibilityTest"
         ]
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "iPad/native or compatibility viewport acceptance"
     },
     {
       "id": "STD-ADAPT-011",
-      "level": "MUST NOT"
+      "level": "MUST NOT",
+      "title": "Avoid fixed device-specific screenshot offsets"
     },
     {
       "id": "STD-ADAPT-012",
@@ -213,7 +243,8 @@
         "capability": "hasCalculatorKeypad",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Calculator keypad stays usable at different sizes"
     },
     {
       "id": "STD-NAV-001",
@@ -221,14 +252,16 @@
       "appliesWhen": {
         "capability": "hasBottomNavigation",
         "equals": true
-      }
+      },
+      "title": "Bottom navigation declares its implementation"
     },
     {
       "id": "STD-NAV-002",
       "level": "MUST",
       "appliesWhen": {
         "bottomNavigationMode": "native"
-      }
+      },
+      "title": "Native bottom navigation respects platform conventions"
     },
     {
       "id": "STD-NAV-003",
@@ -236,7 +269,8 @@
       "appliesWhen": {
         "bottomNavigationMode": "custom"
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Custom bottom navigation honors safe area"
     },
     {
       "id": "STD-NAV-004",
@@ -245,7 +279,8 @@
         "capability": "hasBottomPrimaryAction",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Bottom primary action is accessible and positioned safely"
     },
     {
       "id": "STD-NAV-005",
@@ -253,7 +288,8 @@
       "appliesWhen": {
         "bottomNavigationMode": "custom"
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Custom tab content maintains usable interaction bounds"
     },
     {
       "id": "STD-NAV-006",
@@ -261,7 +297,8 @@
       "appliesWhen": {
         "bottomNavigationMode": "custom"
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Custom bottom bar geometry is consistent"
     },
     {
       "id": "STD-NAV-007",
@@ -270,7 +307,8 @@
         "capability": "hasBottomNavigation",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Bottom navigation selection and destinations are accurate"
     },
     {
       "id": "STD-NAV-008",
@@ -278,24 +316,28 @@
       "appliesWhen": {
         "bottomNavigationMode": "custom"
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Custom bottom bar handles dynamic content size"
     },
     {
       "id": "STD-NAV-009",
       "level": "MUST",
       "appliesWhen": {
         "bottomNavigationMode": "custom"
-      }
+      },
+      "title": "Custom navigation uses shared semantic accessibility IDs"
     },
     {
       "id": "STD-NESTED-NAV-001",
       "level": "MUST",
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Nested navigation shows coherent title and back semantics"
     },
     {
       "id": "STD-NESTED-NAV-002",
       "level": "MUST",
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Nested navigation destination and return flow work"
     },
     {
       "id": "STD-LOC-001",
@@ -303,7 +345,8 @@
       "appliesWhen": {
         "capability": "hasLocalization",
         "equals": true
-      }
+      },
+      "title": "Supported localized content has consistent keys"
     },
     {
       "id": "STD-LOC-002",
@@ -311,22 +354,26 @@
       "appliesWhen": {
         "capability": "hasLocalization",
         "equals": true
-      }
+      },
+      "title": "Localization fallback preserves visible content"
     },
     {
       "id": "STD-A11Y-001",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Controls meet minimum touch accessibility"
     },
     {
       "id": "STD-A11Y-002",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Dynamic Type and assistive navigation usability"
     },
     {
       "id": "STD-A11Y-003",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Color contrast and semantic state accessibility"
     },
     {
       "id": "STD-FORM-001",
@@ -335,7 +382,8 @@
         "capability": "hasForms",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Form fields are reachable and editable"
     },
     {
       "id": "STD-FORM-002",
@@ -344,7 +392,8 @@
         "capability": "hasForms",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Form validation communicates errors"
     },
     {
       "id": "STD-FORM-003",
@@ -353,7 +402,8 @@
         "capability": "hasAdvancedFormFields",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Advanced form fields retain correct focus and values"
     },
     {
       "id": "STD-FORM-004",
@@ -362,7 +412,8 @@
         "capability": "hasForms",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Form save and dismissal do not lose user input"
     },
     {
       "id": "STD-DATA-001",
@@ -370,7 +421,8 @@
       "appliesWhen": {
         "capability": "hasPersistedData",
         "equals": true
-      }
+      },
+      "title": "Persisted model identities and migration safety"
     },
     {
       "id": "STD-DATA-002",
@@ -379,7 +431,8 @@
         "capability": "hasPersistedData",
         "equals": true
       },
-      "defaultVerification": "unit"
+      "defaultVerification": "unit",
+      "title": "Persisted mutations and recovery are tested"
     },
     {
       "id": "STD-DATA-003",
@@ -388,7 +441,8 @@
         "capability": "hasSyncOrBackup",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Sync or backup state is user-visible and correct"
     },
     {
       "id": "STD-DATA-004",
@@ -397,7 +451,8 @@
         "capability": "hasAuthoritativeVersionedData",
         "equals": true
       },
-      "defaultVerification": "unit"
+      "defaultVerification": "unit",
+      "title": "Authoritative versioned data has tested source identity"
     },
     {
       "id": "STD-AUTH-SOURCE-001",
@@ -412,12 +467,14 @@
     },
     {
       "id": "STD-PRIVACY-001",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Required privacy metadata and data-minimization declarations"
     },
     {
       "id": "STD-PRIVACY-002",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Privacy and permission behavior matches user expectations"
     },
     {
       "id": "STD-SECURITY-001",
@@ -426,15 +483,18 @@
         "capability": "hasAppLock",
         "equals": true
       },
-      "defaultVerification": "ui"
+      "defaultVerification": "ui",
+      "title": "Biometric-first app lock with system-device fallback"
     },
     {
       "id": "STD-DEBUG-001",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Debug controls isolated from production configuration"
     },
     {
       "id": "STD-DEBUG-002",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Diagnostic secrets and fixtures excluded from production UI"
     },
     {
       "id": "STD-AI-001",
@@ -474,31 +534,38 @@
     },
     {
       "id": "STD-CONF-001",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Conformance version pin and mandatory rule evidence"
     },
     {
       "id": "STD-CONF-002",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Cross-app Standard contract adoption is declared"
     },
     {
       "id": "STD-CONF-003",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Rule applicability matches shipped app capabilities"
     },
     {
       "id": "STD-CONF-004",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Static and runtime evidence types remain distinct"
     },
     {
       "id": "STD-CONF-005",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Conformance exception uses traceable approved ADR"
     },
     {
       "id": "STD-CONF-006",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Conformance reporting remains auditable"
     },
     {
       "id": "STD-RELEASE-001",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Build and release package metadata is consistent"
     },
     {
       "id": "STD-RELEASE-002",
@@ -506,41 +573,49 @@
       "appliesWhen": {
         "capability": "hasLocalization",
         "equals": true
-      }
+      },
+      "title": "Store language assets and localization package validation"
     },
     {
       "id": "STD-RELEASE-003",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Native release Build/Test verification"
     },
     {
       "id": "STD-RELEASE-004",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Production runtime smoke and release readiness"
     },
     {
       "id": "STD-ADAPT-013",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Adaptive content density and useful space utilization"
     },
     {
       "id": "STD-ADAPT-014",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Stable component geometry across UI state changes"
     },
     {
       "id": "STD-ADAPT-015",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Adaptive layout remains responsive under real data"
     },
     {
       "id": "STD-VIEWPORT-001",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Root screen top safe-area alignment"
     },
     {
       "id": "STD-VIEWPORT-002",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Viewport uses container-relative horizontal insets"
     },
     {
       "id": "STD-VIEWPORT-003",
@@ -556,7 +631,8 @@
           }
         ]
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Custom bottom chrome position and safe area"
     },
     {
       "id": "STD-VIEWPORT-004",
@@ -572,45 +648,54 @@
           }
         ]
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Scrolling clears fixed bottom chrome"
     },
     {
       "id": "STD-VIEWPORT-005",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Viewport uses available horizontal width"
     },
     {
       "id": "STD-VIEWPORT-006",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Root screen avoids unexplained edge waste"
     },
     {
       "id": "STD-VIEWPORT-007",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Viewport remains stable across scrolling and presentation"
     },
     {
       "id": "STD-VIEWPORT-008",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Viewport spacing survives Dynamic Type and orientation"
     },
     {
       "id": "STD-SCREEN-001",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Screen-family inventory covers app capabilities"
     },
     {
       "id": "STD-SCREEN-002",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Relevant screen families have executed runtime checks"
     },
     {
       "id": "STD-SCREEN-003",
       "level": "MUST",
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Runtime screen-family matrix includes visual states"
     },
     {
       "id": "STD-SCREEN-004",
-      "level": "MUST"
+      "level": "MUST",
+      "title": "Release blocks unresolved screen-family evidence"
     },
     {
       "id": "STD-NAV-010",
@@ -618,7 +703,8 @@
       "appliesWhen": {
         "bottomNavigationMode": "custom"
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Custom navigation active-state and destination integrity"
     },
     {
       "id": "STD-NAV-011",
@@ -626,7 +712,8 @@
       "appliesWhen": {
         "bottomNavigationMode": "custom"
       },
-      "defaultVerification": "unit"
+      "defaultVerification": "unit",
+      "title": "Custom navigation state and deep links regression tests"
     },
     {
       "id": "STD-A11Y-004",
@@ -635,7 +722,8 @@
         "capability": "hasTranslucentSurfaces",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Reduce Transparency fallback for translucent surfaces"
     },
     {
       "id": "STD-FORM-005",
@@ -644,7 +732,8 @@
         "capability": "hasForms",
         "equals": true
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Keyboard visibility and form focus coordination"
     },
     {
       "id": "STD-FORM-006",
@@ -655,7 +744,8 @@
           "hasBottomNavigation"
         ]
       },
-      "defaultVerification": "runtime"
+      "defaultVerification": "runtime",
+      "title": "Form keyboard clearance with bottom navigation"
     },
     {
       "id": "STD-HEADER-001",
@@ -1168,5 +1258,6 @@
   ],
   "notes": [
     "RC4 consolidation: existing IDs preserved; phase release-candidate vs development vs post-release; evidence result linkage required for unit/ui/runtime; persistent shared content, in-app language selector, authoritative source conditions refined."
-  ]
+  ],
+  "titleMetadata": "Human-readable summaries identify existing legacy rules. These labels do not replace or independently extend normative provisions inherited from the 1.7/1.8 Standard."
 }
