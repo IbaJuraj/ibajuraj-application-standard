@@ -1,1 +1,1288 @@
-{"schemaVersion":1,"standardVersion":"1.8.0","status":"active","candidate":null,"stableAuthority":"1.8.0","proposedTag":"standard-v1.8.0","rules":[{"id":"STD-IDENTITY-001","level":"MUST"},{"id":"STD-IDENTITY-002","level":"MUST"},{"id":"STD-IDENTITY-003","level":"MUST"},{"id":"STD-COMPONENT-001","level":"MUST","defaultVerification":"runtime"},{"id":"STD-COMPONENT-002","level":"MUST NOT"},{"id":"STD-COMPONENT-003","level":"MUST"},{"id":"STD-COMPONENT-004","level":"MUST","defaultVerification":"runtime"},{"id":"STD-COMPONENT-005","level":"MUST","defaultVerification":"runtime"},{"id":"STD-SETTINGS-001","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true},"defaultVerification":"ui"},{"id":"STD-SETTINGS-002","level":"MUST","appliesWhen":{"capability":"hasAppearance","equals":true},"defaultVerification":"ui"},{"id":"STD-APPEARANCE-001","level":"MUST","appliesWhen":{"capability":"hasCustomThemes","equals":true},"defaultVerification":"ui"},{"id":"STD-APPEARANCE-002","level":"MUST","appliesWhen":{"capability":"hasCustomThemes","equals":true},"defaultVerification":"ui"},{"id":"STD-APPEARANCE-003","level":"MUST","appliesWhen":{"capability":"hasCustomThemes","equals":true},"defaultVerification":"unit"},{"id":"STD-ABOUT-001","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true},"defaultVerification":"ui"},{"id":"STD-ABOUT-002","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true},"defaultVerification":"ui"},{"id":"STD-ABOUT-003","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true},"defaultVerification":"ui"},{"id":"STD-ABOUT-004","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true},"defaultVerification":"ui"},{"id":"STD-ABOUT-005","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true},"defaultVerification":"ui"},{"id":"STD-ABOUT-006","level":"MUST","appliesWhen":{"capability":"hasSettings","equals":true}},{"id":"STD-ADAPT-001","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-002","level":"MUST"},{"id":"STD-ADAPT-003","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-004","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-005","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-006","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-007","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"runtime"},{"id":"STD-ADAPT-008","level":"MUST"},{"id":"STD-ADAPT-009","level":"MUST","appliesWhen":{"capability":"supportsResizableWindow","equals":true},"defaultVerification":"runtime"},{"id":"STD-ADAPT-010","level":"MUST","appliesWhen":{"anyCapability":["supportsIPad","requiresIPadCompatibilityTest"]},"defaultVerification":"runtime"},{"id":"STD-ADAPT-011","level":"MUST NOT"},{"id":"STD-ADAPT-012","level":"MUST","appliesWhen":{"capability":"hasCalculatorKeypad","equals":true},"defaultVerification":"runtime"},{"id":"STD-NAV-001","level":"MUST","appliesWhen":{"capability":"hasBottomNavigation","equals":true}},{"id":"STD-NAV-002","level":"MUST","appliesWhen":{"bottomNavigationMode":"native"}},{"id":"STD-NAV-003","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"},"defaultVerification":"runtime"},{"id":"STD-NAV-004","level":"MUST","appliesWhen":{"capability":"hasBottomPrimaryAction","equals":true},"defaultVerification":"runtime"},{"id":"STD-NAV-005","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"},"defaultVerification":"runtime"},{"id":"STD-NAV-006","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"},"defaultVerification":"runtime"},{"id":"STD-NAV-007","level":"MUST","appliesWhen":{"capability":"hasBottomNavigation","equals":true},"defaultVerification":"runtime"},{"id":"STD-NAV-008","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"},"defaultVerification":"runtime"},{"id":"STD-NAV-009","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"}},{"id":"STD-NESTED-NAV-001","level":"MUST","defaultVerification":"ui"},{"id":"STD-NESTED-NAV-002","level":"MUST","defaultVerification":"ui"},{"id":"STD-LOC-001","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true}},{"id":"STD-LOC-002","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true}},{"id":"STD-A11Y-001","level":"MUST","defaultVerification":"runtime"},{"id":"STD-A11Y-002","level":"MUST","defaultVerification":"runtime"},{"id":"STD-A11Y-003","level":"MUST","defaultVerification":"runtime"},{"id":"STD-FORM-001","level":"MUST","appliesWhen":{"capability":"hasForms","equals":true},"defaultVerification":"runtime"},{"id":"STD-FORM-002","level":"MUST","appliesWhen":{"capability":"hasForms","equals":true},"defaultVerification":"ui"},{"id":"STD-FORM-003","level":"MUST","appliesWhen":{"capability":"hasAdvancedFormFields","equals":true},"defaultVerification":"ui"},{"id":"STD-FORM-004","level":"MUST","appliesWhen":{"capability":"hasForms","equals":true},"defaultVerification":"ui"},{"id":"STD-DATA-001","level":"MUST","appliesWhen":{"capability":"hasPersistedData","equals":true}},{"id":"STD-DATA-002","level":"MUST","appliesWhen":{"capability":"hasPersistedData","equals":true},"defaultVerification":"unit"},{"id":"STD-DATA-003","level":"MUST","appliesWhen":{"capability":"hasSyncOrBackup","equals":true},"defaultVerification":"ui"},{"id":"STD-DATA-004","level":"MUST","appliesWhen":{"capability":"hasAuthoritativeVersionedData","equals":true},"defaultVerification":"unit"},{"id":"STD-PRIVACY-001","level":"MUST"},{"id":"STD-PRIVACY-002","level":"MUST","defaultVerification":"runtime"},{"id":"STD-SECURITY-001","level":"MUST","appliesWhen":{"capability":"hasAppLock","equals":true},"defaultVerification":"ui"},{"id":"STD-DEBUG-001","level":"MUST"},{"id":"STD-DEBUG-002","level":"MUST"},{"id":"STD-AI-001","level":"MUST","appliesWhen":{"capability":"hasGeneratedAssistance","equals":true},"defaultVerification":"unit"},{"id":"STD-AI-002","level":"MUST","appliesWhen":{"capability":"hasGeneratedAssistance","equals":true},"defaultVerification":"unit"},{"id":"STD-CONF-001","level":"MUST"},{"id":"STD-CONF-002","level":"MUST"},{"id":"STD-CONF-003","level":"MUST"},{"id":"STD-CONF-004","level":"MUST"},{"id":"STD-CONF-005","level":"MUST"},{"id":"STD-CONF-006","level":"MUST"},{"id":"STD-RELEASE-001","level":"MUST"},{"id":"STD-RELEASE-002","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true}},{"id":"STD-RELEASE-003","level":"MUST","defaultVerification":"runtime"},{"id":"STD-RELEASE-004","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-013","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-014","level":"MUST","defaultVerification":"runtime"},{"id":"STD-ADAPT-015","level":"MUST","defaultVerification":"runtime"},{"id":"STD-VIEWPORT-001","level":"MUST","defaultVerification":"runtime"},{"id":"STD-VIEWPORT-002","level":"MUST"},{"id":"STD-VIEWPORT-003","level":"MUST","appliesWhen":{"anyOf":[{"bottomNavigationMode":"custom"},{"capability":"hasFixedBottomControls","equals":true}]},"defaultVerification":"runtime"},{"id":"STD-VIEWPORT-004","level":"MUST","appliesWhen":{"anyOf":[{"bottomNavigationMode":"custom"},{"capability":"hasFixedBottomControls","equals":true}]},"defaultVerification":"runtime"},{"id":"STD-VIEWPORT-005","level":"MUST","defaultVerification":"runtime"},{"id":"STD-VIEWPORT-006","level":"MUST","defaultVerification":"runtime"},{"id":"STD-VIEWPORT-007","level":"MUST","defaultVerification":"runtime"},{"id":"STD-VIEWPORT-008","level":"MUST","defaultVerification":"runtime"},{"id":"STD-SCREEN-001","level":"MUST"},{"id":"STD-SCREEN-002","level":"MUST","defaultVerification":"runtime"},{"id":"STD-SCREEN-003","level":"MUST","defaultVerification":"runtime"},{"id":"STD-SCREEN-004","level":"MUST"},{"id":"STD-NAV-010","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"},"defaultVerification":"runtime"},{"id":"STD-NAV-011","level":"MUST","appliesWhen":{"bottomNavigationMode":"custom"},"defaultVerification":"unit"},{"id":"STD-A11Y-004","level":"MUST","appliesWhen":{"capability":"hasTranslucentSurfaces","equals":true},"defaultVerification":"runtime"},{"id":"STD-FORM-005","level":"MUST","appliesWhen":{"capability":"hasForms","equals":true},"defaultVerification":"runtime"},{"id":"STD-FORM-006","level":"MUST","appliesWhen":{"allCapabilities":["hasForms","hasBottomNavigation"]},"defaultVerification":"runtime"},{"id":"STD-HEADER-001","level":"MUST","appliesWhen":"always","defaultVerification":"static","title":"Each screen has one authoritative header owner","releaseBlocking":true},{"id":"STD-HEADER-002","level":"MUST NOT","appliesWhen":"always","defaultVerification":"ui","title":"Navigation title is not duplicated by equivalent page or section heading","releaseBlocking":true},{"id":"STD-HEADER-003","level":"MUST","appliesWhen":{"capability":"hasSheets","equals":true},"defaultVerification":"ui","title":"Sheet title subtitle and dismissal action form one coherent header hierarchy","releaseBlocking":true},{"id":"STD-CHROME-001","level":"MUST NOT","appliesWhen":"always","defaultVerification":"static","title":"App does not imitate platform-owned system chrome","releaseBlocking":true},{"id":"STD-LOC-003","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"static","title":"Localization-ready architecture and stable semantic localization keys","releaseBlocking":true},{"id":"STD-LOC-004","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"runtime","title":"Locale-aware formatting and pluralization","releaseBlocking":true},{"id":"STD-LOC-005","level":"SHOULD","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"runtime","title":"Optional in-app language selector supports Automatic/System mode","releaseBlocking":false},{"id":"STD-LOC-006","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"unit","title":"Language switching does not migrate domain data or change stable raw IDs","releaseBlocking":true},{"id":"STD-LOC-007","level":"MUST","appliesWhen":{"capability":"hasLocalizedSearch","equals":true},"defaultVerification":"runtime","title":"Localized search has feature parity across supported runtime languages","releaseBlocking":true},{"id":"STD-LOC-008","level":"MUST","appliesWhen":{"capability":"hasLocalization","equals":true},"defaultVerification":"static","title":"Runtime languages are independent from App Store territory availability","releaseBlocking":true},{"id":"STD-RELEASE-005","level":"MUST","defaultVerification":"static","title":"Current release root is clean and superseded build history is archived","releaseBlocking":true},{"id":"STD-DATA-005","level":"MUST","appliesWhen":{"capability":"hasPersistedData","equals":true},"defaultVerification":"runtime","title":"Single-device Xcode ↔ TestFlight/App Store ↔ Xcode data continuity","releaseBlocking":true},{"id":"STD-BACKEND-001","level":"MUST","appliesWhen":{"capability":"hasProductionBackend","equals":true},"defaultVerification":"static","title":"Production backend schema/index/permission/config is explicitly ready","releaseBlocking":true},{"id":"STD-BACKEND-002","level":"MUST","appliesWhen":{"capability":"hasProductionBackend","equals":true},"defaultVerification":"runtime","title":"Real TestFlight/Production read/write/sync/share smoke follows app capabilities","releaseBlocking":true},{"id":"STD-BACKEND-003","level":"MUST","appliesWhen":{"capability":"hasProductionBackend","equals":true},"defaultVerification":"static","title":"Server-side fixes and binary fixes are explicitly distinguished","releaseBlocking":true},{"id":"STD-PERF-001","level":"MUST","appliesWhen":{"capability":"hasRepresentativeUserData","equals":true},"defaultVerification":"runtime","title":"Runtime performance is tested with representative real-volume data","releaseBlocking":true},{"id":"STD-ASYNC-001","level":"MUST","appliesWhen":{"capability":"hasAsyncDerivedState","equals":true},"defaultVerification":"unit","title":"Stale async completion cannot overwrite newer state","releaseBlocking":true},{"id":"STD-DERIVED-001","level":"MUST","appliesWhen":{"capability":"hasDerivedState","equals":true},"defaultVerification":"unit","title":"Authoritative mutation precedes one coherent derived-state rebuild","releaseBlocking":true},{"id":"STD-CLOUD-001","level":"MUST","appliesWhen":{"capability":"hasRemoteDestructiveOrAccessMutations","equals":true},"defaultVerification":"runtime","title":"Remote destructive/access success follows confirmed remote truth","releaseBlocking":true},{"id":"STD-CLOUD-002","level":"MUST","appliesWhen":{"capability":"hasCloudSharingOrAccessControl","equals":true},"defaultVerification":"runtime","title":"Security/access mutations have durable retry or reconciliation","releaseBlocking":true},{"id":"STD-DATA-006","level":"MUST","appliesWhen":{"capability":"hasPersistedData","equals":true},"defaultVerification":"unit","title":"Corrupt persisted state fails safely without destructive empty overwrite","releaseBlocking":true},{"id":"STD-DATA-007","level":"MUST","appliesWhen":{"capability":"hasRelationshipBearingDeletion","equals":true},"defaultVerification":"unit","title":"Destructive deletion is relationship-aware","releaseBlocking":true},{"id":"STD-DATA-008","level":"MUST","appliesWhen":{"capability":"hasPersistedData","equals":true},"defaultVerification":"runtime","title":"Persisted-data app has production-to-candidate upgrade-path gate","releaseBlocking":true},{"id":"STD-TEST-001","level":"MUST","appliesWhen":{"capability":"hasMaterialDeterministicEngine","equals":true},"defaultVerification":"unit","title":"Material deterministic engines require automated regression coverage","releaseBlocking":true},{"id":"STD-PERM-001","level":"MUST","appliesWhen":{"capability":"hasFeatureFlaggedPermissionedCapability","equals":true},"defaultVerification":"runtime","title":"Disabled feature and permission exposure remain in parity","releaseBlocking":true},{"id":"STD-EVIDENCE-001","level":"MUST","defaultVerification":"static","title":"Runtime evidence is build-scoped and regressions remain traceable","releaseBlocking":true},{"id":"STD-COMPACT-001","level":"SHOULD","appliesWhen":{"capability":"hasCompactSurfaces","equals":true},"defaultVerification":"runtime","title":"Compact surfaces define content priority and destination integrity","releaseBlocking":false}]}
+{
+  "schemaVersion": 1,
+  "standardVersion": "1.9.0",
+  "status": "candidate",
+  "candidate": "RC4",
+  "stableAuthority": "1.8.0",
+  "proposedTag": "standard-v1.9.0-rc4",
+  "ruleCount": 138,
+  "rules": [
+    {
+      "id": "STD-IDENTITY-001",
+      "level": "MUST",
+      "title": "App family identity and developer attribution"
+    },
+    {
+      "id": "STD-IDENTITY-002",
+      "level": "MUST",
+      "title": "Runtime marketing version and build identity"
+    },
+    {
+      "id": "STD-IDENTITY-003",
+      "level": "MUST",
+      "title": "Consistent bundle and product identity"
+    },
+    {
+      "id": "STD-COMPONENT-001",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Reusable components preserve consistent interaction roles"
+    },
+    {
+      "id": "STD-COMPONENT-002",
+      "level": "MUST NOT",
+      "title": "No arbitrary per-screen shared-component divergence"
+    },
+    {
+      "id": "STD-COMPONENT-003",
+      "level": "MUST",
+      "title": "Common semantic identifiers for shared components"
+    },
+    {
+      "id": "STD-COMPONENT-004",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Shared component geometry across peer screens"
+    },
+    {
+      "id": "STD-COMPONENT-005",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Interactive and visual state consistency in component family"
+    },
+    {
+      "id": "STD-SETTINGS-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Discoverable root-level Settings entry"
+    },
+    {
+      "id": "STD-SETTINGS-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAppearance",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Appearance settings have reliable navigation"
+    },
+    {
+      "id": "STD-APPEARANCE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasCustomThemes",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Live appearance choice reflects selected state"
+    },
+    {
+      "id": "STD-APPEARANCE-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasCustomThemes",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Selected custom theme persists and renders consistently"
+    },
+    {
+      "id": "STD-APPEARANCE-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasCustomThemes",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Theme state and tokens are regression tested"
+    },
+    {
+      "id": "STD-ABOUT-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "About screen exists in Settings"
+    },
+    {
+      "id": "STD-ABOUT-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "About shows actual marketing version and build"
+    },
+    {
+      "id": "STD-ABOUT-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "About attributes IbaJuraj developer identity"
+    },
+    {
+      "id": "STD-ABOUT-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "About links open intended resources"
+    },
+    {
+      "id": "STD-ABOUT-005",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "About screen presents privacy and support details"
+    },
+    {
+      "id": "STD-ABOUT-006",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSettings",
+        "equals": true
+      },
+      "title": "About declares applied Standard version"
+    },
+    {
+      "id": "STD-ADAPT-001",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Responsive whole-app layout"
+    },
+    {
+      "id": "STD-ADAPT-002",
+      "level": "MUST",
+      "title": "Layout uses semantic container metrics"
+    },
+    {
+      "id": "STD-ADAPT-003",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Safe-area and device geometry remain responsive"
+    },
+    {
+      "id": "STD-ADAPT-004",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Dynamic Type and content scaling"
+    },
+    {
+      "id": "STD-ADAPT-005",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Presentation adapts across width classes"
+    },
+    {
+      "id": "STD-ADAPT-006",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "No clipping or offscreen interactive content"
+    },
+    {
+      "id": "STD-ADAPT-007",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Localization-aware adaptive layout"
+    },
+    {
+      "id": "STD-ADAPT-008",
+      "level": "MUST",
+      "title": "No hardcoded device-name layout substitution"
+    },
+    {
+      "id": "STD-ADAPT-009",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "supportsResizableWindow",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Resizable window and multitasking adaptation"
+    },
+    {
+      "id": "STD-ADAPT-010",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "supportsIPad",
+          "requiresIPadCompatibilityTest"
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "iPad/native or compatibility viewport acceptance"
+    },
+    {
+      "id": "STD-ADAPT-011",
+      "level": "MUST NOT",
+      "title": "Avoid fixed device-specific screenshot offsets"
+    },
+    {
+      "id": "STD-ADAPT-012",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasCalculatorKeypad",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Calculator keypad stays usable at different sizes"
+    },
+    {
+      "id": "STD-NAV-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasBottomNavigation",
+        "equals": true
+      },
+      "title": "Bottom navigation declares its implementation"
+    },
+    {
+      "id": "STD-NAV-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "native"
+      },
+      "title": "Native bottom navigation respects platform conventions"
+    },
+    {
+      "id": "STD-NAV-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "defaultVerification": "runtime",
+      "title": "Custom bottom navigation honors safe area"
+    },
+    {
+      "id": "STD-NAV-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasBottomPrimaryAction",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Bottom primary action is accessible and positioned safely"
+    },
+    {
+      "id": "STD-NAV-005",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "defaultVerification": "runtime",
+      "title": "Custom tab content maintains usable interaction bounds"
+    },
+    {
+      "id": "STD-NAV-006",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "defaultVerification": "runtime",
+      "title": "Custom bottom bar geometry is consistent"
+    },
+    {
+      "id": "STD-NAV-007",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasBottomNavigation",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Bottom navigation selection and destinations are accurate"
+    },
+    {
+      "id": "STD-NAV-008",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "defaultVerification": "runtime",
+      "title": "Custom bottom bar handles dynamic content size"
+    },
+    {
+      "id": "STD-NAV-009",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "title": "Custom navigation uses shared semantic accessibility IDs"
+    },
+    {
+      "id": "STD-NESTED-NAV-001",
+      "level": "MUST",
+      "defaultVerification": "ui",
+      "title": "Nested navigation shows coherent title and back semantics"
+    },
+    {
+      "id": "STD-NESTED-NAV-002",
+      "level": "MUST",
+      "defaultVerification": "ui",
+      "title": "Nested navigation destination and return flow work"
+    },
+    {
+      "id": "STD-LOC-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "title": "Supported localized content has consistent keys"
+    },
+    {
+      "id": "STD-LOC-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "title": "Localization fallback preserves visible content"
+    },
+    {
+      "id": "STD-A11Y-001",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Controls meet minimum touch accessibility"
+    },
+    {
+      "id": "STD-A11Y-002",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Dynamic Type and assistive navigation usability"
+    },
+    {
+      "id": "STD-A11Y-003",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Color contrast and semantic state accessibility"
+    },
+    {
+      "id": "STD-FORM-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasForms",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Form fields are reachable and editable"
+    },
+    {
+      "id": "STD-FORM-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasForms",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Form validation communicates errors"
+    },
+    {
+      "id": "STD-FORM-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAdvancedFormFields",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Advanced form fields retain correct focus and values"
+    },
+    {
+      "id": "STD-FORM-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasForms",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Form save and dismissal do not lose user input"
+    },
+    {
+      "id": "STD-DATA-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPersistedData",
+        "equals": true
+      },
+      "title": "Persisted model identities and migration safety"
+    },
+    {
+      "id": "STD-DATA-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPersistedData",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Persisted mutations and recovery are tested"
+    },
+    {
+      "id": "STD-DATA-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSyncOrBackup",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Sync or backup state is user-visible and correct"
+    },
+    {
+      "id": "STD-DATA-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAuthoritativeVersionedData",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Authoritative versioned data has tested source identity"
+    },
+    {
+      "id": "STD-AUTH-SOURCE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAuthoritativeFunctionalSources",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Versioned normative source offline; live authoritative source provenance",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-PRIVACY-001",
+      "level": "MUST",
+      "title": "Required privacy metadata and data-minimization declarations"
+    },
+    {
+      "id": "STD-PRIVACY-002",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Privacy and permission behavior matches user expectations"
+    },
+    {
+      "id": "STD-SECURITY-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAppLock",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Biometric-first app lock with system-device fallback"
+    },
+    {
+      "id": "STD-DEBUG-001",
+      "level": "MUST",
+      "title": "Debug controls isolated from production configuration"
+    },
+    {
+      "id": "STD-DEBUG-002",
+      "level": "MUST",
+      "title": "Diagnostic secrets and fixtures excluded from production UI"
+    },
+    {
+      "id": "STD-AI-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "unit",
+      "title": "Grounded & verified AI assistance",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-AI-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "unit",
+      "title": "User transparency, fallback & feedback",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-CONF-001",
+      "level": "MUST",
+      "title": "Conformance version pin and mandatory rule evidence"
+    },
+    {
+      "id": "STD-CONF-002",
+      "level": "MUST",
+      "title": "Cross-app Standard contract adoption is declared"
+    },
+    {
+      "id": "STD-CONF-003",
+      "level": "MUST",
+      "title": "Rule applicability matches shipped app capabilities"
+    },
+    {
+      "id": "STD-CONF-004",
+      "level": "MUST",
+      "title": "Static and runtime evidence types remain distinct"
+    },
+    {
+      "id": "STD-CONF-005",
+      "level": "MUST",
+      "title": "Conformance exception uses traceable approved ADR"
+    },
+    {
+      "id": "STD-CONF-006",
+      "level": "MUST",
+      "title": "Conformance reporting remains auditable"
+    },
+    {
+      "id": "STD-RELEASE-001",
+      "level": "MUST",
+      "title": "Build and release package metadata is consistent"
+    },
+    {
+      "id": "STD-RELEASE-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "allOf": [
+          {
+            "capability": "hasLocalization",
+            "equals": true
+          },
+          {
+            "phase": "release-candidate"
+          }
+        ]
+      },
+      "title": "Store language assets and localization package validation"
+    },
+    {
+      "id": "STD-RELEASE-003",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Native release Build/Test verification",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-RELEASE-004",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Production runtime smoke and release readiness",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-ADAPT-013",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Adaptive content density and useful space utilization"
+    },
+    {
+      "id": "STD-ADAPT-014",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Stable component geometry across UI state changes"
+    },
+    {
+      "id": "STD-ADAPT-015",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Adaptive layout remains responsive under real data"
+    },
+    {
+      "id": "STD-VIEWPORT-001",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Root screen top safe-area alignment"
+    },
+    {
+      "id": "STD-VIEWPORT-002",
+      "level": "MUST",
+      "title": "Viewport uses container-relative horizontal insets"
+    },
+    {
+      "id": "STD-VIEWPORT-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyOf": [
+          {
+            "bottomNavigationMode": "custom"
+          },
+          {
+            "capability": "hasFixedBottomControls",
+            "equals": true
+          }
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Custom bottom chrome position and safe area"
+    },
+    {
+      "id": "STD-VIEWPORT-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyOf": [
+          {
+            "bottomNavigationMode": "custom"
+          },
+          {
+            "capability": "hasFixedBottomControls",
+            "equals": true
+          }
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Scrolling clears fixed bottom chrome"
+    },
+    {
+      "id": "STD-VIEWPORT-005",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Viewport uses available horizontal width"
+    },
+    {
+      "id": "STD-VIEWPORT-006",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Root screen avoids unexplained edge waste"
+    },
+    {
+      "id": "STD-VIEWPORT-007",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Viewport remains stable across scrolling and presentation"
+    },
+    {
+      "id": "STD-VIEWPORT-008",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Viewport spacing survives Dynamic Type and orientation"
+    },
+    {
+      "id": "STD-SCREEN-001",
+      "level": "MUST",
+      "title": "Screen-family inventory covers app capabilities"
+    },
+    {
+      "id": "STD-SCREEN-002",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Relevant screen families have executed runtime checks",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-SCREEN-003",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Runtime screen-family matrix includes visual states",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-SCREEN-004",
+      "level": "MUST",
+      "title": "Release blocks unresolved screen-family evidence",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-NAV-010",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "defaultVerification": "runtime",
+      "title": "Custom navigation active-state and destination integrity"
+    },
+    {
+      "id": "STD-NAV-011",
+      "level": "MUST",
+      "appliesWhen": {
+        "bottomNavigationMode": "custom"
+      },
+      "defaultVerification": "unit",
+      "title": "Custom navigation state and deep links regression tests"
+    },
+    {
+      "id": "STD-A11Y-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasTranslucentSurfaces",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Reduce Transparency fallback for translucent surfaces"
+    },
+    {
+      "id": "STD-FORM-005",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasForms",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Keyboard visibility and form focus coordination"
+    },
+    {
+      "id": "STD-FORM-006",
+      "level": "MUST",
+      "appliesWhen": {
+        "allCapabilities": [
+          "hasForms",
+          "hasBottomNavigation"
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Form keyboard clearance with bottom navigation"
+    },
+    {
+      "id": "STD-HEADER-001",
+      "level": "MUST",
+      "appliesWhen": "always",
+      "defaultVerification": "static",
+      "title": "Each screen has one authoritative header owner",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-HEADER-002",
+      "level": "MUST NOT",
+      "appliesWhen": "always",
+      "defaultVerification": "ui",
+      "title": "Navigation title is not duplicated by equivalent page or section heading",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-HEADER-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasSheets",
+        "equals": true
+      },
+      "defaultVerification": "ui",
+      "title": "Sheet title subtitle and dismissal action form one coherent header hierarchy",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-CHROME-001",
+      "level": "MUST NOT",
+      "appliesWhen": "always",
+      "defaultVerification": "static",
+      "title": "App does not imitate platform-owned system chrome",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-LOC-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "defaultVerification": "static",
+      "title": "Localization-ready architecture and stable semantic localization keys",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-LOC-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Locale-aware formatting and pluralization",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-LOC-005",
+      "level": "SHOULD",
+      "appliesWhen": {
+        "capability": "hasInAppLanguageSelector",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Optional in-app language selector offers Automatic/System",
+      "releaseBlocking": false
+    },
+    {
+      "id": "STD-LOC-006",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Language switching does not migrate domain data or change stable raw IDs",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-LOC-007",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalizedSearch",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Localized search has feature parity across supported runtime languages",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-LOC-008",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasLocalization",
+        "equals": true
+      },
+      "defaultVerification": "static",
+      "title": "Runtime languages are independent from App Store territory availability",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-RELEASE-005",
+      "level": "MUST",
+      "defaultVerification": "static",
+      "title": "Current release root is clean and superseded build history is archived",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-DATA-005",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPersistedData",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Single-device Xcode ↔ TestFlight/App Store ↔ Xcode data continuity",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-BACKEND-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasProductionBackend",
+        "equals": true
+      },
+      "defaultVerification": "static",
+      "title": "Production backend schema/index/permission/config is explicitly ready",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-BACKEND-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasProductionBackend",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Real TestFlight/Production read/write/sync/share smoke follows app capabilities",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-BACKEND-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasProductionBackend",
+        "equals": true
+      },
+      "defaultVerification": "static",
+      "title": "Server-side fixes and binary fixes are explicitly distinguished",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-PERF-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasRepresentativeUserData",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Runtime performance is tested with representative real-volume data",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-ASYNC-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAsyncDerivedState",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Stale async completion cannot overwrite newer state",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-ASYNC-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasRemoteInviteShareAccessFlow",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Remote invite/share/access operations do not block interactive UI/MainActor responsiveness",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-DERIVED-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasDerivedState",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Authoritative mutation precedes one coherent derived-state rebuild",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-CLOUD-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasRemoteDestructiveOrAccessMutations",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Remote destructive/access success follows confirmed remote truth",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-CLOUD-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasCloudSharingOrAccessControl",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Security/access mutations have durable retry or reconciliation",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-DATA-006",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPersistedData",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Corrupt persisted state fails safely without destructive empty overwrite",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-DATA-007",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasRelationshipBearingDeletion",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Destructive deletion is relationship-aware",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-DATA-008",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPersistedData",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Persisted-data app has production-to-candidate upgrade-path gate",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-TEST-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasMaterialDeterministicEngine",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Material deterministic engines require automated regression coverage",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-PERM-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasFeatureFlaggedPermissionedCapability",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Disabled feature and permission exposure remain in parity",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-EVIDENCE-001",
+      "level": "MUST",
+      "defaultVerification": "static",
+      "title": "Runtime evidence is build-scoped and regressions remain traceable",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-COMPACT-001",
+      "level": "SHOULD",
+      "appliesWhen": {
+        "capability": "hasCompactSurfaces",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Compact surfaces define content priority and destination integrity",
+      "releaseBlocking": false
+    },
+    {
+      "id": "STD-RELEASE-006",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Release Candidate Quality Gate cadence",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-DIAG-001",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Developer-only Full App Check or equivalent CI diagnostic",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-DIAG-002",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Structured diagnostic findings and severity",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-RELEASE-007",
+      "level": "MUST",
+      "defaultVerification": "static",
+      "title": "Release diff and risk-based coverage",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-TEST-002",
+      "level": "MUST",
+      "defaultVerification": "runtime",
+      "title": "Critical user journeys and resilience scenarios",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-UI-001",
+      "level": "MUST",
+      "defaultVerification": "ui",
+      "title": "Release visual/runtime matrix",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-AI-003",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Advisory, explainable and read-only-by-default AI",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-AI-004",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "static",
+      "title": "Privacy, data minimization & secret handling",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-AI-005",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Provider, runtime & graceful fallback",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-AI-006",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasGeneratedAssistance",
+          "hasAIReleaseReview",
+          "hasOnDeviceAI",
+          "hasCloudAI",
+          "hasAITools",
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "unit",
+      "title": "Untrusted input/output, evaluation & rollback",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-AI-007",
+      "level": "MUST",
+      "appliesWhen": {
+        "anyCapability": [
+          "hasAdaptiveAI",
+          "hasAIPersonalization"
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Controlled adaptation, learning memory & human reset",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-EVIDENCE-002",
+      "level": "MUST",
+      "defaultVerification": "static",
+      "title": "RC Evidence Bundle and release baseline",
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
+    },
+    {
+      "id": "STD-POSTRELEASE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "allOf": [
+          {
+            "phase": "post-release"
+          },
+          {
+            "capability": "hasPostReleaseMonitoring",
+            "equals": true
+          }
+        ]
+      },
+      "defaultVerification": "runtime",
+      "title": "Post-release production feedback loop (not pre-release gate)",
+      "releaseBlocking": false
+    },
+    {
+      "id": "STD-BACKUP-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPortableBackup",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Portable backup scope, integrity and secret safety",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-BACKUP-002",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasUserRestore",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Safe restore preflight, rollback and cross-device proof",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-SHARE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasPersistentSharedContent",
+        "equals": true
+      },
+      "defaultVerification": "runtime",
+      "title": "Persistent shared-content recipient parity and lifecycle",
+      "releaseBlocking": true
+    },
+    {
+      "id": "STD-UPDATE-001",
+      "level": "MUST",
+      "appliesWhen": {
+        "capability": "hasAppUpdateNotice",
+        "equals": true
+      },
+      "defaultVerification": "unit",
+      "title": "Non-blocking, channel-correct, version-scoped update notice",
+      "releaseBlocking": true
+    }
+  ],
+  "notes": [
+    "RC4 consolidation: existing IDs preserved; phase release-candidate vs development vs post-release; evidence result linkage required for unit/ui/runtime; persistent shared content, in-app language selector, authoritative source conditions refined."
+  ],
+  "titleMetadata": "Human-readable summaries identify existing legacy rules. These labels do not replace or independently extend normative provisions inherited from the 1.7/1.8 Standard."
+}

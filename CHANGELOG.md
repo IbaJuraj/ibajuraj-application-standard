@@ -1,16 +1,101 @@
 # Changelog
 
-## 1.9.0 RC1 – accepted scope (unreleased) – 2026-09-17
+## 1.9.0 RC4 – 2026-10-16 (candidate)
 
-### Accepted
-- `STD-AUTH-SOURCE-001` via `IJAS-0033-authoritative-source-offline-citation-contract.md`.
-- Applications that use legal, regulatory, normative or other authoritative sources as part of a user-facing functional result must provide the used source locally/offline, preserve source identity and effective/version metadata, and keep a verification trace where verified content is used.
-- Legal or equivalently normative content must expose the exact citation or verbatim provision used by the result.
-- An external official website may remain available as a supplemental link, but must not be the only way to access the authoritative basis.
+### RC4 consolidation — 2026-10-16 (prior to app adoption)
 
-### Compatibility
-- Classified as a MINOR compatible contract family under Governance.
-- Stable 1.8.0 authority and its 119-rule machine-readable catalog remain unchanged until 1.9.0 RC integration.
+- **No rule IDs removed**, stable authority 1.8.0 unchanged, candidate count 138.
+- 90 inherited rules gained descriptive, non-normative human-readable titles.
+- Scoped seven Release Candidate gate rules to `release-candidate`, and `STD-POSTRELEASE-001` to `post-release`.
+- External developer/CI equivalent is acceptable under `STD-DIAG-001`, without a production diagnostic UI.
+- `STD-LOC-005` requires an actual own language selector, `STD-SHARE-001` persistent shared content.
+- `STD-AUTH-SOURCE-001` distinguishes offline norm/legal citations from live sourced data freshness/staleness.
+- Template corrected for previously missing `hasAuthoritativeFunctionalSources` and `hasRemoteInviteShareAccessFlow` and new feature flags.
+- Executed evidence contract separates real PASS from declared `test`/Markdown path; exact build/source/phase, runner/date and artifact hash verified. Missing = PENDING; mismatched/failed = FAIL.
+- Phase and evidence negative regression tests added. No app code, database, CloudKit container or user backup changed.
+
+
+### Added
+- Four capability-scoped cross-app rules: `STD-BACKUP-001/002`, `STD-SHARE-001` and `STD-UPDATE-001`; RC3 134 → RC4 **138 candidate rules**.
+- Portable backup scope, completeness, authenticated integrity/encryption and independent recovery material.
+- Restore preflight, checkpoint/rollback, fault injection and isolated-device full-state verification.
+- Two-account shared-content parity after invite and later edit/revoke, preventing empty first-sync overwrite.
+- App update notice policy: source/channel/storefront correctness, distinct successful-check time and retry, per-version snooze and non-blocking UI.
+- Strict Boolean capability switches and deterministic conformance regression coverage.
+
+### Preserved
+- Published 1.8.0 stable authority and 119 stable rules.
+- All original 134 RC3 rules and meanings, AI/Release Inspector governance and existing iPad/adaptive contracts.
+- No change to any app build, production data, CloudKit container or encryption key.
+
+### Pending
+- Exact-commit candidate CI and checksum manifest verification; cross-app runtime gates before any promotion. These requirements are not declared PASS just because code exists.
+
+
+## 1.9.0 RC3 – 2026-09-25
+
+### Added
+- `STD-AI-005` — provider/runtime, on-device/cloud transparency and graceful fallback.
+- `STD-AI-006` — untrusted input/output boundary, structured-output validation, AI eval/regression and rollback.
+- `STD-AI-007` — controlled adaptation/self-learning, separate learning memory, provenance, reversibility and human reset.
+- Machine-readable `ai.features[]` metadata with stable feature ID, risk profile and execution mode.
+- AI capability flags for on-device, cloud, tools, adaptive behavior and personalization.
+- Candidate catalog expanded from 131 to **134 unique rules**.
+
+### Consolidated
+- `STD-AI-001` and `STD-AI-002` retain their stable identities and are explicitly defined as grounded/verified assistance and user transparency/fallback/feedback contracts.
+- `STD-AI-003` is generalized from Release-Inspector-only wording to advisory, explainable and read-only-by-default AI.
+- `STD-AI-004` is generalized to privacy, data minimization, sanitization and secure secret handling for all AI use.
+- AI release review remains subordinate to deterministic Release Inspector PASS/FAIL.
+
+### Reference implementation
+- Apple Foundation Models / Core AI are documented as reference on-device implementations, not mandatory technologies.
+- TradeBook is the first intended RC3 pilot for local/cloud AI review and controlled adaptation contracts.
+
+### Pilot clarifications
+- Distinguishes model/device support, runtime readiness and successful execution.
+- Allows a deterministic non-generative fallback while requiring it to be identified separately from model AI.
+- Adds machine-readable `runtimeKind` and `fallbackKind` metadata without adding a new rule ID.
+- Clarifies controlled-learning lifecycle: candidate → confirmed → active/usable → revoked/reset.
+- Requires freshness/provenance for time-sensitive news, price, on-chain and event inputs.
+- Clarifies that market/watch/buy candidates are advisory and do not authorize transactions.
+- Candidate catalog remains **134 unique rules**.
+
+## 1.9.0 RC2 – 2026-09-25
+
+### Added
+- RC-only full quality gate rather than a full audit after every small development build.
+- In-App Full App Check with structured severity findings.
+- Release diff/risk audit, critical journeys/failure injection and UI/runtime matrix.
+- Governed AI release review with explainability and privacy/data-minimization boundaries.
+- Exact-build RC Evidence Bundle and optional post-release feedback loop.
+- Candidate catalog expanded from 121 to **131 unique rules**.
+
+### Preserved
+- Stable authority remains 1.8.0.
+- RC1 async responsiveness and authoritative-source contracts remain unchanged.
+- Runtime evidence remains exact-build scoped.
+
+
+## 1.9.0 RC1 – 2026-09-17
+
+### Added
+- `STD-ASYNC-002` for remote invite/share/access responsiveness; network/backend orchestration must not block interactive UI/MainActor responsiveness and long-running work must expose a visible in-progress state.
+- `STD-AUTH-SOURCE-001` for authoritative functional sources; legal/regulatory/normative basis used by a user-facing result must be locally/offline available, version/effective-date identified, exactly citable and externally traceable.
+- 1.9.0 RC1 machine-readable catalog expanded from the stable 1.8.0 baseline of 119 rules to **121 unique rules**.
+
+### Clarified
+- Root-title adaptive family: peer root screens use one shared title family driven by available viewport/container width; full titles should be preferred over truncation. This clarification does not add a new `STD-*` rule ID.
+- `STD-AUTH-SOURCE-001` makes an official external website supplemental only; it must not be the sole access path to the authoritative basis.
+
+### Preserved
+- `STD-CLOUD-001` remains the authority for confirmed remote destructive/access success.
+- `STD-CLOUD-002` remains the authority for durable retry/reconciliation.
+- Stable public authority remains 1.8.0 until 1.9.0 is promoted.
+
+### Reference adoption
+- Strážca Termínov Build 120 Phase 14A R12 is the first implementation reference for `STD-ASYNC-002`.
+- Lex Drive Build 232 is the first implementation/reference case for `STD-AUTH-SOURCE-001` and offline legal citation behavior.
 
 ## 1.8.0 – 2026-09-15
 
@@ -54,7 +139,7 @@
 ## 1.8.0 RC1 – 2026-09-05
 
 ### Published scope
-- Localization-first architecture and stable semantic localization keys.
+- Localization-first architektúra a stable semantic localization keys.
 - Locale-aware formatting and pluralization.
 - Optional in-app language selector with Automatic/System mode.
 - No data migration/raw-ID change solely from language switching.

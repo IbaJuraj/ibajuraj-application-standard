@@ -17,6 +17,18 @@ Tento dokument definuje spoločné referenčné tokeny. Token je baseline, nie n
 - `touch.minimum`: **44 × 44 pt**
 - Hit-area MAY byť väčšia než vizuálny symbol.
 
+## Root title adaptive family
+
+Root page title je family token, nie pevný screenshotový rozmer.
+
+- peer root obrazovky MUST používať jednu spoločnú title family,
+- výsledná veľkosť MUST vychádzať z reálne dostupnej šírky viewport-u alebo kontajnera, nie z názvu konkrétneho zariadenia,
+- na tom istom viewport-e MUST peer root titles používať rovnaký výsledný size token,
+- adaptácia SHOULD preferovať celý názov bez `…` pomocou breakpointov, clamped veľkosti, tightening alebo primeraného scale fallbacku,
+- nested/system navigation headers tvoria samostatnú family a nemusia používať root-title token.
+
+Referenčná implementácia MÔŽE používať napr. 28 / 30 / 32 pt podľa dostupnej šírky. Tieto čísla nie sú cross-app povinné; povinná je family konzistencia a container-driven adaptácia.
+
 ## Shared navigation tile
 
 Peer tiles musia používať rovnaký variant a adaptovať sa cez obsah/container, nie per-screen offsetmi.

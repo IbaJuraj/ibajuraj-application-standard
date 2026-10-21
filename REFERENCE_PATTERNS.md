@@ -138,3 +138,28 @@ Family `pass` bez evidence je invalidný. `pending` blokuje Level 4.
 
 ## 11. Header ownership pattern
 Prefer either native `navigationTitle` **or** a custom page/sheet header for the authoritative page title. A section heading must narrow the content meaning. Do not reserve an empty navigation band only for close/back control above a second title.
+
+## Release Inspector / Full App Check reference pattern
+
+Recommended flow for an App Store Release Candidate:
+
+```text
+Development builds
+  -> Build + Test + targeted regression
+
+Release Candidate
+  -> In-App Full App Check
+  -> Release Diff / Risk Map
+  -> Critical User Journeys + Failure Injection
+  -> UI / Runtime Matrix
+  -> Optional AI Review
+  -> Severity Review
+  -> Evidence Bundle
+  -> PASS / FAIL
+```
+
+The internal diagnostics surface should expose a single **Full App Check** action and a drill-down list of structured findings. Shared core checks may be reused across apps; product-specific checks live in app modules. AI findings show reason/evidence/confidence and never silently change production state.
+
+## 12. RC4 executed evidence — distinct from declarations
+
+Older examples above with `implemented` and `test`/`runtimeGate` are **only declarations** for 1.9.0 RC4, not standalone PASS evidence. Each implemented unit/UI/runtime rule and each passed screen family requires a matching `executionEvidence.file` record with exact build/source/phase, runner, timestamp, primary artifact and verified SHA256. See [EXECUTION_EVIDENCE_CONTRACT.md](EXECUTION_EVIDENCE_CONTRACT.md). Normal development checks use `--phase development`; a nominated production release must run `--phase release-candidate`.
