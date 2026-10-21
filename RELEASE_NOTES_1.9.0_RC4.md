@@ -29,3 +29,9 @@ All **138 rule IDs** remain stable; no arbitrary removals or new RC numbering. T
 Legacy catalog titles are now machine-readable summaries, **not a rewrite of inherited normative clauses**. The template exposes missing applicability flags. Central CI PASS is distinct from runtime adoption PASS in TradeBook, Lex Drive, Strážca, Peňaženka and Kalkulačka.
 
 Stable 1.8.0 and existing App Store binaries remain unchanged.
+
+## Governance acceptance addendum — 22 October 2026 (CANDIDATE, NOT STABLE)
+
+The owner approved [IJAS-0041](Proposals/IJAS-0041-central-standard-promotion-vs-app-release-adr.md), which distinguishes publication of the validated shared Standard from full App Store/production acceptance of individual apps. **All applicable MUST/MUST NOT requirements remain unchanged and enforced at the respective app release gate.** Pending cross-device restore (TradeBook), recipient content parity (Strážca), two-account wallet share (Peňaženka), exact app release checks and AI/provider applicability are not certified by publishing the central Standard.
+
+On the documented prior head `d898962`, 138/138 catalog, 47/47 tests and 132-file manifest were green; the Calculator B64 R6 pilot proved failure/pending enforcement but not positive native execution evidence or full RC compliance. Positive execution evidence, cross-app capability register, new exact-head CI and separate merge/tag authorization remain required. Public stable 1.8.0 is unchanged.

@@ -18,3 +18,19 @@ Candidate status only; no automatic app code changes, data migrations, build inc
 4. Keep backup restore on iPad and two-account cloud content parity as separate live runtime acceptance tasks, not as automatic results of Standard CI.
 5. Release audit applies to nominated app release candidates; avoid separate application builds for every small requirement.
 6. Stable Standard 1.8.0 remains current public authority until independent approval and promotion of 1.9.0.
+
+## Authoritative governance/adoption status addendum — 22 October 2026
+
+The older build references above describe the **initial** pilots and are historical. Approved [IJAS-0041](Proposals/IJAS-0041-central-standard-promotion-vs-app-release-adr.md) separates the Standard's C-01...C-07 **central promotion** from each app's exact-build release gate; it does not weaken mandatory contracts.
+
+| App | Most recent working source baseline on 21 Oct 2026 | Real acceptance still not evidenced |
+|---|---|---|
+| Calculator | 1.15.0 Build64 R6 | Pilot validator logic PASS; original executed RC evidence / 7 screen families and full app RC PENDING |
+| TradeBook | 2.1.0 Build280 | B280 native Xcode and second-device full-state restore/rollback PENDING; earlier B279 native check is not B280 |
+| Strážca Termínov | 1.62.0 Build135 R2 | Xcode PASS/PASS and widget/deep link runtime PASS; recipient content parity / edit / revoke and backup restore PENDING |
+| Peňaženka Kariet | 1.6.0 Build94 R8 | Owner-side B78 flow PASS historically; two-account persistent-wallet lifecycle and second-device recovery PENDING; precise R8 native artifact to reconcile |
+| Lex Drive | 1.23.0 Build325 (RC validation pending) | Exact-native, legal temporal integrity and release inspector PENDING |
+
+Cross-app applicability and capabilities are to be reviewed against source, not guessed from false flags. App update notices with real providers remain mandatory at applicable app RC; absence of a true provider demands independent N/A justification. RC3 AI/Release Inspector requirements remain mandatory where applicable.
+
+**Central required next:** positive Calculator exact-build native/UI execution evidence, read-only cross-app capability audit, latest-head CI+SHA and release authorization. No unnecessary application builds, no synthetic evidence and no stable promotion while central gates are pending.
