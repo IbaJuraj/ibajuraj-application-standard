@@ -315,6 +315,83 @@ class ValidatorTests(unittest.TestCase):
             self.assertEqual(p.returncode,0,p.stdout)
         finally: td.cleanup()
 
+    def test_historical_release_checks_are_rc_only(self):
+        td,r=self.make_app(phase='development')
+        try:
+            manifest=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            for rid in ('STD-RELEASE-002','STD-RELEASE-003','STD-RELEASE-004','STD-RELEASE-005',
+                        'STD-SCREEN-002','STD-SCREEN-003','STD-SCREEN-004'):
+                self.assertNotIn(rid,manifest['rules'],rid)
+            p=self.runv(r,'development')
+            self.assertEqual(p.returncode,0,p.stdout)
+        finally: td.cleanup()
+
+    def test_dev_pending_rule_warns_without_false_pass(self):
+        td,r=self.make_app(pending='STD-ADAPT-001',phase='development')
+        try:
+            p=self.runv(r,'development')
+            self.assertEqual(p.returncode,0,p.stdout)
+            self.assertIn('PENDING',p.stdout)
+            self.assertIn('release approval is NOT implied',p.stdout)
+        finally: td.cleanup()
+
+    def test_dev_pending_screens_do_not_block(self):
+        td,r=self.make_app(pending_screen='SCREEN-ROOT',phase='development')
+        try:
+            p=self.runv(r,'development')
+            self.assertEqual(p.returncode,0,p.stdout)
+            self.assertIn('SCREEN-ROOT deferred until release-candidate',p.stdout)
+        finally: td.cleanup()
+
+    def test_omitted_rc_risk_flag_is_fail_not_na(self):
+        td,r=self.make_app()
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            del m['capabilities']['hasUserRestore']
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r,'release-candidate')
+            self.assertEqual(p.returncode,1,p.stdout)
+            self.assertIn('hasUserRestore missing',p.stdout)
+        finally: td.cleanup()
+
+    def test_omitted_dev_risk_flag_only_warns(self):
+        td,r=self.make_app(phase='development')
+        try:
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            del m['capabilities']['hasUserRestore']
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r,'development')
+            self.assertEqual(p.returncode,0,p.stdout)
+            self.assertIn('hasUserRestore missing',p.stdout)
+        finally: td.cleanup()
+
+    def test_should_recommendations_warn_but_never_block(self):
+        td,r=self.make_app({'hasInAppLanguageSelector':True})
+        try:
+            p=self.runv(r)
+            self.assertEqual(p.returncode,0,p.stdout)
+            self.assertIn('STD-LOC-005 SHOULD decision missing',p.stdout)
+            m=json.loads((r/'STANDARD_CONFORMANCE.json').read_text())
+            m['recommendations']={'STD-LOC-005':{'decision':'deferred','reason':''}}
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r)
+            self.assertEqual(p.returncode,0,p.stdout)
+            self.assertIn('STD-LOC-005 SHOULD deferred without rationale',p.stdout)
+            m['recommendations']['STD-LOC-005']['reason']='Synthetic fixture defers optional selector'
+            (r/'STANDARD_CONFORMANCE.json').write_text(json.dumps(m))
+            p=self.runv(r)
+            self.assertEqual(p.returncode,0,p.stdout)
+            self.assertNotIn('STD-LOC-005 SHOULD',p.stdout)
+        finally: td.cleanup()
+
+    def test_release_runtime_requirement_still_blocks(self):
+        td,r=self.make_app(omit='STD-RELEASE-004')
+        try:
+            p=self.runv(r,'release-candidate')
+            self.assertEqual(p.returncode,1,p.stdout)
+            self.assertIn('STD-RELEASE-004 missing conformance entry',p.stdout)
+        finally: td.cleanup()
+
     def test_rc_phase_missing_release_rule_fails(self):
         td,r=self.make_app(omit='STD-DIAG-001')
         try:

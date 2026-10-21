@@ -222,6 +222,27 @@
         }
       },
       "additionalProperties": false
+    },
+    "recommendations": {
+      "type": "object",
+      "description": "Non-blocking decisions for applicable SHOULD rules; deferred decisions explain why.",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "decision"
+        ],
+        "properties": {
+          "decision": {
+            "enum": [
+              "adopted",
+              "deferred"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
     }
   },
   "additionalProperties": true

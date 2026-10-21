@@ -175,5 +175,6 @@
   },
   "executionEvidence": {
     "file": "Evidence/STANDARD_EXECUTION_RESULTS.json"
-  }
+  },
+  "recommendations": {}
 }

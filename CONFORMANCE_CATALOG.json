@@ -571,8 +571,15 @@
       "id": "STD-RELEASE-002",
       "level": "MUST",
       "appliesWhen": {
-        "capability": "hasLocalization",
-        "equals": true
+        "allOf": [
+          {
+            "capability": "hasLocalization",
+            "equals": true
+          },
+          {
+            "phase": "release-candidate"
+          }
+        ]
       },
       "title": "Store language assets and localization package validation"
     },
@@ -580,13 +587,19 @@
       "id": "STD-RELEASE-003",
       "level": "MUST",
       "defaultVerification": "runtime",
-      "title": "Native release Build/Test verification"
+      "title": "Native release Build/Test verification",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-RELEASE-004",
       "level": "MUST",
       "defaultVerification": "runtime",
-      "title": "Production runtime smoke and release readiness"
+      "title": "Production runtime smoke and release readiness",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-ADAPT-013",
@@ -684,18 +697,27 @@
       "id": "STD-SCREEN-002",
       "level": "MUST",
       "defaultVerification": "runtime",
-      "title": "Relevant screen families have executed runtime checks"
+      "title": "Relevant screen families have executed runtime checks",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-SCREEN-003",
       "level": "MUST",
       "defaultVerification": "runtime",
-      "title": "Runtime screen-family matrix includes visual states"
+      "title": "Runtime screen-family matrix includes visual states",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-SCREEN-004",
       "level": "MUST",
-      "title": "Release blocks unresolved screen-family evidence"
+      "title": "Release blocks unresolved screen-family evidence",
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-NAV-010",
@@ -853,7 +875,10 @@
       "level": "MUST",
       "defaultVerification": "static",
       "title": "Current release root is clean and superseded build history is archived",
-      "releaseBlocking": true
+      "releaseBlocking": true,
+      "appliesWhen": {
+        "phase": "release-candidate"
+      }
     },
     {
       "id": "STD-DATA-005",

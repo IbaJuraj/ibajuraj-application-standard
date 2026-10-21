@@ -167,6 +167,14 @@ Každá AI feature deklarácia MUSÍ zároveň uviesť:
 Tieto polia nehovoria, že deterministický fallback je AI; práve naopak, umožňujú diagnostike a conformance vrstve explicitne odlíšiť modelovú AI od ne-generatívneho lokálneho fallbacku.
 ## 6. Release Candidate Quality Gate & Intelligent Self-Audit
 
+**RC4 scope clarification (historical IDs preserved):** `STD-RELEASE-002/003/004/005` and `STD-SCREEN-002/003/004` are only applicable during an explicit `release-candidate` gate. Regular `development` still expects Build/Test and change-risk regression without running a whole-app release audit. Unexecuted development unit/UI/runtime and screen acceptance appear as PENDING, not a production-release PASS. `STD-SCREEN-001` still requires the screen-family inventory. Invalid version/evidence metadata or tampering remains FAIL in every phase. `post-release` monitoring has its separate capability/phase condition.
+
+**Capability truth / N/A:** On a nominated RC, declare each critical data/security/AI/cloud/share/backup/restore/update capability explicitly as true/false; omission is FAIL, not silent N/A. Source-level verification is still essential: a false value in a manifest alone does not prove a shipped feature is absent. Access-only sharing is different from persistent recipient-shared content.
+
+**SHOULD recommendations:** For an applicable SHOULD, optional `recommendations` records an `adopted` or `deferred` decision with a `reason` for deferral; missing/unsupported decisions and reasons emit review warnings only, never release blockers.
+
+
+
 ### STD-RELEASE-006 — Release Candidate Quality Gate cadence — MUST
 Kompletný whole-app release audit MUSÍ prebehnúť na builde explicitne nominovanom na App Store/store/produkčné odoslanie. Bežné vývojové buildy nepotrebujú celý release audit; postačuje Build/Test a cielená regresia zmenených alebo rizikových oblastí. Materiálna zmena po uzavretí RC gate zneplatňuje release evidence predchádzajúceho buildu a nový RC MUSÍ gate zopakovať.
 

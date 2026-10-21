@@ -31,3 +31,10 @@
 - [ ] Candidate cross-app applicability reviewed before proposed stable promotion.
 - [ ] Native runtime recovery/share/AI release requirements proven where supported (not by synthetic fixtures).
 All app projects remain unchanged during Standard consolidation.
+
+## Consolidated corrective update — 21 Oct 2026
+- [x] Preserved 138 catalog IDs; applied explicit release-candidate conditions to seven existing release/screen contracts.
+- [x] Development-only pending evidence no longer claims false PASS or blocks ordinary builds.
+- [x] Missing critical capability declarations fail a real RC; SHOULD reports remain advisory.
+- [ ] Verify new exact-head CI / checksum manifest and regression tests after this commit.
+- [ ] Validate against at least one app with real exact-build test execution evidence; synthetic fixtures alone are insufficient.

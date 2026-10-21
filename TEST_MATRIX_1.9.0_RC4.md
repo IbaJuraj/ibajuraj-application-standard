@@ -57,3 +57,10 @@ Evidence separation: Static PASS != Xcode Build/Test PASS != recovery/sharing ru
 - [ ] Screen family pass requires an executed UI check result, otherwise PENDING; fixture outputs distinguish synthetic from true native runtime.
 - [ ] Final `SHA256SUMS.txt` covers every file except itself, and GitHub CI passes on the exact reviewed commit.
 See [EXECUTION_EVIDENCE_CONTRACT.md](EXECUTION_EVIDENCE_CONTRACT.md); a SHA256-matching self-asserted log alone does not prove physical runtime behavior.
+
+## Grouped correction regression — 21 Oct 2026
+- [ ] Seven historical release/screen contracts do not appear in development conformance but do apply in release-candidate.
+- [ ] Pending development unit and screen evidence is visible as PENDING, exits 0 with no other errors and does not claim release PASS.
+- [ ] Omitted critical feature flags fail RC (exit 1), not silent N/A; optional development warning remains nonblocking.
+- [ ] Missing/adopted/deferred SHOULD decision and missing deferral rationale produce only relevant nonblocking warnings.
+- [ ] Missing RC release rule, explicit failed result, build/source mismatch, or artifact hash tampering still fail.

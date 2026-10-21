@@ -28,3 +28,11 @@ No RC4 rule or proposal is already a production feature merely because it is doc
 7. Record missing execution as PENDING, failure/mismatched build or tampered file as FAIL. Manual device proof is still required for cross-device backup/CloudKit acceptance; no synthetic test fixture is a runtime PASS.
 8. Post-release monitoring MUST is not a pre-release blocker; it becomes applicable after release.
 9. No automatic user-data migration, app build increment, version switch or secret copying occurs from Standard candidate adoption.
+
+## RC4 phase/N/A/SHOULD correction — 21 Oct 2026
+
+- Existing `STD-RELEASE-002/003/004/005` and `STD-SCREEN-002/003/004` are RC-phase contracts. Missing development UI/runtime evidence is reported as **PENDING**, never as genuine PASS or a release block (exit 0 if there are no actual validation errors).
+- Release-candidate runs require explicit Boolean risk-related capability flags; omission gives FAIL rather than silent N/A. Validate true/false values against actual shipped app features independently.
+- `STD-LOC-005` and `STD-COMPACT-001` remain SHOULD: optional `recommendations` accepts `{ "decision": "adopted" }` or `{ "decision": "deferred", "reason": "..." }`. Missing rationale warns without blocking.
+- Wrong version, tampered/mismatched execution evidence or failing test remains FAIL regardless of phase.
+- Stable 1.8.0, the count of 138 candidate IDs and all app binaries remain unchanged.
