@@ -181,6 +181,6 @@ Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatí
 
 Schválený návrh: `Proposals/IJAS-0033-authoritative-source-offline-citation-contract.md`.
 
-### STD-RELEASE-COMMS-001 — Published store metadata and channel-specific release communication — planned MUST / SHOULD
+### Planned rule: STD-RELEASE-COMMS-001 — Published store metadata and channel-specific release communication — planned MUST / SHOULD
 
 App Store je autoritatívny zdroj zverejnených produktových informácií. Web preberá popis a údaje vydania, Telegram iba názov aplikácie, verziu a pôvodný What's New. Verejné publikovanie je opt-in pre každú aplikáciu, s ochranou pred duplicitami a oddelením News a Reports bota. Odporúčané dĺžky a migračný postup určuje schválený návrh `Proposals/IJAS-0034-release-communication-and-store-metadata.md`. Pilot je obmedzený na Strážcu Termínov; ostatné aplikácie sa nemenia bez samostatného schválenia.
