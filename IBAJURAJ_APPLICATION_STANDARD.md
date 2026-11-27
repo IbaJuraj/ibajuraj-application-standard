@@ -175,7 +175,7 @@ Všetky normatívne významy, semantic clarifications, layout/header/chrome kont
 
 Táto sekcia je informatívna pre plánovaný next-minor scope a **nemení stabilnú autoritu 1.8.0 ani jej 119-rule katalóg**.
 
-### STD-AUTH-SOURCE-001 — Authoritative source is available offline and externally traceable — planned MUST
+### Planned rule: STD-AUTH-SOURCE-001 — Authoritative source is available offline and externally traceable — planned MUST
 
 Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku, použitý podklad musí byť dostupný aj bez internetového pripojenia, musí byť identifikovaný konkrétnou verziou/účinnosťou a musí byť spätne dohľadateľný na verifikačnú stopu. Pri právnom alebo obdobne normatívnom obsahu musí byť dostupná presná citácia alebo doslovné znenie použitého ustanovenia. Externý oficiálny web môže byť doplnkový odkaz, ale nesmie byť jediným spôsobom zobrazenia autoritatívneho podkladu.
 
