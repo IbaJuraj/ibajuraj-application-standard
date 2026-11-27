@@ -8,6 +8,8 @@
 - Legal or equivalently normative content must expose the exact citation or verbatim provision used by the result.
 - An external official website may remain available as a supplemental link, but must not be the only way to access the authoritative basis.
 
+- `STD-RELEASE-COMMS-001` via `IJAS-0034-release-communication-and-store-metadata.md`: concise store metadata, channel-specific content, opt-in Telegram release announcements, duplicate protection and separate News/Reports bots.
+
 ### Compatibility
 - Classified as a MINOR compatible contract family under Governance.
 - Stable 1.8.0 authority and its 119-rule machine-readable catalog remain unchanged until 1.9.0 RC integration.

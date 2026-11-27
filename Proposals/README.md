@@ -42,3 +42,5 @@ IJAS-0001-strucny-nazov.md
 - `IJAS-0026-release-package-root-hygiene-and-build-history-archive.md` – proposed for Standard 1.7.1; spoločný kontrakt čistoty release rootu a archivácie historických build/runtime dokumentov.
 - `IJAS-0027-single-device-development-release-data-continuity.md` – proposed for Standard 1.7.1; zachovanie stabilných lokálnych dát a oddelenie environment-specific cloudových väzieb pri striedaní Xcode ↔ App Store/TestFlight na jednom fyzickom zariadení.
 - `IJAS-0033-authoritative-source-offline-citation-contract.md` – accepted for Standard 1.9.0 RC1; autoritatívny právny/regulačný podklad musí byť dostupný lokálne/offline, verzovaný a spätne dohľadateľný; externý oficiálny web je iba doplnkový zdroj.
+
+- `IJAS-0034-release-communication-and-store-metadata.md` – accepted for Standard 1.9.0 RC1; jednotné stručné texty App Store, web a Telegram; pilot Strážca Termínov.

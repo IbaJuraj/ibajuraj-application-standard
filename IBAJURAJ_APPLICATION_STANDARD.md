@@ -175,8 +175,12 @@ Všetky normatívne významy, semantic clarifications, layout/header/chrome kont
 
 Táto sekcia je informatívna pre plánovaný next-minor scope a **nemení stabilnú autoritu 1.8.0 ani jej 119-rule katalóg**.
 
-### STD-AUTH-SOURCE-001 — Authoritative source is available offline and externally traceable — planned MUST
+### Planned rule: STD-AUTH-SOURCE-001 — Authoritative source is available offline and externally traceable — planned MUST
 
 Ak aplikácia používa právny, regulačný, normatívny alebo iný autoritatívny zdroj ako súčasť funkčného používateľského výsledku, použitý podklad musí byť dostupný aj bez internetového pripojenia, musí byť identifikovaný konkrétnou verziou/účinnosťou a musí byť spätne dohľadateľný na verifikačnú stopu. Pri právnom alebo obdobne normatívnom obsahu musí byť dostupná presná citácia alebo doslovné znenie použitého ustanovenia. Externý oficiálny web môže byť doplnkový odkaz, ale nesmie byť jediným spôsobom zobrazenia autoritatívneho podkladu.
 
 Schválený návrh: `Proposals/IJAS-0033-authoritative-source-offline-citation-contract.md`.
+
+### Planned rule: STD-RELEASE-COMMS-001 — Published store metadata and channel-specific release communication — planned MUST / SHOULD
+
+App Store je autoritatívny zdroj zverejnených produktových informácií. Web preberá popis a údaje vydania, Telegram iba názov aplikácie, verziu a pôvodný What's New. Verejné publikovanie je opt-in pre každú aplikáciu, s ochranou pred duplicitami a oddelením News a Reports bota. Odporúčané dĺžky a migračný postup určuje schválený návrh `Proposals/IJAS-0034-release-communication-and-store-metadata.md`. Pilot je obmedzený na Strážcu Termínov; ostatné aplikácie sa nemenia bez samostatného schválenia.
