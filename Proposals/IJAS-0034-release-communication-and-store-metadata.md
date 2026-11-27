@@ -20,6 +20,16 @@ Duplicitné ručné texty pre App Store, web a Telegram vedú k rozdielnym údaj
 - Nejasný stav doručenia MUSÍ zastaviť automatické opakovanie až do overenia; chyba Telegramu nesmie zrušiť úspešné publikovanie webu.
 - Publikačný News bot MUSÍ byť oddelený od súkromného Reports bota; tokeny sa ukladajú mimo verejného kódu a bot má len potrebné oprávnenia.
 
+## Odkazy a umiestnenie v aplikácii
+
+- Obrazovka **Kontakt** zachová kontaktný formulár a existujúcu Telegram komunitu pre otázky, návrhy a diskusiu. Odkaz na komunitu sa nesmie zameniť za jednosmerný kanál noviniek.
+- Obrazovka **O aplikácii** má pri adopcii kontraktu obsahovať samostatný externý odkaz **Novinky na Telegrame**, s doplnkovým textom „Nové verzie a aktualizácie aplikácií“. Odporúčané umiestnenie: medzi Web IbaJuraj Apps a Ochrana súkromia. Použiť existujúci komponent externého odkazu, vzhľad a prístupnosť aplikácie.
+- Cieľ: `https://t.me/IbaJurajAppsNews`. Odkaz sa centralizuje v konfigurácii identity/odkazov aplikácie, nie v jednotlivých views. Otvorenie musí fungovať aj bez nainštalovaného Telegramu cez systémový HTTPS odkaz.
+- Samotný odkaz nevyžaduje Telegram SDK, token, nové oprávnenia ani integráciu bota v klientovi. News automatizácia zostáva serverová (App Store → GitHub Actions → Telegram).
+- Verejné novinky, komunitná diskusia, kontaktný formulár a súkromné Reports hlásenia zostávajú účelovo oddelené. Žiadne citlivé údaje v komunite alebo novinkách.
+- Pilot UI: Strážca Termínov pri najbližšej vhodnej revízii pred vydaním, ak je ešte otvorená; inak pri ďalšom plánovanom vydaní. Nevytvárať samostatný build iba kvôli odkazu. Ostatné aplikácie až po samostatnom schválení.
+- Overenie: správny cieľ odkazu, otvorenie s Telegramom aj bez neho, nezmenený kontakt a súkromie, čitateľnosť a prístupnosť v podporovaných režimoch. Verzia štandardu zobrazená v aplikácii zostáva skutočne adoptovaná stabilná verzia, nie plánovaná RC.
+
 ## Migrácia a overenie
 
 Pilot: Strážca Termínov, slovenský text. Ďalšie aplikácie až po samostatnom schválení pri najbližšom plánovanom vydaní. Žiadne vynútené nové buildy iba kvôli textu.
